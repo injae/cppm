@@ -1,3 +1,2 @@
-#Cxxc# \n
-this project is c++ project manager to use cmake
-
+#Cppm# \n
+C++ cmake project helper
