@@ -1,0 +1,34 @@
+project:
+    name: cppm
+    version: 1.0.0
+    authors: 8687lee@gmail.com 
+     
+    thirdparty:
+        boost: 
+            build-type: static
+            url: 
+        mysql:
+            build-type: static
+            url:
+        ormpp:
+            build-type: header_only
+            url:
+        iguana:
+            build-type: header_only 
+            url:
+        yaml-cpp:
+            build-type: static
+            url:
+        protobuf:
+            build-type: static
+            url:
+
+    include: cd include && ls
+    src    : cd src && ls 
+    list   : ls
+     
+    
+    
+    
+    
+    
