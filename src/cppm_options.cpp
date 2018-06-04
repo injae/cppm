@@ -16,20 +16,27 @@ CppmOptions::CppmOptions(int argc, char* argv[]) : Option("Cppm Options", argc, 
 }
 
 void CppmOptions::run() {
-    auto project = Cppm::instance()->project();
     if(vm_.count("command")) { auto cmd = vm_["command"].as<std::string>();
-        auto subargs = ranges::accumulate(get_subarg(), std::string{});
-        for(auto& command : subcommand_) {
-             if(command.first == cmd) {
-                 system(("cd "+ project.path + " && " + command.second + " " + subargs).c_str());
-                 continue;
-             }
-        }
-             if(cmd == "build") _build();
-        else if(cmd == "run")   _run();
+        _user_command(cmd.c_str());
+        
+             if(cmd == "build")   _build();
+        else if(cmd == "run")     _run();
+        else if(cmd == "install") _install();
+        else if(cmd == "thirdparty") _show_thirdparties();
     }
     else if(vm_.count("help")   ) _help(); 
     else if(vm_.count("version")) _version();
+}
+
+void CppmOptions::_user_command(std::string_view cmd) {
+    auto project = Cppm::instance()->project();
+    auto subargs = ranges::accumulate(get_subarg(), std::string{});
+    for(auto& command : subcommand_) {
+         if(command.first == cmd) {
+             system(("cd "+ project.path + " && " + command.second + " " + subargs).c_str());
+             continue;
+         }
+    }
 }
 
 void CppmOptions::registe_subcommand(std::pair<std::string, std::string> command) {
@@ -57,4 +64,18 @@ void CppmOptions::_run() {
     auto subargs = ranges::accumulate(get_subarg(), std::string{});
     std::string cmd = "cd " + project.bin + " && ./" + project.name +" " + subargs;
     system(cmd.c_str());
+}
+
+void CppmOptions::_show_thirdparties() {
+    auto thirdparties = Cppm::instance()->thirdparties();
+    for(auto thirdparty : thirdparties) {
+        std::cout << "[" + thirdparty.name << "]\n"
+                  << "-url: "  + thirdparty.repo.url << "\n"
+                  << "-version: "+ thirdparty.version << "\n"
+                  << "-build-type: " + thirdparty.build_type << "\n";
+    }
+}
+
+void CppmOptions::_install() {
+    
 }

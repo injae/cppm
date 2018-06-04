@@ -2,7 +2,6 @@
 #include"cppm_options.h"
 #include"utils.h"
 
-#include<yaml-cpp/yaml.h>
 
 Cppm* Cppm::instance() {
     static Cppm instance_; 
@@ -31,6 +30,40 @@ fs::path Cppm::find_config_file() {
     return *config_file;
 }
 
+void Cppm::parse_thirdparty(YAML::Node& node) {
+    for(auto name : node["project"]["thirdparty"]) {
+        cppm::Thirdparty thirdparty; 
+        thirdparty.name = name.first.as<std::string>();
+        for(auto property : node["project"]["thirdparty"][thirdparty.name]) {
+            auto node = property.first.as<std::string>();
+            auto data = property.second.as<std::string>();
+             
+            switch(hash(node.c_str())) 
+            {
+            case hash("build-type"):
+                thirdparty.build_type = data;
+                break;
+            case hash("url"):
+                thirdparty.repo       = cppm::classificate_repo(data);
+                break;
+            case hash("version"):
+                thirdparty.version    = data;
+                break;
+            case hash("desciption"):
+                thirdparty.desciption = data;
+                break;
+            case hash("license"):
+                thirdparty.license    = data;
+                break;
+            default:
+                std::cerr << "undefined property" << std::endl;
+                exit(1);
+            }
+        }
+        thirdparties_.emplace_back(std::move(thirdparty));
+    }
+}
+
 void Cppm::run(int argc, char** argv) {
     CppmOptions option(argc, argv);
     auto configure_file = YAML::LoadFile(find_config_file().c_str());
@@ -43,6 +76,7 @@ void Cppm::run(int argc, char** argv) {
             project_.name = it.second.as<std::string>(); 
             break;
         case hash("thirdparty"):
+            parse_thirdparty(configure_file);
             break;
         case hash("version"):
             project_.version = it.second.as<std::string>();

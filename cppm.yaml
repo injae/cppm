@@ -6,22 +6,18 @@ project:
     thirdparty:
         boost: 
             build-type: static
-            url: 
+            version: 1.54.0
         mysql:
             build-type: static
-            url:
         ormpp:
             build-type: header_only
-            url:
         iguana:
             build-type: header_only 
-            url:
         yaml-cpp:
             build-type: static
-            url:
         protobuf:
             build-type: static
-            url:
+            version: 3.5.1
 
     include: cd include && ls
     src    : cd src && ls 

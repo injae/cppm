@@ -215,6 +215,33 @@ src/cppm_options.cpp.s:
 	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cppm_options.cpp.s
 .PHONY : src/cppm_options.cpp.s
 
+src/cppm_thirdparty.o: src/cppm_thirdparty.cpp.o
+
+.PHONY : src/cppm_thirdparty.o
+
+# target to build an object file
+src/cppm_thirdparty.cpp.o:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o
+.PHONY : src/cppm_thirdparty.cpp.o
+
+src/cppm_thirdparty.i: src/cppm_thirdparty.cpp.i
+
+.PHONY : src/cppm_thirdparty.i
+
+# target to preprocess a source file
+src/cppm_thirdparty.cpp.i:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.i
+.PHONY : src/cppm_thirdparty.cpp.i
+
+src/cppm_thirdparty.s: src/cppm_thirdparty.cpp.s
+
+.PHONY : src/cppm_thirdparty.s
+
+# target to generate assembly for a file
+src/cppm_thirdparty.cpp.s:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.s
+.PHONY : src/cppm_thirdparty.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -315,6 +342,9 @@ help:
 	@echo "... src/cppm_options.o"
 	@echo "... src/cppm_options.i"
 	@echo "... src/cppm_options.s"
+	@echo "... src/cppm_thirdparty.o"
+	@echo "... src/cppm_thirdparty.i"
+	@echo "... src/cppm_thirdparty.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

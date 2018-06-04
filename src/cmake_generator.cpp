@@ -29,12 +29,13 @@ namespace cmake
              << set("BUILD_DIR"             , get("PROJECT_NAME")     + "/build")      << endl()
              << endl()
              
-             << set("CMAKE_CXX_FLAGS"       , get("CMAKE_CXX_FLAGS") + " -std=c++17 -g -Wall -lstdc++fs") << endl()
-             << endl()
-             
-             << endl()
-             
-             << "enable_testing"                            << endl()
+             << include(get("CMAKE_MODULE_PATH") + "/cmake_option.cmake") << endl()
+                
+             << include(get("CMAKE_MODULE_PATH") + "/utils.cmake")<< endl()
+             << "make_excutable(" + get("PROJECT_NAME") + ")"
+                
+             <<   add_subdirectory(get("TEST_DIR"))               << endl()
+             << "enable_testing()"                            << endl()
              << endl()
              ; 
       return output.str();
