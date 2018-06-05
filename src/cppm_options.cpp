@@ -19,9 +19,9 @@ void CppmOptions::run() {
     if(vm_.count("command")) { auto cmd = vm_["command"].as<std::string>();
         _user_command(cmd.c_str());
         
-             if(cmd == "build")   _build();
-        else if(cmd == "run")     _run();
-        else if(cmd == "install") _install();
+             if(cmd == "build")      _build();
+        else if(cmd == "run")        _run();
+        else if(cmd == "install")    _install();
         else if(cmd == "thirdparty") _show_thirdparties();
     }
     else if(vm_.count("help")   ) _help(); 
@@ -77,5 +77,9 @@ void CppmOptions::_show_thirdparties() {
 }
 
 void CppmOptions::_install() {
-    
+           
+}
+
+void CppmOptions::_config_base_install() {
+     
 }

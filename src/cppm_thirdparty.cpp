@@ -4,20 +4,30 @@
 #include"cppm.h"
 #include<boost/filesystem.hpp>
 #include<fstream>
+#include"url.h"
+#include"boost/tokenizer.hpp"
+#include"boost/algorithm/string/replace.hpp"
 
 namespace fs = boost::filesystem;
-
 
 namespace cppm 
 {
     Repository classificate_repo(std::string url) {
-        //using namespace boost::network;
-        //uri::uri uri(uri);
-        //std::cout << uri.scheme() << "\n"
-        //          << uri.host()   << "\n"
-        //          << uri.path()   << "\n"
-        //          ;
+        Url parsed = parse_url(url);
+        Repository repo; 
+        repo.url = url;
+        
+        std::cout << parsed.path << std::endl;
+        boost::char_separator<char> sep("/");
+        boost::tokenizer<boost::char_separator<char>> tokens(path, sep);
+        std::string last_token;
+        std::cout << tokens[tokens.size()];
+        for(const auto& token : tokens) last_token = token;
+         
+        
+        return repo;
     }
+    
     
     void install_thirdparty(Thirdparty& library) {
         switch(hash(library.repo.type.c_str()))

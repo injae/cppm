@@ -296,6 +296,33 @@ src/option.cpp.s:
 	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/option.cpp.s
 .PHONY : src/option.cpp.s
 
+src/url.o: src/url.cpp.o
+
+.PHONY : src/url.o
+
+# target to build an object file
+src/url.cpp.o:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/url.cpp.o
+.PHONY : src/url.cpp.o
+
+src/url.i: src/url.cpp.i
+
+.PHONY : src/url.i
+
+# target to preprocess a source file
+src/url.cpp.i:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/url.cpp.i
+.PHONY : src/url.cpp.i
+
+src/url.s: src/url.cpp.s
+
+.PHONY : src/url.s
+
+# target to generate assembly for a file
+src/url.cpp.s:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/url.cpp.s
+.PHONY : src/url.cpp.s
+
 src/utils.o: src/utils.cpp.o
 
 .PHONY : src/utils.o
@@ -351,6 +378,9 @@ help:
 	@echo "... src/option.o"
 	@echo "... src/option.i"
 	@echo "... src/option.s"
+	@echo "... src/url.o"
+	@echo "... src/url.i"
+	@echo "... src/url.s"
 	@echo "... src/utils.o"
 	@echo "... src/utils.i"
 	@echo "... src/utils.s"
