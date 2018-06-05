@@ -2,6 +2,7 @@
 #include"boost/filesystem.hpp"
 #include<sstream>
 #include<string_view>
+#include<cctype>
 
 namespace fs = boost::filesystem;
 
@@ -78,6 +79,19 @@ namespace cmake
    
    std::string compiler_flag(std::string compiler_flag) {
       return set("CMAKE_CXX_FLAGS"       , get("CMAKE_CXX_FLAGS") + compiler_flag);
+   }
+
+   std::string make_find_library(std::string library_name, std::string library_type) {
+      auto upper_name = library_name;
+      upper_name[0] = std::toupper(library_name[0]);
+      std::stringstream output("");
+      output << "find_package(" << upper_name <<" REQUIRED)" << endl()
+             << endl()
+             << include(get("CMAKE_MODULE_PATH") +"/util.cmake") << endl()
+             << "make_third_party_" << library_type << "_lib(" << library_name << " " << upper_name << ")" << endl()
+             << "list(APPEND third_party_library " << library_name << ")" <<endl()
+             ;
+      return output.str();
    }
    
 }

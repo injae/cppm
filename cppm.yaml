@@ -6,18 +6,22 @@ project:
     thirdparty:
         boost: 
             build-type: static
-            version: 1.54.0
+            version: 1.67.0
+            url: https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.gz 
         mysql:
             build-type: static
         ormpp:
             build-type: header_only
+            url: https://github.com/qicosmos/ormpp.git
         iguana:
             build-type: header_only 
+            url: https://github.com/qicosmos/iguana.git 
         yaml-cpp:
             build-type: static
-        protobuf:
+            url: https://github.com/jbeder/yaml-cpp.git
+        cpp-netlib:
             build-type: static
-            version: 3.5.1
+            url: https://github.com/downloads/cpp-netlib/cpp-netlib/cpp-netlib-0.9.4.zip
 
     include: cd include && ls
     src    : cd src && ls 

@@ -18,6 +18,7 @@ private:
     void _version();
     void _install();
     void _show_thirdparties();
+    void _config_base_install();
     void _user_command(std::string_view cmd);
     
 private:

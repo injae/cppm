@@ -26,7 +26,6 @@ public:
         ; std::string cmake_find_module
         ;
     };
-
 public:
     static Cppm* instance();
     void run(int argc, char** argv);
