@@ -4,6 +4,8 @@
 #include<range/v3/numeric/accumulate.hpp>
 #include<range/v3/algorithm/for_each.hpp>
 #include"utils.h"
+#include<string>
+#include<boost/regex.hpp>
 
 #include<iterator>
 
@@ -81,30 +83,32 @@ void CppmOptions::_show_thirdparties() {
 
 void CppmOptions::_install() {
     
-    boost::regex filter("cmake*");
-    auto files = find_regex_files("/usr/local/share/", filter);
-    for(auto& file : files) {
-       std::cout << file << std::endl; 
+    auto thirdparties = Cppm::instance()->thirdparties();
+    auto subargs = get_subarg();
+    std::vector<cppm::Thirdparty> install_list;
+    for(auto thirdparty : thirdparties) {
+        for(auto subarg : subargs) {
+            if(has_str(subarg, "all")) {
+                install_list = thirdparties;  break;
+            }
+            else if(has_str(subarg, thirdparty.name.c_str())) {
+               install_list.push_back(thirdparty);
+            }
+        }
     }
     
-    //auto thirdparties = Cppm::instance()->thirdparties();
-    //auto subargs = get_subarg();
-    //std::vector<cppm::Thirdparty> install_list;
-    //for(auto thirdparty : thirdparties) {
-    //    for(auto subarg : subargs) {
-    //        if(has_str(subarg, "all")) {
-    //            install_list = thirdparties;
-    //            break;
-    //        }
-    //        else if(has_str(subarg, thirdparty.name.c_str())) {
-    //           install_list.push_back(thirdparty);
-    //        }
-    //    }
-    //}
-    //for(auto& library : install_list) {
+    cppm::cmake_package_config_list();
+    
+    for(auto& library : install_list) {
+        if(has_find_package(library)) std::cout << library.name << std::endl;
     //    cppm::install_thirdparty(library);
-    //}
+    }
+    
+    
 }
+
+
+
 
 void CppmOptions::_config_base_install() {
      

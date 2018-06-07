@@ -7,6 +7,7 @@
 #include"url.h"
 #include"boost/tokenizer.hpp"
 #include"boost/algorithm/string/replace.hpp"
+#include<boost/regex.hpp>
 
 namespace fs = boost::filesystem;
 
@@ -49,6 +50,65 @@ namespace cppm
         
         return repo;
     }
+    
+     
+    std::vector<std::string> cmake_find_package_list() {
+        std::string cmake_path = "/usr/local/share/";
+        auto cmake_dir = find_regex_files(cmake_path, boost::regex("cmake.*"));
+        auto module_path = cmake_path + "/" + cmake_dir[0] + "/Modules/";
+        auto find_package_files = find_regex_files(module_path, boost::regex("Find.*cmake"));
+        return find_package_files;
+    }
+    
+    bool has_find_package(Thirdparty thirdparty) {
+        for(auto& package : cmake_find_package_list()) {
+            boost::regex filter("Find(?i)(" + thirdparty.name + ")\\.cmake");
+            boost::smatch what;
+            if(!boost::regex_match(package, what, filter)) continue;
+            return true;
+        }
+        return false;
+    }
+    
+    std::vector<Thirdparty> cmake_package_config_list() {
+        std::vector<Thirdparty> packages;
+        
+        std::string cmake_path = "/usr/local/lib/cmake";
+        auto library_dirs = find_regex_files(cmake_path, boost::regex(".*"));
+        for(auto dir : library_dirs) {
+           Thirdparty package;
+           package.name = dir;
+           
+           auto package_path = cmake_path + "/" + package.name;
+           std::string config_file = package_path + package.name + "-config.cmake";
+           parse_package_config_file(package, config_file);
+           std::cout << package.cmake_var_name << "\n";
+           
+           packages.emplace_back(std::move(package));
+        }
+        
+        return packages; 
+    }
+    
+    Thirdparty parse_package_config_file(Thirdparty& thirdparty, std::string& file) {
+        char fdata[512];
+        std::ifstream ifs(file);
+        if(ifs.is_open()) {
+            while(!ifs.eof()) {
+               memset(fdata, 0, 512);
+               ifs.getline(fdata, 512);
+               boost::smatch what;
+               boost::regex filter( "(\\w)_INCLUDE_DIR");
+               
+               if(!boost::regex_match(std::string(fdata), what, filter)) continue;
+               std::cout << fdata << " " << what[0] << std::endl;
+            }
+        }
+        
+        ifs.close(); 
+        return thirdparty;
+    }
+    
     
     
     void install_thirdparty(Thirdparty& library) {

@@ -2,6 +2,7 @@
 #define __CPPM_THIRDPARTY_H__
 
 #include<string>
+#include<vector>
 
 namespace cppm
 {
@@ -16,6 +17,9 @@ namespace cppm
     {
           std::string name
         ; std::string version 
+        ; std::string include_dir
+        ; std::string library_dir
+        ; std::string cmake_var_name
         ; std::string license
         ; std::string desciption
         ; std::string build_type
@@ -23,7 +27,16 @@ namespace cppm
         ; 
     };
     
+    
+    
     Repository classificate_repo(std::string url);
+    
+    std::vector<std::string> cmake_find_package_list();
+    bool has_find_package(Thirdparty thirdparty);
+    std::vector<Thirdparty> cmake_package_config_list();
+   
+    Thirdparty parse_package_config_file(Thirdparty& thirdparty, std::string& file);
+   
    
     void install_thirdparty(Thirdparty& library); 
     void git(std::string& url);

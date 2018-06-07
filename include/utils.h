@@ -8,6 +8,9 @@
 #include<boost/regex.hpp>
 #include<vector>
 
+#define BOOST_FILESYSTEM_NO_DEPRECATED
+#define BOOST_FILESYSTEM_VERSION 3
+
 namespace fs = boost::filesystem;
 using boost::optional;
 using boost::none;
