@@ -85,9 +85,9 @@ namespace cmake
       auto upper_name = library_name;
       upper_name[0] = std::toupper(library_name[0]);
       std::stringstream output("");
-      output << "find_package(" << upper_name <<" REQUIRED)" << endl()
+      output << "find_package(" << library_name <<" REQUIRED)" << endl()
              << endl()
-             << include(get("CMAKE_MODULE_PATH") +"/util.cmake") << endl()
+             << include(get("CMAKE_MODULE_PATH") +"/utils.cmake") << endl()
              << "make_third_party_" << library_type << "_lib(" << library_name << " " << upper_name << ")" << endl()
              << "list(APPEND third_party_library " << library_name << ")" <<endl()
              ;

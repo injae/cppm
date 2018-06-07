@@ -1,6 +1,6 @@
 #include"utils.h"
 #include<algorithm>
-#include"boost/algorithm/string/replace.hpp"
+#include<boost/algorithm/string/replace.hpp>
 #include<iostream>
 #include<iterator>
 
@@ -12,10 +12,10 @@ std::string make_include_guard(const std::string& file_name) {
                +"#define __"+upper_file_name+"_H__\n"
                +"\n\n"
                +"#endif";
-    }
+}
     
-    std::string make_include(const std::string& header_path) {
-        return "#include\"" + header_path + "\"";
+std::string make_include(const std::string& header_path) {
+    return "#include\"" + header_path + "\"";
 }
 
 
@@ -43,6 +43,22 @@ void create_directory(std::string dir_name) {
     fs::create_directory(dir_name);
 }
 
+std::vector<std::string> find_regex_files(std::string path, boost::regex filter) {
+    std::vector<std::string> matching_files;
+    fs::recursive_directory_iterator end; 
+    auto it = fs::find_if(fs::recursive_directory_iterator(path), end, [&filter](const fs::directory_entry& e)
+              {
+                  boost::smatch what;
+                  if(!boost::regex_match(e.path().filename().string(), what, filter)) continue;
+                  return e.path().filename(); 
+              })
+    
+    matching_files.push_back( item->path().filename().string());
+   
+    
+    return matching_files;
+}
+
 void recursive_copy(const fs::path& src, const fs::path& dst) {
     if (fs::exists(dst)){
        std::cerr << dst.generic_string() + " exists" << std::endl; return;
@@ -51,7 +67,6 @@ void recursive_copy(const fs::path& src, const fs::path& dst) {
     if (fs::is_directory(src)) {
        fs::create_directories(dst);
        for(fs::directory_iterator item(src); item != fs::directory_iterator(); ++item) {
-    //         std::cout << dst/item->path().filename() << std::endl;
           recursive_copy(item->path(), dst/item->path().filename());
         }
     } 
@@ -63,3 +78,13 @@ void recursive_copy(const fs::path& src, const fs::path& dst) {
     } 
 }
     
+
+bool has_str(std::string& target, std::string_view str) {
+    std::size_t pos = 0;
+    if ((pos = target.find(str, 0)) != std::string::npos) {
+        return true;
+    } 
+    else {
+       return false;
+    }
+}

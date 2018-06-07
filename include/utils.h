@@ -5,6 +5,7 @@
 #include<string>
 #include"boost/filesystem.hpp"
 #include"boost/optional.hpp"
+#include<boost/regex.hpp>
 #include<vector>
 
 namespace fs = boost::filesystem;
@@ -25,5 +26,7 @@ optional<std::vector<fs::directory_entry>> file_list(const fs::path& path);
 optional<fs::path> find_file(const fs::path& path, const std::string& file_name);
 void create_directory(std::string dir_name);
 void recursive_copy(const fs::path& src, const fs::path& dst);
+bool has_str(std::string& target, std::string_view str);
+std::vector<std::string> find_regex_files(std::string path, boost::regex filter);
 
 #endif

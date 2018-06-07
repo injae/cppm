@@ -25,7 +25,7 @@ namespace cppm
     
     Repository classificate_repo(std::string url);
    
-    void install_thirdparty(Thirdparty library); 
+    void install_thirdparty(Thirdparty& library); 
     void git(std::string& url);
     void svn(std::string& url);
     std::string wget(std::string& url);

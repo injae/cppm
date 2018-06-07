@@ -3,6 +3,7 @@
 #include<range/v3/core.hpp>
 #include<range/v3/numeric/accumulate.hpp>
 #include<range/v3/algorithm/for_each.hpp>
+#include"utils.h"
 
 #include<iterator>
 
@@ -70,14 +71,39 @@ void CppmOptions::_show_thirdparties() {
     auto thirdparties = Cppm::instance()->thirdparties();
     for(auto thirdparty : thirdparties) {
         std::cout << "[" + thirdparty.name << "]\n"
-                  << "-url: "  + thirdparty.repo.url << "\n"
+                  << "-build-type: " + thirdparty.build_type << "\n"
                   << "-version: "+ thirdparty.version << "\n"
-                  << "-build-type: " + thirdparty.build_type << "\n";
+                  << "-url: "  + thirdparty.repo.url << "\n"
+                  << "-url-type: "  + thirdparty.repo.type << "\n"
+                  ;
     }
 }
 
 void CppmOptions::_install() {
-           
+    
+    boost::regex filter("cmake*");
+    auto files = find_regex_files("/usr/local/share/", filter);
+    for(auto& file : files) {
+       std::cout << file << std::endl; 
+    }
+    
+    //auto thirdparties = Cppm::instance()->thirdparties();
+    //auto subargs = get_subarg();
+    //std::vector<cppm::Thirdparty> install_list;
+    //for(auto thirdparty : thirdparties) {
+    //    for(auto subarg : subargs) {
+    //        if(has_str(subarg, "all")) {
+    //            install_list = thirdparties;
+    //            break;
+    //        }
+    //        else if(has_str(subarg, thirdparty.name.c_str())) {
+    //           install_list.push_back(thirdparty);
+    //        }
+    //    }
+    //}
+    //for(auto& library : install_list) {
+    //    cppm::install_thirdparty(library);
+    //}
 }
 
 void CppmOptions::_config_base_install() {

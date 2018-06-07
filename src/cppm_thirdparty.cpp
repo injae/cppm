@@ -16,14 +16,36 @@ namespace cppm
         Url parsed = parse_url(url);
         Repository repo; 
         repo.url = url;
-        
-        std::cout << parsed.path << std::endl;
-        boost::char_separator<char> sep("/");
-        boost::tokenizer<boost::char_separator<char>> tokens(path, sep);
-        std::string last_token;
-        std::cout << tokens[tokens.size()];
-        for(const auto& token : tokens) last_token = token;
-         
+        if(   has_str(parsed.protocol, "http") 
+           || has_str(parsed.protocol, "https")) 
+        {
+            if(has_str(parsed.path, "git")) {
+                repo.type = "git";
+            }
+            else if(has_str(parsed.path,"svn")) {
+                repo.type = "svn";
+            }
+            else if(   has_str(parsed.path, "tar")
+                    || has_str(parsed.path, "zip")
+                    || has_str(parsed.path, "gz"))
+            {
+                repo.type = "link";
+            }
+            else {
+                repo.type = "unknown";
+            }
+        }
+        else {
+            if(   has_str(parsed.path, "tar")
+               || has_str(parsed.path, "zip")
+               || has_str(parsed.path, "gz"))
+            {
+                repo.type = "file";
+            }
+            else {
+                repo.type = "unknown";
+            }
+        }
         
         return repo;
     }
@@ -42,19 +64,22 @@ namespace cppm
             tar(wget(library.repo.url));
             break;
         }
-        cmake::make_find_library(library.name, library.build_type);
+        
         auto project = Cppm::instance()->project();
         auto file_name = project.cmake_find_module + "/Find"+library.name+".cmake";
         std::ofstream file(file_name); file.is_open();
+        file <<  cmake::make_find_library(library.name, library.build_type);
+        file.close();
     }
     
     void git(std::string& url) {
-       std::string cmd("git clone "+url);
-       system(cmd.c_str());
+        auto project = Cppm::instance()->project();
+        auto command = "    cd " + project.thirdparty 
+                     + " && git clone " + url;
+        system(command.c_str());
     }
     
     void svn(std::string& url) {
-        
     }
     
     std::string wget(std::string& url) {
