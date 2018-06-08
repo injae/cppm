@@ -1,28 +1,39 @@
 project:
     name: cppm
     version: 1.0.0
-    authors: 8687lee@gmail.com 
+    authors: 8687lee@gmail.com LeeInJae
      
     thirdparty:
         boost: 
             build-type: static
+            install: global
             version: 1.67.0
             url: https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.gz 
+            cmake-library-name: Boost
         protobuf:
             build-type: static
+            install: global
+        range-v3:
+            build-type: header_only
+            install: global
         mysql:
             build-type: static
+            install: global
         ormpp:
             build-type: header_only
+            install: local
             url: https://github.com/qicosmos/ormpp.git
         iguana:
             build-type: header_only 
+            install: local
             url: https://github.com/qicosmos/iguana.git 
         yaml-cpp:
             build-type: static
+            install: global
             url: https://github.com/jbeder/yaml-cpp.git
         cpp-netlib:
             build-type: static
+            install: global
             url: https://github.com/downloads/cpp-netlib/cpp-netlib/cpp-netlib-0.9.4.zip
 
     include: cd include && ls

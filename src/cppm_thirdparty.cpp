@@ -50,7 +50,6 @@ namespace cppm
         
         return repo;
     }
-    
      
     std::vector<std::string> cmake_find_package_list() {
         std::string cmake_path = "/usr/local/share/";
@@ -59,12 +58,13 @@ namespace cppm
         auto find_package_files = find_regex_files(module_path, boost::regex("Find.*cmake"));
         return find_package_files;
     }
-    
+     
     bool has_find_package(Thirdparty thirdparty) {
         for(auto& package : cmake_find_package_list()) {
             boost::regex filter("Find(?i)(" + thirdparty.name + ")\\.cmake");
             boost::smatch what;
             if(!boost::regex_match(package, what, filter)) continue;
+            parse_package_config_file(thirdparty, path);
             return true;
         }
         return false;
@@ -80,9 +80,7 @@ namespace cppm
            package.name = dir;
            
            auto package_path = cmake_path + "/" + package.name;
-           std::string config_file = package_path + package.name + "-config.cmake";
-           parse_package_config_file(package, config_file);
-           std::cout << package.cmake_var_name << "\n";
+           std::string config_file = package_path + "/" + package.name + "-config.cmake";
            
            packages.emplace_back(std::move(package));
         }
@@ -90,18 +88,19 @@ namespace cppm
         return packages; 
     }
     
-    Thirdparty parse_package_config_file(Thirdparty& thirdparty, std::string& file) {
+    Thirdparty get_package_config_hint(Thirdparty& thirdparty, std::string& file) {
         char fdata[512];
+        std::cout << file << std::endl;
         std::ifstream ifs(file);
         if(ifs.is_open()) {
             while(!ifs.eof()) {
                memset(fdata, 0, 512);
                ifs.getline(fdata, 512);
                boost::smatch what;
-               boost::regex filter( "(\\w)_INCLUDE_DIR");
-               
-               if(!boost::regex_match(std::string(fdata), what, filter)) continue;
-               std::cout << fdata << " " << what[0] << std::endl;
+               std::string filter_str = "(.*)_LIBRARIES";
+               boost::regex filter(filter_str);
+               if(!boost::regex_search(std::string(fdata), what, filter)) continue;
+               std::cout << what[0] << std::endl;
             }
         }
         
@@ -109,7 +108,13 @@ namespace cppm
         return thirdparty;
     }
     
-    
+    void make_cmake_find_library(Thirdparty& library) {
+        auto project = Cppm::instance()->project();
+        auto file_name = project.cmake_find_module + "/Find"+library.name+".cmake";
+        std::ofstream file(file_name); file.is_open();
+        file <<  cmake::make_find_library(library.name, library.build_type);
+        file.close();
+    }
     
     void install_thirdparty(Thirdparty& library) {
         switch(hash(library.repo.type.c_str()))
@@ -125,11 +130,6 @@ namespace cppm
             break;
         }
         
-        auto project = Cppm::instance()->project();
-        auto file_name = project.cmake_find_module + "/Find"+library.name+".cmake";
-        std::ofstream file(file_name); file.is_open();
-        file <<  cmake::make_find_library(library.name, library.build_type);
-        file.close();
     }
     
     void git(std::string& url) {

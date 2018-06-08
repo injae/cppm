@@ -82,7 +82,6 @@ void CppmOptions::_show_thirdparties() {
 }
 
 void CppmOptions::_install() {
-    
     auto thirdparties = Cppm::instance()->thirdparties();
     auto subargs = get_subarg();
     std::vector<cppm::Thirdparty> install_list;
@@ -97,14 +96,9 @@ void CppmOptions::_install() {
         }
     }
     
-    cppm::cmake_package_config_list();
-    
     for(auto& library : install_list) {
-        if(has_find_package(library)) std::cout << library.name << std::endl;
-    //    cppm::install_thirdparty(library);
+        cppm::install_thirdparty(library);
     }
-    
-    
 }
 
 
