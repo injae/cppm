@@ -51,26 +51,37 @@ namespace cppm
         return repo;
     }
      
-    std::vector<std::string> cmake_find_package_list() {
-        std::string cmake_path = "/usr/local/share/";
-        auto cmake_dir = find_regex_files(cmake_path, boost::regex("cmake.*"));
-        auto module_path = cmake_path + "/" + cmake_dir[0] + "/Modules/";
-        auto find_package_files = find_regex_files(module_path, boost::regex("Find.*cmake"));
-        return find_package_files;
-    }
      
     bool has_find_package(Thirdparty thirdparty) {
-        for(auto& package : cmake_find_package_list()) {
-            boost::regex filter("Find(?i)(" + thirdparty.name + ")\\.cmake");
-            boost::smatch what;
-            if(!boost::regex_match(package, what, filter)) continue;
-            parse_package_config_file(thirdparty, path);
-            return true;
+        for(auto& package : get_cmake_find_package_list()) {
+            if(package.name == thirdparty.name) return true;
         }
         return false;
     }
     
-    std::vector<Thirdparty> cmake_package_config_list() {
+    std::vector<Thirdparty> cmake_find_package_list() {
+        std::vector<Thirdparty> packages;
+        
+        std::string cmake_path = "/usr/local/share/";
+        auto cmake_dir = find_regex_files(cmake_path, boost::regex("cmake.*"));
+        auto module_path = cmake_path + "/" + cmake_dir[0] + "/Modules/";
+        
+        for(auto config_file : find_regex_files(module_path, boost::regex("Find.*cmake"))) {
+            Thirdparty package;
+            boost::regex filter("Find(?i)(.*)\\.cmake");
+            boost::smatch what;
+            if(!boost::regex_match(package.name, what, filter)) continue;
+            
+            package.name = what[0];
+            package.config_file = config_file;
+            std::cout << package.name << std::endl;   
+            packages.emplace_back(std::move(package));
+        }
+        
+        return packages;
+    }
+    
+    std::vector<Thirdparty> cmake_config_package_list() {
         std::vector<Thirdparty> packages;
         
         std::string cmake_path = "/usr/local/lib/cmake";
@@ -80,7 +91,7 @@ namespace cppm
            package.name = dir;
            
            auto package_path = cmake_path + "/" + package.name;
-           std::string config_file = package_path + "/" + package.name + "-config.cmake";
+           package.config_file = package_path + "/" + package.name + "-config.cmake";
            
            packages.emplace_back(std::move(package));
         }
@@ -88,10 +99,18 @@ namespace cppm
         return packages; 
     }
     
-    Thirdparty get_package_config_hint(Thirdparty& thirdparty, std::string& file) {
+    std::vector<Thirdparty> get_cmake_find_package_list() {
+        std::vector<Thirdparty> packages;
+        auto package1 = cmake_find_package_list();
+        auto package2 = cmake_config_package_list();
+        packages.insert(packages.end(), package1.begin(), package1.end());
+        packages.insert(packages.end(), package2.begin(), package2.end());
+        return packages;
+    }
+    
+    void get_package_config_hint(Thirdparty& thirdparty) {
         char fdata[512];
-        std::cout << file << std::endl;
-        std::ifstream ifs(file);
+        std::ifstream ifs(thirdparty.config_file);
         if(ifs.is_open()) {
             while(!ifs.eof()) {
                memset(fdata, 0, 512);
@@ -100,19 +119,19 @@ namespace cppm
                std::string filter_str = "(.*)_LIBRARIES";
                boost::regex filter(filter_str);
                if(!boost::regex_search(std::string(fdata), what, filter)) continue;
+               thirdparty.cmake_var_name = what[0];
                std::cout << what[0] << std::endl;
             }
         }
         
         ifs.close(); 
-        return thirdparty;
     }
     
     void make_cmake_find_library(Thirdparty& library) {
         auto project = Cppm::instance()->project();
         auto file_name = project.cmake_find_module + "/Find"+library.name+".cmake";
         std::ofstream file(file_name); file.is_open();
-        file <<  cmake::make_find_library(library.name, library.build_type);
+        file <<  cmake::make_find_library(library.name, library.cmake_var_name, library.build_type);
         file.close();
     }
     

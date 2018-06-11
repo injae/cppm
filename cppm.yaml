@@ -1,7 +1,7 @@
 project:
     name: cppm
     version: 1.0.0
-    authors: 8687lee@gmail.com LeeInJae
+    authors: 8687lee@gmail.com 
      
     thirdparty:
         boost: 
@@ -9,7 +9,7 @@ project:
             install: global
             version: 1.67.0
             url: https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.gz 
-            cmake-library-name: Boost
+            find-cmake-value: Boost
         protobuf:
             build-type: static
             install: global

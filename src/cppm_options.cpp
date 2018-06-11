@@ -21,11 +21,11 @@ CppmOptions::CppmOptions(int argc, char* argv[]) : Option("Cppm Options", argc, 
 void CppmOptions::run() {
     if(vm_.count("command")) { auto cmd = vm_["command"].as<std::string>();
         _user_command(cmd.c_str());
-        
              if(cmd == "build")      _build();
         else if(cmd == "run")        _run();
         else if(cmd == "install")    _install();
         else if(cmd == "thirdparty") _show_thirdparties();
+        else if(cmd == "hint")       _get_cmake_lib_hint();
     }
     else if(vm_.count("help")   ) _help(); 
     else if(vm_.count("version")) _version();
@@ -102,7 +102,19 @@ void CppmOptions::_install() {
 }
 
 
+void CppmOptions::_get_cmake_lib_hint() {
+    cppm::Thirdparty thirdparty;
+    thirdparty.name = get_subarg()[0];
+    
+    for(auto lib : cppm::cmake_find_package_list()) {
+        if(!(lib.name == thirdparty.name)) continue;
+        cppm::get_package_config_hint(lib);
+    }
+}
 
+void CppmOptions::_make_cmake_find_lib_file() {
+    
+}
 
 void CppmOptions::_config_base_install() {
      

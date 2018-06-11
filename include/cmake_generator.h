@@ -15,7 +15,7 @@ namespace cmake
    std::string      add_subdirectory(std::string path);
    std::string      include(std::string cmake_file);
    std::string      compiler_flag(std::string compiler_flag);
-   std::string      make_find_library(std::string library_name, std::string cmake_library_var_name std::string library_type);
+   std::string      make_find_library(std::string library_name, std::string cmake_library_var_name, std::string library_type);
    std::string_view endl();
 }
 

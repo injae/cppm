@@ -55,6 +55,12 @@ void Cppm::parse_thirdparty(YAML::Node& node) {
             case hash("license"):
                 thirdparty.license    = data;
                 break;
+            case hash("install"):
+                thirdparty.install_type = data;
+                break;
+            case hash("find-cmake-value"):
+                thirdparty.cmake_var_name = data;
+                break;
             default:
                 std::cerr << "undefined property" << std::endl;
                 exit(1);

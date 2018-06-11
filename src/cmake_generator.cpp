@@ -81,7 +81,7 @@ namespace cmake
       return set("CMAKE_CXX_FLAGS"       , get("CMAKE_CXX_FLAGS") + compiler_flag);
    }
 
-   std::string make_find_library(std::string library_name, std::string cmake_library_var_name std::string library_type) {
+   std::string make_find_library(std::string library_name, std::string cmake_library_var_name, std::string library_type) {
       //auto upper_name = library_name;
       //upper_name[0] = std::toupper(library_name[0]);
       std::stringstream output("");
