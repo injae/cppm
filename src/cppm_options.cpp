@@ -75,8 +75,6 @@ void CppmOptions::_show_thirdparties() {
         std::cout << "[" + thirdparty.name << "]\n"
                   << "-build-type: " + thirdparty.build_type << "\n"
                   << "-version: "+ thirdparty.version << "\n"
-                  << "-url: "  + thirdparty.repo.url << "\n"
-                  << "-url-type: "  + thirdparty.repo.type << "\n"
                   ;
     }
 }
@@ -107,14 +105,13 @@ void CppmOptions::_get_cmake_lib_hint() {
     thirdparty.name = get_subarg()[0];
    	 
     for(auto lib : cppm::get_cmake_find_package_list()) {
-		std::cout << lib.name << " " << thirdparty.name << std::endl;
         if(!(lib.name == thirdparty.name)) continue;
         cppm::get_package_config_hint(lib);
     }
 }
 
 void CppmOptions::_make_cmake_find_lib_file() {
-    
+     
 }
 
 void CppmOptions::_config_base_install() {

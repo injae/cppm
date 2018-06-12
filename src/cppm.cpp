@@ -91,6 +91,9 @@ void Cppm::run(int argc, char** argv) {
         case hash("compiler"):
             project_.compiler = it.second.as<std::string>();
             break;
+        case hash("builder"):
+            project_.builder = it.second.as<std::string>();
+            break;
         default:
             option.registe_subcommand(std::make_pair(it.first.as<std::string>(), it.second.as<std::string>())); 
         }

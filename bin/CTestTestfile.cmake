@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
-# Source directory: /workspace/Cppm
-# Build directory: /workspace/Cppm/bin
+# Source directory: /home/ubuntu/workspace/cppm
+# Build directory: /home/ubuntu/workspace/cppm/bin
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.

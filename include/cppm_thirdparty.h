@@ -38,7 +38,6 @@ namespace cppm
     void get_package_config_hint(Thirdparty& thirdparty);
     std::vector<Thirdparty> get_cmake_find_package_list();
    
-   
     void make_cmake_find_library(Thirdparty& library);
     void install_thirdparty(Thirdparty& library); 
     void git(std::string& url);

@@ -8,6 +8,7 @@
 #include"boost/tokenizer.hpp"
 #include"boost/algorithm/string/replace.hpp"
 #include<boost/regex.hpp>
+#include <boost/algorithm/string.hpp>
 
 namespace fs = boost::filesystem;
 
@@ -62,19 +63,19 @@ namespace cppm
     std::vector<Thirdparty> cmake_find_package_list() {
         std::vector<Thirdparty> packages;
         
-        std::string cmake_path = "/usr/local/share/";
+        std::string cmake_path = "/usr/local/share";
         auto cmake_dir = find_regex_files(cmake_path, boost::regex("cmake.*"));
-        auto module_path = cmake_path + "/" + cmake_dir[0] + "/Modules/";
+        auto module_path = cmake_path + "/" + cmake_dir[0] + "/Modules";
         
         for(auto config_file : find_regex_files(module_path, boost::regex("Find.*cmake"))) {
             Thirdparty package;
-            boost::regex filter("Find(?i).*\\.cmake");
+            boost::regex filter("Find(.*)\\.cmake");
             boost::smatch what;
-            if(!boost::regex_match(package.name, what, filter)) continue;
+            if(!boost::regex_search(config_file, what, filter)) continue;
             
-            package.name = what[0];
-            std::cout << package.name << std::endl;   
-            package.config_file = config_file;
+            package.name = what[1];
+            boost::to_lower(package.name);
+            package.config_file = module_path + "/" + config_file;
             packages.emplace_back(std::move(package));
         }
         
@@ -119,7 +120,6 @@ namespace cppm
                std::string filter_str = "(.*)_LIBRARIES";
                boost::regex filter(filter_str);
                if(!boost::regex_search(std::string(fdata), what, filter)) continue;
-               thirdparty.cmake_var_name = what[0];
                std::cout << what[0] << std::endl;
             }
         }

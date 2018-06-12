@@ -1,8 +1,9 @@
 project:
     name: cppm
     version: 1.0.0
-    authors: 8687lee@gmail.com 
-    compiler: clang-6.0
+    authors: 8687lee@gmail.com InJaeLee
+    builder: make
+    compiler: gcc-7.3 clang-6.0
      
     thirdparty:
         boost: 
@@ -11,16 +12,15 @@ project:
             version: 1.67.0
             url: https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.gz 
             find-cmake-value: Boost
-        protobuf:
+        yaml-cpp:
             build-type: static
             install: global
+            url: https://github.com/jbeder/yaml-cpp.git
+            find-cmake-value: YAML_CPP
         range-v3:
             build-type: header_only
             install: global
-        url: https://github.com/ericniebler/range-v3.git
-        mysql:
-            build-type: static
-            install: global
+            url: https://github.com/ericniebler/range-v3.git
         ormpp:
             build-type: header_only
             install: local
@@ -29,19 +29,11 @@ project:
             build-type: header_only 
             install: local
             url: https://github.com/qicosmos/iguana.git 
-        yaml-cpp:
-            build-type: static
-            install: global
-            url: https://github.com/jbeder/yaml-cpp.git
-        cpp-netlib:
-            build-type: static
-            install: global
-            url: https://github.com/downloads/cpp-netlib/cpp-netlib/cpp-netlib-0.9.4.zip
 
     include: cd include && ls
     src    : cd src && ls 
     list   : ls
-     
+    thirdparty-local: ls thirdparty 
     
     
     
