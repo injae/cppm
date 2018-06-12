@@ -38,6 +38,7 @@ void Cppm::parse_thirdparty(YAML::Node& node) {
             auto node = property.first.as<std::string>();
             auto data = property.second.as<std::string>();
              
+			
             switch(hash(node.c_str())) 
             {
             case hash("build-type"):
@@ -86,6 +87,9 @@ void Cppm::run(int argc, char** argv) {
             break;
         case hash("version"):
             project_.version = it.second.as<std::string>();
+            break;
+        case hash("compiler"):
+            project_.compiler = it.second.as<std::string>();
             break;
         default:
             option.registe_subcommand(std::make_pair(it.first.as<std::string>(), it.second.as<std::string>())); 

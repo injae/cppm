@@ -2,6 +2,7 @@ project:
     name: cppm
     version: 1.0.0
     authors: 8687lee@gmail.com 
+    compiler: clang-6.0
      
     thirdparty:
         boost: 
@@ -16,6 +17,7 @@ project:
         range-v3:
             build-type: header_only
             install: global
+        url: https://github.com/ericniebler/range-v3.git
         mysql:
             build-type: static
             install: global

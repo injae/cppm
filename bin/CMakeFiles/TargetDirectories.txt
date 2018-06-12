@@ -1,0 +1,4 @@
+/workspace/Cppm/bin/CMakeFiles/rebuild_cache.dir
+/workspace/Cppm/bin/CMakeFiles/edit_cache.dir
+/workspace/Cppm/bin/CMakeFiles/cppm.dir
+/workspace/Cppm/bin/CMakeFiles/test.dir

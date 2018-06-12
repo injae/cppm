@@ -105,8 +105,9 @@ void CppmOptions::_install() {
 void CppmOptions::_get_cmake_lib_hint() {
     cppm::Thirdparty thirdparty;
     thirdparty.name = get_subarg()[0];
-    
-    for(auto lib : cppm::cmake_find_package_list()) {
+   	 
+    for(auto lib : cppm::get_cmake_find_package_list()) {
+		std::cout << lib.name << " " << thirdparty.name << std::endl;
         if(!(lib.name == thirdparty.name)) continue;
         cppm::get_package_config_hint(lib);
     }

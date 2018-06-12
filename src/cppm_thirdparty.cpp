@@ -68,13 +68,13 @@ namespace cppm
         
         for(auto config_file : find_regex_files(module_path, boost::regex("Find.*cmake"))) {
             Thirdparty package;
-            boost::regex filter("Find(?i)(.*)\\.cmake");
+            boost::regex filter("Find(?i).*\\.cmake");
             boost::smatch what;
             if(!boost::regex_match(package.name, what, filter)) continue;
             
             package.name = what[0];
-            package.config_file = config_file;
             std::cout << package.name << std::endl;   
+            package.config_file = config_file;
             packages.emplace_back(std::move(package));
         }
         

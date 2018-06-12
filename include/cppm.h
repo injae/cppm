@@ -17,6 +17,7 @@ public:
     {
           std::string name
         ; std::string version
+		; std::string compiler
         ; std::string path
         ; std::string bin
         ; std::string source
