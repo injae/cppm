@@ -2,8 +2,9 @@ project:
     name: cppm
     version: 1.0.0
     authors: 8687lee@gmail.com InJaeLee
-    builder: make
+    type: bin
     compiler: gcc-7.3 clang-6.0
+    builder: make
      
     thirdparty:
         boost: 

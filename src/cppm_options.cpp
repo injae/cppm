@@ -1,10 +1,12 @@
 #include"cppm_options.h"
 #include"cppm.h"
-#include"cmake_find_package.h"
+#include"cmake/find_package.h"
+#include"utils.h"
+#include"options/init.h"
+
 #include<range/v3/core.hpp>
 #include<range/v3/numeric/accumulate.hpp>
 #include<range/v3/algorithm/for_each.hpp>
-#include"utils.h"
 #include<string>
 #include<boost/regex.hpp>
 
@@ -24,6 +26,7 @@ void CppmOptions::run() {
         _user_command(cmd.c_str());
              if(cmd == "build")      _build();
         else if(cmd == "run")        _run();
+        else if(cmd == "init")       _init();
         else if(cmd == "install")    _install();
         else if(cmd == "thirdparty") _show_thirdparties();
         else if(cmd == "hint")       _get_cmake_lib_hint();
@@ -61,7 +64,7 @@ void CppmOptions::_build() {
     auto subargs = get_subarg();
     
     auto project = Cppm::instance()->project();
-    std::string cmd = "cd " + project.bin + " && cmake .. &&sudo make ";
+    std::string cmd = "cd " + project.bin + " && cmake .. && sudo make ";
     for(auto subarg : subargs) {
         cmd += subarg;    
     }
@@ -122,4 +125,12 @@ void CppmOptions::_make_cmake_find_lib_file() {
 
 void CppmOptions::_config_base_install() {
      
+}
+
+void CppmOptions::_init() {
+    auto opts = po::collect_unrecognized(make_parser().options, po::include_positional);
+    opts.erase(opts.begin());
+    option::Init option_init(argc_,argv_);
+    option_init.regist(opts); 
+    option_init.run();
 }

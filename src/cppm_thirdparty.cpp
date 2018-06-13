@@ -1,7 +1,7 @@
 #include"cppm_thirdparty.h"
 #include"utils.h"
-#include"cmake_generator.h"
-#include"cmake_find_package.h"
+#include"cmake/generator.h"
+#include"cmake/find_package.h"
 #include"cppm.h"
 #include"url.h"
 

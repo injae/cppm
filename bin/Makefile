@@ -178,59 +178,59 @@ cppm/fast:
 	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/build
 .PHONY : cppm/fast
 
-src/cmake_find_package.o: src/cmake_find_package.cpp.o
+src/cmake/find_package.o: src/cmake/find_package.cpp.o
 
-.PHONY : src/cmake_find_package.o
-
-# target to build an object file
-src/cmake_find_package.cpp.o:
-	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o
-.PHONY : src/cmake_find_package.cpp.o
-
-src/cmake_find_package.i: src/cmake_find_package.cpp.i
-
-.PHONY : src/cmake_find_package.i
-
-# target to preprocess a source file
-src/cmake_find_package.cpp.i:
-	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake_find_package.cpp.i
-.PHONY : src/cmake_find_package.cpp.i
-
-src/cmake_find_package.s: src/cmake_find_package.cpp.s
-
-.PHONY : src/cmake_find_package.s
-
-# target to generate assembly for a file
-src/cmake_find_package.cpp.s:
-	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake_find_package.cpp.s
-.PHONY : src/cmake_find_package.cpp.s
-
-src/cmake_generator.o: src/cmake_generator.cpp.o
-
-.PHONY : src/cmake_generator.o
+.PHONY : src/cmake/find_package.o
 
 # target to build an object file
-src/cmake_generator.cpp.o:
-	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake_generator.cpp.o
-.PHONY : src/cmake_generator.cpp.o
+src/cmake/find_package.cpp.o:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o
+.PHONY : src/cmake/find_package.cpp.o
 
-src/cmake_generator.i: src/cmake_generator.cpp.i
+src/cmake/find_package.i: src/cmake/find_package.cpp.i
 
-.PHONY : src/cmake_generator.i
+.PHONY : src/cmake/find_package.i
 
 # target to preprocess a source file
-src/cmake_generator.cpp.i:
-	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake_generator.cpp.i
-.PHONY : src/cmake_generator.cpp.i
+src/cmake/find_package.cpp.i:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake/find_package.cpp.i
+.PHONY : src/cmake/find_package.cpp.i
 
-src/cmake_generator.s: src/cmake_generator.cpp.s
+src/cmake/find_package.s: src/cmake/find_package.cpp.s
 
-.PHONY : src/cmake_generator.s
+.PHONY : src/cmake/find_package.s
 
 # target to generate assembly for a file
-src/cmake_generator.cpp.s:
-	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake_generator.cpp.s
-.PHONY : src/cmake_generator.cpp.s
+src/cmake/find_package.cpp.s:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake/find_package.cpp.s
+.PHONY : src/cmake/find_package.cpp.s
+
+src/cmake/generator.o: src/cmake/generator.cpp.o
+
+.PHONY : src/cmake/generator.o
+
+# target to build an object file
+src/cmake/generator.cpp.o:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake/generator.cpp.o
+.PHONY : src/cmake/generator.cpp.o
+
+src/cmake/generator.i: src/cmake/generator.cpp.i
+
+.PHONY : src/cmake/generator.i
+
+# target to preprocess a source file
+src/cmake/generator.cpp.i:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake/generator.cpp.i
+.PHONY : src/cmake/generator.cpp.i
+
+src/cmake/generator.s: src/cmake/generator.cpp.s
+
+.PHONY : src/cmake/generator.s
+
+# target to generate assembly for a file
+src/cmake/generator.cpp.s:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake/generator.cpp.s
+.PHONY : src/cmake/generator.cpp.s
 
 src/cppm.o: src/cppm.cpp.o
 
@@ -340,32 +340,59 @@ src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/option.o: src/option.cpp.o
+src/options/init.o: src/options/init.cpp.o
 
-.PHONY : src/option.o
+.PHONY : src/options/init.o
 
 # target to build an object file
-src/option.cpp.o:
-	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/option.cpp.o
-.PHONY : src/option.cpp.o
+src/options/init.cpp.o:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/options/init.cpp.o
+.PHONY : src/options/init.cpp.o
 
-src/option.i: src/option.cpp.i
+src/options/init.i: src/options/init.cpp.i
 
-.PHONY : src/option.i
+.PHONY : src/options/init.i
 
 # target to preprocess a source file
-src/option.cpp.i:
-	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/option.cpp.i
-.PHONY : src/option.cpp.i
+src/options/init.cpp.i:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/options/init.cpp.i
+.PHONY : src/options/init.cpp.i
 
-src/option.s: src/option.cpp.s
+src/options/init.s: src/options/init.cpp.s
 
-.PHONY : src/option.s
+.PHONY : src/options/init.s
 
 # target to generate assembly for a file
-src/option.cpp.s:
-	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/option.cpp.s
-.PHONY : src/option.cpp.s
+src/options/init.cpp.s:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/options/init.cpp.s
+.PHONY : src/options/init.cpp.s
+
+src/options/option.o: src/options/option.cpp.o
+
+.PHONY : src/options/option.o
+
+# target to build an object file
+src/options/option.cpp.o:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/options/option.cpp.o
+.PHONY : src/options/option.cpp.o
+
+src/options/option.i: src/options/option.cpp.i
+
+.PHONY : src/options/option.i
+
+# target to preprocess a source file
+src/options/option.cpp.i:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/options/option.cpp.i
+.PHONY : src/options/option.cpp.i
+
+src/options/option.s: src/options/option.cpp.s
+
+.PHONY : src/options/option.s
+
+# target to generate assembly for a file
+src/options/option.cpp.s:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/options/option.cpp.s
+.PHONY : src/options/option.cpp.s
 
 src/url.o: src/url.cpp.o
 
@@ -435,12 +462,12 @@ help:
 	@echo "... install/local"
 	@echo "... install/strip"
 	@echo "... cppm"
-	@echo "... src/cmake_find_package.o"
-	@echo "... src/cmake_find_package.i"
-	@echo "... src/cmake_find_package.s"
-	@echo "... src/cmake_generator.o"
-	@echo "... src/cmake_generator.i"
-	@echo "... src/cmake_generator.s"
+	@echo "... src/cmake/find_package.o"
+	@echo "... src/cmake/find_package.i"
+	@echo "... src/cmake/find_package.s"
+	@echo "... src/cmake/generator.o"
+	@echo "... src/cmake/generator.i"
+	@echo "... src/cmake/generator.s"
 	@echo "... src/cppm.o"
 	@echo "... src/cppm.i"
 	@echo "... src/cppm.s"
@@ -453,9 +480,12 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/option.o"
-	@echo "... src/option.i"
-	@echo "... src/option.s"
+	@echo "... src/options/init.o"
+	@echo "... src/options/init.i"
+	@echo "... src/options/init.s"
+	@echo "... src/options/option.o"
+	@echo "... src/options/option.i"
+	@echo "... src/options/option.s"
 	@echo "... src/url.o"
 	@echo "... src/url.i"
 	@echo "... src/url.s"

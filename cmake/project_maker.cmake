@@ -1,18 +1,7 @@
 include(${CMAKE_MODULE_PATH}/utils.cmake)
 
-function(install_library_include name include_dir)
-    subdirectory_list_f(folder_list ${include_dir})
-    list(APPEND folder_list ${include_dir})
-    foreach(folder ${folder_list}) 
-        file_list(headers ${folder})
-        string(REPLACE "${include_dir}" "" buffer ${folder})
-        install(FILES ${headers} DESTINATION "include/${name}/${buffer}")  
-    endforeach()
-endfunction()
-
-function(install_library name include_dir)
+function(install_library name)
     install_library_config(${name})
-    #install_library_include(${include_dir})
 endfunction()
 
 function(make_excutable name)
@@ -45,10 +34,10 @@ function(make_static_lib name)
     
     add_library(${name} STATIC ${SOURCES})
     target_link_libraries(${name} ${third_party_library})
-    install_library(${name} ${INCLUDE_DIR})
+    install_library(${name})
 endfunction()
 
-function(make_shared_ib name)
+function(make_shared_lib name)
     get_third_party_list()
     
     file(GLOB_RECURSE GLOB_RESULT "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"  
@@ -59,7 +48,7 @@ function(make_shared_ib name)
     
     add_library(${name} SHARED ${SOURCES})
     target_link_libraries(${name} ${third_party_library})
-    install_library(${name} ${INCLUDE_DIR})
+    install_library(${name})
 endfunction()
 
 function(install_library_config name)
@@ -152,4 +141,13 @@ ENDMACRO()
 #        DESTINATION lib/cmake/${name}
 #    )
 #    
+#function(install_library_include name include_dir)
+#    subdirectory_list_f(folder_list ${include_dir})
+#    list(APPEND folder_list ${include_dir})
+#    foreach(folder ${folder_list}) 
+#        file_list(headers ${folder})
+#        string(REPLACE "${include_dir}" "" buffer ${folder})
+#        install(FILES ${headers} DESTINATION "include/${name}/${buffer}")  
+#    endforeach()
+#endfunction()
 #endfunction()

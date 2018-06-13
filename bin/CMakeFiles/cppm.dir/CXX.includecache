@@ -6,19 +6,23 @@
 
 #IncludeRegexTransform: 
 
-../include/cmake_find_package.h
+../include/cmake/find_package.h
 vector
 -
 string
 -
 cppm_thirdparty.h
-../include/cppm_thirdparty.h
+../include/cmake/cppm_thirdparty.h
 
-../include/cmake_generator.h
+../include/cmake/generator.h
 string
 -
 string_view
 -
+cppm.h
+../include/cmake/cppm.h
+cppm_thirdparty.h
+../include/cmake/cppm_thirdparty.h
 
 ../include/cppm.h
 boost/filesystem.hpp
@@ -33,8 +37,8 @@ cppm_thirdparty.h
 ../include/cppm_thirdparty.h
 
 ../include/cppm_options.h
-option.h
-../include/option.h
+options/option.h
+../include/options/option.h
 string_view
 -
 
@@ -44,7 +48,11 @@ string
 vector
 -
 
-../include/option.h
+../include/options/init.h
+options/option.h
+../include/options/options/option.h
+
+../include/options/option.h
 boost/program_options/options_description.hpp
 -
 boost/program_options/variables_map.hpp
@@ -70,15 +78,15 @@ boost/regex.hpp
 vector
 -
 
-/home/ubuntu/workspace/cppm/src/cmake_find_package.cpp
-cmake_find_package.h
-/home/ubuntu/workspace/cppm/src/cmake_find_package.h
-cmake_generator.h
-/home/ubuntu/workspace/cppm/src/cmake_generator.h
+/home/ubuntu/workspace/cppm/src/cmake/find_package.cpp
+cmake/find_package.h
+/home/ubuntu/workspace/cppm/src/cmake/cmake/find_package.h
+cmake/generator.h
+/home/ubuntu/workspace/cppm/src/cmake/cmake/generator.h
 cppm.h
-/home/ubuntu/workspace/cppm/src/cppm.h
+/home/ubuntu/workspace/cppm/src/cmake/cppm.h
 utils.h
-/home/ubuntu/workspace/cppm/src/utils.h
+/home/ubuntu/workspace/cppm/src/cmake/utils.h
 boost/regex.hpp
 -
 boost/algorithm/string.hpp
@@ -88,11 +96,13 @@ fstream
 boost/filesystem.hpp
 -
 
-/home/ubuntu/workspace/cppm/src/cmake_generator.cpp
-cmake_generator.h
-/home/ubuntu/workspace/cppm/src/cmake_generator.h
+/home/ubuntu/workspace/cppm/src/cmake/generator.cpp
+cmake/generator.h
+/home/ubuntu/workspace/cppm/src/cmake/cmake/generator.h
+utils.h
+/home/ubuntu/workspace/cppm/src/cmake/utils.h
 boost/filesystem.hpp
-/home/ubuntu/workspace/cppm/src/boost/filesystem.hpp
+/home/ubuntu/workspace/cppm/src/cmake/boost/filesystem.hpp
 sstream
 -
 string_view
@@ -113,16 +123,18 @@ cppm_options.h
 /home/ubuntu/workspace/cppm/src/cppm_options.h
 cppm.h
 /home/ubuntu/workspace/cppm/src/cppm.h
-cmake_find_package.h
-/home/ubuntu/workspace/cppm/src/cmake_find_package.h
+cmake/find_package.h
+/home/ubuntu/workspace/cppm/src/cmake/find_package.h
+utils.h
+/home/ubuntu/workspace/cppm/src/utils.h
+options/init.h
+/home/ubuntu/workspace/cppm/src/options/init.h
 range/v3/core.hpp
 -
 range/v3/numeric/accumulate.hpp
 -
 range/v3/algorithm/for_each.hpp
 -
-utils.h
-/home/ubuntu/workspace/cppm/src/utils.h
 string
 -
 boost/regex.hpp
@@ -135,10 +147,10 @@ cppm_thirdparty.h
 /home/ubuntu/workspace/cppm/src/cppm_thirdparty.h
 utils.h
 /home/ubuntu/workspace/cppm/src/utils.h
-cmake_generator.h
-/home/ubuntu/workspace/cppm/src/cmake_generator.h
-cmake_find_package.h
-/home/ubuntu/workspace/cppm/src/cmake_find_package.h
+cmake/generator.h
+/home/ubuntu/workspace/cppm/src/cmake/generator.h
+cmake/find_package.h
+/home/ubuntu/workspace/cppm/src/cmake/find_package.h
 cppm.h
 /home/ubuntu/workspace/cppm/src/cppm.h
 url.h
@@ -150,9 +162,21 @@ iostream
 cppm.h
 /home/ubuntu/workspace/cppm/src/cppm.h
 
-/home/ubuntu/workspace/cppm/src/option.cpp
-option.h
-/home/ubuntu/workspace/cppm/src/option.h
+/home/ubuntu/workspace/cppm/src/options/init.cpp
+options/init.h
+/home/ubuntu/workspace/cppm/src/options/options/init.h
+boost/filesystem.hpp
+/home/ubuntu/workspace/cppm/src/options/boost/filesystem.hpp
+fstream
+-
+utils.h
+/home/ubuntu/workspace/cppm/src/options/utils.h
+stdlib.h
+/home/ubuntu/workspace/cppm/src/options/stdlib.h
+
+/home/ubuntu/workspace/cppm/src/options/option.cpp
+options/option.h
+/home/ubuntu/workspace/cppm/src/options/options/option.h
 string
 -
 vector

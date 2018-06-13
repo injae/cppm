@@ -1,7 +1,7 @@
 #ifndef __CPPM_OPTIONS_H__
 #define __CPPM_OPTIONS_H__
 
-#include"option.h"
+#include"options/option.h"
 #include<string_view>
 
 class CppmOptions : public Option
@@ -14,6 +14,7 @@ public:
 private:
     void _run();
     void _help();
+    void _init();
     void _build();
     void _version();
     void _install();
