@@ -20,7 +20,7 @@ void Cppm::make_project_property() {
 }
 
 fs::path Cppm::find_config_file() {
-    auto config_file = find_file(fs::current_path(), "cppm.yaml");
+    auto config_file = util::find_file(fs::current_path(), "cppm.yaml");
     if(!config_file) {
         std::cerr << "Can't not find cppm.yaml file\n" 
                   << std::endl;
@@ -31,6 +31,8 @@ fs::path Cppm::find_config_file() {
 }
 
 void Cppm::parse_thirdparty(YAML::Node& node) {
+    using namespace util;
+    
     for(auto name : node["project"]["thirdparty"]) {
         cppm::Thirdparty thirdparty; 
         thirdparty.name = name.first.as<std::string>();
@@ -72,6 +74,7 @@ void Cppm::parse_thirdparty(YAML::Node& node) {
 }
 
 void Cppm::run(int argc, char** argv) {
+    using namespace util;
     CppmOptions option(argc, argv);
     auto configure_file = YAML::LoadFile(find_config_file().c_str());
     project_.path = find_config_file().parent_path().string();

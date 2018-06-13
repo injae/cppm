@@ -14,6 +14,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "../cmake/Modules/FindBoost.cmake"
   "../cmake/Modules/Findyaml-cpp.cmake"
   "../cmake/cmake_option.cmake"
+  "../cmake/project_maker.cmake"
   "../cmake/utils.cmake"
   "/usr/local/lib/cmake/yaml-cpp/yaml-cpp-config-version.cmake"
   "/usr/local/lib/cmake/yaml-cpp/yaml-cpp-config.cmake"

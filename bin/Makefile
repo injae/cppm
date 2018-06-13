@@ -134,6 +134,33 @@ cppm/fast:
 	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/build
 .PHONY : cppm/fast
 
+src/cmake_find_package.o: src/cmake_find_package.cpp.o
+
+.PHONY : src/cmake_find_package.o
+
+# target to build an object file
+src/cmake_find_package.cpp.o:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o
+.PHONY : src/cmake_find_package.cpp.o
+
+src/cmake_find_package.i: src/cmake_find_package.cpp.i
+
+.PHONY : src/cmake_find_package.i
+
+# target to preprocess a source file
+src/cmake_find_package.cpp.i:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake_find_package.cpp.i
+.PHONY : src/cmake_find_package.cpp.i
+
+src/cmake_find_package.s: src/cmake_find_package.cpp.s
+
+.PHONY : src/cmake_find_package.s
+
+# target to generate assembly for a file
+src/cmake_find_package.cpp.s:
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake_find_package.cpp.s
+.PHONY : src/cmake_find_package.cpp.s
+
 src/cmake_generator.o: src/cmake_generator.cpp.o
 
 .PHONY : src/cmake_generator.o
@@ -360,6 +387,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... cppm"
+	@echo "... src/cmake_find_package.o"
+	@echo "... src/cmake_find_package.i"
+	@echo "... src/cmake_find_package.s"
 	@echo "... src/cmake_generator.o"
 	@echo "... src/cmake_generator.i"
 	@echo "... src/cmake_generator.s"

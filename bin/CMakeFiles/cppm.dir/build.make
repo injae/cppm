@@ -57,9 +57,33 @@ include CMakeFiles/cppm.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/cppm.dir/flags.make
 
+CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o: CMakeFiles/cppm.dir/flags.make
+CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o: ../src/cmake_find_package.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o -c /home/ubuntu/workspace/cppm/src/cmake_find_package.cpp
+
+CMakeFiles/cppm.dir/src/cmake_find_package.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/cppm.dir/src/cmake_find_package.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/workspace/cppm/src/cmake_find_package.cpp > CMakeFiles/cppm.dir/src/cmake_find_package.cpp.i
+
+CMakeFiles/cppm.dir/src/cmake_find_package.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/cppm.dir/src/cmake_find_package.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/workspace/cppm/src/cmake_find_package.cpp -o CMakeFiles/cppm.dir/src/cmake_find_package.cpp.s
+
+CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o.requires:
+
+.PHONY : CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o.requires
+
+CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o.provides: CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o.requires
+	$(MAKE) -f CMakeFiles/cppm.dir/build.make CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o.provides.build
+.PHONY : CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o.provides
+
+CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o.provides.build: CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o
+
+
 CMakeFiles/cppm.dir/src/cmake_generator.cpp.o: CMakeFiles/cppm.dir/flags.make
 CMakeFiles/cppm.dir/src/cmake_generator.cpp.o: ../src/cmake_generator.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/cppm.dir/src/cmake_generator.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/cppm.dir/src/cmake_generator.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppm.dir/src/cmake_generator.cpp.o -c /home/ubuntu/workspace/cppm/src/cmake_generator.cpp
 
 CMakeFiles/cppm.dir/src/cmake_generator.cpp.i: cmake_force
@@ -83,7 +107,7 @@ CMakeFiles/cppm.dir/src/cmake_generator.cpp.o.provides.build: CMakeFiles/cppm.di
 
 CMakeFiles/cppm.dir/src/cppm.cpp.o: CMakeFiles/cppm.dir/flags.make
 CMakeFiles/cppm.dir/src/cppm.cpp.o: ../src/cppm.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/cppm.dir/src/cppm.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/cppm.dir/src/cppm.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppm.dir/src/cppm.cpp.o -c /home/ubuntu/workspace/cppm/src/cppm.cpp
 
 CMakeFiles/cppm.dir/src/cppm.cpp.i: cmake_force
@@ -107,7 +131,7 @@ CMakeFiles/cppm.dir/src/cppm.cpp.o.provides.build: CMakeFiles/cppm.dir/src/cppm.
 
 CMakeFiles/cppm.dir/src/cppm_options.cpp.o: CMakeFiles/cppm.dir/flags.make
 CMakeFiles/cppm.dir/src/cppm_options.cpp.o: ../src/cppm_options.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/cppm.dir/src/cppm_options.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/cppm.dir/src/cppm_options.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppm.dir/src/cppm_options.cpp.o -c /home/ubuntu/workspace/cppm/src/cppm_options.cpp
 
 CMakeFiles/cppm.dir/src/cppm_options.cpp.i: cmake_force
@@ -131,7 +155,7 @@ CMakeFiles/cppm.dir/src/cppm_options.cpp.o.provides.build: CMakeFiles/cppm.dir/s
 
 CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o: CMakeFiles/cppm.dir/flags.make
 CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o: ../src/cppm_thirdparty.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o -c /home/ubuntu/workspace/cppm/src/cppm_thirdparty.cpp
 
 CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.i: cmake_force
@@ -155,7 +179,7 @@ CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o.provides.build: CMakeFiles/cppm.di
 
 CMakeFiles/cppm.dir/src/main.cpp.o: CMakeFiles/cppm.dir/flags.make
 CMakeFiles/cppm.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/cppm.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/cppm.dir/src/main.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppm.dir/src/main.cpp.o -c /home/ubuntu/workspace/cppm/src/main.cpp
 
 CMakeFiles/cppm.dir/src/main.cpp.i: cmake_force
@@ -179,7 +203,7 @@ CMakeFiles/cppm.dir/src/main.cpp.o.provides.build: CMakeFiles/cppm.dir/src/main.
 
 CMakeFiles/cppm.dir/src/option.cpp.o: CMakeFiles/cppm.dir/flags.make
 CMakeFiles/cppm.dir/src/option.cpp.o: ../src/option.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/cppm.dir/src/option.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/cppm.dir/src/option.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppm.dir/src/option.cpp.o -c /home/ubuntu/workspace/cppm/src/option.cpp
 
 CMakeFiles/cppm.dir/src/option.cpp.i: cmake_force
@@ -203,7 +227,7 @@ CMakeFiles/cppm.dir/src/option.cpp.o.provides.build: CMakeFiles/cppm.dir/src/opt
 
 CMakeFiles/cppm.dir/src/url.cpp.o: CMakeFiles/cppm.dir/flags.make
 CMakeFiles/cppm.dir/src/url.cpp.o: ../src/url.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/cppm.dir/src/url.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/cppm.dir/src/url.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppm.dir/src/url.cpp.o -c /home/ubuntu/workspace/cppm/src/url.cpp
 
 CMakeFiles/cppm.dir/src/url.cpp.i: cmake_force
@@ -227,7 +251,7 @@ CMakeFiles/cppm.dir/src/url.cpp.o.provides.build: CMakeFiles/cppm.dir/src/url.cp
 
 CMakeFiles/cppm.dir/src/utils.cpp.o: CMakeFiles/cppm.dir/flags.make
 CMakeFiles/cppm.dir/src/utils.cpp.o: ../src/utils.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/cppm.dir/src/utils.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/cppm.dir/src/utils.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/cppm.dir/src/utils.cpp.o -c /home/ubuntu/workspace/cppm/src/utils.cpp
 
 CMakeFiles/cppm.dir/src/utils.cpp.i: cmake_force
@@ -251,6 +275,7 @@ CMakeFiles/cppm.dir/src/utils.cpp.o.provides.build: CMakeFiles/cppm.dir/src/util
 
 # Object files for target cppm
 cppm_OBJECTS = \
+"CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o" \
 "CMakeFiles/cppm.dir/src/cmake_generator.cpp.o" \
 "CMakeFiles/cppm.dir/src/cppm.cpp.o" \
 "CMakeFiles/cppm.dir/src/cppm_options.cpp.o" \
@@ -263,6 +288,7 @@ cppm_OBJECTS = \
 # External object files for target cppm
 cppm_EXTERNAL_OBJECTS =
 
+cppm: CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o
 cppm: CMakeFiles/cppm.dir/src/cmake_generator.cpp.o
 cppm: CMakeFiles/cppm.dir/src/cppm.cpp.o
 cppm: CMakeFiles/cppm.dir/src/cppm_options.cpp.o
@@ -278,7 +304,7 @@ cppm: /usr/lib/x86_64-linux-gnu/libboost_program_options.a
 cppm: /usr/lib/x86_64-linux-gnu/libboost_regex.a
 cppm: /usr/local/lib/libyaml-cpp.a
 cppm: CMakeFiles/cppm.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable cppm"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ubuntu/workspace/cppm/bin/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable cppm"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/cppm.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -286,6 +312,7 @@ CMakeFiles/cppm.dir/build: cppm
 
 .PHONY : CMakeFiles/cppm.dir/build
 
+CMakeFiles/cppm.dir/requires: CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o.requires
 CMakeFiles/cppm.dir/requires: CMakeFiles/cppm.dir/src/cmake_generator.cpp.o.requires
 CMakeFiles/cppm.dir/requires: CMakeFiles/cppm.dir/src/cppm.cpp.o.requires
 CMakeFiles/cppm.dir/requires: CMakeFiles/cppm.dir/src/cppm_options.cpp.o.requires

@@ -1,5 +1,6 @@
 #include"cppm_options.h"
 #include"cppm.h"
+#include"cmake_find_package.h"
 #include<range/v3/core.hpp>
 #include<range/v3/numeric/accumulate.hpp>
 #include<range/v3/algorithm/for_each.hpp>
@@ -85,10 +86,10 @@ void CppmOptions::_install() {
     std::vector<cppm::Thirdparty> install_list;
     for(auto thirdparty : thirdparties) {
         for(auto subarg : subargs) {
-            if(has_str(subarg, "all")) {
+            if(util::has_str(subarg, "all")) {
                 install_list = thirdparties;  break;
             }
-            else if(has_str(subarg, thirdparty.name.c_str())) {
+            else if(util::has_str(subarg, thirdparty.name.c_str())) {
                install_list.push_back(thirdparty);
             }
         }
@@ -104,9 +105,9 @@ void CppmOptions::_get_cmake_lib_hint() {
     cppm::Thirdparty thirdparty;
     thirdparty.name = get_subarg()[0];
    	 
-    for(auto lib : cppm::get_cmake_find_package_list()) {
+    for(auto lib : cmake::get_find_package_list()) {
         if(!(lib.name == thirdparty.name)) continue;
-        cppm::get_package_config_hint(lib);
+        cmake::get_package_config_hint(lib);
     }
 }
 

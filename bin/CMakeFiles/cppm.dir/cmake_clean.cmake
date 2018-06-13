@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/cppm.dir/src/cmake_find_package.cpp.o"
   "CMakeFiles/cppm.dir/src/cmake_generator.cpp.o"
   "CMakeFiles/cppm.dir/src/cppm.cpp.o"
   "CMakeFiles/cppm.dir/src/cppm_options.cpp.o"
