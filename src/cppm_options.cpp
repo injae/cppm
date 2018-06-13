@@ -58,8 +58,13 @@ void CppmOptions::_version() {
 }
 
 void CppmOptions::_build() {
+    auto subargs = get_subarg();
+    
     auto project = Cppm::instance()->project();
-    std::string cmd = "cd " + project.bin + " && cmake .. && make";
+    std::string cmd = "cd " + project.bin + " && cmake .. &&sudo make ";
+    for(auto subarg : subargs) {
+        cmd += subarg;    
+    }
     system(cmd.c_str()); 
 }
 

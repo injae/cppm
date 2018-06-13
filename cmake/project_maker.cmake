@@ -10,9 +10,9 @@ function(install_library_include name include_dir)
     endforeach()
 endfunction()
 
-function(install_library include_dir)
-    install_library_config()
-    install_library_include(${include_dir})
+function(install_library name include_dir)
+    install_library_config(${name})
+    #install_library_include(${include_dir})
 endfunction()
 
 function(make_excutable name)
@@ -28,6 +28,9 @@ function(make_excutable name)
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
     )
     target_link_libraries(${name} PUBLIC ${third_party_library})
+    
+    include(GNUInstallDirs) 
+    install(TARGETS ${name} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
     
 endfunction()
 
@@ -59,7 +62,7 @@ function(make_shared_ib name)
     install_library(${name} ${INCLUDE_DIR})
 endfunction()
 
-function(install_library_config_two name)
+function(install_library_config name)
     include(GNUInstallDirs) 
     target_include_directories(${name} PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -83,46 +86,6 @@ function(install_library_config_two name)
     
     export(TARGETS ${name} FILE ${name}Config.cmake)
 endfunction()
-
-
-
-function(install_library_config name)
-    target_include_directories(${name} PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include>
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
-    )
-        
-    install(TARGETS ${name} EXPORT ${name}Targets
-        ARCHIVE  DESTINATION lib
-        LIBRARY  DESTINATION lib 
-        RUNTIME  DESTINATION bin 
-        INCLUDES DESTINATION include 
-    )
-    
-    install(EXPORT ${name}Targets
-        FILE ${name}Targets.cmake
-        NAMESPACE ${name}::
-        DESTINATION lib/cmake/${name}
-    )
-    
-    #install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-    install_library_include(${name} ${INCLUDE_DIR})
-    
-    install(EXPORT ${name}Targets DESTINATION static/${name}/cmake)
-    
-    include(CMakePackageConfigHelpers)
-    write_basic_package_version_file("${name}ConfigVersion.cmake"
-        VERSION ${name}_Version}
-        COMPATIBILITY SameMajorVersion
-    )
-    
-    install(FILES "${name}Config.cmake" "${name}ConfigVersion.cmake"
-        DESTINATION lib/cmake/${name}
-    )
-    
-endfunction()
-
 
 MACRO(make_third_party_shared_lib name third_party_lib)
     
@@ -153,3 +116,40 @@ MACRO(make_third_party_header_only_lib name path)
     add_library(${name} INTERFACE)
     target_include_directories(${name} INTERFACE ${path})
 ENDMACRO()
+
+#function(install_library_config name)
+#    target_include_directories(${name} PUBLIC
+#        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#        $<INSTALL_INTERFACE:include>
+#        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+#    )
+#        
+#    install(TARGETS ${name} EXPORT ${name}Targets
+#        ARCHIVE  DESTINATION lib
+#        LIBRARY  DESTINATION lib 
+#        RUNTIME  DESTINATION bin 
+#        INCLUDES DESTINATION include 
+#    )
+#    
+#    install(EXPORT ${name}Targets
+#        FILE ${name}Targets.cmake
+#        NAMESPACE ${name}::
+#        DESTINATION lib/cmake/${name}
+#    )
+#    
+#    #install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+#    install_library_include(${name} ${INCLUDE_DIR})
+#    
+#    install(EXPORT ${name}Targets DESTINATION static/${name}/cmake)
+#    
+#    include(CMakePackageConfigHelpers)
+#    write_basic_package_version_file("${name}ConfigVersion.cmake"
+#        VERSION ${name}_Version}
+#        COMPATIBILITY SameMajorVersion
+#    )
+#    
+#    install(FILES "${name}Config.cmake" "${name}ConfigVersion.cmake"
+#        DESTINATION lib/cmake/${name}
+#    )
+#    
+#endfunction()
