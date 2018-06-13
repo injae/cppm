@@ -165,6 +165,10 @@ cppm.h
 /home/ubuntu/workspace/cppm/src/options/init.cpp
 options/init.h
 /home/ubuntu/workspace/cppm/src/options/options/init.h
+cppm.h
+/home/ubuntu/workspace/cppm/src/options/cppm.h
+cmake/generator.h
+/home/ubuntu/workspace/cppm/src/options/cmake/generator.h
 boost/filesystem.hpp
 /home/ubuntu/workspace/cppm/src/options/boost/filesystem.hpp
 fstream

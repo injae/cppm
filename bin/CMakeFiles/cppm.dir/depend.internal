@@ -292,10 +292,45 @@ CMakeFiles/cppm.dir/src/main.cpp.o
  /usr/local/include/yaml-cpp/traits.h
  /usr/local/include/yaml-cpp/yaml.h
 CMakeFiles/cppm.dir/src/options/init.cpp.o
+ ../include/cmake/generator.h
+ ../include/cppm.h
+ ../include/cppm_thirdparty.h
  ../include/options/init.h
  ../include/options/option.h
  ../include/utils.h
  /home/ubuntu/workspace/cppm/src/options/init.cpp
+ /usr/local/include/yaml-cpp/binary.h
+ /usr/local/include/yaml-cpp/dll.h
+ /usr/local/include/yaml-cpp/emitter.h
+ /usr/local/include/yaml-cpp/emitterdef.h
+ /usr/local/include/yaml-cpp/emittermanip.h
+ /usr/local/include/yaml-cpp/emitterstyle.h
+ /usr/local/include/yaml-cpp/exceptions.h
+ /usr/local/include/yaml-cpp/mark.h
+ /usr/local/include/yaml-cpp/node/convert.h
+ /usr/local/include/yaml-cpp/node/detail/bool_type.h
+ /usr/local/include/yaml-cpp/node/detail/impl.h
+ /usr/local/include/yaml-cpp/node/detail/iterator.h
+ /usr/local/include/yaml-cpp/node/detail/iterator_fwd.h
+ /usr/local/include/yaml-cpp/node/detail/memory.h
+ /usr/local/include/yaml-cpp/node/detail/node.h
+ /usr/local/include/yaml-cpp/node/detail/node_data.h
+ /usr/local/include/yaml-cpp/node/detail/node_iterator.h
+ /usr/local/include/yaml-cpp/node/detail/node_ref.h
+ /usr/local/include/yaml-cpp/node/emit.h
+ /usr/local/include/yaml-cpp/node/impl.h
+ /usr/local/include/yaml-cpp/node/iterator.h
+ /usr/local/include/yaml-cpp/node/node.h
+ /usr/local/include/yaml-cpp/node/parse.h
+ /usr/local/include/yaml-cpp/node/ptr.h
+ /usr/local/include/yaml-cpp/node/type.h
+ /usr/local/include/yaml-cpp/noncopyable.h
+ /usr/local/include/yaml-cpp/null.h
+ /usr/local/include/yaml-cpp/ostream_wrapper.h
+ /usr/local/include/yaml-cpp/parser.h
+ /usr/local/include/yaml-cpp/stlemitter.h
+ /usr/local/include/yaml-cpp/traits.h
+ /usr/local/include/yaml-cpp/yaml.h
 CMakeFiles/cppm.dir/src/options/option.cpp.o
  ../include/options/option.h
  /home/ubuntu/workspace/cppm/src/options/option.cpp

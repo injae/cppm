@@ -82,7 +82,6 @@ namespace util
           std::cerr << (dst.generic_string() + " not dir or file") << std::endl; return ;
         } 
     }
-        
     
     bool has_str(std::string& target, std::string_view str) {
         std::size_t pos = 0;
