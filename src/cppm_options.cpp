@@ -24,12 +24,15 @@ CppmOptions::CppmOptions(int argc, char* argv[]) : Option("Cppm Options", argc, 
 void CppmOptions::run() {
     if(vm_.count("command")) { auto cmd = vm_["command"].as<std::string>();
         _user_command(cmd.c_str());
+        // don't use Project config 
+             if(cmd == "hint")       _get_cmake_lib_hint();
+        else if(cmd == "init")       _init();
+        
+        // use Project config
              if(cmd == "build")      _build();
         else if(cmd == "run")        _run();
-        else if(cmd == "init")       _init();
         else if(cmd == "install")    _install();
         else if(cmd == "thirdparty") _show_thirdparties();
-        else if(cmd == "hint")       _get_cmake_lib_hint();
     }
     else if(vm_.count("help")   ) _help(); 
     else if(vm_.count("version")) _version();
@@ -51,16 +54,19 @@ void CppmOptions::registe_subcommand(std::pair<std::string, std::string> command
 }
 
 void CppmOptions::_help() {
+   Cppm::instance()->parse_project_config();
    std::cout << "Usage: regex [options]\n"
              << visible_option_
              << std::endl;
 }
 
 void CppmOptions::_version() {
+   Cppm::instance()->parse_project_config();
    std::cout << "Version: "<< Cppm::instance()->project().version << std::endl;
 }
 
 void CppmOptions::_build() {
+    Cppm::instance()->parse_project_config();
     auto subargs = get_subarg();
     
     auto project = Cppm::instance()->project();
@@ -72,13 +78,16 @@ void CppmOptions::_build() {
 }
 
 void CppmOptions::_run() {
+    Cppm::instance()->parse_project_config();
     auto project = Cppm::instance()->project();
     auto subargs = ranges::accumulate(get_subarg(), std::string{});
     std::string cmd = "cd " + project.bin + " && ./" + project.name +" " + subargs;
+    std::cout << cmd;
     system(cmd.c_str());
 }
 
 void CppmOptions::_show_thirdparties() {
+    Cppm::instance()->parse_project_config();
     auto thirdparties = Cppm::instance()->thirdparties();
     for(auto thirdparty : thirdparties) {
         std::cout << "[" + thirdparty.name << "]\n"
@@ -89,6 +98,7 @@ void CppmOptions::_show_thirdparties() {
 }
 
 void CppmOptions::_install() {
+    Cppm::instance()->parse_project_config();
     auto thirdparties = Cppm::instance()->thirdparties();
     auto subargs = get_subarg();
     std::vector<cppm::Thirdparty> install_list;

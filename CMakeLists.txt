@@ -39,6 +39,7 @@ install(DIRECTORY DESTINATION ${default_project_dir}/test)
 install(DIRECTORY DESTINATION ${default_project_dir}/bin)
 install(DIRECTORY DESTINATION ${default_project_dir}/cmake/Modules)
 install(FILES ${CMAKE_MODULE_PATH}/utils.cmake DESTINATION ${default_project_dir}/cmake)
+install(FILES ${CMAKE_MODULE_PATH}/cmake_option.cmake DESTINATION ${default_project_dir}/cmake)
 install(FILES ${CMAKE_MODULE_PATH}/project_maker.cmake DESTINATION ${default_project_dir}/cmake)
 
 install(DIRECTORY FindThirdparty DESTINATION share/${PROJECT_NAME})

@@ -1,15 +1,13 @@
 #include"cppm.h"
-#include"cppm_options.h"
 #include"utils.h"
-
-
+#include<fstream>
 
 Cppm* Cppm::instance() {
     static Cppm instance_; 
     return &instance_;  
 } 
 
-Cppm::Cppm() { }
+Cppm::Cppm() : option_() { }
 
 void Cppm::make_project_property() {
     project_.bin               = project_.path + "/bin";
@@ -22,14 +20,27 @@ void Cppm::make_project_property() {
 
 fs::path Cppm::find_config_file() {
     auto config_file = util::find_file(fs::current_path(), "cppm.yaml");
-    //if(!config_file) {
-    //    std::cerr << "Can't not find cppm.yaml file\n" 
-    //              << std::endl;
-    //    exit(1);
-    //}
+    if(!config_file) {
+        std::cerr << "Can't not find cppm.yaml file\n" 
+                  << std::endl;
+        exit(1);
+    }
     
     return *config_file;
 }
+
+void Cppm::make_config_file(Project& project) {
+    std::ofstream config_file(project.name + "/cppm.yaml"); config_file.is_open();
+    config_file.close();
+    
+    auto config = YAML::LoadFile(project.path+"/cppm.yaml");
+    config["project"]["name"] = project.name;
+    config["project"]["version"] = project.version;
+    config["project"]["type"] = project.type;
+    config["project"]["compiler"] = project.compiler;
+    config["project"]["builder"] = project.builder;
+}
+
 
 void Cppm::parse_thirdparty(YAML::Node& node) {
     using namespace util;
@@ -74,38 +85,39 @@ void Cppm::parse_thirdparty(YAML::Node& node) {
     }
 }
 
-void Cppm::run(int argc, char** argv) {
+void Cppm::parse_project_config() {
     using namespace util;
-    CppmOptions option(argc, argv);
-    auto config_file = util::find_file(fs::current_path(), "cppm.yaml");
-    if(config_file != boost::none) {
-        auto configure_file = YAML::LoadFile(find_config_file().c_str());
-        project_.path = find_config_file().parent_path().string();
-        for(auto it : configure_file["project"]) {
-            auto node = it.first.as<std::string>().c_str();
-            switch(hash(node))
-            {
-            case hash("name"):
-                project_.name = it.second.as<std::string>(); 
-                break;
-            case hash("thirdparty"):
-                parse_thirdparty(configure_file);
-                break;
-            case hash("version"):
-                project_.version = it.second.as<std::string>();
-                break;
-            case hash("compiler"):
-                project_.compiler = it.second.as<std::string>();
-                break;
-            case hash("builder"):
-                project_.builder = it.second.as<std::string>();
-                break;
-            default:
-                option.registe_subcommand(std::make_pair(it.first.as<std::string>(), it.second.as<std::string>())); 
-            }
+    auto configure_file = YAML::LoadFile(find_config_file().c_str());
+    project_.path = find_config_file().parent_path().string();
+    for(auto it : configure_file["project"]) {
+        auto node = it.first.as<std::string>().c_str();
+        switch(hash(node))
+        {
+        case hash("name"):
+            project_.name = it.second.as<std::string>(); 
+            std::cout << project_.name << std::endl;
+            break;
+        case hash("thirdparty"):
+            parse_thirdparty(configure_file);
+            break;
+        case hash("version"):
+            project_.version = it.second.as<std::string>();
+            break;
+        case hash("compiler"):
+            project_.compiler = it.second.as<std::string>();
+            break;
+        case hash("builder"):
+            project_.builder = it.second.as<std::string>();
+            break;
+        default:
+            option_->registe_subcommand(std::make_pair(it.first.as<std::string>(), it.second.as<std::string>())); 
         }
-    make_project_property();
     }
-    option.regist(); 
-    option.run();
+    make_project_property();
+}
+
+void Cppm::run(int argc, char** argv) {
+    option_ = std::make_unique<CppmOptions>(argc, argv);
+    option_->regist(); 
+    option_->run();
 }

@@ -5,7 +5,9 @@ CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o
  ../include/cmake/find_package.h
  ../include/cmake/generator.h
  ../include/cppm.h
+ ../include/cppm_options.h
  ../include/cppm_thirdparty.h
+ ../include/options/option.h
  ../include/utils.h
  /home/ubuntu/workspace/cppm/src/cmake/find_package.cpp
  /usr/local/include/yaml-cpp/binary.h
@@ -43,7 +45,9 @@ CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o
 CMakeFiles/cppm.dir/src/cmake/generator.cpp.o
  ../include/cmake/generator.h
  ../include/cppm.h
+ ../include/cppm_options.h
  ../include/cppm_thirdparty.h
+ ../include/options/option.h
  ../include/utils.h
  /home/ubuntu/workspace/cppm/src/cmake/generator.cpp
  /usr/local/include/yaml-cpp/binary.h
@@ -219,7 +223,9 @@ CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o
  ../include/cmake/find_package.h
  ../include/cmake/generator.h
  ../include/cppm.h
+ ../include/cppm_options.h
  ../include/cppm_thirdparty.h
+ ../include/options/option.h
  ../include/url.h
  ../include/utils.h
  /home/ubuntu/workspace/cppm/src/cppm_thirdparty.cpp
@@ -257,7 +263,9 @@ CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o
  /usr/local/include/yaml-cpp/yaml.h
 CMakeFiles/cppm.dir/src/main.cpp.o
  ../include/cppm.h
+ ../include/cppm_options.h
  ../include/cppm_thirdparty.h
+ ../include/options/option.h
  /home/ubuntu/workspace/cppm/src/main.cpp
  /usr/local/include/yaml-cpp/binary.h
  /usr/local/include/yaml-cpp/dll.h
@@ -294,6 +302,7 @@ CMakeFiles/cppm.dir/src/main.cpp.o
 CMakeFiles/cppm.dir/src/options/init.cpp.o
  ../include/cmake/generator.h
  ../include/cppm.h
+ ../include/cppm_options.h
  ../include/cppm_thirdparty.h
  ../include/options/init.h
  ../include/options/option.h

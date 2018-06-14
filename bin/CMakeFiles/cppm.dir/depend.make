@@ -4,7 +4,9 @@
 CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o: ../include/cmake/find_package.h
 CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o: ../include/cmake/generator.h
 CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o: ../include/cppm.h
+CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o: ../include/cppm_options.h
 CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o: ../include/cppm_thirdparty.h
+CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o: ../include/options/option.h
 CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o: ../include/utils.h
 CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o: ../src/cmake/find_package.cpp
 CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o: /usr/local/include/yaml-cpp/binary.h
@@ -42,7 +44,9 @@ CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o: /usr/local/include/yaml-cpp/ya
 
 CMakeFiles/cppm.dir/src/cmake/generator.cpp.o: ../include/cmake/generator.h
 CMakeFiles/cppm.dir/src/cmake/generator.cpp.o: ../include/cppm.h
+CMakeFiles/cppm.dir/src/cmake/generator.cpp.o: ../include/cppm_options.h
 CMakeFiles/cppm.dir/src/cmake/generator.cpp.o: ../include/cppm_thirdparty.h
+CMakeFiles/cppm.dir/src/cmake/generator.cpp.o: ../include/options/option.h
 CMakeFiles/cppm.dir/src/cmake/generator.cpp.o: ../include/utils.h
 CMakeFiles/cppm.dir/src/cmake/generator.cpp.o: ../src/cmake/generator.cpp
 CMakeFiles/cppm.dir/src/cmake/generator.cpp.o: /usr/local/include/yaml-cpp/binary.h
@@ -218,7 +222,9 @@ CMakeFiles/cppm.dir/src/cppm_options.cpp.o: /usr/local/include/yaml-cpp/yaml.h
 CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o: ../include/cmake/find_package.h
 CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o: ../include/cmake/generator.h
 CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o: ../include/cppm.h
+CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o: ../include/cppm_options.h
 CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o: ../include/cppm_thirdparty.h
+CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o: ../include/options/option.h
 CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o: ../include/url.h
 CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o: ../include/utils.h
 CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o: ../src/cppm_thirdparty.cpp
@@ -256,7 +262,9 @@ CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o: /usr/local/include/yaml-cpp/trait
 CMakeFiles/cppm.dir/src/cppm_thirdparty.cpp.o: /usr/local/include/yaml-cpp/yaml.h
 
 CMakeFiles/cppm.dir/src/main.cpp.o: ../include/cppm.h
+CMakeFiles/cppm.dir/src/main.cpp.o: ../include/cppm_options.h
 CMakeFiles/cppm.dir/src/main.cpp.o: ../include/cppm_thirdparty.h
+CMakeFiles/cppm.dir/src/main.cpp.o: ../include/options/option.h
 CMakeFiles/cppm.dir/src/main.cpp.o: ../src/main.cpp
 CMakeFiles/cppm.dir/src/main.cpp.o: /usr/local/include/yaml-cpp/binary.h
 CMakeFiles/cppm.dir/src/main.cpp.o: /usr/local/include/yaml-cpp/dll.h
@@ -293,6 +301,7 @@ CMakeFiles/cppm.dir/src/main.cpp.o: /usr/local/include/yaml-cpp/yaml.h
 
 CMakeFiles/cppm.dir/src/options/init.cpp.o: ../include/cmake/generator.h
 CMakeFiles/cppm.dir/src/options/init.cpp.o: ../include/cppm.h
+CMakeFiles/cppm.dir/src/options/init.cpp.o: ../include/cppm_options.h
 CMakeFiles/cppm.dir/src/options/init.cpp.o: ../include/cppm_thirdparty.h
 CMakeFiles/cppm.dir/src/options/init.cpp.o: ../include/options/init.h
 CMakeFiles/cppm.dir/src/options/init.cpp.o: ../include/options/option.h
