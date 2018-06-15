@@ -22,14 +22,10 @@ project:
             build-type: header_only
             install: global
             url: https://github.com/ericniebler/range-v3.git
-        ormpp:
-            build-type: header_only
-            install: local
-            url: https://github.com/qicosmos/ormpp.git
-        iguana:
-            build-type: header_only 
-            install: local
-            url: https://github.com/qicosmos/iguana.git 
+        nieel:
+            build-type: static
+            install: global
+            url: https://github.com/INJAE/nieel.git
 
     include: cd include && ls
     src    : cd src && ls 

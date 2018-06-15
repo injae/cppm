@@ -10,12 +10,10 @@ namespace cppm
 {
     Repository classificate_repo(std::string url) {
         using namespace util;
-        Url parsed = parse_url(url);
+        auto parsed = *parse_url(url);
         Repository repo; 
         repo.url = url;
-        if(   has_str(parsed.protocol, "http") 
-           || has_str(parsed.protocol, "https")) 
-        {
+        if(has_str(parsed.protocol, "http") || has_str(parsed.protocol, "https")) {
             if(has_str(parsed.path, "git")) {
                 repo.type = "git";
             }
@@ -32,16 +30,11 @@ namespace cppm
                 repo.type = "unknown";
             }
         }
+        else if(has_str(parsed.path, "tar") || has_str(parsed.path, "zip") || has_str(parsed.path, "gz")) {
+            repo.type = "file";
+        }
         else {
-            if(   has_str(parsed.path, "tar")
-               || has_str(parsed.path, "zip")
-               || has_str(parsed.path, "gz"))
-            {
-                repo.type = "file";
-            }
-            else {
-                repo.type = "unknown";
-            }
+            repo.type = "unknown";
         }
         
         return repo;
@@ -55,6 +48,21 @@ namespace cppm
         return false;
     }
     
+    void make_thirdparty_config(Thirdparty& library) {
+        auto project = Cppm::instance()->project();
+        std::ofstream config_file(project.path + "/cppm.yaml"); config_file.is_open();
+        
+        auto config = YAML::LoadFile(project.path+"/cppm.yaml");
+        config["project"]["thirdparty"][library.name]["build-type"]       = library.build_type;
+        config["project"]["thirdparty"][library.name]["install"]          = library.install_type;
+        config["project"]["thirdparty"][library.name]["version"]          = library.version;
+        config["project"]["thirdparty"][library.name]["url"]              = library.repo.url;
+        config["project"]["thirdparty"][library.name]["find-cmake-value"] = library.cmake_var_name;
+        
+        config_file << config; 
+        
+        config_file.close();
+    }
     
     void install_thirdparty(Thirdparty& library) {
         using namespace util;

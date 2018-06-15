@@ -54,7 +54,6 @@ void Cppm::parse_thirdparty(YAML::Node& node) {
         for(auto property : node["project"]["thirdparty"][thirdparty.name]) {
             auto node = property.first.as<std::string>();
             auto data = property.second.as<std::string>();
-             
 			
             switch(hash(node.c_str())) 
             {
@@ -117,6 +116,7 @@ void Cppm::parse_project_config() {
     }
     make_project_property();
 }
+
 
 void Cppm::run(int argc, char** argv) {
     option_ = std::make_unique<CppmOptions>(argc, argv);

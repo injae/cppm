@@ -3,6 +3,7 @@
 #include"cmake/find_package.h"
 #include"utils.h"
 #include"options/init.h"
+#include"url.h"
 
 #include<range/v3/core.hpp>
 #include<range/v3/numeric/accumulate.hpp>
@@ -110,10 +111,17 @@ void CppmOptions::_install() {
             else if(util::has_str(subarg, thirdparty.name.c_str())) {
                install_list.push_back(thirdparty);
             }
+            else if(parse_url(subarg)) {
+                cppm::Thirdparty url_lib;
+                url_lib.repo = cppm::classificate_repo(subarg);
+                install_list.push_back(url_lib);
+            }
+            
         }
     }
     
     for(auto& library : install_list) {
+        
         cppm::install_thirdparty(library);
     }
 }

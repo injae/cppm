@@ -2,6 +2,9 @@
 #define __URL_H__
 
 #include<string>
+#include<boost/optional.hpp>
+using boost::optional;
+using boost::none;
 
 struct Url
 {
@@ -13,7 +16,7 @@ struct Url
     ;  
 };
 
-Url parse_url(std::string url);
+optional<Url> parse_url(std::string url);
 
 
 
