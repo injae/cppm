@@ -59,10 +59,11 @@ function(install_library_config name)
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
     )
     
-    set_target_properties(${name} PROPERTIES
-        VERSION ${${name}_VERSION}
-        SOVERSION 1
-    )
+    message("${name}")
+    #set_target_properties(${name} PROPERTIES
+    #    VERSION ${${name}_VERSION}
+    #    SOVERSION 1
+    #)
     
     install(TARGETS ${name} EXPORT ${name}Config
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -71,7 +72,7 @@ function(install_library_config name)
     )
     install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${name})
 
-    install(EXPORT MyLibConfig DESTINATION share/${name}/cmake)
+    install(EXPORT ${name}Config DESTINATION share/${name}/cmake)
     
     export(TARGETS ${name} FILE ${name}Config.cmake)
 endfunction()

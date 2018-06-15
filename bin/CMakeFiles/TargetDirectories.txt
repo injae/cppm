@@ -1,8 +1,0 @@
-/home/ubuntu/workspace/cppm/bin/CMakeFiles/test.dir
-/home/ubuntu/workspace/cppm/bin/CMakeFiles/edit_cache.dir
-/home/ubuntu/workspace/cppm/bin/CMakeFiles/rebuild_cache.dir
-/home/ubuntu/workspace/cppm/bin/CMakeFiles/list_install_components.dir
-/home/ubuntu/workspace/cppm/bin/CMakeFiles/install.dir
-/home/ubuntu/workspace/cppm/bin/CMakeFiles/install/local.dir
-/home/ubuntu/workspace/cppm/bin/CMakeFiles/install/strip.dir
-/home/ubuntu/workspace/cppm/bin/CMakeFiles/cppm.dir

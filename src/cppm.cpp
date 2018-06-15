@@ -30,15 +30,18 @@ fs::path Cppm::find_config_file() {
 }
 
 void Cppm::make_config_file(Project& project) {
-    std::ofstream config_file(project.name + "/cppm.yaml"); config_file.is_open();
-    config_file.close();
+    std::ofstream config_file(project.path + "/cppm.yaml"); config_file.is_open();
     
     auto config = YAML::LoadFile(project.path+"/cppm.yaml");
-    config["project"]["name"] = project.name;
-    config["project"]["version"] = project.version;
-    config["project"]["type"] = project.type;
+    config["project"]["name"]     = project.name;
+    config["project"]["version"]  = project.version;
+    config["project"]["type"]     = project.type;
     config["project"]["compiler"] = project.compiler;
-    config["project"]["builder"] = project.builder;
+    config["project"]["builder"]  = project.builder;
+    
+    config_file << config; 
+    
+    config_file.close();
 }
 
 
@@ -95,7 +98,6 @@ void Cppm::parse_project_config() {
         {
         case hash("name"):
             project_.name = it.second.as<std::string>(); 
-            std::cout << project_.name << std::endl;
             break;
         case hash("thirdparty"):
             parse_thirdparty(configure_file);
