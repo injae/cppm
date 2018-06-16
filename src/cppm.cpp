@@ -117,7 +117,6 @@ void Cppm::parse_project_config() {
     make_project_property();
 }
 
-
 void Cppm::run(int argc, char** argv) {
     option_ = std::make_unique<CppmOptions>(argc, argv);
     option_->regist(); 

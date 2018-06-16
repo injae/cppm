@@ -3,7 +3,7 @@ project:
     version: 1.0.0
     authors: 8687lee@gmail.com InJaeLee
     type: bin
-    compiler: gcc-7.3 clang-6.0
+    compiler: gcc-7.3
     builder: make
      
     thirdparty:

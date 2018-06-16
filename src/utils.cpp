@@ -7,12 +7,14 @@
 namespace util
 {
     
-    std::string make_include_guard(const std::string& file_name) {
-        std::string upper_file_name = boost::replace_all_copy(file_name, "/", "_"); 
+    std::string make_include_guard(const std::string& library_name const std::string& file_name);
+        std::string upper_file_name    = boost::replace_all_copy(file_name, "/", "_"); 
+        std::string upper_library_name = boost::replace_all_copy(library_name, "/", "_"); 
         
         std::transform(upper_file_name.begin(), upper_file_name.end(), upper_file_name.begin(), ::toupper);   
-            return  "#ifndef __"+upper_file_name+"_H__\n"
-                   +"#define __"+upper_file_name+"_H__\n"
+        std::transform(upper_library_name.begin(), upper_library_name.end(), upper_library_name.begin(), ::toupper);   
+            return  "#ifndef __"+upper_library_name+"_"+upper_file_name+"_H__\n"
+                   +"#define __"+upper_library_name+"_"+upper_file_name+"_H__\n"
                    +"\n\n"
                    +"#endif";
     }

@@ -3,6 +3,7 @@
 #include"cmake/find_package.h"
 #include"utils.h"
 #include"options/init.h"
+#include"options/install.h"
 #include"url.h"
 
 #include<range/v3/core.hpp>
@@ -100,32 +101,8 @@ void CppmOptions::_show_thirdparties() {
 
 void CppmOptions::_install() {
     Cppm::instance()->parse_project_config();
-    auto thirdparties = Cppm::instance()->thirdparties();
-    auto subargs = get_subarg();
-    std::vector<cppm::Thirdparty> install_list;
-    for(auto thirdparty : thirdparties) {
-        for(auto subarg : subargs) {
-            if(util::has_str(subarg, "all")) {
-                install_list = thirdparties;  break;
-            }
-            else if(util::has_str(subarg, thirdparty.name.c_str())) {
-               install_list.push_back(thirdparty);
-            }
-            else if(parse_url(subarg)) {
-                cppm::Thirdparty url_lib;
-                url_lib.repo = cppm::classificate_repo(subarg);
-                install_list.push_back(url_lib);
-            }
-            
-        }
-    }
-    
-    for(auto& library : install_list) {
-        
-        cppm::install_thirdparty(library);
-    }
+    make_sub_command<option::Install>().run();
 }
-
 
 void CppmOptions::_get_cmake_lib_hint() {
     cppm::Thirdparty thirdparty;
@@ -141,14 +118,6 @@ void CppmOptions::_make_cmake_find_lib_file() {
      
 }
 
-void CppmOptions::_config_base_install() {
-     
-}
-
 void CppmOptions::_init() {
-    auto opts = po::collect_unrecognized(make_parser().options, po::include_positional);
-    opts.erase(opts.begin());
-    option::Init option_init(argc_,argv_);
-    option_init.regist(opts); 
-    option_init.run();
+     make_sub_command<option::Init>().run();
 }

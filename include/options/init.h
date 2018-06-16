@@ -1,7 +1,7 @@
 #ifndef __OPTIONS_INIT_H__
 #define __OPTIONS_INIT_H__
 
-#include"options/option.h"
+#include<nieel/option/option.h>
 
 namespace option
 {

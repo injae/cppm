@@ -25,7 +25,7 @@ namespace util
         return (*m) ? mix(*m,hash(m+1)) : 0;
     }
     
-    std::string make_include_guard(const std::string& file_name);
+    std::string make_include_guard(const std::string& library_name const std::string& file_name);
     std::string make_include(const std::string& header_path);
     optional<std::vector<fs::directory_entry>> file_list(const fs::path& path);
     optional<fs::path> find_file(const fs::path& path, const std::string& file_name);
