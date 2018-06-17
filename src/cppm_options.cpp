@@ -2,6 +2,7 @@
 #include"cppm_options.h"
 #include"cmake/find_package.h"
 #include"cmake/cmake_option.h"
+#include"cmake/generator.h"
 #include"options/init.h"
 #include"options/install.h"
 #include"url.h"
@@ -70,6 +71,8 @@ void CppmOptions::_build() {
     using namespace cmake::option;
     Cppm::instance()->parse_project_config();
     auto subargs = get_subarg();
+    std::ofstream file (Cppm::instance()->project().path + "/CMakeLists.txt"); file.is_open();
+    file << cmake::make_default_project(Cppm::instance()->project()); file.close();
     
     auto project = Cppm::instance()->project();
     std::string cmd = "cd " + project.bin 
@@ -79,8 +82,6 @@ void CppmOptions::_build() {
         cmd += subarg;    
     }
     
-    std::cout << cmd << std::endl;
-    
     system(cmd.c_str()); 
 }
 
@@ -89,7 +90,6 @@ void CppmOptions::_run() {
     auto project = Cppm::instance()->project();
     auto subargs = ranges::accumulate(get_subarg(), std::string{});
     std::string cmd = "cd " + project.bin + " && ./" + project.name +" " + subargs;
-    std::cout << cmd;
     system(cmd.c_str());
 }
 

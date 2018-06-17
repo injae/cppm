@@ -9,7 +9,7 @@ namespace fs = boost::filesystem;
 
 namespace cmake 
 {
-   std::string make_default_project(Cppm::Project project) {
+   std::string make_default_project(Cppm::Project& project) {
       std::stringstream output("");
       output << cmake_version("3.6", project.name)  << endl()
              << endl()
@@ -30,11 +30,15 @@ namespace cmake
              << set("BUILD_DIR"             , get("PROJECT_NAME")     + "/build")      << endl()
              << set("third_party_library", " ") << endl()
              << endl()
-             
+             << compiler_flag(project.compiler_option)
+             << endl()
              << include(get("CMAKE_MODULE_PATH") + "/cmake_option.cmake") << endl()
                 
              << include(get("CMAKE_MODULE_PATH") + "/project_maker.cmake")<< endl()
              << make_cppm_lib_bin(project.type, get("PROJECT_NAME"))
+             << endl()
+             << include_user_script(project) 
+             << endl()
                 
             // << add_subdirectory(get("TEST_DIR"))               << endl()
             // << "enable_testing()"                            << endl()
@@ -78,7 +82,7 @@ namespace cmake
    }
    
    std::string compiler_flag(std::string compiler_flag) {
-      return set("CMAKE_CXX_FLAGS"       , get("CMAKE_CXX_FLAGS") + compiler_flag);
+      return set("CMAKE_CXX_FLAGS"       ,"\"" + get("CMAKE_CXX_FLAGS") +" "+compiler_flag+ "\"");
    }
 
    std::string cppm_find_library(cppm::Thirdparty& thirdparty) {
@@ -92,6 +96,14 @@ namespace cmake
       return output.str();
    }
    
+   std::string include_user_script(Cppm::Project& project)  {
+      std::stringstream output("");
+      for(auto script : project.user_cmake_script) {
+         output << include(script) << endl();
+      }
+      return output.str();
+   }
+   
    std::string make_cppm_lib_bin(std::string type, std::string name) {
       using namespace nieel::util;
       switch(hash(type.c_str())) 
@@ -99,11 +111,10 @@ namespace cmake
       case hash("bin"):
          return "make_excutable(" + name + ")";
       case hash("static"):
-         return "make_static_lib(" + name + ")";
       case hash("shared"):
-         return "make_shared_lib(" + name + ")";
+         return "make_lib(" + name + ")";
       default:
-         std::cerr<< "wrong parameter" << std::endl;
+         std::cerr<< "wrong project type: " << type << std::endl;
          exit(1);
       }
    }

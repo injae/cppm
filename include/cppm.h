@@ -20,6 +20,7 @@ public:
           std::string name
         ; std::string version
 		; std::string compiler
+		; std::string compiler_option
 		; std::string builder
 		; std::string cpu_core
 		; std::string type
@@ -30,13 +31,15 @@ public:
         ; std::string thirdparty
         ; std::string cmake_module
         ; std::string cmake_find_module
+        ; std::vector<std::string> user_cmake_script
         ;
     };
 public:
     static Cppm* instance();
     void run(int argc, char** argv);
-    const Project& project() { return project_; }
+    Project& project() { return project_; }
     const std::vector<cppm::Thirdparty>& thirdparties() { return thirdparties_; }
+    std::vector<std::string> user_cmake_script_parser(YAML::Node& node);
     void parse_project_config();
     void make_config_file(Project& project);
 private:

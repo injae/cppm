@@ -108,6 +108,15 @@ void Cppm::parse_project_config() {
         case hash("compiler"):
             project_.compiler = it.second.as<std::string>();
             break;
+        case hash("compiler-option"):
+            project_.compiler_option = it.second.as<std::string>();
+            break;
+        case hash("user-cmake-script"):
+            project_.user_cmake_script = user_cmake_script_parser(configure_file);
+            break;
+        case hash("type"):
+            project_.type = it.second.as<std::string>();
+            break;
         case hash("builder"):
             project_.builder = it.second.as<std::string>();
             break;
@@ -119,6 +128,15 @@ void Cppm::parse_project_config() {
         }
     }
     make_project_property();
+}
+
+std::vector<std::string> Cppm::user_cmake_script_parser(YAML::Node& node) {
+    std::vector<std::string> cmake_scripts;
+    for(auto script : node["project"]["user-cmake-script"]) {
+        cmake_scripts.push_back(script.as<std::string>());
+    }
+    
+    return cmake_scripts;
 }
 
 void Cppm::run(int argc, char** argv) {

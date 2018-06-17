@@ -18,5 +18,3 @@ option(BUILD_STATIC_LIBS "Build Library as static as oppesed to shared" OFF)
 
 # detect host processor
 message(STATUS "The host processor is ${CMAKE_HOST_SYSTEM_PROCESSOR}")
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC")

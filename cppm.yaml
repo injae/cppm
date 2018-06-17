@@ -5,7 +5,10 @@ project:
     type: bin
     cpu-core: 4
     compiler: g++ 
+    compiler-option: -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC
     builder: make 
+    user-cmake-script: 
+            - cmake/cppm_install.cmake
      
     thirdparty:
         boost: 
@@ -28,7 +31,7 @@ project:
             version: 0.0.1
             install: global
             url: https://github.com/INJAE/nieel.git
-
+    
     list   : ls
     
     include: cd include && ls
