@@ -3,7 +3,7 @@ find_package(Boost 1.54 COMPONENTS system filesystem program_options regex REQUI
 
 include(${CMAKE_MODULE_PATH}/utils.cmake)
 #make_third_party_static_lib(boost Boost)
-#list(APPEND third_party_library boost)
+list(APPEND third_party_library Boost::boost)
 
-include_directories( ${Boost_INCLUDE_DIR} )
-list(APPEND third_party_library ${Boost_LIBRARIES})
+#include_directories( ${Boost_INCLUDE_DIR} )
+#list(APPEND third_party_library ${Boost_LIBRARIES})

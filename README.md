@@ -1,2 +1,3 @@
-#Cppm# \n
+Cppm 
 C++ cmake project helper
+only linux

@@ -51,7 +51,7 @@ project:
                   && ./contrib/download_prerequisites 
                   && mkdir build && cd build 
                   && ../configure -v --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --prefix=/usr/local/gcc-8.1 --enable-checking=release --enable-languages=c,c++,fortran --disable-multilib --program-suffix=-8.1
-                  && make -j 8               
+                  && make -j 4               
                   && sudo make install
                   
     clean:   cd bin && sudo rm -rf *
