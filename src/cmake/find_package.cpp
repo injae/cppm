@@ -1,7 +1,7 @@
 #include"cmake/find_package.h"
 #include"cmake/generator.h"
 #include"cppm.h"
-#include"utils.h"
+#include<nieel/filesystem.h>
 #include<boost/regex.hpp>
 #include<boost/algorithm/string.hpp>
 
@@ -16,10 +16,10 @@ namespace cmake
         std::vector<cppm::Thirdparty> packages;
         
         std::string cmake_path = "/usr/local/share";
-        auto cmake_dir = util::find_regex_files(cmake_path, boost::regex("cmake.*"));
+        auto cmake_dir = nieel::find_regex_files(cmake_path, boost::regex("cmake.*"));
         auto module_path = cmake_path + "/" + cmake_dir[0] + "/Modules";
         
-        for(auto config_file : util::find_regex_files(module_path, boost::regex("Find.*cmake"))) {
+        for(auto config_file : nieel::find_regex_files(module_path, boost::regex("Find.*cmake"))) {
             cppm::Thirdparty package;
             boost::regex filter("Find(.*)\\.cmake");
             boost::smatch what;
@@ -38,7 +38,7 @@ namespace cmake
         std::vector<cppm::Thirdparty> packages;
         
         std::string cmake_path = "/usr/local/lib/cmake";
-        auto library_dirs = util::find_regex_files(cmake_path, boost::regex(".*"));
+        auto library_dirs = nieel::find_regex_files(cmake_path, boost::regex(".*"));
         for(auto dir : library_dirs) {
            cppm::Thirdparty package;
            package.name = dir;

@@ -3,7 +3,7 @@
 #include"cmake/generator.h"
 #include"boost/filesystem.hpp"
 #include<fstream>
-#include"utils.h"
+#include<nieel/filesystem.h>
 #include"stdlib.h"
 
 namespace fs = boost::filesystem;
@@ -15,17 +15,17 @@ namespace option
         ("help,h", "produce a help message")
         ;
         visible_option_.add(desc_);
-        desc_.add(make_command_desc());
+        desc_.add(nieel::make_command_desc());
     }
       
     void Init::run() {
-        if(vm_.count("command")) { auto cmd = vm_["command"].as<std::string>(); 
+        if(vm_.count("help")) _help();
+        else if(vm_.count("command")) { auto cmd = vm_["command"].as<std::string>(); 
                  if(cmd == "binary")      _bin();
             else if(cmd == "static")      _lib("static");
             else if(cmd == "shared")      _lib("shared");
             else if(cmd == "header-only") _lib("header_only");
         }
-       if(vm_.count("help")) _help();
     }
      
     void Init::_help() {
@@ -40,7 +40,7 @@ namespace option
         project.version = "0.0.1";
         project.builder = "make";
         cmake::make_default_project(project);
-        util::recursive_copy("/usr/local/share/cppm/default_project", project.path);
+        nieel::recursive_copy("/usr/local/share/cppm/default_project", project.path);
         std::ofstream file (project.name + "/CMakeLists.txt"); file.is_open();
         file << cmake::make_default_project(project); file.close();
         Cppm::instance()->make_config_file(project);
@@ -56,7 +56,7 @@ namespace option
         project.version = "0.0.1";
         project.builder = "make";
         cmake::make_default_project(project);
-        util::recursive_copy("/usr/local/share/cppm/default_project", project.path);
+        nieel::recursive_copy("/usr/local/share/cppm/default_project", project.path);
         std::ofstream file (project.name + "/CMakeLists.txt"); file.is_open();
         file << cmake::make_default_project(project); file.close();
         Cppm::instance()->make_config_file(project);

@@ -1,17 +1,16 @@
-#include"cppm_options.h"
 #include"cppm.h"
+#include"cppm_options.h"
 #include"cmake/find_package.h"
-#include"utils.h"
+#include"cmake/cmake_option.h"
 #include"options/init.h"
 #include"options/install.h"
 #include"url.h"
 
 #include<range/v3/core.hpp>
 #include<range/v3/numeric/accumulate.hpp>
-#include<range/v3/algorithm/for_each.hpp>
-#include<string>
 #include<boost/regex.hpp>
 
+#include<string>
 #include<iterator>
 
 CppmOptions::CppmOptions(int argc, char* argv[]) : Option("Cppm Options", argc, argv) {
@@ -20,27 +19,28 @@ CppmOptions::CppmOptions(int argc, char* argv[]) : Option("Cppm Options", argc, 
         ("version,v" , "Display the version number" )
         ;
     visible_option_.add(desc_);
-    desc_.add(make_command_desc());
+    desc_.add(nieel::make_command_desc());
 }
 
 void CppmOptions::run() {
-    if(vm_.count("command")) { auto cmd = vm_["command"].as<std::string>();
-        _user_command(cmd.c_str());
+         if(vm_.count("help")   ) _help(); 
+    else if(vm_.count("command")) { auto cmd = vm_["command"].as<std::string>();
         // don't use Project config 
              if(cmd == "hint")       _get_cmake_lib_hint();
         else if(cmd == "init")       _init();
         
         // use Project config
-             if(cmd == "build")      _build();
+        else if(cmd == "build")      _build();
         else if(cmd == "run")        _run();
         else if(cmd == "install")    _install();
         else if(cmd == "thirdparty") _show_thirdparties();
+        else                         _user_command(cmd.c_str());
     }
-    else if(vm_.count("help")   ) _help(); 
     else if(vm_.count("version")) _version();
 }
 
 void CppmOptions::_user_command(std::string_view cmd) {
+    Cppm::instance()->parse_project_config();
     auto project = Cppm::instance()->project();
     auto subargs = ranges::accumulate(get_subarg(), std::string{});
     for(auto& command : subcommand_) {
@@ -56,7 +56,6 @@ void CppmOptions::registe_subcommand(std::pair<std::string, std::string> command
 }
 
 void CppmOptions::_help() {
-   Cppm::instance()->parse_project_config();
    std::cout << "Usage: regex [options]\n"
              << visible_option_
              << std::endl;
@@ -68,14 +67,20 @@ void CppmOptions::_version() {
 }
 
 void CppmOptions::_build() {
+    using namespace cmake::option;
     Cppm::instance()->parse_project_config();
     auto subargs = get_subarg();
     
     auto project = Cppm::instance()->project();
-    std::string cmd = "cd " + project.bin + " && cmake .. && sudo make ";
+    std::string cmd = "cd " + project.bin 
+                    + " && cmake .."+ builder(project) + compiler(project) 
+                    + " && " + build(project);
     for(auto subarg : subargs) {
         cmd += subarg;    
     }
+    
+    std::cout << cmd << std::endl;
+    
     system(cmd.c_str()); 
 }
 

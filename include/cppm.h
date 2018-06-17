@@ -21,6 +21,7 @@ public:
         ; std::string version
 		; std::string compiler
 		; std::string builder
+		; std::string cpu_core
 		; std::string type
         ; std::string path
         ; std::string bin

@@ -1,10 +1,10 @@
 #ifndef __CPPM_OPTIONS_H__
 #define __CPPM_OPTIONS_H__
 
-#include<nieel/option/option.h>
+#include<nieel/program_option.h>
 #include<string_view>
 
-class CppmOptions : public Option
+class CppmOptions : public nieel::Option
 {
 public:
     void run();

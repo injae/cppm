@@ -1,11 +1,11 @@
 #ifndef __OPTIONS_INIT_H__
 #define __OPTIONS_INIT_H__
 
-#include<nieel/option/option.h>
+#include<nieel/program_option.h>
 
 namespace option
 {
-    class Init : public Option
+    class Init : public nieel::Option
     {
     public:
         void run();

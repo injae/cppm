@@ -1,5 +1,6 @@
+#include<nieel/util/hash.hpp>
+#include<nieel/util/string.h>
 #include"cppm_thirdparty.h"
-#include"utils.h"
 #include"cmake/generator.h"
 #include"cmake/find_package.h"
 #include"cppm.h"
@@ -9,7 +10,7 @@
 namespace cppm 
 {
     Repository classificate_repo(std::string url) {
-        using namespace util;
+        using namespace nieel::util;
         auto parsed = *parse_url(url);
         Repository repo; 
         repo.url = url;
@@ -65,7 +66,7 @@ namespace cppm
     }
     
     void install_thirdparty(Thirdparty& library) {
-        using namespace util;
+        using namespace nieel::util;
         switch(hash(library.repo.type.c_str()))
         {
         case hash("git"): 

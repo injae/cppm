@@ -1,5 +1,5 @@
 #include"cmake/generator.h"
-#include"utils.h"
+#include<nieel/util/hash.hpp>
 #include"boost/filesystem.hpp"
 #include<sstream>
 #include<string_view>
@@ -12,11 +12,9 @@ namespace cmake
    std::string make_default_project(Cppm::Project project) {
       std::stringstream output("");
       output << cmake_version("3.6", project.name)  << endl()
-             << set("PROJECT_NAME", project.name)    << endl()
-             << set(project.name + "_VERSION", project.version) 
              << endl()
              
-             << cmake_project(get("PROJECT_NAME"))         << endl()
+             << cmake_project(project.name + " LANGUAGES CXX " + "VERSION " + project.version) << endl()
              << endl()
              
              << set("PROJECT_ROOT_DIR"      , get("CMAKE_CURRENT_SOURCE_DIR")        ) << endl()
@@ -95,7 +93,7 @@ namespace cmake
    }
    
    std::string make_cppm_lib_bin(std::string type, std::string name) {
-      using namespace util;
+      using namespace nieel::util;
       switch(hash(type.c_str())) 
       {
       case hash("bin"):
@@ -111,7 +109,7 @@ namespace cmake
    }
   
    std::string make_external_library(cppm::Thirdparty& thirdparty) {
-      using namespace util; 
+      using namespace nieel::util; 
       
       switch(hash(thirdparty.build_type.c_str()))
       {
@@ -125,8 +123,5 @@ namespace cmake
          std::cerr<< "wrong parameter" << std::endl;
          exit(1);
       }
-      
    }
-   
-   
 }

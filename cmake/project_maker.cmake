@@ -20,7 +20,47 @@ function(make_excutable name)
     
     include(GNUInstallDirs) 
     install(TARGETS ${name} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+endfunction()
+
+function(make_lib name)
+    get_third_party_list()
     
+    file(GLOB_RECURSE GLOB_RESULT "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"  
+                                  "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc"
+                                  "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cxx"
+    )
+    list(APPEND SOURCES ${GLOB_RESULT})
+    
+    if(BUILD_STATIC_LIBS MATCHES ON) 
+        add_library(${name} STATIC ${SOURCES})
+        target_link_libraries(${name} ${third_party_library})
+         
+    else()
+        add_library(${name} SHARED ${SOURCES})
+        target_link_libraries(${name} ${third_party_library})
+    endif()
+        
+    install_library(${name})
+endfunction()
+
+function(make_static_shared_lib name)
+    get_third_party_list()
+    
+    file(GLOB_RECURSE GLOB_RESULT "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"  
+                                  "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc"
+                                  "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cxx"
+    )
+    list(APPEND SOURCES ${GLOB_RESULT})
+    
+    add_library(${name} SHARED ${SOURCES})
+    add_library(${name}-static STATIC ${SOURCES})
+    
+    set_target_properties(${name}-static PROPERTIES OUTPUT_NAME ${name}) 
+    target_link_libraries(${name} ${third_party_library})
+    target_link_libraries(${name}-static ${third_party_library})
+    
+    install_library(${name})
+    install_library(${name}-static)
 endfunction()
 
 function(make_static_lib name)
@@ -33,6 +73,7 @@ function(make_static_lib name)
     list(APPEND SOURCES ${GLOB_RESULT})
     
     add_library(${name} STATIC ${SOURCES})
+    
     target_link_libraries(${name} ${third_party_library})
     install_library(${name})
 endfunction()
@@ -47,6 +88,17 @@ function(make_shared_lib name)
     list(APPEND SOURCES ${GLOB_RESULT})
     
     add_library(${name} SHARED ${SOURCES})
+    
+    target_link_libraries(${name} ${third_party_library})
+    install_library(${name})
+endfunction()
+
+function(make_header_only_lib name)
+    get_third_party_list()
+    
+    add_library(${name} INTERFACE)
+    target_include_directories(${name} INTERFACE ${path})
+    
     target_link_libraries(${name} ${third_party_library})
     install_library(${name})
 endfunction()
@@ -59,9 +111,8 @@ function(install_library_config name)
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
     )
     
-    message("${name}")
     #set_target_properties(${name} PROPERTIES
-    #    VERSION ${${name}_VERSION}
+    #    VERSION ${${PROJECT_NAME}_VERSION}}
     #    SOVERSION 1
     #)
     
@@ -72,12 +123,13 @@ function(install_library_config name)
     )
     install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${name})
 
-    install(EXPORT ${name}Config DESTINATION share/${name}/cmake)
+    install(EXPORT ${name}Config DESTINATION lib/cmake/${name})
     
     export(TARGETS ${name} FILE ${name}Config.cmake)
 endfunction()
 
 MACRO(make_third_party_shared_lib name third_party_lib)
+    message("${${third_party_lib}_INCLUDE_DIR}")
     
     if(${third_party_lib}_FOUND)
         add_library(${name} SHARED IMPORTED)
@@ -90,7 +142,6 @@ MACRO(make_third_party_shared_lib name third_party_lib)
 ENDMACRO()
 
 MACRO(make_third_party_static_lib name third_party_lib)
-    
     if(${third_party_lib}_FOUND)
         add_library(${name} STATIC IMPORTED)
         set_target_properties(${name} PROPERTIES IMPORTED_LOCATION ${${third_party_lib}_LIBRARIES})

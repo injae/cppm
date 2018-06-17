@@ -1,5 +1,6 @@
 #include"cppm.h"
-#include"utils.h"
+#include<nieel/filesystem.h>
+#include<nieel/util/hash.hpp>
 #include<fstream>
 
 Cppm* Cppm::instance() {
@@ -19,7 +20,7 @@ void Cppm::make_project_property() {
 }
 
 fs::path Cppm::find_config_file() {
-    auto config_file = util::find_file(fs::current_path(), "cppm.yaml");
+    auto config_file = nieel::find_file(fs::current_path(), "cppm.yaml");
     if(!config_file) {
         std::cerr << "Can't not find cppm.yaml file\n" 
                   << std::endl;
@@ -46,7 +47,7 @@ void Cppm::make_config_file(Project& project) {
 
 
 void Cppm::parse_thirdparty(YAML::Node& node) {
-    using namespace util;
+    using namespace nieel::util;
     
     for(auto name : node["project"]["thirdparty"]) {
         cppm::Thirdparty thirdparty; 
@@ -88,7 +89,7 @@ void Cppm::parse_thirdparty(YAML::Node& node) {
 }
 
 void Cppm::parse_project_config() {
-    using namespace util;
+    using namespace nieel::util;
     auto configure_file = YAML::LoadFile(find_config_file().c_str());
     project_.path = find_config_file().parent_path().string();
     for(auto it : configure_file["project"]) {
@@ -109,6 +110,9 @@ void Cppm::parse_project_config() {
             break;
         case hash("builder"):
             project_.builder = it.second.as<std::string>();
+            break;
+        case hash("cpu-core"):
+            project_.cpu_core = it.second.as<std::string>();
             break;
         default:
             option_->registe_subcommand(std::make_pair(it.first.as<std::string>(), it.second.as<std::string>())); 
