@@ -14,7 +14,6 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     add_definitions(-DSYSTEM_WINDOWS)
 endif()
 
-option(BUILD_STATIC_LIBS "Build Library as static as oppesed to shared" OFF)
 
 # detect host processor
 message(STATUS "The host processor is ${CMAKE_HOST_SYSTEM_PROCESSOR}")

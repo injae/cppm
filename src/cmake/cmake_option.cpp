@@ -26,7 +26,7 @@ namespace cmake::option
         case hash("ninja"):
             return " -G Ninja";
         case hash("make"):
-            return " ";
+            return "";
         default:
             std::cerr << "wrong argument" << std::endl;
             exit(1);
@@ -37,16 +37,4 @@ namespace cmake::option
         return " -DCMAKE_CXX_COMPILER=" +project.compiler;
     }
     
-    std::string library_type(Cppm::Project& project) {
-        using namespace nieel::util;
-        switch(hash(project.type.c_str()))
-        {
-        case hash("static"):
-            return " -BUILD_STATIC_LIBS=ON";
-        case hash("shared"):
-            return " ";
-        default:
-            return " ";
-        } 
-    }
 }

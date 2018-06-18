@@ -2,7 +2,6 @@
 #include<regex>
 #include<iostream>
 
-
 optional<Url> parse_url(std::string url) {
     std::regex ex("(http|https)://([^/ :]+):?([^/ ]*)(/?[^ #?]*)\\x3f?([^ #]*)#?([^ ]*)");
     std::cmatch what;

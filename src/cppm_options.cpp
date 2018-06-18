@@ -76,7 +76,7 @@ void CppmOptions::_build() {
     
     auto project = Cppm::instance()->project();
     std::string cmd = "cd " + project.bin 
-                    + " && cmake .."+ builder(project) + compiler(project) 
+                    + " && cmake" + builder(project) + compiler(project) + " .. "
                     + " && " + build(project);
     for(auto subarg : subargs) {
         cmd += subarg;    

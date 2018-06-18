@@ -9,7 +9,6 @@ namespace cmake::option
 {
     std::string builder(Cppm::Project& project);
     std::string compiler(Cppm::Project& project);
-    std::string library_type(Cppm::Project& project);
     std::string build(Cppm::Project& project);
 }
 

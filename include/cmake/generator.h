@@ -8,6 +8,8 @@
 
 namespace cmake 
 {
+   //std::string      option(std::string name, std::string descripte, std::string on_off);
+   std::string      is_on_shared(Cppm::Project& project);
    std::string      make_default_project(Cppm::Project& project);
    std::string      cmake_version(std::string cmake_version, std::string project_name);
    std::string      cmake_project(std::string project_name);

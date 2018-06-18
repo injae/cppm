@@ -3,7 +3,7 @@ project:
     version: 1.0.0
     authors: 8687lee@gmail.com InJaeLee
     type: bin
-    cpu-core: 4
+    cpu-core: 1
     compiler: g++ 
     compiler-option: -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC
     builder: make 

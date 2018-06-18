@@ -33,6 +33,8 @@ namespace cmake
              << compiler_flag(project.compiler_option)
              << endl()
              << include(get("CMAKE_MODULE_PATH") + "/cmake_option.cmake") << endl()
+             << "option( BUILD_SHARED_LIB \"ON is build shared lib\"" + is_on_shared(project)+ ")"
+             << endl()
                 
              << include(get("CMAKE_MODULE_PATH") + "/project_maker.cmake")<< endl()
              << make_cppm_lib_bin(project.type, get("PROJECT_NAME"))
@@ -46,6 +48,23 @@ namespace cmake
              ; 
       return output.str();
    }
+   
+    std::string is_on_shared(Cppm::Project& project) {
+        using namespace nieel::util;
+        switch(hash(project.type.c_str()))
+        {
+        case hash("static"):
+            return " OFF";
+        case hash("shared"):
+            return " ON";
+        default:
+            return " ON";
+        } 
+    }
+   
+   //std::string option(std::string name, std::string descripte, std::string on_off) {
+   //   return "option(" + name + " " + descripte + " " + on_off + ")";
+   //}
    
    std::string cmake_version(std::string cmake_version, std::string project_name) {
       return  "cmake_minimum_required(VERSION " + cmake_version + ")";
