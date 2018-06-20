@@ -8,9 +8,10 @@
 #include<memory>
 
 #include"cppm_options.h"
-#include"cppm_thirdparty.h"
+#include"config/thirdparty.h"
 
 namespace fs = boost::filesystem;
+
 
 class Cppm 
 {

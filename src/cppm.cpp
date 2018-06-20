@@ -62,7 +62,7 @@ void Cppm::parse_thirdparty(YAML::Node& node) {
                 thirdparty.build_type = data;
                 break;
             case hash("url"):
-                thirdparty.repo       = cppm::classificate_repo(data);
+                thirdparty.repo       = cppm::Repository::classificate(data);
                 break;
             case hash("version"):
                 thirdparty.version    = data;

@@ -3,7 +3,7 @@
 #include"utils.h"
 #include<string>
 #include"cmake/find_package.h"
-#include"cppm_thirdparty.h"
+#include"config/thirdparty.h"
 #include"cppm.h"
 
 namespace option {
@@ -50,7 +50,7 @@ namespace option {
         auto subarg = vm_["url"].as<std::string>();
         if(parse_url(subarg)) {
             cppm::Thirdparty lib;
-            lib.repo = cppm::classificate_repo(subarg);
+            lib.repo = cppm::Repository::classificate(subarg);
             cppm::install_thirdparty(lib);
         }
     }

@@ -3,7 +3,7 @@
 
 #include<vector>
 #include<string>
-#include"cppm_thirdparty.h"
+#include"config/thirdparty.h"
 
 namespace cmake 
 {

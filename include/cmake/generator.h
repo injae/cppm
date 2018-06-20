@@ -4,7 +4,7 @@
 #include<string>
 #include<string_view>
 #include"cppm.h"
-#include"cppm_thirdparty.h"
+#include"config/thirdparty.h"
 
 namespace cmake 
 {
