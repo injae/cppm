@@ -9,12 +9,12 @@ namespace fs = boost::filesystem;
 
 namespace cmake 
 {
-   std::string make_default_project(Cppm::Project& project) {
+   std::string make_default_project(cppm::Project& project) {
       std::stringstream output("");
-      output << cmake_version("3.6", project.name)  << endl()
+      output << cmake_version("3.6", project.package.name)  << endl()
              << endl()
              
-             << cmake_project(project.name + " LANGUAGES CXX " + "VERSION " + project.version) << endl()
+             << cmake_project(project.package.name + " LANGUAGES CXX " + "VERSION " + project.package.version) << endl()
              << endl()
              
              << set("PROJECT_ROOT_DIR"      , get("CMAKE_CURRENT_SOURCE_DIR")        ) << endl()
@@ -30,14 +30,14 @@ namespace cmake
              << set("BUILD_DIR"             , get("PROJECT_NAME")     + "/build")      << endl()
              << set("third_party_library", " ") << endl()
              << endl()
-             << compiler_flag(project.compiler_option)
+             << compiler_flag(project.compiler.option)
              << endl()
              << include(get("CMAKE_MODULE_PATH") + "/cmake_option.cmake") << endl()
              << "option( BUILD_SHARED_LIB \"ON is build shared lib\"" + is_on_shared(project)+ ")"
              << endl()
                 
              << include(get("CMAKE_MODULE_PATH") + "/project_maker.cmake")<< endl()
-             << make_cppm_lib_bin(project.type, get("PROJECT_NAME"))
+             << make_cppm_lib_bin(project.package.type, get("PROJECT_NAME"))
              << endl()
              << include_user_script(project) 
              << endl()
@@ -49,9 +49,9 @@ namespace cmake
       return output.str();
    }
    
-    std::string is_on_shared(Cppm::Project& project) {
-        using namespace nieel::util;
-        switch(hash(project.type.c_str()))
+    std::string is_on_shared(cppm::Project& project) {
+        using namespace nieel;
+        switch(hash(project.package.type.c_str()))
         {
         case hash("static"):
             return " OFF";
@@ -115,16 +115,16 @@ namespace cmake
       return output.str();
    }
    
-   std::string include_user_script(Cppm::Project& project)  {
+   std::string include_user_script(cppm::Project& project)  {
       std::stringstream output("");
-      for(auto script : project.user_cmake_script) {
+      for(auto script : project.user_cmake_scripts) {
          output << include(script) << endl();
       }
       return output.str();
    }
    
    std::string make_cppm_lib_bin(std::string type, std::string name) {
-      using namespace nieel::util;
+      using namespace nieel;
       switch(hash(type.c_str())) 
       {
       case hash("bin"):
@@ -139,7 +139,7 @@ namespace cmake
    }
   
    std::string make_external_library(cppm::Thirdparty& thirdparty) {
-      using namespace nieel::util; 
+      using namespace nieel; 
       
       switch(hash(thirdparty.build_type.c_str()))
       {

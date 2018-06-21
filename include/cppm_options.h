@@ -22,6 +22,7 @@ private:
     void _get_cmake_lib_hint();
     void _make_cmake_find_lib_file();
     void _user_command(std::string_view cmd);
+    void _show_libraries();
     
 private:
     std::map<std::string, std::string> subcommand_;

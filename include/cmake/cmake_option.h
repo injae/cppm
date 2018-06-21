@@ -7,9 +7,9 @@
 
 namespace cmake::option 
 {
-    std::string builder(Cppm::Project& project);
-    std::string compiler(Cppm::Project& project);
-    std::string build(Cppm::Project& project);
+    std::string builder(cppm::Project& project);
+    std::string compiler(cppm::Project& project);
+    std::string build(cppm::Project& project);
 }
 
 #endif  

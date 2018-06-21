@@ -9,6 +9,7 @@
 
 #include<range/v3/core.hpp>
 #include<range/v3/numeric/accumulate.hpp>
+//#include<range/v3/algorithm/for_each.hpp>
 #include<boost/regex.hpp>
 
 #include<string>
@@ -35,6 +36,7 @@ void CppmOptions::run() {
         else if(cmd == "run")        _run();
         else if(cmd == "install")    _install();
         else if(cmd == "thirdparty") _show_thirdparties();
+        else if(cmd == "library")    _show_libraries();
         else                         _user_command(cmd.c_str());
     }
     else if(vm_.count("version")) _version();
@@ -44,9 +46,9 @@ void CppmOptions::_user_command(std::string_view cmd) {
     Cppm::instance()->parse_project_config();
     auto project = Cppm::instance()->project();
     auto subargs = ranges::accumulate(get_subarg(), std::string{});
-    for(auto& command : subcommand_) {
-         if(command.first == cmd) {
-             system(("cd "+ project.path + " && " + command.second + " " + subargs).c_str());
+    for(auto& command : project.user_commands) {
+         if(command.name == cmd) {
+             system(("cd "+ project.path.root + " && " + command.script + " " + subargs).c_str());
              continue;
          }
     }
@@ -61,26 +63,34 @@ void CppmOptions::_help() {
              << visible_option_
              << std::endl;
 }
+void CppmOptions::_show_libraries() {
+    Cppm::instance()->parse_project_config();
+    auto project = Cppm::instance()->project();
+        std::for_each(project.libraries.begin(),
+                     project.libraries.end(),
+                     [](auto library) {
+                        cppm::Library::show(library);
+                     });
+}
 
 void CppmOptions::_version() {
    Cppm::instance()->parse_project_config();
-   std::cout << "Version: "<< Cppm::instance()->project().version << std::endl;
+   std::cout << "Version: "<< Cppm::instance()->project().package.version << std::endl;
 }
 
 void CppmOptions::_build() {
     using namespace cmake::option;
     Cppm::instance()->parse_project_config();
     auto subargs = get_subarg();
-    std::ofstream file (Cppm::instance()->project().path + "/CMakeLists.txt"); file.is_open();
+    std::ofstream file (Cppm::instance()->project().path.root + "/CMakeLists.txt"); file.is_open();
     file << cmake::make_default_project(Cppm::instance()->project()); file.close();
     
     auto project = Cppm::instance()->project();
-    std::string cmd = "cd " + project.bin 
+    std::string cmd = "cd " + project.path.bin 
                     + " && cmake" + builder(project) + compiler(project) + " .. "
                     + " && " + build(project);
-    for(auto subarg : subargs) {
-        cmd += subarg;    
-    }
+                    
+    for(auto subarg : subargs) { cmd += subarg; }
     
     system(cmd.c_str()); 
 }
@@ -89,13 +99,13 @@ void CppmOptions::_run() {
     Cppm::instance()->parse_project_config();
     auto project = Cppm::instance()->project();
     auto subargs = ranges::accumulate(get_subarg(), std::string{});
-    std::string cmd = "cd " + project.bin + " && ./" + project.name +" " + subargs;
+    std::string cmd = "cd " + project.path.bin + " && ./" + project.package.name +" " + subargs;
     system(cmd.c_str());
 }
 
 void CppmOptions::_show_thirdparties() {
     Cppm::instance()->parse_project_config();
-    auto thirdparties = Cppm::instance()->thirdparties();
+    auto thirdparties = Cppm::instance()->project().thirdparties;
     for(auto thirdparty : thirdparties) {
         std::cout << "[" + thirdparty.name << "]\n"
                   << "-build-type: " + thirdparty.build_type << "\n"

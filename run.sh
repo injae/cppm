@@ -6,6 +6,7 @@
 cd bin
 cmake ..
 make 
+sudo make install
 
 #cd ..
 ##./bin/DefaultCmakeProject

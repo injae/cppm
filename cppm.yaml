@@ -1,67 +1,83 @@
-project:
+package:
     name: cppm
     version: 1.0.0
     authors: 8687lee@gmail.com InJaeLee
-    type: bin
-    cpu-core: 1
-    compiler: g++ 
-    compiler-option: -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC
-    builder: make 
-    user-cmake-script: 
-            - cmake/cppm_install.cmake
+    type: bin 
+        
+compiler: 
+    type: g++ 
+    option: -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC -O0
+    
+builder: 
+    type: make
+    core: 1
+    
+user-cmake-script: 
+    - cmake/cppm_install.cmake
+    
+        
+thirdparty:
+    boost: 
+       build-type: static
+       install: global
+       version: 1.67.0
+       url: https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.gz 
+       find-cmake-value: Boost
+       
+    yaml-cpp:
+       build-type: static
+       install: global
+       url: https://github.com/jbeder/yaml-cpp.git
+       find-cmake-value: YAML_CPP
+       
+    range-v3:
+       build-type: header_only
+       install: global
+       url: https://github.com/ericniebler/range-v3.git
+       
+    nieel:
+       build-type: static
+       version: 0.0.1
+       install: global
+       url: https://github.com/INJAE/nieel.git
             
-    thirdparty:
-        boost: 
-            build-type: static
-            install: global
-            version: 1.67.0
-            url: https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.gz 
-            find-cmake-value: Boost
-        yaml-cpp:
-            build-type: static
-            install: global
-            url: https://github.com/jbeder/yaml-cpp.git
-            find-cmake-value: YAML_CPP
-        range-v3:
-            build-type: header_only
-            install: global
-            url: https://github.com/ericniebler/range-v3.git
-        nieel:
-            build-type: static
-            version: 0.0.1
-            install: global
-            url: https://github.com/INJAE/nieel.git
-    
-            
-    
-    list   : ls
-    
-    include: cd include && ls
+list:
+    - ls
+
+include: 
+    - cd include 
+    - ls
+         
+src: 
+    - cd src 
+    - ls 
+
+ninja-install:
+    - git clone git://github.com/martine/ninja.git 
+    - cd ninja && ./bootstrap.py 
+    - sudo cp ninja /usr/local/bin/ 
+    - sudo chmod a+rx /usr/local/bin/ninja 
+              
+gcc-install:
+    - wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-8.1.0/gcc-8.1.0.tar.gz              
+    - rm gcc-8.1.0.tar.gz
+    - cd gcc-8.1.0
+    - ./contrib/download_prerequisites 
+    - mkdir build && cd build 
+    - ../configure -v --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --prefix=/usr/local/gcc-8.1 --enable-checking=release --enable-languages=c,c++,fortran --disable-multilib --program-suffix=-8.1
+    - make -j 4               
+    - sudo make install
              
-    src    : cd src && ls 
-             
-    thirdparty-local: ls thirdparty 
-    
-    ninja-install:   git clone git://github.com/martine/ninja.git 
-                  && cd ninja && ./bootstrap.py 
-                  && sudo cp ninja /usr/local/bin/ 
-                  && sudo chmod a+rx /usr/local/bin/ninja 
-                  
-    gcc-install:     wget http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-8.1.0/gcc-8.1.0.tar.gz              
-                  && rm gcc-8.1.0.tar.gz
-                  && cd gcc-8.1.0
-                  && ./contrib/download_prerequisites 
-                  && mkdir build && cd build 
-                  && ../configure -v --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --prefix=/usr/local/gcc-8.1 --enable-checking=release --enable-languages=c,c++,fortran --disable-multilib --program-suffix=-8.1
-                  && make -j 4               
-                  && sudo make install
-                  
-    clean:   cd bin && sudo rm -rf *
-    
-    nieel: cd ../nieel && cppm build install 
-    cp:    cp cmake/project_maker.cmake ../nieel/cmake
-        && cp cmake/cmake_option.cmake ../nieel/cmake
-    
-    shared-lib-setting: LD_LIBRARY_PATH=/usr/local/lib
-    
-    
+clean: 
+    - cd bin && sudo rm -rf *
+
+nieel:
+    - cd ../nieel && cppm build install 
+cp:
+    - cp cmake/project_maker.cmake ../nieel/cmake
+    - cp cmake/cmake_option.cmake ../nieel/cmake
+
+shared-lib-setting: 
+    - LD_LIBRARY_PATH=/usr/local/lib
+
+   

@@ -14,7 +14,7 @@ set(MODULE_PATH ${CMAKE_MODULE_PATH}/Modules)
 set(BUILD_DIR ${PROJECT_NAME}/build)
 set(third_party_library  )
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC -O0")
 include(${CMAKE_MODULE_PATH}/cmake_option.cmake)
 option( BUILD_SHARED_LIB "ON is build shared lib" ON)
 include(${CMAKE_MODULE_PATH}/project_maker.cmake)

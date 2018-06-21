@@ -81,7 +81,7 @@ namespace cmake
     
     void make_find_library(cppm::Thirdparty& library) {
         auto project = Cppm::instance()->project();
-        auto file_name = project.cmake_find_module + "/Find"+library.name+".cmake";
+        auto file_name = project.path.cmake_find_module + "/Find"+library.name+".cmake";
         std::ofstream file(file_name); file.is_open();
         file <<  cppm_find_library(library);
         file.close();

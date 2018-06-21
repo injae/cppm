@@ -33,15 +33,15 @@ namespace option
     }
      
     void Init::_bin() {
-        Cppm::Project project;
-        project.name = get_subarg()[0];
-        project.path = (fs::current_path() / project.name).string();
-        project.type = "bin";
-        project.version = "0.0.1";
-        project.builder = "make";
+        cppm::Project project;
+        project.package.name = get_subarg()[0];
+        project.path.root = (fs::current_path() / project.package.name).string();
+        project.package.type = "bin";
+        project.package.version = "0.0.1";
+        project.builder.type = "make";
         cmake::make_default_project(project);
-        nieel::recursive_copy("/usr/local/share/cppm/default_project", project.path);
-        std::ofstream file (project.name + "/CMakeLists.txt"); file.is_open();
+        nieel::recursive_copy("/usr/local/share/cppm/default_project", project.path.root);
+        std::ofstream file (project.package.name + "/CMakeLists.txt"); file.is_open();
         file << cmake::make_default_project(project); file.close();
         Cppm::instance()->make_config_file(project);
         
@@ -49,15 +49,15 @@ namespace option
     }
      
     void Init::_lib(std::string type) {
-        Cppm::Project project;
-        project.name = get_subarg()[0];
-        project.path = (fs::current_path() / project.name).string();
-        project.type = type; 
-        project.version = "0.0.1";
-        project.builder = "make";
+        cppm::Project project;
+        project.package.name = get_subarg()[0];
+        project.path.root = (fs::current_path() / project.package.name).string();
+        project.package.type = type; 
+        project.package.version = "0.0.1";
+        project.builder.type = "make";
         cmake::make_default_project(project);
-        nieel::recursive_copy("/usr/local/share/cppm/default_project", project.path);
-        std::ofstream file (project.name + "/CMakeLists.txt"); file.is_open();
+        nieel::recursive_copy("/usr/local/share/cppm/default_project", project.path.root);
+        std::ofstream file (project.package.name + "/CMakeLists.txt"); file.is_open();
         file << cmake::make_default_project(project); file.close();
         Cppm::instance()->make_config_file(project);
         

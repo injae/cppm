@@ -5,23 +5,22 @@
 
 namespace cmake::option 
 {
-    std::string build(Cppm::Project& project) {
-        using namespace nieel::util;
-        switch(hash(project.builder.c_str()))
+    std::string build(cppm::Project& project) {
+        using namespace nieel;
+        switch(hash(project.builder.type))
         {
         case hash("ninja"):
             return " sudo ninja ";
-            
         case hash("make"):
             std::string cmd = " sudo make ";
-            if(project.cpu_core != "") cmd += "-j " + project.cpu_core + " ";
+            if(project.builder.cpu_core != "") cmd += "-j " + project.builder.cpu_core + " ";
             return cmd;
         }
     }
     
-    std::string builder(Cppm::Project& project) {
-        using namespace nieel::util;
-        switch(hash(project.builder.c_str()))
+    std::string builder(cppm::Project& project) {
+        using namespace nieel;
+        switch(hash(project.builder.type))
         {
         case hash("ninja"):
             return " -G Ninja";
@@ -33,8 +32,8 @@ namespace cmake::option
         }
     }
     
-    std::string compiler(Cppm::Project& project) {
-        return " -DCMAKE_CXX_COMPILER=" +project.compiler;
+    std::string compiler(cppm::Project& project) {
+        return " -DCMAKE_CXX_COMPILER=" +project.compiler.type;
     }
     
 }

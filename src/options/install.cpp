@@ -30,7 +30,7 @@ namespace option {
     }
     
     void Install::_config_base(std::string& name) {
-        auto thirdparties = Cppm::instance()->thirdparties();
+        auto thirdparties = Cppm::instance()->project().thirdparties;
         auto subargs = get_subarg();
         std::vector<cppm::Thirdparty> install_list;
         for(auto thirdparty : thirdparties) {
