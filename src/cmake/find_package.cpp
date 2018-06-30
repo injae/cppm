@@ -3,15 +3,14 @@
 #include"cppm.h"
 #include<nieel/filesystem.h>
 #include<boost/regex.hpp>
-#include<boost/algorithm/string.hpp>
-
+#include<cctype>
 #include<fstream>
 #include<boost/filesystem.hpp>
+#include<nieel/string.hpp>
 namespace fs = boost::filesystem;
 
 namespace cmake 
 {
-
     std::vector<cppm::Thirdparty> find_package_list() {
         std::vector<cppm::Thirdparty> packages;
         
@@ -26,7 +25,7 @@ namespace cmake
             if(!boost::regex_search(config_file, what, filter)) continue;
             
             package.name = what[1];
-            boost::to_lower(package.name);
+            nieel::to_lower(package.name);
             package.config_file = module_path + "/" + config_file;
             packages.emplace_back(std::move(package));
         }

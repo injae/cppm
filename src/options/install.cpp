@@ -1,3 +1,4 @@
+#include<nieel/util/hash.hpp>
 #include"options/install.h"
 #include"url.h"
 #include"utils.h"
@@ -9,27 +10,55 @@
 namespace option {
     Install::Install(int argc, char* argv[]) : Option("Install option", argc, argv) {
         desc_.add_options()
-        ("help,h", "produce a help message")
-        ("url,u" , po::value<std::string>(), "url base install")
+        ("help,h" , "produce a help message")
+        ("url,u"  , po::value<std::string>(), "url base install")
+        ("git,g"  , po::value<std::string>(), "git base install")
+        ("svn,s"  , po::value<std::string>(), "svn base install")
+        ("file,f" , po::value<std::string>(), "file base install")
         ;
         visible_option_.add(desc_);
         desc_.add(nieel::make_command_desc());
     }
       
     void Install::run() {
-             if(vm_.count("help")) _help();
-        else if(vm_.count("url"))  _url_base();
-        else if(vm_.count("command")) { auto cmd = vm_["command"].as<std::string>(); 
-            std::cout << cmd << std::endl;
-            _config_base(cmd);
-        }
+       using namespace nieel::option; 
+       using namespace nieel;
+       SubOptions suboptions(vm_);
+       suboptions(type::option, "help" , opbind(_help))
+                 (type::option, "url"  , opbind(_git))
+                 (type::option, "git"  , opbind(_git))
+                 (type::option, "svn"  , opbind(_svn))
+                 (type::option, "file" , opbind(_file))
+                 (type::default_command, uopbind(_config))
+                 .run();
     }
     
     void Install::_help() {
-        
+        std::cout << "hello" << std::endl;
     }
     
-    void Install::_config_base(std::string& name) {
+    void Install::_git() {
+        cppm::Thirdparty lib;
+        lib.repo.url = vm_["git"].as<std::string>();
+        lib.repo.type = "git";
+        cppm::install_thirdparty(lib);
+    }
+    
+    void Install::_svn() {
+        cppm::Thirdparty lib;
+        lib.repo.url = vm_["svn"].as<std::string>();
+        lib.repo.type = "svn";
+        cppm::install_thirdparty(lib);
+    }
+    
+    void Install::_file() {
+        cppm::Thirdparty lib;
+        lib.repo.url = vm_["file"].as<std::string>();
+        lib.repo.type = "link";
+        cppm::install_thirdparty(lib);
+    }
+    
+    void Install::_config(std::string& name) {
         auto thirdparties = Cppm::instance()->project().thirdparties;
         auto subargs = get_subarg();
         std::vector<cppm::Thirdparty> install_list;
@@ -46,7 +75,7 @@ namespace option {
         }
     }
     
-    void Install::_url_base() {
+    void Install::_url() {
         auto subarg = vm_["url"].as<std::string>();
         if(parse_url(subarg)) {
             cppm::Thirdparty lib;

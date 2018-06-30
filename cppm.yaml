@@ -10,36 +10,48 @@ compiler:
     
 builder: 
     type: make
-    core: 1
+    core: 2
     
 user-cmake-script: 
     - cmake/cppm_install.cmake
     
-        
+binary:
+    cppm:
+        version: 1.0.0
+        source:
+            - src/
+        dependencies:
+            - boost
+            - yaml-cpp
+            - range-v3
+            - nieel 
 thirdparty:
     boost: 
        build-type: static
        install: global
        version: 1.67.0
        url: https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.gz 
-       find-cmake-value: Boost
+       cmake-lib-name: Boost::boost
        
     yaml-cpp:
        build-type: static
        install: global
        url: https://github.com/jbeder/yaml-cpp.git
        find-cmake-value: YAML_CPP
+       cmake-lib-name: yaml-cpp
        
     range-v3:
        build-type: header_only
        install: global
        url: https://github.com/ericniebler/range-v3.git
+       cmake-lib-name: range-v3
        
     nieel:
        build-type: static
        version: 0.0.1
        install: global
        url: https://github.com/INJAE/nieel.git
+       cmake-lib-name: nieel
             
 list:
     - ls
@@ -73,9 +85,13 @@ clean:
 
 nieel:
     - cd ../nieel && cppm build install 
+    
+nieelt:
+    - cd ../nieel && ./run.sh
 cp:
     - cp cmake/project_maker.cmake ../nieel/cmake
     - cp cmake/cmake_option.cmake ../nieel/cmake
+    - cp cmake/project_makerv2.cmake ../nieel/cmake
 
 shared-lib-setting: 
     - LD_LIBRARY_PATH=/usr/local/lib

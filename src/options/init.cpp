@@ -19,13 +19,16 @@ namespace option
     }
       
     void Init::run() {
-        if(vm_.count("help")) _help();
-        else if(vm_.count("command")) { auto cmd = vm_["command"].as<std::string>(); 
-                 if(cmd == "binary")      _bin();
-            else if(cmd == "static")      _lib("static");
-            else if(cmd == "shared")      _lib("shared");
-            else if(cmd == "header-only") _lib("header_only");
-        }
+        using namespace nieel::option; 
+        using namespace nieel;
+        SubOptions suboptions(vm_);
+        suboptions(type::option , "help"       , opbind(_help))
+                  (type::command, "binary"     , opbind(_bin))
+                  (type::command, "static"     , aopbind(_lib("static")))
+                  (type::command, "shared"     , aopbind(_lib("shared")))
+                  (type::command, "header_only", aopbind(_lib("header_only")))
+                  (type::default_command, opbind([](){std::cerr << "wrong argument" << std::endl;}))
+                  .run();
     }
      
     void Init::_help() {

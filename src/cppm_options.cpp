@@ -6,18 +6,17 @@
 #include"options/init.h"
 #include"options/install.h"
 #include"url.h"
-
 #include<range/v3/core.hpp>
-#include<range/v3/numeric/accumulate.hpp>
-//#include<range/v3/algorithm/for_each.hpp>
-#include<boost/regex.hpp>
+#include<range/v3/algorithm.hpp>
+#include<range/v3/numeric.hpp>
+#include<nieel/string.hpp>
 
 #include<string>
 #include<iterator>
 
 CppmOptions::CppmOptions(int argc, char* argv[]) : Option("Cppm Options", argc, argv) {
     desc_.add_options()
-        ("help"      , "produce a help message"     )
+        ("help,h"      , "produce a help message"     )
         ("version,v" , "Display the version number" )
         ;
     visible_option_.add(desc_);
@@ -25,33 +24,40 @@ CppmOptions::CppmOptions(int argc, char* argv[]) : Option("Cppm Options", argc, 
 }
 
 void CppmOptions::run() {
-         if(vm_.count("help")   ) _help(); 
-    else if(vm_.count("command")) { auto cmd = vm_["command"].as<std::string>();
-        // don't use Project config 
-             if(cmd == "hint")       _get_cmake_lib_hint();
-        else if(cmd == "init")       _init();
-        
-        // use Project config
-        else if(cmd == "build")      _build();
-        else if(cmd == "run")        _run();
-        else if(cmd == "install")    _install();
-        else if(cmd == "thirdparty") _show_thirdparties();
-        else if(cmd == "library")    _show_libraries();
-        else                         _user_command(cmd.c_str());
-    }
-    else if(vm_.count("version")) _version();
+    using namespace nieel::option; 
+    using namespace nieel;
+    SubOptions suboptions(vm_);
+    suboptions(type::option , "help"      , opbind(_help))
+              (type::command, "init"      , opbind(_init))
+              (type::command, "run"       , opbind(_run))
+              (type::command, "test"      , opbind(_test))
+              (type::command, "build"     , opbind(_build))
+              (type::command, "hint"      , opbind(_get_cmake_lib_hint))
+              (type::option , "version"   , opbind(_version))
+              (type::command, "install"   , opbind(_install))
+              (type::command, "library"   , opbind(_show_libraries))
+              (type::command, "thirdparty", opbind(_show_thirdparties))
+              (type::default_command, uopbind(_user_command))
+              .run();
 }
 
-void CppmOptions::_user_command(std::string_view cmd) {
+void CppmOptions::_test() {
+    Cppm::instance()->parse_project_config();
+    std::cout << cmake::make_default_project(Cppm::instance()->project()) << std::endl;
+    
+}
+
+void CppmOptions::_user_command(std::string cmd) {
     Cppm::instance()->parse_project_config();
     auto project = Cppm::instance()->project();
     auto subargs = ranges::accumulate(get_subarg(), std::string{});
     for(auto& command : project.user_commands) {
          if(command.name == cmd) {
              system(("cd "+ project.path.root + " && " + command.script + " " + subargs).c_str());
-             continue;
+             return ; 
          }
     }
+    std::cerr << "unknown command" << std::endl; exit(1);
 }
 
 void CppmOptions::registe_subcommand(std::pair<std::string, std::string> command) {
@@ -104,9 +110,11 @@ void CppmOptions::_run() {
 }
 
 void CppmOptions::_show_thirdparties() {
+    using namespace ranges;
     Cppm::instance()->parse_project_config();
     auto thirdparties = Cppm::instance()->project().thirdparties;
-    for(auto thirdparty : thirdparties) {
+     
+    for(auto& thirdparty : thirdparties) {
         std::cout << "[" + thirdparty.name << "]\n"
                   << "-build-type: " + thirdparty.build_type << "\n"
                   << "-version: "+ thirdparty.version << "\n"

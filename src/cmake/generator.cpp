@@ -17,33 +17,21 @@ namespace cmake
              << cmake_project(project.package.name + " LANGUAGES CXX " + "VERSION " + project.package.version) << endl()
              << endl()
              
-             << set("PROJECT_ROOT_DIR"      , get("CMAKE_CURRENT_SOURCE_DIR")        ) << endl()
-             << set("SOURCE_DIR"            , get("PROJECT_ROOT_DIR") + "/src"       ) << endl() 
-             << set("INCLUDE_DIR"           , get("PROJECT_ROOT_DIR") + "/include"   ) << endl()
-             << set("THIRD_PARTY_DIR"       , get("PROJECT_ROOT_DIR") + "/thirdparty") << endl()
-             << set("TEST_DIR"              , get("PROJECT_ROOT_DIR") + "/test"      ) << endl()
-             << set("CMAKE_BINARY_DIR"      , get("PROJECT_ROOT_DIR") + "/bin"       ) << endl()
-             << set("EXECUTABLE_OUTPUT_PATH", get("CMAKE_BINARY_DIR")                ) << endl()
-             << set("CMAKE_MODULE_PATH"     , get("PROJECT_ROOT_DIR") + "/cmake "
+             << set("CMAKE_MODULE_PATH"     , get("CMAKE_CURRENT_SOURCE_DIR") + "/cmake "
                                             + get("CMAKE_MODULE_PATH")               ) << endl()
              << set("MODULE_PATH"           , get("CMAKE_MODULE_PATH")+ "/Modules"   ) << endl()
-             << set("BUILD_DIR"             , get("PROJECT_NAME")     + "/build")      << endl()
-             << set("third_party_library", " ") << endl()
              << endl()
              << compiler_flag(project.compiler.option)
              << endl()
              << include(get("CMAKE_MODULE_PATH") + "/cmake_option.cmake") << endl()
-             << "option( BUILD_SHARED_LIB \"ON is build shared lib\"" + is_on_shared(project)+ ")"
-             << endl()
-                
-             << include(get("CMAKE_MODULE_PATH") + "/project_maker.cmake")<< endl()
-             << make_cppm_lib_bin(project.package.type, get("PROJECT_NAME"))
+             << include(get("CMAKE_MODULE_PATH") + "/project_makerv2.cmake") << endl()
+             << include(get("CMAKE_MODULE_PATH") + "/utils.cmake") << endl()
+             << "get_third_party_list()" << endl()
+             << project.make_cmake_bin_lib_script()
              << endl()
              << include_user_script(project) 
              << endl()
                 
-            // << add_subdirectory(get("TEST_DIR"))               << endl()
-            // << "enable_testing()"                            << endl()
              << endl()
              ; 
       return output.str();

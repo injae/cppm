@@ -1,5 +1,5 @@
-include(${CMAKE_MODULE_PATH}/auto_make_third_party.cmake)
-include(${CMAKE_MODULE_PATH}/utils.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/auto_make_third_party.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/utils.cmake)
 
 MACRO(add_thirdparty_library library_name dependcy_lib)
     MESSAGE("================================")

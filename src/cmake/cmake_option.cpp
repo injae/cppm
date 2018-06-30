@@ -1,4 +1,3 @@
-
 #include"cmake/cmake_option.h"
 #include<nieel/util/hash.hpp>
 #include<iostream>

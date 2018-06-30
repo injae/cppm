@@ -1,4 +1,4 @@
-include(${CMAKE_MODULE_PATH}/utils.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/utils.cmake)
 
 function(install_library name)
     install_library_config(${name})

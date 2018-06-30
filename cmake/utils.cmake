@@ -33,7 +33,7 @@ function(file_list result_ target_dir_)
 endfunction()
 
 macro(get_third_party_list)
-    file(GLOB_RECURSE find_file "${MODULE_PATH}/*.cmake")
+    file(GLOB_RECURSE find_file "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/*.cmake")
     FOREACH(file ${find_file})
         include(${file})
     ENDFOREACH()

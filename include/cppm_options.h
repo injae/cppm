@@ -2,7 +2,7 @@
 #define __CPPM_OPTIONS_H__
 
 #include<nieel/program_option.h>
-#include<string_view>
+#include<string>
 
 class CppmOptions : public nieel::Option
 {
@@ -14,6 +14,7 @@ public:
 private:
     void _run();
     void _help();
+    void _test();
     void _init();
     void _build();
     void _version();
@@ -21,7 +22,7 @@ private:
     void _show_thirdparties();
     void _get_cmake_lib_hint();
     void _make_cmake_find_lib_file();
-    void _user_command(std::string_view cmd);
+    void _user_command(std::string cmd);
     void _show_libraries();
     
 private:
