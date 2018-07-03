@@ -21,14 +21,13 @@ namespace option
     void Init::run() {
         using namespace nieel::option; 
         using namespace nieel;
-        SubOptions suboptions(vm_);
-        suboptions(type::option , "help"       , opbind(_help))
-                  (type::command, "binary"     , opbind(_bin))
-                  (type::command, "static"     , aopbind(_lib("static")))
-                  (type::command, "shared"     , aopbind(_lib("shared")))
-                  (type::command, "header_only", aopbind(_lib("header_only")))
-                  (type::default_command, opbind([](){std::cerr << "wrong argument" << std::endl;}))
-                  .run();
+        sub_options_(type::option , "help"       , opbind(_help))
+                    (type::command, "binary"     , opbind(_bin))
+                    (type::command, "static"     , aopbind(_lib("static")))
+                    (type::command, "shared"     , aopbind(_lib("shared")))
+                    (type::command, "header_only", aopbind(_lib("header_only")))
+                    (type::default_command, opbind([](){std::cerr << "wrong argument" << std::endl;}))
+                    .run();
     }
      
     void Init::_help() {

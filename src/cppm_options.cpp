@@ -16,7 +16,7 @@
 
 CppmOptions::CppmOptions(int argc, char* argv[]) : Option("Cppm Options", argc, argv) {
     desc_.add_options()
-        ("help,h"      , "produce a help message"     )
+        ("help"      , "produce a help message"     )
         ("version,v" , "Display the version number" )
         ;
     visible_option_.add(desc_);
@@ -26,19 +26,19 @@ CppmOptions::CppmOptions(int argc, char* argv[]) : Option("Cppm Options", argc, 
 void CppmOptions::run() {
     using namespace nieel::option; 
     using namespace nieel;
-    SubOptions suboptions(vm_);
-    suboptions(type::option , "help"      , opbind(_help))
-              (type::command, "init"      , opbind(_init))
-              (type::command, "run"       , opbind(_run))
-              (type::command, "test"      , opbind(_test))
-              (type::command, "build"     , opbind(_build))
-              (type::command, "hint"      , opbind(_get_cmake_lib_hint))
-              (type::option , "version"   , opbind(_version))
-              (type::command, "install"   , opbind(_install))
-              (type::command, "library"   , opbind(_show_libraries))
-              (type::command, "thirdparty", opbind(_show_thirdparties))
-              (type::default_command, uopbind(_user_command))
-              .run();
+    sub_options_(type::option , "help"      , opbind(_help))
+                (type::option , "version"   , opbind(_version))
+                (type::command, "init"      , opbind(_init), "initialize new cppm project")
+                (type::command, "run"       , opbind(_run),  "running binary")
+                (type::command, "test"      , opbind(_test))
+                (type::command, "build"     , opbind(_build), "project build")
+                (type::command, "hint"      , opbind(_get_cmake_lib_hint), "get cmake-lib-name option")
+                (type::command, "install"   , opbind(_install), "install library")
+                (type::command, "library"   , opbind(_show_libraries), "show libraries")
+                (type::command, "thirdparty", opbind(_show_thirdparties), "show thirdparties")
+                (type::default_command, uopbind(_user_command))
+                .run();
+                std::cout << "end" << std::endl;
 }
 
 void CppmOptions::_test() {
@@ -67,6 +67,7 @@ void CppmOptions::registe_subcommand(std::pair<std::string, std::string> command
 void CppmOptions::_help() {
    std::cout << "Usage: regex [options]\n"
              << visible_option_
+             << sub_options_.command_description("Command")
              << std::endl;
 }
 void CppmOptions::_show_libraries() {

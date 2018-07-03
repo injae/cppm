@@ -6,7 +6,7 @@ package:
         
 compiler: 
     type: g++ 
-    option: -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC -O0
+    option: -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC -O0 -Wunused-variable
     
 builder: 
     type: make

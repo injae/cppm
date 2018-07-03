@@ -23,18 +23,20 @@ namespace option {
     void Install::run() {
        using namespace nieel::option; 
        using namespace nieel;
-       SubOptions suboptions(vm_);
-       suboptions(type::option, "help" , opbind(_help))
-                 (type::option, "url"  , opbind(_git))
-                 (type::option, "git"  , opbind(_git))
-                 (type::option, "svn"  , opbind(_svn))
-                 (type::option, "file" , opbind(_file))
-                 (type::default_command, uopbind(_config))
-                 .run();
+       sub_options_(type::option, "help" , opbind(_help)   , "show install command options")
+                   (type::option, "url"  , opbind(_git)    , "")
+                   (type::option, "git"  , opbind(_git)    , "")
+                   (type::option, "svn"  , opbind(_svn)    , "")
+                   (type::option, "file" , opbind(_file)   , "")
+                   (type::default_command, uopbind(_config))
+                   .run();
     }
     
     void Install::_help() {
-        std::cout << "hello" << std::endl;
+       std::cout << "Usage: regex [options]\n"
+                 << visible_option_
+                 << sub_options_.command_description("Install")
+                 << std::endl;
     }
     
     void Install::_git() {
