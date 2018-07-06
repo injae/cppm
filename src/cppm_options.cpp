@@ -6,10 +6,8 @@
 #include"options/init.h"
 #include"options/install.h"
 #include"url.h"
-#include<range/v3/core.hpp>
-#include<range/v3/algorithm.hpp>
-#include<range/v3/numeric.hpp>
 #include<nieel/string.hpp>
+#include<nieel/algorithm.hpp>
 
 #include<string>
 #include<iterator>
@@ -38,7 +36,6 @@ void CppmOptions::run() {
                 (type::command, "thirdparty", opbind(_show_thirdparties), "show thirdparties")
                 (type::default_command, uopbind(_user_command))
                 .run();
-                std::cout << "end" << std::endl;
 }
 
 void CppmOptions::_test() {
@@ -50,7 +47,7 @@ void CppmOptions::_test() {
 void CppmOptions::_user_command(std::string cmd) {
     Cppm::instance()->parse_project_config();
     auto project = Cppm::instance()->project();
-    auto subargs = ranges::accumulate(get_subarg(), std::string{});
+    auto subargs = nieel::accumulate(get_subarg(), std::string{});
     for(auto& command : project.user_commands) {
          if(command.name == cmd) {
              system(("cd "+ project.path.root + " && " + command.script + " " + subargs).c_str());
@@ -73,11 +70,7 @@ void CppmOptions::_help() {
 void CppmOptions::_show_libraries() {
     Cppm::instance()->parse_project_config();
     auto project = Cppm::instance()->project();
-        std::for_each(project.libraries.begin(),
-                     project.libraries.end(),
-                     [](auto library) {
-                        cppm::Library::show(library);
-                     });
+        nieel::for_each(project.libraries, [](auto library) { cppm::Library::show(library); });
 }
 
 void CppmOptions::_version() {
@@ -105,13 +98,12 @@ void CppmOptions::_build() {
 void CppmOptions::_run() {
     Cppm::instance()->parse_project_config();
     auto project = Cppm::instance()->project();
-    auto subargs = ranges::accumulate(get_subarg(), std::string{});
+    auto subargs = nieel::accumulate(get_subarg(), std::string{});
     std::string cmd = "cd " + project.path.bin + " && ./" + project.package.name +" " + subargs;
     system(cmd.c_str());
 }
 
 void CppmOptions::_show_thirdparties() {
-    using namespace ranges;
     Cppm::instance()->parse_project_config();
     auto thirdparties = Cppm::instance()->project().thirdparties;
      

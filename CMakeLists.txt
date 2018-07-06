@@ -12,7 +12,7 @@ include(${CMAKE_MODULE_PATH}/utils.cmake)
 get_third_party_list()
 
 cpp_file_list(src/)
-set(thirdparty  Boost::boost yaml-cpp range-v3 nieel)
+set(thirdparty  Boost::boost yaml-cpp nieel)
 build_binary(cppm "${source}" "${thirdparty}")
 
 include(cmake/cppm_install.cmake)

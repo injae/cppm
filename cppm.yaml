@@ -5,7 +5,7 @@ package:
     type: bin 
         
 compiler: 
-    type: g++ 
+    type: g++
     option: -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC -O0 -Wunused-variable
     
 builder: 
@@ -23,7 +23,6 @@ binary:
         dependencies:
             - boost
             - yaml-cpp
-            - range-v3
             - nieel 
 thirdparty:
     boost: 
@@ -96,4 +95,7 @@ cp:
 shared-lib-setting: 
     - LD_LIBRARY_PATH=/usr/local/lib
 
+build-cache-install:
+    - sudo apt install ccache
+    - export PATH=/usr/lib/ccache:$PATH
    

@@ -1,5 +1,7 @@
 #include<iostream>
 #include"cppm.h"
+#include<nieel/algorithm.hpp>
+#include<nieel/adoptor.hpp>
 
 int main(int argc, char* argv[])
 {
