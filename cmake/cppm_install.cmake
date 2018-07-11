@@ -12,3 +12,4 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_option.cmake DESTINATION $
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/project_maker.cmake DESTINATION ${default_project_dir}/cmake)
 
 install(DIRECTORY FindThirdparty DESTINATION share/${PROJECT_NAME})
+install(DIRECTORY cppm_packages DESTINATION share/${PROJECT_NAME}/repos)

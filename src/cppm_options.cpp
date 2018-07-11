@@ -5,6 +5,7 @@
 #include"cmake/generator.h"
 #include"options/init.h"
 #include"options/install.h"
+#include"config/cppm-package/package.h"
 #include"url.h"
 #include<nieel/string.hpp>
 #include<nieel/algorithm.hpp>
@@ -39,9 +40,11 @@ void CppmOptions::run() {
 }
 
 void CppmOptions::_test() {
+    using namespace cppm;
     Cppm::instance()->parse_project_config();
-    std::cout << cmake::make_default_project(Cppm::instance()->project()) << std::endl;
-    
+    for(auto arg : get_subarg()) {
+        package::Package::install_package(package::Package::find_package(arg));
+    }
 }
 
 void CppmOptions::_user_command(std::string cmd) {

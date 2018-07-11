@@ -8,12 +8,17 @@ namespace cmake::option
         using namespace nieel;
         switch(hash(project.builder.type))
         {
-        case hash("ninja"):
-            return " sudo ninja ";
-        case hash("make"):
+        case "make"_h: {
             std::string cmd = " sudo make ";
-            if(project.builder.cpu_core != "") cmd += "-j " + project.builder.cpu_core + " ";
+            if(project.builder.cpu_core != "") 
+                cmd += "-j " + project.builder.cpu_core + " ";
             return cmd;
+        }
+        case "ninja"_h:
+            return " sudo ninja ";
+        default:
+            std::cerr << "wrong argument" <<std::endl;
+            exit(1);
         }
     }
     
@@ -21,9 +26,9 @@ namespace cmake::option
         using namespace nieel;
         switch(hash(project.builder.type))
         {
-        case hash("ninja"):
+        case "ninja"_h:
             return " -G Ninja";
-        case hash("make"):
+        case "make"_h:
             return "";
         default:
             std::cerr << "wrong argument" << std::endl;

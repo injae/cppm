@@ -3,6 +3,8 @@ package:
     version: 1.0.0
     authors: 8687lee@gmail.com InJaeLee
     type: bin 
+    thirdparty-repo:
+        - https://github.com/INJAE/cppm_packages.git
         
 compiler: 
     type: g++
@@ -99,3 +101,12 @@ build-cache-install:
     - sudo apt install ccache
     - export PATH=/usr/lib/ccache:$PATH
    
+nieel-push:
+    - cd ../nieel
+    - git add *
+    - git commit
+
+push:
+    - git add *
+    - git commit 
+    

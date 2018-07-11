@@ -14,7 +14,7 @@ namespace cmake
       output << cmake_version("3.6", project.package.name)  << endl()
              << endl()
              
-             << cmake_project(project.package.name + " LANGUAGES CXX " + "VERSION " + project.package.version) << endl()
+             << cmake_project(project.package.name + " LANGUAGES CXX " + "VERSION " + project.package.version.str()) << endl()
              << endl()
              
              << set("CMAKE_MODULE_PATH"     , get("CMAKE_CURRENT_SOURCE_DIR") + "/cmake "

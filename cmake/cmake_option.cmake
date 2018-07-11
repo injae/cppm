@@ -14,6 +14,5 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     add_definitions(-DSYSTEM_WINDOWS)
 endif()
 
-
 # detect host processor
 message(STATUS "The host processor is ${CMAKE_HOST_SYSTEM_PROCESSOR}")

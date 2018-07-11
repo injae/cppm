@@ -10,7 +10,7 @@ Cppm* Cppm::instance() {
 Cppm::Cppm() : option_() { }
 
 fs::path Cppm::find_config_file() {
-    auto config_file = nieel::find_file(fs::current_path(), "cppm.yaml");
+    auto config_file = nieel::reverse_find_file(fs::current_path(), "cppm.yaml");
     if(!config_file) {
         std::cerr << "Can't not find cppm.yaml file\n" 
                   << std::endl;
@@ -25,7 +25,7 @@ void Cppm::make_config_file(cppm::Project& project) {
     
     auto config = YAML::LoadFile(project.path.root +"/cppm.yaml");
     config["project"]["package"]["name"]     = project.package.name;
-    config["project"]["package"]["version"]  = project.package.version;
+    config["project"]["package"]["version"]  = project.package.version.str();
     config["project"]["package"]["type"]     = project.package.type;
     config["project"]["compiler"]["type"] = project.compiler.type;
     config["project"]["builder"]["type"]  = project.builder.type;
