@@ -2,9 +2,9 @@
 #include"cmake/generator.h"
 #include"cppm.h"
 #include<nieel/filesystem.h>
-#include<boost/regex.hpp>
 #include<cctype>
 #include<fstream>
+#include<regex>
 #include<boost/filesystem.hpp>
 #include<nieel/string.hpp>
 namespace fs = boost::filesystem;
@@ -15,17 +15,17 @@ namespace cmake
         std::vector<cppm::Thirdparty> packages;
         
         std::string cmake_path = "/usr/local/share";
-        auto cmake_dir = nieel::find_regex_files(cmake_path, boost::regex("cmake.*"));
+        auto cmake_dir = nieel::find_regex_files(cmake_path, std::regex("cmake.*"));
         auto module_path = cmake_path + "/" + cmake_dir[0] + "/Modules";
         
-        for(auto config_file : nieel::find_regex_files(module_path, boost::regex("Find.*cmake"))) {
+        for(auto config_file : nieel::find_regex_files(module_path, std::regex("Find.*cmake"))) {
             cppm::Thirdparty package;
-            boost::regex filter("Find(.*)\\.cmake");
-            boost::smatch what;
-            if(!boost::regex_search(config_file, what, filter)) continue;
+            std::regex filter("Find(.*)\\.cmake");
+            std::smatch what;
+            if(!std::regex_search(config_file, what, filter)) continue;
             
             package.name = what[1];
-            nieel::to_lower(package.name);
+            nieel::str::to_lower(package.name);
             package.config_file = module_path + "/" + config_file;
             packages.emplace_back(std::move(package));
         }
@@ -37,7 +37,7 @@ namespace cmake
         std::vector<cppm::Thirdparty> packages;
         
         std::string cmake_path = "/usr/local/lib/cmake";
-        auto library_dirs = nieel::find_regex_files(cmake_path, boost::regex(".*"));
+        auto library_dirs = nieel::find_regex_files(cmake_path, std::regex(".*"));
         for(auto dir : library_dirs) {
            cppm::Thirdparty package;
            package.name = dir;
@@ -67,10 +67,11 @@ namespace cmake
             while(!ifs.eof()) {
                memset(fdata, 0, 512);
                ifs.getline(fdata, 512);
-               boost::smatch what;
+               std::smatch what;
                std::string filter_str = "(.*)_LIBRARIES";
-               boost::regex filter(filter_str);
-               if(!boost::regex_search(std::string(fdata), what, filter)) continue;
+               std::regex filter(filter_str);
+               std::string data(fdata);
+               if(!std::regex_search(data, what, filter)) continue;
                std::cout << what[0] << std::endl;
             }
         }

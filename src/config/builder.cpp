@@ -13,9 +13,8 @@ namespace cppm
             case hash("type"):
                 builder.type = it.second.as<std::string>();
                 break;
-            case hash("cpu-core"):
-                builder.cpu_core = it.second.as<std::string>();
-                break;
+            case hash("option"):
+                builder.option = it.second.as<std::string>();
             }
         }
         return builder;

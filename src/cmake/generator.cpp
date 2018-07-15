@@ -24,14 +24,13 @@ namespace cmake
              << compiler_flag(project.compiler.option)
              << endl()
              << include(get("CMAKE_MODULE_PATH") + "/cmake_option.cmake") << endl()
-             << include(get("CMAKE_MODULE_PATH") + "/project_makerv2.cmake") << endl()
+             << include(get("CMAKE_MODULE_PATH") + "/project_maker.cmake") << endl()
              << include(get("CMAKE_MODULE_PATH") + "/utils.cmake") << endl()
-             << "get_third_party_list()" << endl()
+             << "get_third_party_list()" 
              << project.make_cmake_bin_lib_script()
              << endl()
              << include_user_script(project) 
              << endl()
-                
              << endl()
              ; 
       return output.str();
@@ -41,9 +40,9 @@ namespace cmake
         using namespace nieel;
         switch(hash(project.package.type.c_str()))
         {
-        case hash("static"):
+        case "static"_h:
             return " OFF";
-        case hash("shared"):
+        case "shared"_h:
             return " ON";
         default:
             return " ON";

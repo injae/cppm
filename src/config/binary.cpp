@@ -2,12 +2,13 @@
 #include"cmake/generator.h"
 #include<nieel/string.hpp>
 #include<nieel/util/hash.hpp>
+#include<nieel/filesystem.h>
 
 namespace cppm
 {
     Binary Binary::parse(YAML::Node& node, std::string name) {
         using namespace nieel;
-        
+        auto root_path = nieel::reverse_find_file(fs::current_path(), "cppm.yaml")->parent_path().string();
         Binary binary;
         binary.name = name;
         for(auto it : node["binary"][binary.name]) {
@@ -24,7 +25,8 @@ namespace cppm
                 break;
             case hash("source"):
                 for(auto source : node["binary"][name]["source"]){
-                    binary.source.push_back(source.as<std::string>());
+                    auto sources = nieel::find_files(root_path, std::regex(source.as<std::string>()), false);
+                    nieel::insert(binary.source, sources);
                 }
                 break;
             case hash("dependencies"):
@@ -36,7 +38,6 @@ namespace cppm
         }
         return binary;
     }
-    
     
     std::vector<Binary> Binary::parse_binaries(YAML::Node& node) {
         std::vector<Binary> binaries;
@@ -52,8 +53,8 @@ namespace cppm
         auto project = Cppm::instance()->project();
         if(project.binaries.empty()) return "";
         std::stringstream output("");
-        output << "cpp_file_list(src/)"  << endl()
-               << set("thirdparty", nieel::accumulate(project.cmake_lib_name(dependencies), std::string{" "})) << endl()
+        output << set("thirdparty", nieel::str::accumulate(project.cmake_lib_name(dependencies), std::string{"\n\t"}) + "\n") << endl()
+               << set("source"    , nieel::str::accumulate(source, std::string{"\n\t"}) + "\n") << endl()
                << "build_binary(" << name << " \"" << get("source") << "\" \"" << get("thirdparty") << "\")" << endl()
                ;
         return output.str();

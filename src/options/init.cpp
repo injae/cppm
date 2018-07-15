@@ -39,12 +39,10 @@ namespace option
         project.package.name = get_subarg()[0];
         project.path.root = (fs::current_path() / project.package.name).string();
         project.package.type = "bin";
-        project.package.version = "0.0.1";
+        project.package.version = "0.0.0.1";
+        project.compiler.type = "g++";
         project.builder.type = "make";
-        cmake::make_default_project(project);
         nieel::recursive_copy("/usr/local/share/cppm/default_project", project.path.root);
-        std::ofstream file (project.package.name + "/CMakeLists.txt"); file.is_open();
-        file << cmake::make_default_project(project); file.close();
         Cppm::instance()->make_config_file(project);
         
         std::cout << "initialized c++ binary project" << "\n";
@@ -55,12 +53,11 @@ namespace option
         project.package.name = get_subarg()[0];
         project.path.root = (fs::current_path() / project.package.name).string();
         project.package.type = type; 
-        project.package.version = "0.0.1";
+        project.package.version = "0.0.0.1";
+        project.compiler.type = "g++";
         project.builder.type = "make";
         cmake::make_default_project(project);
         nieel::recursive_copy("/usr/local/share/cppm/default_project", project.path.root);
-        std::ofstream file (project.package.name + "/CMakeLists.txt"); file.is_open();
-        file << cmake::make_default_project(project); file.close();
         Cppm::instance()->make_config_file(project);
         
         std::cout << "initialized " + type + " c++ library project" << "\n";

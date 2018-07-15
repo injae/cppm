@@ -10,8 +10,7 @@ namespace cmake::option
         {
         case "make"_h: {
             std::string cmd = " sudo make ";
-            if(project.builder.cpu_core != "") 
-                cmd += "-j " + project.builder.cpu_core + " ";
+            if(project.builder.option != "") cmd += project.builder.option + " ";
             return cmd;
         }
         case "ninja"_h:
@@ -37,7 +36,13 @@ namespace cmake::option
     }
     
     std::string compiler(cppm::Project& project) {
-        return " -DCMAKE_CXX_COMPILER=" +project.compiler.type;
+        if(project.compiler.type == "") return "";
+        return " -D CMAKE_CXX_COMPILER=" +project.compiler.type;
+    }
+    
+    std::string luncher(cppm::Project& project) {
+        if(project.compiler.luncher == "") return "";
+        return " -D CMAKE_CXX_COMPILER_LAUNCHER=" +project.compiler.luncher;
     }
     
 }

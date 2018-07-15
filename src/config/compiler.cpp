@@ -13,6 +13,9 @@ namespace cppm
             case hash("type"):
                 compiler.type = it.second.as<std::string>();
                 break;
+            case hash("luncher"):
+                compiler.luncher = it.second.as<std::string>();
+                break;
             case hash("option"):
                 compiler.option = it.second.as<std::string>();
                 break;

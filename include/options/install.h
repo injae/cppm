@@ -12,7 +12,8 @@ namespace option
         Install(int argc, char* argv[]);
     private:
         void _help();
-        void _config(std::string& name);
+        void _config();
+        void _repo(std::string name);
         void _url();
         void _git(); 
         void _svn();

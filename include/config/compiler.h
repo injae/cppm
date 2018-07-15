@@ -12,6 +12,7 @@ namespace cppm
         static Compiler parse(YAML::Node& node);
     public:
           std::string type   
+        ; std::string luncher
         ; std::string option
         ; 
     };

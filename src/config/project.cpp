@@ -7,34 +7,52 @@ namespace cppm
 {
     
     Project Project::parse(YAML::Node& node) {
-        using namespace nieel;
         Project project;
-        auto config_file_path = nieel::reverse_find_file(fs::current_path(), "cppm.yaml")->parent_path().string();
-        project.path = Path::make(config_file_path);
+        auto root_path = nieel::reverse_find_file(fs::current_path(), "cppm.yaml")->parent_path().string();
+        project.path = Path::make(root_path);
+        Project::parse(node, project);
+        return project;
+    }
+    
+    Project& Project::parse(YAML::Node& node, Project& project) {
+        using namespace nieel;
+        auto root_path = nieel::reverse_find_file(fs::current_path(), "cppm.yaml")->parent_path().string();
         for(auto it : node) {
             auto property = it.first.as<std::string>().c_str();
             switch(hash(property))
             {
-            case hash("package"):
+            case "package"_h:
                 project.package = Package::parse(node);
                 break;
-            case hash("compiler"):
+            case "compiler"_h:
                 project.compiler = Compiler::parse(node);
                 break;
-            case hash("builder"):
+            case "builder"_h:
                 project.builder  = Builder::parse(node);
                 break;
-            case hash("binary"):
+            case "binary"_h:
                 project.binaries = Binary::parse_binaries(node);
                 break;
-            case hash("library"):
+            case "library"_h:
                 project.libraries = Library::parse_libraries(node);
                 break;
-            case hash("thirdparty"):
-                project.thirdparties = Thirdparty::parse_thirdparties(node);
-                break;
-            case hash("user-cmake-script"):
+            case "user-cmake-script"_h:
                 project.parse_user_cmake_script(node);
+                break;
+            case "include"_h:
+            {
+                for(auto include : node["include"]){
+                    auto script = nieel::find_files(root_path, std::regex(include.as<std::string>()));
+                    nieel::insert(project.include_script, script);
+                }
+                for(auto include : project.include_script) {
+                    auto script = YAML::LoadFile(include.c_str());
+                    Project::parse(script, project);
+                }
+                break;
+            }
+            case "thirdparty"_h:
+                project.thirdparties = Thirdparty::parse_thirdparties(node);
                 break;
             default:
                 project.user_commands.emplace_back(Command::parse(node, property));
@@ -57,6 +75,7 @@ namespace cppm
     }
     
     std::vector<Thirdparty> Project::has(std::vector<std::string>& names) {
+        if(thirdparties.empty()) return std::vector<Thirdparty>();
         auto lib = thirdparties;
         return nieel::erase_if(lib, [this, &names](auto& thirdparty){ return !nieel::has(names, thirdparty.name);  });
     }
@@ -69,7 +88,7 @@ namespace cppm
     std::string Project::make_cmake_bin_lib_script() {
         using trans_type = std::vector<std::string>;
         auto lib = nieel::accumulate(nieel::transform<trans_type>(libraries, [](auto& library){ return library.cmake_script(); }), std::string{""});
-        auto bin = nieel::accumulate(nieel::transform<trans_type>(binaries,[](auto& library){ return library.cmake_script(); }), std::string{""});
-        return lib + "\n" + bin;
+        auto bin = nieel::accumulate(nieel::transform<trans_type>(binaries , [](auto& binary) { return binary.cmake_script(); }), std::string{""});
+        return "\n" + lib + "\n" + bin;
     }
 }

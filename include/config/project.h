@@ -18,6 +18,7 @@ namespace cppm
     {
     public:
         static Project parse(YAML::Node& node);
+        static Project& parse(YAML::Node& node, Project& project);
     public:
         void parse_user_cmake_script(YAML::Node& node);
         bool has(std::string name);
@@ -35,6 +36,7 @@ namespace cppm
         ; std::vector<Command>     user_commands
 		; std::vector<Thirdparty>  thirdparties
         ; std::vector<std::string> user_cmake_scripts
+        ; std::vector<std::string> include_script
         ;
     };
 }

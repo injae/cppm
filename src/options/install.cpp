@@ -5,6 +5,8 @@
 #include<string>
 #include"cmake/find_package.h"
 #include"config/thirdparty.h"
+#include"package/package.h"
+#include"package/install.h"
 #include"cppm.h"
 
 namespace option {
@@ -15,6 +17,7 @@ namespace option {
         ("git,g"  , po::value<std::string>(), "git base install")
         ("svn,s"  , po::value<std::string>(), "svn base install")
         ("file,f" , po::value<std::string>(), "file base install")
+        ("config,c", po::value<std::string>(), "cppm.yaml thirdparty: option base install")
         ;
         visible_option_.add(desc_);
         desc_.add(nieel::make_command_desc());
@@ -23,12 +26,14 @@ namespace option {
     void Install::run() {
        using namespace nieel::option; 
        using namespace nieel;
-       sub_options_(type::option, "help" , opbind(_help)   , "show install command options")
-                   (type::option, "url"  , opbind(_git)    , "")
-                   (type::option, "git"  , opbind(_git)    , "")
-                   (type::option, "svn"  , opbind(_svn)    , "")
-                   (type::option, "file" , opbind(_file)   , "")
-                   (type::default_command, uopbind(_config))
+       sub_options_(type::option, "help"   , opbind(_help)   , "")
+                   (type::option, "url"    , opbind(_git)    , "")
+                   (type::option, "git"    , opbind(_git)    , "")
+                   (type::option, "svn"    , opbind(_svn)    , "")
+                   (type::option, "file"   , opbind(_file)   , "")
+                   (type::option, "config" , opbind(_config) , "")
+                   (type::command, "xx"   , opbind(_help)   ,  "running binary")
+                   (type::default_command  , uopbind(_repo))
                    .run();
     }
     
@@ -60,21 +65,20 @@ namespace option {
         cppm::install_thirdparty(lib);
     }
     
-    void Install::_config(std::string& name) {
+    void Install::_config() {
         auto thirdparties = Cppm::instance()->project().thirdparties;
-        auto subargs = get_subarg();
-        std::vector<cppm::Thirdparty> install_list;
+        auto name = vm_["config"].as<std::string>();
         for(auto thirdparty : thirdparties) {
-            if(util::has_str(name, "all")) {
-                install_list = thirdparties;  break;
-            }
-            else if(util::has_str(name, thirdparty.name.c_str())) {
-               install_list.push_back(thirdparty);
-            }
+            if(util::has_str(name, thirdparty.name.c_str()))
+                cppm::install_thirdparty(thirdparty);
         }
-        for(auto& library : install_list) {
-            cppm::install_thirdparty(library);
-        }
+    }
+    
+    void Install::_repo(std::string name) {
+        namespace pkg = cppm::package;
+        auto package = pkg::Package::find_package(name);
+        pkg::Package::install_package(package);
+        package.install.install();
     }
     
     void Install::_url() {

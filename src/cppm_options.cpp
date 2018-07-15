@@ -5,7 +5,7 @@
 #include"cmake/generator.h"
 #include"options/init.h"
 #include"options/install.h"
-#include"config/cppm-package/package.h"
+#include"package/package.h"
 #include"url.h"
 #include<nieel/string.hpp>
 #include<nieel/algorithm.hpp>
@@ -33,9 +33,7 @@ void CppmOptions::run() {
                 (type::command, "build"     , opbind(_build), "project build")
                 (type::command, "hint"      , opbind(_get_cmake_lib_hint), "get cmake-lib-name option")
                 (type::command, "install"   , opbind(_install), "install library")
-                (type::command, "library"   , opbind(_show_libraries), "show libraries")
-                (type::command, "thirdparty", opbind(_show_thirdparties), "show thirdparties")
-                (type::default_command, uopbind(_user_command))
+                (type::default_command      , uopbind(_user_command))
                 .run();
 }
 
@@ -43,14 +41,13 @@ void CppmOptions::_test() {
     using namespace cppm;
     Cppm::instance()->parse_project_config();
     for(auto arg : get_subarg()) {
-        package::Package::install_package(package::Package::find_package(arg));
     }
 }
 
 void CppmOptions::_user_command(std::string cmd) {
     Cppm::instance()->parse_project_config();
     auto project = Cppm::instance()->project();
-    auto subargs = nieel::accumulate(get_subarg(), std::string{});
+    auto subargs = nieel::str::accumulate(get_subarg(), std::string{});
     for(auto& command : project.user_commands) {
          if(command.name == cmd) {
              system(("cd "+ project.path.root + " && " + command.script + " " + subargs).c_str());
@@ -70,11 +67,6 @@ void CppmOptions::_help() {
              << sub_options_.command_description("Command")
              << std::endl;
 }
-void CppmOptions::_show_libraries() {
-    Cppm::instance()->parse_project_config();
-    auto project = Cppm::instance()->project();
-        nieel::for_each(project.libraries, [](auto library) { cppm::Library::show(library); });
-}
 
 void CppmOptions::_version() {
    Cppm::instance()->parse_project_config();
@@ -85,14 +77,14 @@ void CppmOptions::_build() {
     using namespace cmake::option;
     Cppm::instance()->parse_project_config();
     auto subargs = get_subarg();
-    std::ofstream file (Cppm::instance()->project().path.root + "/CMakeLists.txt"); file.is_open();
-    file << cmake::make_default_project(Cppm::instance()->project()); file.close();
-    
     auto project = Cppm::instance()->project();
+    std::cout << project.path.root << std::endl;
+    std::ofstream file (project.path.root + "/CMakeLists.txt"); file.is_open();
+    file << cmake::make_default_project(project); file.close();
+    
     std::string cmd = "cd " + project.path.bin 
-                    + " && cmake" + builder(project) + compiler(project) + " .. "
+                    + " && cmake" + builder(project) + compiler(project) + luncher(project) + " .. "
                     + " && " + build(project);
-                    
     for(auto subarg : subargs) { cmd += subarg; }
     
     system(cmd.c_str()); 
@@ -104,18 +96,6 @@ void CppmOptions::_run() {
     auto subargs = nieel::accumulate(get_subarg(), std::string{});
     std::string cmd = "cd " + project.path.bin + " && ./" + project.package.name +" " + subargs;
     system(cmd.c_str());
-}
-
-void CppmOptions::_show_thirdparties() {
-    Cppm::instance()->parse_project_config();
-    auto thirdparties = Cppm::instance()->project().thirdparties;
-     
-    for(auto& thirdparty : thirdparties) {
-        std::cout << "[" + thirdparty.name << "]\n"
-                  << "-build-type: " + thirdparty.build_type << "\n"
-                  << "-version: "+ thirdparty.version << "\n"
-                  ;
-    }
 }
 
 void CppmOptions::_install() {

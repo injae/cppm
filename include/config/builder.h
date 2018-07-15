@@ -2,6 +2,7 @@
 #define __CONFIG_BUILDER_H__
 
 #include<string>
+#include<vector>
 #include<yaml-cpp/yaml.h>
 
 namespace cppm
@@ -12,7 +13,7 @@ namespace cppm
         static Builder parse(YAML::Node& node);
     public:
           std::string type
-        ; std::string cpu_core
+        ; std::string option
         ;
     };
 }

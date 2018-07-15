@@ -13,7 +13,7 @@ namespace cppm
     public:
         static Thirdparty parse(const YAML::Node& node, std::string name);
         static std::vector<Thirdparty> parse_thirdparties(const YAML::Node& node);
-        
+        Thirdparty() {}
     public:
           std::string name
         ; std::string version 

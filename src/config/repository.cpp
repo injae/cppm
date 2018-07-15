@@ -11,16 +11,16 @@ namespace cppm
         auto parsed = *parse_url(url);
         Repository repo; 
         repo.url = url;
-        if(has_str(parsed.protocol, "http") || has_str(parsed.protocol, "https")) {
-            if(has_str(parsed.path, "git")) {
+        if(str::has(parsed.protocol, "http") || str::has(parsed.protocol, "https")) {
+            if(str::has(parsed.path, "git")) {
                 repo.type = "git";
             }
-            else if(has_str(parsed.path,"svn")) {
+            else if(str::has(parsed.path,"svn")) {
                 repo.type = "svn";
             }
-            else if(   has_str(parsed.path, "tar")
-                    || has_str(parsed.path, "zip")
-                    || has_str(parsed.path, "gz"))
+            else if(   str::has(parsed.path, "tar")
+                    || str::has(parsed.path, "zip")
+                    || str::has(parsed.path, "gz"))
             {
                 repo.type = "link";
             }
@@ -28,7 +28,7 @@ namespace cppm
                 repo.type = "unknown";
             }
         }
-        else if(has_str(parsed.path, "tar") || has_str(parsed.path, "zip") || has_str(parsed.path, "gz")) {
+        else if(str::has(parsed.path, "tar") || str::has(parsed.path, "zip") || str::has(parsed.path, "gz")) {
             repo.type = "file";
         }
         else {

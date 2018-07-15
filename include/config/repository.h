@@ -9,7 +9,7 @@ namespace cppm
     {
     public:
         static Repository classificate(std::string url);
-        
+        Repository() : url("") , type("") {}
     public:
           std::string url
         ; std::string type

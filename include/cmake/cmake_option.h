@@ -10,6 +10,7 @@ namespace cmake::option
     std::string builder(cppm::Project& project);
     std::string compiler(cppm::Project& project);
     std::string build(cppm::Project& project);
+    std::string luncher(cppm::Project& project);
 }
 
 #endif  

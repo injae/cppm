@@ -12,14 +12,13 @@ namespace cppm
         
         int count = 0;  
         for(auto it : node[name]) {
-            if(count == 0) {
+            count++;
+            if(count == 1) {
                 command.script = it.as<std::string>();
                 continue;
             }
             command.script +=  " && " + it.as<std::string>();
-            count++;
         }
-        
         return command;
     }
 }

@@ -24,11 +24,15 @@ void Cppm::make_config_file(cppm::Project& project) {
     std::ofstream config_file(project.path.root + "/cppm.yaml"); config_file.is_open();
     
     auto config = YAML::LoadFile(project.path.root +"/cppm.yaml");
-    config["project"]["package"]["name"]     = project.package.name;
-    config["project"]["package"]["version"]  = project.package.version.str();
-    config["project"]["package"]["type"]     = project.package.type;
-    config["project"]["compiler"]["type"] = project.compiler.type;
-    config["project"]["builder"]["type"]  = project.builder.type;
+    config["package"]["name"]     = project.package.name;
+    config["package"]["version"]  = project.package.version.str();
+    config["package"]["type"]     = project.package.type;
+    config["package"]["thirdparty-repo"].push_back("https://github.com/INJAE/cppm_packages.git");
+    
+    config["compiler"]["type"] = project.compiler.type;
+    config["builder"]["type"]  = project.builder.type;
+    config["binary"][project.package.name]["version"] = "0.0.0.1";
+    config["binary"][project.package.name]["source"].push_back("src/.*");
     
     config_file << config; 
     
@@ -43,6 +47,5 @@ void Cppm::parse_project_config() {
 void Cppm::run(int argc, char** argv) {
     option_ = std::make_unique<CppmOptions>(argc, argv);
     option_->regist(); 
-    
     option_->run();
 }
