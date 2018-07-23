@@ -68,6 +68,7 @@ namespace cppm
             user_cmake_scripts.push_back(script.as<std::string>());
         }
     }
+    
     bool Project::has(std::string name) {
         using trans_type = std::vector<std::string>;
         return nieel::has( nieel::transform<trans_type>(thirdparties, [](auto thirdparty){ return thirdparty.name; })
@@ -77,7 +78,7 @@ namespace cppm
     std::vector<Thirdparty> Project::has(std::vector<std::string>& names) {
         if(thirdparties.empty()) return std::vector<Thirdparty>();
         auto lib = thirdparties;
-        return nieel::erase_if(lib, [this, &names](auto& thirdparty){ return !nieel::has(names, thirdparty.name);  });
+        return nieel::erase_if(lib, [&names](auto& thirdparty){ return !nieel::has(names, thirdparty.name);  });
     }
     
     std::vector<std::string> Project::cmake_lib_name(std::vector<std::string> libraries)  {

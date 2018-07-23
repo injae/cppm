@@ -78,7 +78,6 @@ void CppmOptions::_build() {
     Cppm::instance()->parse_project_config();
     auto subargs = get_subarg();
     auto project = Cppm::instance()->project();
-    std::cout << project.path.root << std::endl;
     std::ofstream file (project.path.root + "/CMakeLists.txt"); file.is_open();
     file << cmake::make_default_project(project); file.close();
     

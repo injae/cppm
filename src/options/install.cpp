@@ -76,9 +76,8 @@ namespace option {
     
     void Install::_repo(std::string name) {
         namespace pkg = cppm::package;
-        auto package = pkg::Package::find_package(name);
-        pkg::Package::install_package(package);
-        package.install.install();
+        auto path    = pkg::Package::find_package(name);
+        pkg::Package::parse(path).install_pkg();
     }
     
     void Install::_url() {

@@ -38,7 +38,7 @@ namespace cppm
                 break;
             case "dependencies"_h:
                 for(auto dependency : node["library"][name]["dependencies"]){
-                    library.dependencies.push_back(dependency.as<std::string>());
+                    library.dependencies.emplace_back(cppm::parse_dependency(dependency.as<std::string>()));
                 }
                 break;
             }
@@ -59,16 +59,16 @@ namespace cppm
         std::cout << "type: " << library.type << "\n";
         std::cout << "include: "<< nieel::accumulate(library.include, std::string("\n  - ")) << "\n";
         std::cout << "source: " << nieel::accumulate(library.source, std::string("\n  - ")) << "\n";
-        std::cout << "dependencies: " << nieel::accumulate(library.dependencies, std::string("\n  - ")) << "\n";
         library.cmake_script();
     }
     
     std::string Library::cmake_script() {
         using namespace cmake;
+        using trans_type = std::vector<std::string>;
         auto project = Cppm::instance()->project();
         if(project.libraries.empty()) return "";
         std::stringstream output("");
-        output << set("thirdparty", nieel::str::accumulate(project.cmake_lib_name(dependencies), std::string{"\n\t"}) + "\n") << endl()
+        output << set("thirdparty", nieel::str::accumulate(nieel::transform<trans_type>(dependencies, [](auto dep){ return dep.cmake_name; }), std::string{"\n\t"}) + "\n") << endl()
                << set("source"    , nieel::str::accumulate(source, std::string{"\n\t"}) + "\n") << endl()
                << "build_library(" << name << " " << type << " \"" << get("source") << "\" \"" << get("thirdparty") << "\")" << endl()
                ;

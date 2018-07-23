@@ -10,11 +10,12 @@ namespace cppm
             auto property = it.first.as<std::string>().c_str(); 
             switch(hash(property))
             {
-            case hash("type"):
+            case "type"_h:
                 builder.type = it.second.as<std::string>();
                 break;
-            case hash("option"):
+            case "option"_h:
                 builder.option = it.second.as<std::string>();
+                break;
             }
         }
         return builder;

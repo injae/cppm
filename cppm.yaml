@@ -7,12 +7,12 @@ package:
         - https://github.com/INJAE/cppm_packages.git
         
 compiler: 
-    type: g++
-    option: -std=c++17 -lstdc++fs -g -Wall -pthread -fPIC -O0 -Wunused-variable
+    type: clang++
+    luncher: ccache
+    option: -std=c++17 -g -Wall -pthread -fPIC -O0 -Qunused-arguments
     
 builder: 
     type: make
-    luncher: ccache 
     option: -j1
     
 user-cmake-script: 
@@ -27,32 +27,6 @@ binary:
         source:
             - src/.*
         dependencies:
-            - boost 
-            - yaml-cpp
-            - nieel
-    
-thirdparty:
-    boost: 
-       build-type: static
-       install: global
-       url: https://dl.bintray.com/boostorg/release/1.67.0/source/boost_1_67_0.tar.gz 
-       cmake-lib-name: Boost::boost
-       
-    yaml-cpp:
-       build-type: static
-       install: global
-       url: https://github.com/jbeder/yaml-cpp.git
-       find-cmake-value: YAML_CPP
-       cmake-lib-name: yaml-cpp
-       
-    range-v3:
-       build-type: header_only
-       install: global
-       url: https://github.com/ericniebler/range-v3.git
-       cmake-lib-name: range-v3
-       
-    nieel:
-       build-type: static
-       install: global
-       url: https://github.com/INJAE/nieel.git
-       cmake-lib-name: nieel
+            - yaml-cpp 0.6.2 yaml-cpp
+            - boost 1.55.0 Boost::boost
+            - nieel 0.1.0 nieel

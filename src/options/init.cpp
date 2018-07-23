@@ -26,7 +26,7 @@ namespace option
                     (type::command, "static"     , aopbind(_lib("static")))
                     (type::command, "shared"     , aopbind(_lib("shared")))
                     (type::command, "header_only", aopbind(_lib("header_only")))
-                    (type::default_command, opbind([](){std::cerr << "wrong argument" << std::endl;}))
+                    (type::default_command, [](){std::cerr << "wrong argument" << std::endl;})
                     .run();
     }
      

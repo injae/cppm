@@ -10,6 +10,8 @@ install(DIRECTORY DESTINATION ${default_project_dir}/cmake/Modules)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/utils.cmake DESTINATION ${default_project_dir}/cmake)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_option.cmake DESTINATION ${default_project_dir}/cmake)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/project_maker.cmake DESTINATION ${default_project_dir}/cmake)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/library_maker.cmake DESTINATION ${default_project_dir}/cmake)
 
-install(DIRECTORY FindThirdparty DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY cppm_packages DESTINATION share/${PROJECT_NAME}/repos)
+
+set(ENV{CPPM_PATH} /usr/local/share/cppm) 

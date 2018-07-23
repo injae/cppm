@@ -1,8 +1,9 @@
-#include"config/binary.h"
-#include"cmake/generator.h"
-#include<nieel/string.hpp>
-#include<nieel/util/hash.hpp>
-#include<nieel/filesystem.h>
+#include "config/binary.h"
+#include "config/dependency.h"
+#include "cmake/generator.h"
+#include <nieel/string.hpp>
+#include <nieel/util/hash.hpp>
+#include <nieel/filesystem.h>
 
 namespace cppm
 {
@@ -31,7 +32,7 @@ namespace cppm
                 break;
             case hash("dependencies"):
                 for(auto dependency : node["binary"][name]["dependencies"]){
-                    binary.dependencies.push_back(dependency.as<std::string>());
+                    binary.dependencies.emplace_back(cppm::parse_dependency(dependency.as<std::string>()));
                 }
                 break;
             }
@@ -47,13 +48,13 @@ namespace cppm
         return binaries;
     }
     
-    
     std::string Binary::cmake_script() {
         using namespace cmake;
+        using trans_type = std::vector<std::string>;
         auto project = Cppm::instance()->project();
         if(project.binaries.empty()) return "";
         std::stringstream output("");
-        output << set("thirdparty", nieel::str::accumulate(project.cmake_lib_name(dependencies), std::string{"\n\t"}) + "\n") << endl()
+        output << set("thirdparty", nieel::str::accumulate(nieel::transform<trans_type>(dependencies, [](auto dep){ return dep.cmake_name;}), std::string{"\n\t"}) + "\n") << endl()
                << set("source"    , nieel::str::accumulate(source, std::string{"\n\t"}) + "\n") << endl()
                << "build_binary(" << name << " \"" << get("source") << "\" \"" << get("thirdparty") << "\")" << endl()
                ;

@@ -4,6 +4,7 @@
 #include<string>
 #include<vector>
 #include<yaml-cpp/yaml.h>
+#include"config/dependency.h"
 
 namespace cppm
 {
@@ -20,7 +21,7 @@ namespace cppm
         ; std::string type
         ; std::vector<std::string> include
         ; std::vector<std::string> source 
-        ; std::vector<std::string> dependencies
+        ; std::vector<Dependency> dependencies
         ;    
     };
 }

@@ -10,22 +10,22 @@ namespace cppm
             auto property = it.first.as<std::string>().c_str();
             switch(hash(property))
             {
-                case hash("name"):
+                case "name"_h:
                     package.name     = it.second.as<std::string>(); 
                     break;
-                case hash("type"):
+                case "type"_h:
                     package.type     = it.second.as<std::string>(); 
                     break;
-                case hash("version"):
+                case "version"_h:
                     package.version  = it.second.as<std::string>();
                     break;
-                case hash("license"):
+                case "license"_h:
                     package.license  = it.second.as<std::string>();  
                     break;
-                case hash("authors"):
+                case "authors"_h:
                     package.authors  = it.second.as<std::string>(); 
                     break;
-                case hash("thirdparty-repo"):
+                case "thirdparty-repo"_h:
                     for(auto repo : node["package"]["thirdparty_repo"])
                         package.thirdparty_repo.push_back(repo.as<std::string>());
                     break;
