@@ -13,8 +13,8 @@ get_third_party_list()
 
 set(thirdparty 
 	yaml-cpp
-	Boost::boost
-	nieel
+	${Boost_LIBRARIES}
+	nieel::nieel
 )
 set(source 
 	src/main.cpp

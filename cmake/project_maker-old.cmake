@@ -80,7 +80,6 @@ endfunction()
 
 function(make_shared_lib name)
     get_third_party_list()
-    
     file(GLOB_RECURSE GLOB_RESULT "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"  
                                   "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc"
                                   "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cxx"

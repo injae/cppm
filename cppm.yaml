@@ -28,5 +28,5 @@ binary:
             - src/.*
         dependencies:
             - yaml-cpp 0.6.2 yaml-cpp
-            - boost 1.55.0 Boost::boost
-            - nieel 0.1.0 nieel
+            - boost 1.55.0 ${Boost_LIBRARIES}
+            - nieel 0.1.0 nieel::nieel
