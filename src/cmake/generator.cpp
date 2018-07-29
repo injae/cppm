@@ -137,7 +137,7 @@ namespace cmake
       case hash("header_only"):
          return "make_thirdparty_header_only(" + thirdparty.name + " " + thirdparty.include_dir    + ")";
       default:
-         std::cerr<< "wrong parameter" << std::endl;
+         std::cerr<< "wrong parameter: " << thirdparty.build_type << std::endl;
          exit(1);
       }
    }

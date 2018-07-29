@@ -30,9 +30,11 @@ void Cppm::make_config_file(cppm::Project& project) {
     config["package"]["thirdparty-repo"].push_back("https://github.com/INJAE/cppm_packages.git");
     
     config["compiler"]["type"] = project.compiler.type;
+        
     config["builder"]["type"]  = project.builder.type;
-    config["binary"][project.package.name]["version"] = "0.0.0.1";
-    config["binary"][project.package.name]["source"].push_back("src/.*");
+    config[project.package.type][project.package.name]["version"] = "0.0.0.1";
+    if(project.package.type != "binary") config[project.package.type][project.package.name]["type"] = "static";
+    config[project.package.type][project.package.name]["source"].push_back("src/.*");
     
     config_file << config; 
     

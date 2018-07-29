@@ -12,7 +12,7 @@ namespace option
         Init(int argc, char* argv[]);
     private:
         void _bin();
-        void _lib(std::string type);
+        void _lib();
         void _help();
     };
 }

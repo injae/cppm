@@ -1,14 +1,15 @@
-#include"cppm.h"
-#include"cppm_options.h"
-#include"cmake/find_package.h"
-#include"cmake/cmake_option.h"
-#include"cmake/generator.h"
-#include"options/init.h"
-#include"options/install.h"
-#include"package/package.h"
-#include"url.h"
-#include<nieel/string.hpp>
-#include<nieel/algorithm.hpp>
+#include "cppm.h"
+#include "cppm_options.h"
+#include "cmake/find_package.h"
+#include "cmake/cmake_option.h"
+#include "options/init.h"
+#include "options/install.h"
+#include "options/build.h"
+#include "package/package.h"
+#include "url.h"
+
+#include <nieel/string.hpp>
+#include <nieel/algorithm.hpp>
 
 #include<string>
 #include<iterator>
@@ -74,31 +75,21 @@ void CppmOptions::_version() {
 }
 
 void CppmOptions::_build() {
-    using namespace cmake::option;
     Cppm::instance()->parse_project_config();
-    auto subargs = get_subarg();
-    auto project = Cppm::instance()->project();
-    std::ofstream file (project.path.root + "/CMakeLists.txt"); file.is_open();
-    file << cmake::make_default_project(project); file.close();
-    
-    std::string cmd = "cd " + project.path.bin 
-                    + " && cmake" + builder(project) + compiler(project) + luncher(project) + " .. "
-                    + " && " + build(project);
-    for(auto subarg : subargs) { cmd += subarg; }
-    
-    system(cmd.c_str()); 
+    make_sub_command<option::Build>().run();
 }
 
 void CppmOptions::_run() {
     Cppm::instance()->parse_project_config();
     auto project = Cppm::instance()->project();
-    auto subargs = nieel::accumulate(get_subarg(), std::string{});
+    auto subargs = nieel::str::accumulate(get_subarg(), std::string{" "});
     std::string cmd = "cd " + project.path.bin + " && ./" + project.package.name +" " + subargs;
     system(cmd.c_str());
 }
 
 void CppmOptions::_install() {
     Cppm::instance()->parse_project_config();
+    std::cout <<get_subarg()[0] << std::endl;
     make_sub_command<option::Install>().run();
 }
 

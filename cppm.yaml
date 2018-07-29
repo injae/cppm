@@ -2,14 +2,14 @@ package:
     name: cppm
     version: 1.0.3
     authors: 8687lee@gmail.com InJaeLee
-    type: bin 
+    type: binary
     thirdparty-repo:
         - https://github.com/INJAE/cppm_packages.git
         
 compiler: 
     type: clang++
     luncher: ccache
-    option: -std=c++17 -g -Wall -pthread -fPIC -O0 -Qunused-arguments
+    option: -std=c++17 -g -Wall -pthread -fPIC -O0 -Qunused-arguments -pg
     
 builder: 
     type: make

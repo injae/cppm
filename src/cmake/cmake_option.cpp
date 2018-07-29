@@ -16,7 +16,7 @@ namespace cmake::option
         case "ninja"_h:
             return " sudo ninja ";
         default:
-            std::cerr << "wrong argument" <<std::endl;
+            std::cerr << "wrong argument: " << project.builder.type <<std::endl;
             exit(1);
         }
     }
@@ -30,7 +30,7 @@ namespace cmake::option
         case "make"_h:
             return "";
         default:
-            std::cerr << "wrong argument" << std::endl;
+            std::cerr << "wrong argument: "<< project.builder.type << std::endl;
             exit(1);
         }
     }

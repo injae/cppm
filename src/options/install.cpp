@@ -32,8 +32,8 @@ namespace option {
                    (type::option, "svn"    , opbind(_svn)    , "")
                    (type::option, "file"   , opbind(_file)   , "")
                    (type::option, "config" , opbind(_config) , "")
-                   (type::command, "xx"   , opbind(_help)   ,  "running binary")
                    (type::default_command  , uopbind(_repo))
+                   (type::default_option , [](){std::cerr << "wrong argument" << std::endl;})
                    .run();
     }
     

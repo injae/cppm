@@ -56,7 +56,6 @@ function(build_library name type source dependencies)
                 $<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include>
         )
     else()
-        message("${lib_include_dir}")
         target_include_directories(${name}
             PUBLIC
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_include_dir}>
