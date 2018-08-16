@@ -93,70 +93,57 @@ function(build_library name type source dependencies)
     )
     # ===================================
     
+    # pkg-config install part
+    
+    # set(PKGCONFIG_INSTALL_DIR
+    #    "${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig"
+    #    CACHE PATH "Path where ${CMAKE_PROJECT_NAME}.pc is installed"
+    # )
+    # configure_file(
+    #  ${CMAKE_CURRENT_SOURCE_DIR}/CMake/${CMAKE_PROJECT_NAME}.pc.in
+    #  ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.pc
+    #  @ONLY
+    # )
+    # install(
+    #  FILES
+    #    "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.pc"
+    #  DESTINATION
+    #    ${PKGCONFIG_INSTALL_DIR}
+    # )
+    
+    
+    
+    # ==================================
+    
+    
 endfunction()
       
- #   include(CMakePackageConfigHelpers)
- #   configure_package_config_file(
- #       ${CMAKE_CURRENT_LIST_DIR}/CMake/Catch2Config.cmake.in
- #       ${CMAKE_CURRENT_BINARY_DIR}/Catch2Config.cmake
- #       INSTALL_DESTINATION
- #         ${CATCH_CMAKE_CONFIG_DESTINATION}
- #   )
- #   set(PKGCONFIG_INSTALL_DIR
- #       "${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig"
- #       CACHE PATH "Path where catch2.pc is installed"
- #   )
- #   configure_file(
- #     ${CMAKE_CURRENT_SOURCE_DIR}/CMake/catch2.pc.in
- #     ${CMAKE_CURRENT_BINARY_DIR}/catch2.pc
- #     @ONLY
- #   )
- #   install(
- #     FILES
- #       "${CMAKE_CURRENT_BINARY_DIR}/catch2.pc"
- #     DESTINATION
- #       ${PKGCONFIG_INSTALL_DIR}
- #   ) 
+    
+    # set(INSTALL_LIB_DIR "${CMAKE_INSTALL_PREFIX}/lib" CACHE PATH "Installation directory for libraries")
+    # set(INSTALL_INC_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE PATH "Installation directory for headers")
+    # set(INSTALL_MAN_DIR "${CMAKE_INSTALL_PREFIX}/share/man" CACHE PATH "Installation directory for manual pages")
+    # set(INSTALL_PKGCONFIG_DIR "${CMAKE_INSTALL_PREFIX}/share/pkgconfig" CACHE PATH "Installation directory for pkgconfig (.pc) files")
       
+    # includedir=@CMAKE_INSTALL_FULL_INCLUDEDIR@
+    # Name: Catch2
+    # Description: A modern, C++-native, header-only, test framework for C++11
+    # URL: https://github.com/catchorg/Catch2
+    # Version: @Catch2_VERSION@
+    # Cflags: -I${includedir}
+    
+
+    # prefix=@CMAKE_INSTALL_PREFIX@
+    # exec_prefix=@CMAKE_INSTALL_PREFIX@
+    # libdir=@INSTALL_LIB_DIR@
+    # sharedlibdir=@INSTALL_LIB_DIR@
+    # includedir=@INSTALL_INC_DIR@
+    # 
+    # Name: zlib
+    # Description: zlib compression library
+    # Version: @VERSION@
+    # 
+    # Requires:
+    # Libs: -L${libdir} -L${sharedlibdir} -lz
+    # Cflags: -I${includedir}
+
       
-      
-      
-     # if(${name} MATCHES ${PROJECT_NAME})
-        #export(${name}Targets NAMESPACE ${name})
-     
-        
-     # else()
-     #   set_target_properties(${name} PROPERTIES OUTPUT_NAME "${PROJECT_NAME}_${name}")
-     #   target_include_directories(${name}
-     #       PUBLIC
-     #           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/${name}>
-     #           $<INSTALL_INTERFACE:include/${name}>
-     #       PRIVATE
-     #           ${CMAKE_CURRENT_SOURCE_DIR}/src/${name}
-     #   )
-     #   
-     #   include(GNUInstallDirs)
-     #   install(TARGETS ${name} 
-     #       EXPORT ${PROJECT_NAME}Targets-${name}
-     #       ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}/${name}
-     #       LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}/${name}
-     #       RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}/${name}
-     #   )
-     #   install(DIRECTORY include/${name} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-     #   install(EXPORT ${PROJECT_NAME}Targets-${name}
-     #       FILE ${PROJECT_NAME}Targets-${name}.cmake
-     #       NAMESPACE ${PROJECT_NAME}::
-     #       DESTINATION lib/cmake/${PROJECT_NAME}
-     #   )
-     #endif()
-     
-            
-    #export(TARGETS ${name} FILE ${name}Config.cmake)
-    #set_target_properties(${name} PROPERTIES
-    #    VERSION ${${name}_VERSION}}
-    #    SOVERSION 1
-    #)
-   # file(GLOB_RECURSE GLOB_RESULT "${CMAKE_CURRENT_SOURCE_DIR}/${path}*.cpp"  
-   #                               "${CMAKE_CURRENT_SOURCE_DIR}/${path}*.cc"
-   #                               "${CMAKE_CURRENT_SOURCE_DIR}/${path}*.cxx"
-   # )

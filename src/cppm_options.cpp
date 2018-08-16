@@ -16,7 +16,7 @@
 
 CppmOptions::CppmOptions(int argc, char* argv[]) : Option("Cppm Options", argc, argv) {
     desc_.add_options()
-        ("help"      , "produce a help message"     )
+        ("help,h"    , "produce a help message"     )
         ("version,v" , "Display the version number" )
         ;
     visible_option_.add(desc_);

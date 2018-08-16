@@ -17,32 +17,32 @@ set(thirdparty
 	nieel::nieel
 )
 set(source 
-	src/main.cpp
-	src/package/build.cpp
-	src/package/package.cpp
-	src/package/install.cpp
-	src/package/cmake.cpp
-	src/options/build.cpp
-	src/options/init.cpp
-	src/options/install.cpp
-	src/cmake/cmake_option.cpp
-	src/cmake/find_package.cpp
-	src/cmake/generator.cpp
 	src/utils.cpp
-	src/cppm_options.cpp
-	src/config/compiler.cpp
-	src/config/builder.cpp
-	src/config/command.cpp
-	src/config/dependency.cpp
-	src/config/package.cpp
-	src/config/thirdparty.cpp
-	src/config/library.cpp
-	src/config/binary.cpp
-	src/config/project.cpp
-	src/config/path.cpp
-	src/config/repository.cpp
 	src/cppm.cpp
 	src/url.cpp
+	src/cppm_options.cpp
+	src/package/cmake.cpp
+	src/package/install.cpp
+	src/package/package.cpp
+	src/package/build.cpp
+	src/main.cpp
+	src/cmake/generator.cpp
+	src/cmake/find_package.cpp
+	src/cmake/cmake_option.cpp
+	src/config/thirdparty.cpp
+	src/config/package.cpp
+	src/config/repository.cpp
+	src/config/dependency.cpp
+	src/config/path.cpp
+	src/config/library.cpp
+	src/config/builder.cpp
+	src/config/command.cpp
+	src/config/binary.cpp
+	src/config/project.cpp
+	src/config/compiler.cpp
+	src/options/install.cpp
+	src/options/init.cpp
+	src/options/build.cpp
 )
 build_binary(cppm "${source}" "${thirdparty}")
 
