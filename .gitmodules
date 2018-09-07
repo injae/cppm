@@ -1,0 +1,6 @@
+[submodule "thirdparty/yaml-cpp"]
+	path = thirdparty/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp.git
+[submodule "cppm_packages"]
+	path = cppm_packages
+	url = https://github.com/INJAE/cppm_packages.git

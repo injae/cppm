@@ -9,11 +9,11 @@ package:
 compiler: 
     type: clang++
     luncher: ccache
-    option: -std=c++17 -g -Wall -pthread -fPIC -O0 -Qunused-arguments -pg
+    option: -std=c++17 -g -Wall -pthread -fPIC -O0 -pg
     
 builder: 
-    type: make
-    option: -j1
+    type: ninja 
+    option: -j4
     
 user-cmake-script: 
     - cmake/cppm_install.cmake

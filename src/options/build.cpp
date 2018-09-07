@@ -43,7 +43,7 @@ namespace option
         std::ofstream file (project.path.root + "/CMakeLists.txt"); file.is_open();
         file << cmake::make_default_project(project); file.close();
         
-        std::string cmd = "cd " + project.path.bin 
+        std::string cmd = " cd " + project.path.bin 
                         + " && cmake" + builder(project) + compiler(project) + luncher(project) + " .. "
                         + " && " + build(project);
         for(auto subarg : subargs) { cmd += subarg; }
