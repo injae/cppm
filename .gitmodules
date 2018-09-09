@@ -4,3 +4,6 @@
 [submodule "cppm_packages"]
 	path = cppm_packages
 	url = https://github.com/INJAE/cppm_packages.git
+[submodule "thirdparty/nieel"]
+	path = thirdparty/nieel
+	url = https://github.com/INJAE/nieel.git
