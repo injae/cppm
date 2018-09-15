@@ -1,12 +1,7 @@
-#include<iostream>
-#include"cppm.h"
-#include<nieel/algorithm.hpp>
-#include<nieel/adoptor.hpp>
+#include <iostream>
 
-int main(int argc, char* argv[])
-{
-    auto cppm = Cppm::instance(); 
-    cppm->run(argc,argv);
-	return 0;
+int main(int argc, char* argv[]) {
+    
+
+    return 0;
 }
-
