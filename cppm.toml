@@ -1,0 +1,10 @@
+[package]
+name = "cppm"
+version = "0.0.1"
+description = "cmake maker"
+    
+[[bin]]
+name = "cppm"
+    
+[dependencies]
+cpptoml = { cmake  = "cpptoml", version = "0.5.0" }

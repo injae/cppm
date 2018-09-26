@@ -7,9 +7,9 @@ package:
         - https://github.com/INJAE/cppm_packages.git
         
 compiler: 
-    type: clang++
+    type: g++
     luncher: ccache
-    option: -std=c++17 -g -Wall -pthread -fPIC -O0 -pg
+    option: -g -std=c++17 -Wall -pthread -fPIC -O0
     
 builder: 
     type: ninja 
@@ -30,3 +30,5 @@ binary:
             - yaml-cpp 0.6.2 yaml-cpp
             - boost 1.55.0 ${Boost_LIBRARIES}
             - nieel 0.1.0 nieel::nieel
+            - fmt 5.0.0 fmt::fmt
+            - cpptoml 0.0.0 cpptoml
