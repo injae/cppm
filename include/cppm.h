@@ -12,7 +12,6 @@
 
 namespace fs = boost::filesystem;
 
-
 class Cppm 
 {
 public:
@@ -29,6 +28,5 @@ private:
     cppm::Project project_;
     std::unique_ptr<CppmOptions> option_;
 };
-
 
 #endif

@@ -20,4 +20,5 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/library_maker.cmake DESTINATION 
 
 install(DIRECTORY cppm_packages DESTINATION share/${PROJECT_NAME}/repos)
 
-set(ENV{CPPM_PATH} /usr/local/share/cppm) 
+set(ENV{CPPM_PATH} "/usr/local/share/cppm") 
+message("Enviroment $ENV{CPPM_PATH}")

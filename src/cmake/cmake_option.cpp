@@ -45,4 +45,8 @@ namespace cmake::option
         return " -D CMAKE_CXX_COMPILER_LAUNCHER=" +project.compiler.luncher;
     }
     
+    std::string cmake_option(cppm::Project& project) {
+        if(project.cmake.options == "") return "";
+        return project.cmake.options;
+    }
 }

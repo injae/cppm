@@ -30,6 +30,8 @@ namespace cppm
             case "builder"_h:
                 project.builder  = Builder::parse(node);
                 break;
+            case "cmake"_h:
+                project.cmake    = Cmake::parse(node);
             case "binary"_h:
                 project.binaries = Binary::parse_binaries(node);
                 break;
@@ -37,7 +39,10 @@ namespace cppm
                 project.libraries = Library::parse_libraries(node);
                 break;
             case "user-cmake-script"_h:
-                project.parse_user_cmake_script(node);
+                std::cout << "t" << std::endl;
+                for(auto script : node["user-cmake-script"]) {
+                    project.user_cmake_scripts.push_back(script.as<std::string>());
+                }
                 break;
             case "include"_h:
             {
@@ -60,13 +65,6 @@ namespace cppm
             }
         }
         return project;
-    }
-    
-    void Project::parse_user_cmake_script(YAML::Node& node) {
-        if(!node["user-cmake-script"]) return; 
-        for(auto script : node["user-cmake-script"]) {
-            user_cmake_scripts.push_back(script.as<std::string>());
-        }
     }
     
     bool Project::has(std::string name) {

@@ -6,10 +6,12 @@ package:
     thirdparty-repo:
         - https://github.com/INJAE/cppm_packages.git
         
+cmake:
+    options: -DCMAKE_TOOLCHAIN_FILE=/home/nieel/dev/vcpkg/scripts/buildsystems/vcpkg.cmake
 compiler: 
     type: clang++
     luncher: ccache
-    option: -std=c++17 -g -Wall -pthread -fPIC -O0 -pg
+    option: -std=c++17 -g -Wall -pthread -fPIC -O0 
     
 builder: 
     type: ninja 
