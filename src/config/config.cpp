@@ -13,6 +13,7 @@ namespace cppm
     void Config::parse(table_ptr table) {
         package.parse(table);
         bins.parse(table);
+        dependencies.parse(table);
     }
     
     std::string Config::generate() {

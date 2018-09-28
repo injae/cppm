@@ -1,1 +1,1 @@
-find_package(Boost 1.55 COMPONENTS system filesystem program_options regex REQUIRED)
+find_package(Boost COMPONENTS system filesystem program_options regex REQUIRED)

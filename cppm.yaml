@@ -9,7 +9,7 @@ package:
 compiler: 
     type: g++
     luncher: ccache
-    option: -g -std=c++17 -Wall -pthread -fPIC -O0
+    option: -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
     
 builder: 
     type: ninja 
@@ -27,7 +27,6 @@ binary:
         source:
             - src/.*
         dependencies:
-            - yaml-cpp 0.6.2 yaml-cpp
             - boost 1.55.0 ${Boost_LIBRARIES}
             - nieel 0.1.0 nieel::nieel
             - fmt 5.0.0 fmt::fmt

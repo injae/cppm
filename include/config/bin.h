@@ -17,7 +17,7 @@ namespace cppm
         void parse(table_ptr table);
         std::string generate();
     public:
-        std::vector<Bin> bins;
+        std::vector<Bin> list;
     };
 }
 

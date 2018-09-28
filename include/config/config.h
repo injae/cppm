@@ -5,6 +5,7 @@
 #include "config/base_config.h"
 #include "config/package.h"
 #include "config/bin.h"
+#include "config/dependency.h"
 
 namespace cppm
 {
@@ -17,6 +18,7 @@ namespace cppm
     public:
         Package package;
         Bins bins;
+        Dependencies dependencies;
     };
 }
 

@@ -56,38 +56,52 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Order-only phony target for cppm
 
 build cmake_object_order_depends_target_cppm: phony
+build CMakeFiles/cppm.dir/src/util/filesystem.cpp.o: CXX_COMPILER__cppm ../src/util/filesystem.cpp || cmake_object_order_depends_target_cppm
+  DEFINES = -DSYSTEM_LINUX
+  DEP_FILE = CMakeFiles/cppm.dir/src/util/filesystem.cpp.o.d
+  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
+  INCLUDES = -I../include -I../src -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/cppm.dir
+  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/util
 build CMakeFiles/cppm.dir/src/main.cpp.o: CXX_COMPILER__cppm ../src/main.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/main.cpp.o.d
-  FLAGS = -g -std=c++17 -Wall -pthread -fPIC -O0
+  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src
 build CMakeFiles/cppm.dir/src/config/config.cpp.o: CXX_COMPILER__cppm ../src/config/config.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/config/config.cpp.o.d
-  FLAGS = -g -std=c++17 -Wall -pthread -fPIC -O0
+  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
 build CMakeFiles/cppm.dir/src/config/lib.cpp.o: CXX_COMPILER__cppm ../src/config/lib.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/config/lib.cpp.o.d
-  FLAGS = -g -std=c++17 -Wall -pthread -fPIC -O0
+  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
 build CMakeFiles/cppm.dir/src/config/package.cpp.o: CXX_COMPILER__cppm ../src/config/package.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/config/package.cpp.o.d
-  FLAGS = -g -std=c++17 -Wall -pthread -fPIC -O0
+  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
 build CMakeFiles/cppm.dir/src/config/bin.cpp.o: CXX_COMPILER__cppm ../src/config/bin.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/config/bin.cpp.o.d
-  FLAGS = -g -std=c++17 -Wall -pthread -fPIC -O0
+  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
+  INCLUDES = -I../include -I../src -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/cppm.dir
+  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
+build CMakeFiles/cppm.dir/src/config/dependency.cpp.o: CXX_COMPILER__cppm ../src/config/dependency.cpp || cmake_object_order_depends_target_cppm
+  DEFINES = -DSYSTEM_LINUX
+  DEP_FILE = CMakeFiles/cppm.dir/src/config/dependency.cpp.o.d
+  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
@@ -99,9 +113,9 @@ build CMakeFiles/cppm.dir/src/config/bin.cpp.o: CXX_COMPILER__cppm ../src/config
 #############################################
 # Link the executable cppm
 
-build cppm: CXX_EXECUTABLE_LINKER__cppm CMakeFiles/cppm.dir/src/main.cpp.o CMakeFiles/cppm.dir/src/config/config.cpp.o CMakeFiles/cppm.dir/src/config/lib.cpp.o CMakeFiles/cppm.dir/src/config/package.cpp.o CMakeFiles/cppm.dir/src/config/bin.cpp.o | /usr/local/lib/libyaml-cpp.a /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so /usr/local/lib/libnieel.a /usr/local/lib/libfmt.a /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so
-  FLAGS = -g -std=c++17 -Wall -pthread -fPIC -O0
-  LINK_LIBRARIES = /usr/local/lib/libyaml-cpp.a /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so /usr/local/lib/libnieel.a /usr/local/lib/libfmt.a /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so
+build cppm: CXX_EXECUTABLE_LINKER__cppm CMakeFiles/cppm.dir/src/util/filesystem.cpp.o CMakeFiles/cppm.dir/src/main.cpp.o CMakeFiles/cppm.dir/src/config/config.cpp.o CMakeFiles/cppm.dir/src/config/lib.cpp.o CMakeFiles/cppm.dir/src/config/package.cpp.o CMakeFiles/cppm.dir/src/config/bin.cpp.o CMakeFiles/cppm.dir/src/config/dependency.cpp.o | /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so /usr/local/lib/libnieel.a /usr/local/lib/libfmt.a /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so
+  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
+  LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so /usr/local/lib/libnieel.a /usr/local/lib/libfmt.a /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so
   OBJECT_DIR = CMakeFiles/cppm.dir
   POST_BUILD = :
   PRE_LINK = :

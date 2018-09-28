@@ -6,7 +6,7 @@ namespace cppm
         for(const auto& bin_table : *table->get_table_array("bin")) {
             Bin bin;
             bin.name = *bin_table->get_as<std::string>("name");
-            bins.emplace_back(std::move(bin));
+            list.emplace_back(std::move(bin));
         }
     }
     
