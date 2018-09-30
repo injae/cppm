@@ -58,18 +58,16 @@ CMAKE_AR:FILEPATH=/usr/bin/ar
 CMAKE_BUILD_TYPE:STRING=
 
 //No help, variable specified on the command line.
-CMAKE_CXX_COMPILER:UNINITIALIZED=g++
+CMAKE_CXX_COMPILER:UNINITIALIZED=clang++
 
-//A wrapper around 'ar' adding the appropriate '--plugin' option
-// for the GCC compiler
-CMAKE_CXX_COMPILER_AR:FILEPATH=/usr/bin/gcc-ar-8
+//LLVM archiver
+CMAKE_CXX_COMPILER_AR:FILEPATH=/usr/lib/llvm-7/bin/llvm-ar
 
 //No help, variable specified on the command line.
 CMAKE_CXX_COMPILER_LAUNCHER:UNINITIALIZED=ccache
 
-//A wrapper around 'ranlib' adding the appropriate '--plugin' option
-// for the GCC compiler
-CMAKE_CXX_COMPILER_RANLIB:FILEPATH=/usr/bin/gcc-ranlib-8
+//Generate index for LLVM archive
+CMAKE_CXX_COMPILER_RANLIB:FILEPATH=/usr/lib/llvm-7/bin/llvm-ranlib
 
 //Flags used by the compiler during all build types.
 CMAKE_CXX_FLAGS:STRING=
@@ -252,6 +250,9 @@ fmt_DIR:PATH=/usr/local/lib/cmake/fmt
 
 //The directory containing a CMake configuration file for nieel.
 nieel_DIR:PATH=/usr/local/lib/cmake/nieel
+
+//The directory containing a CMake configuration file for nlpo.
+nlpo_DIR:PATH=/usr/local/lib/cmake/nlpo
 
 //The directory containing a CMake configuration file for yaml-cpp.
 yaml-cpp_DIR:PATH=/usr/local/lib/cmake/yaml-cpp

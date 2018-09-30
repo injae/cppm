@@ -59,49 +59,49 @@ build cmake_object_order_depends_target_cppm: phony
 build CMakeFiles/cppm.dir/src/util/filesystem.cpp.o: CXX_COMPILER__cppm ../src/util/filesystem.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/util/filesystem.cpp.o.d
-  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/util
 build CMakeFiles/cppm.dir/src/main.cpp.o: CXX_COMPILER__cppm ../src/main.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/main.cpp.o.d
-  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src
 build CMakeFiles/cppm.dir/src/config/config.cpp.o: CXX_COMPILER__cppm ../src/config/config.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/config/config.cpp.o.d
-  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
 build CMakeFiles/cppm.dir/src/config/lib.cpp.o: CXX_COMPILER__cppm ../src/config/lib.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/config/lib.cpp.o.d
-  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
 build CMakeFiles/cppm.dir/src/config/package.cpp.o: CXX_COMPILER__cppm ../src/config/package.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/config/package.cpp.o.d
-  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
 build CMakeFiles/cppm.dir/src/config/bin.cpp.o: CXX_COMPILER__cppm ../src/config/bin.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/config/bin.cpp.o.d
-  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
 build CMakeFiles/cppm.dir/src/config/dependency.cpp.o: CXX_COMPILER__cppm ../src/config/dependency.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/config/dependency.cpp.o.d
-  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
@@ -113,9 +113,9 @@ build CMakeFiles/cppm.dir/src/config/dependency.cpp.o: CXX_COMPILER__cppm ../src
 #############################################
 # Link the executable cppm
 
-build cppm: CXX_EXECUTABLE_LINKER__cppm CMakeFiles/cppm.dir/src/util/filesystem.cpp.o CMakeFiles/cppm.dir/src/main.cpp.o CMakeFiles/cppm.dir/src/config/config.cpp.o CMakeFiles/cppm.dir/src/config/lib.cpp.o CMakeFiles/cppm.dir/src/config/package.cpp.o CMakeFiles/cppm.dir/src/config/bin.cpp.o CMakeFiles/cppm.dir/src/config/dependency.cpp.o | /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so /usr/local/lib/libnieel.a /usr/local/lib/libfmt.a /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so
-  FLAGS = -std=c++17 -lstdc++fs -Wall -pthread -fPIC -O0
-  LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so /usr/local/lib/libnieel.a /usr/local/lib/libfmt.a /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so
+build cppm: CXX_EXECUTABLE_LINKER__cppm CMakeFiles/cppm.dir/src/util/filesystem.cpp.o CMakeFiles/cppm.dir/src/main.cpp.o CMakeFiles/cppm.dir/src/config/config.cpp.o CMakeFiles/cppm.dir/src/config/lib.cpp.o CMakeFiles/cppm.dir/src/config/package.cpp.o CMakeFiles/cppm.dir/src/config/bin.cpp.o CMakeFiles/cppm.dir/src/config/dependency.cpp.o | /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so /usr/local/lib/libnlpo.a /usr/local/lib/libfmt.a
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0
+  LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so /usr/local/lib/libnlpo.a /usr/local/lib/libfmt.a
   OBJECT_DIR = CMakeFiles/cppm.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -180,13 +180,13 @@ default all
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | ../CMakeLists.txt ../cmake/Modules/FindBoost.cmake ../cmake/Modules/FindCppToml.cmake ../cmake/Modules/FindFmt.cmake ../cmake/Modules/FindNieel.cmake ../cmake/Modules/FindYamlCpp.cmake ../cmake/cmake_option.cmake ../cmake/project_maker.cmake ../cmake/utils.cmake /usr/local/lib/cmake/cpptoml/cpptomlConfig.cmake /usr/local/lib/cmake/cpptoml/cpptomlConfigVersion.cmake /usr/local/lib/cmake/cpptoml/cpptomlTargets.cmake /usr/local/lib/cmake/fmt/fmt-config-version.cmake /usr/local/lib/cmake/fmt/fmt-config.cmake /usr/local/lib/cmake/fmt/fmt-targets-release.cmake /usr/local/lib/cmake/fmt/fmt-targets.cmake /usr/local/lib/cmake/nieel/nieel-config-noconfig.cmake /usr/local/lib/cmake/nieel/nieel-config-version.cmake /usr/local/lib/cmake/nieel/nieel-config.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-config-version.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-config.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-targets-release.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-targets.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/FindBoost.cmake /usr/share/cmake-3.10/Modules/GNUInstallDirs.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | ../CMakeLists.txt ../cmake/Modules/FindBoost.cmake ../cmake/Modules/FindCppToml.cmake ../cmake/Modules/FindFmt.cmake ../cmake/Modules/FindNlpo.cmake ../cmake/cmake_option.cmake ../cmake/project_maker.cmake ../cmake/utils.cmake /usr/local/lib/cmake/cpptoml/cpptomlConfig.cmake /usr/local/lib/cmake/cpptoml/cpptomlConfigVersion.cmake /usr/local/lib/cmake/cpptoml/cpptomlTargets.cmake /usr/local/lib/cmake/fmt/fmt-config-version.cmake /usr/local/lib/cmake/fmt/fmt-config.cmake /usr/local/lib/cmake/fmt/fmt-targets-release.cmake /usr/local/lib/cmake/fmt/fmt-targets.cmake /usr/local/lib/cmake/nlpo/nlpo-config-noconfig.cmake /usr/local/lib/cmake/nlpo/nlpo-config-version.cmake /usr/local/lib/cmake/nlpo/nlpo-config.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/FindBoost.cmake /usr/share/cmake-3.10/Modules/GNUInstallDirs.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-Clang-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake
   pool = console
 
 #############################################
 # A missing CMake input file is not an error.
 
-build ../CMakeLists.txt ../cmake/Modules/FindBoost.cmake ../cmake/Modules/FindCppToml.cmake ../cmake/Modules/FindFmt.cmake ../cmake/Modules/FindNieel.cmake ../cmake/Modules/FindYamlCpp.cmake ../cmake/cmake_option.cmake ../cmake/project_maker.cmake ../cmake/utils.cmake /usr/local/lib/cmake/cpptoml/cpptomlConfig.cmake /usr/local/lib/cmake/cpptoml/cpptomlConfigVersion.cmake /usr/local/lib/cmake/cpptoml/cpptomlTargets.cmake /usr/local/lib/cmake/fmt/fmt-config-version.cmake /usr/local/lib/cmake/fmt/fmt-config.cmake /usr/local/lib/cmake/fmt/fmt-targets-release.cmake /usr/local/lib/cmake/fmt/fmt-targets.cmake /usr/local/lib/cmake/nieel/nieel-config-noconfig.cmake /usr/local/lib/cmake/nieel/nieel-config-version.cmake /usr/local/lib/cmake/nieel/nieel-config.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-config-version.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-config.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-targets-release.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-targets.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/FindBoost.cmake /usr/share/cmake-3.10/Modules/GNUInstallDirs.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake: phony
+build ../CMakeLists.txt ../cmake/Modules/FindBoost.cmake ../cmake/Modules/FindCppToml.cmake ../cmake/Modules/FindFmt.cmake ../cmake/Modules/FindNlpo.cmake ../cmake/cmake_option.cmake ../cmake/project_maker.cmake ../cmake/utils.cmake /usr/local/lib/cmake/cpptoml/cpptomlConfig.cmake /usr/local/lib/cmake/cpptoml/cpptomlConfigVersion.cmake /usr/local/lib/cmake/cpptoml/cpptomlTargets.cmake /usr/local/lib/cmake/fmt/fmt-config-version.cmake /usr/local/lib/cmake/fmt/fmt-config.cmake /usr/local/lib/cmake/fmt/fmt-targets-release.cmake /usr/local/lib/cmake/fmt/fmt-targets.cmake /usr/local/lib/cmake/nlpo/nlpo-config-noconfig.cmake /usr/local/lib/cmake/nlpo/nlpo-config-version.cmake /usr/local/lib/cmake/nlpo/nlpo-config.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/FindBoost.cmake /usr/share/cmake-3.10/Modules/GNUInstallDirs.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-Clang-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake: phony
 
 #############################################
 # Clean all the built files.

@@ -1,6 +1,3 @@
-[submodule "thirdparty/yaml-cpp"]
-	path = thirdparty/yaml-cpp
-	url = https://github.com/jbeder/yaml-cpp.git
 [submodule "thirdparty/nieel"]
 	path = thirdparty/nieel
 	url = https://github.com/INJAE/nieel.git
@@ -10,3 +7,6 @@
 [submodule "thirdparty/cpptoml"]
 	path = thirdparty/cpptoml
 	url = https://github.com/skystrife/cpptoml.git
+[submodule "thirdparty/nlpo"]
+	path = thirdparty/nlpo
+	url = https://github.com/INJAE/nlpo.git
