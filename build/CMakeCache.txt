@@ -101,7 +101,7 @@ CMAKE_EXE_LINKER_FLAGS_RELEASE:STRING=
 CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 
 //Enable/Disable output of compile commands during generation.
-CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=OFF
+CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=1
 
 //User executables (bin)
 CMAKE_INSTALL_BINDIR:PATH=bin
@@ -248,14 +248,8 @@ cpptoml_DIR:PATH=/usr/local/lib/cmake/cpptoml
 //The directory containing a CMake configuration file for fmt.
 fmt_DIR:PATH=/usr/local/lib/cmake/fmt
 
-//The directory containing a CMake configuration file for nieel.
-nieel_DIR:PATH=/usr/local/lib/cmake/nieel
-
 //The directory containing a CMake configuration file for nlpo.
 nlpo_DIR:PATH=/usr/local/lib/cmake/nlpo
-
-//The directory containing a CMake configuration file for yaml-cpp.
-yaml-cpp_DIR:PATH=/usr/local/lib/cmake/yaml-cpp
 
 
 ########################

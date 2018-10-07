@@ -1,4 +1,4 @@
-The system is: Linux - 4.15.0-34-generic - x86_64
+The system is: Linux - 4.15.0-36-generic - x86_64
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: /usr/bin/clang++ 
 Build flags: 
@@ -15,17 +15,17 @@ The CXX compiler identification is Clang, found in "/home/nieel/dev/test/cppm/bu
 Determining if the CXX compiler works passed with the following output:
 Change Dir: /home/nieel/dev/test/cppm/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/local/bin/ninja" "cmTC_7f3ab"
-[1/2] Building CXX object CMakeFiles/cmTC_7f3ab.dir/testCXXCompiler.cxx.o
-[2/2] Linking CXX executable cmTC_7f3ab
+Run Build Command:"/usr/local/bin/ninja" "cmTC_344c0"
+[1/2] Building CXX object CMakeFiles/cmTC_344c0.dir/testCXXCompiler.cxx.o
+[2/2] Linking CXX executable cmTC_344c0
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /home/nieel/dev/test/cppm/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/local/bin/ninja" "cmTC_9bed2"
-[1/2] Building CXX object CMakeFiles/cmTC_9bed2.dir/CMakeCXXCompilerABI.cpp.o
-[2/2] Linking CXX executable cmTC_9bed2
+Run Build Command:"/usr/local/bin/ninja" "cmTC_489bd"
+[1/2] Building CXX object CMakeFiles/cmTC_489bd.dir/CMakeCXXCompilerABI.cpp.o
+[2/2] Linking CXX executable cmTC_489bd
 clang version 7.0.0-svn341916-1~exp1~20180911115939.26 (branches/release_70)
 Target: x86_64-pc-linux-gnu
 Thread model: posix
@@ -49,16 +49,16 @@ Found candidate GCC installation: /usr/lib/gcc/x86_64-linux-gnu/8.0.1
 Selected GCC installation: /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1
 Candidate multilib: .;@m64
 Selected multilib: .;@m64
- "/usr/bin/ld" -z relro --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_9bed2 /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu/crt1.o /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu/crti.o /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/crtbegin.o -L/usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1 -L/usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../.. -L/usr/lib/llvm-7/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_9bed2.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/crtend.o /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu/crtn.o
+ "/usr/bin/ld" -z relro --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_489bd /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu/crt1.o /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu/crti.o /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/crtbegin.o -L/usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1 -L/usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../.. -L/usr/lib/llvm-7/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_489bd.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/crtend.o /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu/crtn.o
 
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/nieel/dev/test/cppm/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/local/bin/ninja" "cmTC_9bed2"]
-  ignore line: [[1/2] Building CXX object CMakeFiles/cmTC_9bed2.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [[2/2] Linking CXX executable cmTC_9bed2]
+  ignore line: [Run Build Command:"/usr/local/bin/ninja" "cmTC_489bd"]
+  ignore line: [[1/2] Building CXX object CMakeFiles/cmTC_489bd.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [[2/2] Linking CXX executable cmTC_489bd]
   ignore line: [clang version 7.0.0-svn341916-1~exp1~20180911115939.26 (branches/release_70)]
   ignore line: [Target: x86_64-pc-linux-gnu]
   ignore line: [Thread model: posix]
@@ -84,7 +84,7 @@ Parsed CXX implicit link information from above output:
   ignore line: [@m64]
   ignore line: [Selected multilib: .]
   ignore line: [@m64]
-  link line: [ "/usr/bin/ld" -z relro --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_9bed2 /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu/crt1.o /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu/crti.o /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/crtbegin.o -L/usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1 -L/usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../.. -L/usr/lib/llvm-7/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_9bed2.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/crtend.o /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu/crtn.o]
+  link line: [ "/usr/bin/ld" -z relro --hash-style=gnu --eh-frame-hdr -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -o cmTC_489bd /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu/crt1.o /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu/crti.o /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/crtbegin.o -L/usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1 -L/usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../.. -L/usr/lib/llvm-7/bin/../lib -L/lib -L/usr/lib CMakeFiles/cmTC_489bd.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/crtend.o /usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/bin/ld] ==> ignore
     arg [-zrelro] ==> ignore
     arg [--hash-style=gnu] ==> ignore
@@ -94,7 +94,7 @@ Parsed CXX implicit link information from above output:
     arg [-dynamic-linker] ==> ignore
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_9bed2] ==> ignore
+    arg [cmTC_489bd] ==> ignore
     arg [/usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu/crt1.o] ==> ignore
     arg [/usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/bin/../lib/gcc/x86_64-linux-gnu/8.0.1/crtbegin.o] ==> ignore
@@ -107,7 +107,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/llvm-7/bin/../lib] ==> dir [/usr/lib/llvm-7/bin/../lib]
     arg [-L/lib] ==> dir [/lib]
     arg [-L/usr/lib] ==> dir [/usr/lib]
-    arg [CMakeFiles/cmTC_9bed2.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_489bd.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -136,9 +136,9 @@ Parsed CXX implicit link information from above output:
 Detecting CXX [-std=c++1z] compiler features compiled with the following output:
 Change Dir: /home/nieel/dev/test/cppm/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/local/bin/ninja" "cmTC_06f76"
-[1/2] Building CXX object CMakeFiles/cmTC_06f76.dir/feature_tests.cxx.o
-[2/2] Linking CXX executable cmTC_06f76
+Run Build Command:"/usr/local/bin/ninja" "cmTC_67cf2"
+[1/2] Building CXX object CMakeFiles/cmTC_67cf2.dir/feature_tests.cxx.o
+[2/2] Linking CXX executable cmTC_67cf2
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -203,9 +203,9 @@ Run Build Command:"/usr/local/bin/ninja" "cmTC_06f76"
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
 Change Dir: /home/nieel/dev/test/cppm/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/local/bin/ninja" "cmTC_97050"
-[1/2] Building CXX object CMakeFiles/cmTC_97050.dir/feature_tests.cxx.o
-[2/2] Linking CXX executable cmTC_97050
+Run Build Command:"/usr/local/bin/ninja" "cmTC_41e0e"
+[1/2] Building CXX object CMakeFiles/cmTC_41e0e.dir/feature_tests.cxx.o
+[2/2] Linking CXX executable cmTC_41e0e
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -270,9 +270,9 @@ Run Build Command:"/usr/local/bin/ninja" "cmTC_97050"
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
 Change Dir: /home/nieel/dev/test/cppm/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/local/bin/ninja" "cmTC_9d952"
-[1/2] Building CXX object CMakeFiles/cmTC_9d952.dir/feature_tests.cxx.o
-[2/2] Linking CXX executable cmTC_9d952
+Run Build Command:"/usr/local/bin/ninja" "cmTC_f0e04"
+[1/2] Building CXX object CMakeFiles/cmTC_f0e04.dir/feature_tests.cxx.o
+[2/2] Linking CXX executable cmTC_f0e04
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -337,9 +337,9 @@ Run Build Command:"/usr/local/bin/ninja" "cmTC_9d952"
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
 Change Dir: /home/nieel/dev/test/cppm/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/local/bin/ninja" "cmTC_246f4"
-[1/2] Building CXX object CMakeFiles/cmTC_246f4.dir/feature_tests.cxx.o
-[2/2] Linking CXX executable cmTC_246f4
+Run Build Command:"/usr/local/bin/ninja" "cmTC_0ddec"
+[1/2] Building CXX object CMakeFiles/cmTC_0ddec.dir/feature_tests.cxx.o
+[2/2] Linking CXX executable cmTC_0ddec
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
