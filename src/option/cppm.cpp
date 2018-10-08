@@ -10,16 +10,13 @@ namespace cppm::option
 {
     Cppm::Cppm() {
         config_load();
-        config_.generate();
         app_.add_option("help")
             .abbr("h")
             .desc("show cppm commands and options")
             .call_back([&](){ app_.show_help(); });
         app_.add_command("build")
             .desc("make Cmakelists.txt and project build")
-            .call_back([&](){
-                   Build build(config_);
-                   build.app().parse(app_);});
+            .call_back([&](){ Build(config_).app().parse(app_);});
     } 
 
     void Cppm::config_load() {
@@ -29,7 +26,7 @@ namespace cppm::option
     }
     
     void Cppm::generate_cmakelists() {
-        std::ofstream CmakeLists(config_.path.root + "/CmakeLists.txt"); CmakeLists.is_open();
+        std::ofstream CmakeLists(config_.path.root + "/CMakeLists_test.txt"); CmakeLists.is_open();
         CmakeLists << config_.generate();
         CmakeLists.close();
     }

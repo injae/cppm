@@ -18,6 +18,11 @@ namespace cppm::util
         return std::accumulate(begin(stl), end(stl), std::string{},
             [&token](auto& str, const auto& piece) { return str += (token + piece);});
     }
+
+    namespace str
+    {
+        std::string erase(const std::string& target_str, const std::string& erase_str);
+    }
 }
 
 

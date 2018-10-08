@@ -17,7 +17,10 @@ make    = {option = "-j4"}
 
 [[bin]]
 name = "cppm"
-source = ["src/.*"]
-    
+source = ["include/.*" ,"src/.*"]
+
 [dependencies]
-cpptoml = {cmake = "cpptoml", version = "0.5.0" }
+cpptoml = {cmake = "cpptoml"}
+Boost   = {cmake = "boost::filesystem boost::system", components="system filesystem"}
+fmt     = {cmake = "fmt::fmt"}
+nlpo    = {cmake = "nlpo::nlpo"}

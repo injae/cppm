@@ -1,25 +1,35 @@
-#include <fmt/format.h>
 #include "config/bin.h"
+#include "util/filesystem.h"
 #include "util/algorithm.hpp"
-
+#include "config/config.h"
+#include <string>
+#include <fmt/format.h>
 
 namespace cppm
 {
     void Bins::parse(table_ptr table) {
-        for(const auto& bin_table : *table->get_table_array("bin")) {
+        auto table_array = table->get_table_array("bin");
+        if(!table_array) return;
+        for(const auto& bin_table : *table_array) {
             Bin bin;
             bin.name = *bin_table->get_as<std::string>("name");
-            for(const auto& src : *bin_table->get_array_of<std::string>("source"))
-                bin.sources.push_back(src);
+            auto source = bin_table->get_array_of<std::string>("source");
+            if(source) for(const auto& src : *source) {bin.sources.push_back(src);} 
             list.emplace_back(std::move(bin));
         }
     }
 
-    std::string Bins::generate() {
+    std::string Bins::generate(Config& config) {
         using namespace fmt::literals;
         std::string gen;
         for(const auto& bin : list) {
-            gen += "(set {0}_source {1})"_format(bin.name, util::accumulate(bin.sources, "\n"));
+            std::vector<std::string> sources;
+            for(const auto& src : bin.sources) {
+                auto result = util::find_files(config.path.root, std::regex(src), false);
+                sources.insert(sources.end(), result.begin(), result.end());
+            }
+            gen += "(set {0}_source {1}\n)"_format(bin.name, util::accumulate(sources, "\n\t"));
         }
+        return gen;
     }
 }

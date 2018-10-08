@@ -7,6 +7,7 @@
 #include "config/package.h"
 #include "config/builder.h"
 #include "config/bin.h"
+#include "config/lib.h"
 #include "config/cmake.h"
 #include "config/compiler.h"
 #include "config/dependency.h"
@@ -23,6 +24,7 @@ namespace cppm
         Path         path;
         Cmake        cmake;
         Bins         bins;
+        Libs         libs;
         Package      package;
         Builder      builder;
         Compiler     compiler;

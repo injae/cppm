@@ -21,6 +21,8 @@ namespace cppm::option
     {
     public:
         Build(Config& config);
+    private:
+        void cmakelist_build(Config& config);
     };
 }
 

@@ -77,6 +77,13 @@ build CMakeFiles/cppm.dir/src/option/cppm.cpp.o: CXX_COMPILER__cppm ../src/optio
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/option
+build CMakeFiles/cppm.dir/src/util/algorithm.cpp.o: CXX_COMPILER__cppm ../src/util/algorithm.cpp || cmake_object_order_depends_target_cppm
+  DEFINES = -DSYSTEM_LINUX
+  DEP_FILE = CMakeFiles/cppm.dir/src/util/algorithm.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0
+  INCLUDES = -I../include -I../src -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/cppm.dir
+  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/util
 build CMakeFiles/cppm.dir/src/util/filesystem.cpp.o: CXX_COMPILER__cppm ../src/util/filesystem.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/util/filesystem.cpp.o.d
@@ -162,9 +169,9 @@ build CMakeFiles/cppm.dir/src/config/compiler.cpp.o: CXX_COMPILER__cppm ../src/c
 #############################################
 # Link the executable cppm
 
-build cppm: CXX_EXECUTABLE_LINKER__cppm CMakeFiles/cppm.dir/src/option/make.cpp.o CMakeFiles/cppm.dir/src/option/build.cpp.o CMakeFiles/cppm.dir/src/option/cppm.cpp.o CMakeFiles/cppm.dir/src/util/filesystem.cpp.o CMakeFiles/cppm.dir/src/main.cpp.o CMakeFiles/cppm.dir/src/config/config.cpp.o CMakeFiles/cppm.dir/src/config/builder.cpp.o CMakeFiles/cppm.dir/src/config/lib.cpp.o CMakeFiles/cppm.dir/src/config/package.cpp.o CMakeFiles/cppm.dir/src/config/path.cpp.o CMakeFiles/cppm.dir/src/config/bin.cpp.o CMakeFiles/cppm.dir/src/config/dependency.cpp.o CMakeFiles/cppm.dir/src/config/cmake.cpp.o CMakeFiles/cppm.dir/src/config/compiler.cpp.o | /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so /usr/local/lib/libnlpo.a /usr/local/lib/libfmt.a
+build cppm: CXX_EXECUTABLE_LINKER__cppm CMakeFiles/cppm.dir/src/option/make.cpp.o CMakeFiles/cppm.dir/src/option/build.cpp.o CMakeFiles/cppm.dir/src/option/cppm.cpp.o CMakeFiles/cppm.dir/src/util/algorithm.cpp.o CMakeFiles/cppm.dir/src/util/filesystem.cpp.o CMakeFiles/cppm.dir/src/main.cpp.o CMakeFiles/cppm.dir/src/config/config.cpp.o CMakeFiles/cppm.dir/src/config/builder.cpp.o CMakeFiles/cppm.dir/src/config/lib.cpp.o CMakeFiles/cppm.dir/src/config/package.cpp.o CMakeFiles/cppm.dir/src/config/path.cpp.o CMakeFiles/cppm.dir/src/config/bin.cpp.o CMakeFiles/cppm.dir/src/config/dependency.cpp.o CMakeFiles/cppm.dir/src/config/cmake.cpp.o CMakeFiles/cppm.dir/src/config/compiler.cpp.o | /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/local/lib/libnlpo.a /usr/local/lib/libfmt.a
   FLAGS = -std=c++17 -Wall -pthread -fPIC -O0
-  LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so /usr/local/lib/libnlpo.a /usr/local/lib/libfmt.a
+  LINK_LIBRARIES = /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/local/lib/libnlpo.a /usr/local/lib/libfmt.a
   OBJECT_DIR = CMakeFiles/cppm.dir
   POST_BUILD = :
   PRE_LINK = :

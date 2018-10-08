@@ -33,18 +33,26 @@ namespace cppm::option
             .abbr("r")
             .desc("compile release mode")
             .call_back([&](){
+                cmakelist_build(config);
                 CommandBuilder cmd(config);
                 cmd.cmake_option += " -CMAKE_BUILD_TYPE={0}"_format("RELEASE");
-                fmt::print("{0}",cmd.build());
                 //system(cmd.build().c_str());
             });
         app_.add_option("debug")
             .abbr("d")
             .desc("compile debug mode")
             .call_back([&](){
+                cmakelist_build(config);
                 CommandBuilder cmd(config);
                 cmd.cmake_option += " -CMAKE_BUILD_TYPE={0}"_format("DEBUG");
-                //system(cmd.build().c_str());});
+                //system(cmd.build().c_str());
             });
+    }
+    
+    void Build::cmakelist_build(Config& config)
+    {
+        std::ofstream CmakeLists(config.path.root + "/CMakeLists_test.txt"); CmakeLists.is_open();
+        CmakeLists << config.generate();
+        CmakeLists.close();
     }
 }

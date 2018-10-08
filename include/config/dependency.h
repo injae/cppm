@@ -11,12 +11,14 @@ namespace cppm
         std::string name;
         std::string cmake_name;
         std::string version;
+        std::string components;
     };
 
     class Dependencies : public base_config
     {
     public:
         void parse(table_ptr table);
+        std::string gen_find_package();
     public:
         std::vector<Dependency> list;
     };

@@ -21,6 +21,7 @@ set(source
 	src/option/make.cpp
 	src/option/build.cpp
 	src/option/cppm.cpp
+	src/util/algorithm.cpp
 	src/util/filesystem.cpp
 	src/main.cpp
 	src/config/config.cpp
@@ -29,6 +30,7 @@ set(source
 	src/config/package.cpp
 	src/config/path.cpp
 	src/config/bin.cpp
+	src/config/.#config.cpp
 	src/config/dependency.cpp
 	src/config/cmake.cpp
 	src/config/compiler.cpp
@@ -38,7 +40,6 @@ set(source
 	include/option/base_option.h
 	include/util/filesystem.h
 	include/util/algorithm.hpp
-	include/.#config.h
 	include/config/dependency.h
 	include/config/config.h
 	include/config/base_config.h

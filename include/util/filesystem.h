@@ -13,6 +13,7 @@ namespace cppm::util
     auto recursive_file_list(const fs::path& path)-> std::optional<std::vector<fs::directory_entry>>;
     auto find_file(const fs::path& path, const std::string& file_name) -> std::optional<fs::path>;
     auto reverse_find_file(const fs::path& path, const std::string& file_name) -> std::optional<fs::path>;
+    auto find_files(const std::string& path, std::regex filter, bool is_full_path) -> std::vector<std::string>;
 }
 
 #endif
