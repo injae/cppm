@@ -9,6 +9,7 @@ namespace cppm
     struct Bin 
     {
         std::string name;
+        std::vector<std::string> sources;
     };
 
     class Bins : public base_config

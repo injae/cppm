@@ -26,6 +26,7 @@ binary:
         version: 1.0.0
         source:
             - src/.*
+            - include/.*
         dependencies:
             - boost 1.65.0 ${Boost_LIBRARIES}
             - nlpo 0.1.0 nlpo::nlpo

@@ -9,9 +9,10 @@ namespace fs = boost::filesystem;
 
 namespace cppm::util
 {
-    std::optional<std::vector<fs::directory_entry>> file_list(const fs::path& path);
-    std::optional<fs::path> find_file(const fs::path& path, const std::string& file_name);
-    std::optional<fs::path> reverse_find_file(const fs::path& path, const std::string& file_name);
+    auto file_list(const fs::path& path) -> std::optional<std::vector<fs::directory_entry>>;
+    auto recursive_file_list(const fs::path& path)-> std::optional<std::vector<fs::directory_entry>>;
+    auto find_file(const fs::path& path, const std::string& file_name) -> std::optional<fs::path>;
+    auto reverse_find_file(const fs::path& path, const std::string& file_name) -> std::optional<fs::path>;
 }
 
 #endif

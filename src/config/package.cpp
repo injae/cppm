@@ -8,10 +8,4 @@ namespace cppm
         version      = *package->get_as<std::string>("version");
         description  = *package->get_as<std::string>("description");
     }
-    
-    std::string Package::generate() {
-        std::string gen;
-        
-        return gen;
-    }
 }

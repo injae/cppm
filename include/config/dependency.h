@@ -17,7 +17,6 @@ namespace cppm
     {
     public:
         void parse(table_ptr table);
-        std::string generate();
     public:
         std::vector<Dependency> list;
     };

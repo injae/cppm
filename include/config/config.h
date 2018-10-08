@@ -3,8 +3,12 @@
 
 #include <vector>
 #include "config/base_config.h"
+#include "config/path.h"
 #include "config/package.h"
+#include "config/builder.h"
 #include "config/bin.h"
+#include "config/cmake.h"
+#include "config/compiler.h"
 #include "config/dependency.h"
 
 namespace cppm
@@ -16,8 +20,12 @@ namespace cppm
         void parse(table_ptr table);
         std::string generate();
     public:
-        Package package;
-        Bins bins;
+        Path         path;
+        Cmake        cmake;
+        Bins         bins;
+        Package      package;
+        Builder      builder;
+        Compiler     compiler;
         Dependencies dependencies;
     };
 }

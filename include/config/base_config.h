@@ -13,7 +13,6 @@ namespace cppm
         using table_ptr = std::shared_ptr<cpptoml::table>;
     public:
         virtual void parse(table_ptr table) = 0;
-        virtual std::string generate() = 0;
     };
 }
 

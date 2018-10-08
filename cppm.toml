@@ -1,10 +1,23 @@
 [package]
-name = "cppm"
+name    = "cppm"
 version = "0.0.1"
-description = "cmake maker"
-    
+description = "c++ package manager like Cargo"
+
+[cmake]
+version = "3.6"
+option  = ""
+
+[compiler] 
+clang++ = {option = "-std=c++17 -Wall -pthread -fPIC -O0", version = "7.0", ccache=true}
+g++     = {option = "-std=c++17 -Wall -pthread -fPIC -O0", version = "8.0", ccache=true}
+
+[builder]
+ninja   = {option = "-j4"}
+make    = {option = "-j4"}
+
 [[bin]]
 name = "cppm"
+source = ["src/.*"]
     
 [dependencies]
-cpptoml = { cmake = "cpptoml", version = "0.5.0" }
+cpptoml = {cmake = "cpptoml", version = "0.5.0" }

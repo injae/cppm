@@ -15,10 +15,4 @@ namespace cppm
             list.emplace_back(dependency);
         } 
     }
-    
-    std::string Dependencies::generate() {
-        std::string gen;
-
-        return gen;
-    }
 }
