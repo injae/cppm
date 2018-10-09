@@ -23,7 +23,9 @@ namespace cppm
         for(auto& dep : list) {
            auto components = dep.components =="" ? "" : "COMPONENTS " + dep.components;
            gen += "find_package({0} {1} {2} REQUIRED)\n"_format(dep.name, dep.version, components);
+           gen += "list(APPEND thirdparty {0})\n"_format(dep.cmake_name);
         }
         return gen;
     }
+    
 }

@@ -24,12 +24,6 @@ namespace cppm::option
         if(!path) std::cout << "can't find cppm.toml" << std::endl;
         config_ = cppm::Config::load(path->parent_path().string());
     }
-    
-    void Cppm::generate_cmakelists() {
-        std::ofstream CmakeLists(config_.path.root + "/CMakeLists_test.txt"); CmakeLists.is_open();
-        CmakeLists << config_.generate();
-        CmakeLists.close();
-    }
 
     void Cppm::run(int argc, char **argv) {
         app_.parse(argc, argv);

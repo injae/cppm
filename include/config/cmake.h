@@ -6,6 +6,7 @@
 
 namespace cppm
 {
+
     class Cmake : public base_config
     {
     public:
@@ -14,6 +15,8 @@ namespace cppm
         std::string name;
         std::string version;
         std::string option;
+        std::string compiler;
+        std::string builder;
     };
 }
 

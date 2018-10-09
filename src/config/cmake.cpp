@@ -8,5 +8,7 @@ namespace cppm
         name       = *cmake->get_as<std::string>("name");
         version    = *cmake->get_as<std::string>("version");
         option     = *cmake->get_as<std::string>("option");
+        builder    = *cmake->get_as<std::string>("builder");
+        compiler   = *cmake->get_as<std::string>("compiler");
     }
 }

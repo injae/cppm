@@ -2,6 +2,7 @@
 #include "util/filesystem.h"
 #include "util/algorithm.hpp"
 #include "config/config.h"
+#include "util/cmake.h"
 #include <string>
 #include <fmt/format.h>
 
@@ -22,6 +23,7 @@ namespace cppm
 
     std::string Libs::generate(Config& config) {
         using namespace fmt::literals;
+        using namespace util::cmake;
         std::string gen ="";
         for(const auto& lib : list) {
             std::vector<std::string> sources;
@@ -29,7 +31,12 @@ namespace cppm
                 auto result = util::find_files(config.path.root, std::regex(src), false);
                 sources.insert(sources.end(), result.begin(), result.end());
             }
-            gen += "(set {0}_source {1}\n)"_format(lib.name, util::accumulate(sources, "\n\t"));
+            gen += "set({0}_source {1}\n)"_format(lib.name, util::accumulate(sources, "\n\t"));
+            
+            gen += "\n\nbuild_library({0} {1}\"{2}\" \"{3}\")"_format( lib.name
+                                                                 ,lib.type
+                                                                 ,var(lib.name+"_source")
+                                                                 ,var("thirdparty"));
         }
         return gen;
     }

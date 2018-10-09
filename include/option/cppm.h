@@ -13,7 +13,6 @@ namespace cppm::option
         void run(int argc, char* argv[]);
     private:
         void config_load();
-        void generate_cmakelists();
     private:
         Config config_;
     };
