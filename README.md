@@ -9,10 +9,10 @@ like Rust Cargo
 toml file convert CMakelists file
 
 ## Dependencies
-boost 
-nlpo
-cpptoml
-fmt
+1. boost
+2. nlpo
+3. cpptoml
+4. fmt
 
 ## Document
 ### cppm options and commands
