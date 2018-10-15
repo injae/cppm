@@ -27,6 +27,8 @@ namespace cppm::option
     
     Build::Build(Config& config) {
         using namespace fmt::literals;
+        cmakelist_build(config);
+        CommandBuilder cmd(config);
         app_.add_option("help")
             .abbr("h")
             .desc("show cppm commands and options")
@@ -35,17 +37,11 @@ namespace cppm::option
             .abbr("r")
             .desc("compile release mode")
             .call_back([&](){
-                cmakelist_build(config);
-                CommandBuilder cmd(config);
                 cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("RELEASE");
-                system(cmd.build().c_str());
             });
         app_.add_command()
             .desc("before make or ninja command")
             .call_back([&](){
-                cmakelist_build(config);
-                CommandBuilder cmd(config);
-                cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("DEBUG");
                 if(!app_.args().empty()) {
                     cmd.build_option += util::accumulate(app_.args(), " ");
                     app_.args().clear();

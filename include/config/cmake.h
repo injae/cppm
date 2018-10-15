@@ -15,6 +15,7 @@ namespace cppm
         std::string name;
         std::string version;
         std::string option;
+        std::vector<std::string> include;
         std::string compiler;
         std::string builder;
     };

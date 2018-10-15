@@ -10,5 +10,7 @@ namespace cppm
         option     = *cmake->get_as<std::string>("option");
         builder    = *cmake->get_as<std::string>("builder");
         compiler   = *cmake->get_as<std::string>("compiler");
+        auto includes = cmake->get_array_of<std::string>("include");
+        if(includes) for(const auto& inc : *includes) {include.push_back(inc);} 
     }
 }
