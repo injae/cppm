@@ -23,6 +23,7 @@ namespace option
     void Init::run() {
         using namespace nieel::option; 
         using namespace nieel;
+
         sub_options_(type::option, "help"   , opbind(_help))
                     (type::option, "bin"    , opbind(_bin))
                     (type::option, "lib"    , opbind(_lib))

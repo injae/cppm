@@ -44,7 +44,7 @@ namespace option
         file << cmake::make_default_project(project); file.close();
         
         std::string cmd = " cd " + project.path.bin 
-                        + " && cmake" + builder(project) + compiler(project) + luncher(project) +" " + cmake_option(project) + " .. "
+                        + " && cmake" + builder(project) + compiler(project) + luncher(project) +" " + cmake_option(project) + " -DCMAKE_EXPORT_COMPILE_COMMANDS=1" + " .. "
                         + " && " + build(project);
         for(auto subarg : subargs) { cmd += subarg; }
         

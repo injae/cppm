@@ -7,7 +7,7 @@ package:
         - https://github.com/INJAE/cppm_packages.git
         
 cmake:
-    options: -DCMAKE_TOOLCHAIN_FILE=/home/nieel/dev/vcpkg/scripts/buildsystems/vcpkg.cmake
+    options: -DCMAKE_TOOLCHAIN_FILE=/home/nieel/dev/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1
 compiler: 
     type: clang++
     luncher: ccache

@@ -1,0 +1,163 @@
+[
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/url.cpp.o -c /home/nieel/dev/cppm/src/url.cpp",
+  "file": "/home/nieel/dev/cppm/src/url.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/package/package.cpp.o -c /home/nieel/dev/cppm/src/package/package.cpp",
+  "file": "/home/nieel/dev/cppm/src/package/package.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/package/build.cpp.o -c /home/nieel/dev/cppm/src/package/build.cpp",
+  "file": "/home/nieel/dev/cppm/src/package/build.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/package/install.cpp.o -c /home/nieel/dev/cppm/src/package/install.cpp",
+  "file": "/home/nieel/dev/cppm/src/package/install.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/package/cmake.cpp.o -c /home/nieel/dev/cppm/src/package/cmake.cpp",
+  "file": "/home/nieel/dev/cppm/src/package/cmake.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/cmake/generator.cpp.o -c /home/nieel/dev/cppm/src/cmake/generator.cpp",
+  "file": "/home/nieel/dev/cppm/src/cmake/generator.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o -c /home/nieel/dev/cppm/src/cmake/find_package.cpp",
+  "file": "/home/nieel/dev/cppm/src/cmake/find_package.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/cmake/cmake_option.cpp.o -c /home/nieel/dev/cppm/src/cmake/cmake_option.cpp",
+  "file": "/home/nieel/dev/cppm/src/cmake/cmake_option.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/cppm.cpp.o -c /home/nieel/dev/cppm/src/cppm.cpp",
+  "file": "/home/nieel/dev/cppm/src/cppm.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/main.cpp.o -c /home/nieel/dev/cppm/src/main.cpp",
+  "file": "/home/nieel/dev/cppm/src/main.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/options/init.cpp.o -c /home/nieel/dev/cppm/src/options/init.cpp",
+  "file": "/home/nieel/dev/cppm/src/options/init.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/options/build.cpp.o -c /home/nieel/dev/cppm/src/options/build.cpp",
+  "file": "/home/nieel/dev/cppm/src/options/build.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/options/install.cpp.o -c /home/nieel/dev/cppm/src/options/install.cpp",
+  "file": "/home/nieel/dev/cppm/src/options/install.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/cppm_options.cpp.o -c /home/nieel/dev/cppm/src/cppm_options.cpp",
+  "file": "/home/nieel/dev/cppm/src/cppm_options.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/config/library.cpp.o -c /home/nieel/dev/cppm/src/config/library.cpp",
+  "file": "/home/nieel/dev/cppm/src/config/library.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/config/repository.cpp.o -c /home/nieel/dev/cppm/src/config/repository.cpp",
+  "file": "/home/nieel/dev/cppm/src/config/repository.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/config/binary.cpp.o -c /home/nieel/dev/cppm/src/config/binary.cpp",
+  "file": "/home/nieel/dev/cppm/src/config/binary.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/config/builder.cpp.o -c /home/nieel/dev/cppm/src/config/builder.cpp",
+  "file": "/home/nieel/dev/cppm/src/config/builder.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/config/package.cpp.o -c /home/nieel/dev/cppm/src/config/package.cpp",
+  "file": "/home/nieel/dev/cppm/src/config/package.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/config/path.cpp.o -c /home/nieel/dev/cppm/src/config/path.cpp",
+  "file": "/home/nieel/dev/cppm/src/config/path.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/config/command.cpp.o -c /home/nieel/dev/cppm/src/config/command.cpp",
+  "file": "/home/nieel/dev/cppm/src/config/command.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/config/project.cpp.o -c /home/nieel/dev/cppm/src/config/project.cpp",
+  "file": "/home/nieel/dev/cppm/src/config/project.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/config/dependency.cpp.o -c /home/nieel/dev/cppm/src/config/dependency.cpp",
+  "file": "/home/nieel/dev/cppm/src/config/dependency.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/config/cmake.cpp.o -c /home/nieel/dev/cppm/src/config/cmake.cpp",
+  "file": "/home/nieel/dev/cppm/src/config/cmake.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/config/compiler.cpp.o -c /home/nieel/dev/cppm/src/config/compiler.cpp",
+  "file": "/home/nieel/dev/cppm/src/config/compiler.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/config/thirdparty.cpp.o -c /home/nieel/dev/cppm/src/config/thirdparty.cpp",
+  "file": "/home/nieel/dev/cppm/src/config/thirdparty.cpp"
+},
+
+{
+  "directory": "/home/nieel/dev/cppm/build",
+  "command": "/usr/bin/clang++  -DSYSTEM_LINUX -I../include -I../src -isystem /usr/local/include   -std=c++17 -g -Wall -pthread -fPIC -O0   -o CMakeFiles/cppm.dir/src/utils.cpp.o -c /home/nieel/dev/cppm/src/utils.cpp",
+  "file": "/home/nieel/dev/cppm/src/utils.cpp"
+}
+]
