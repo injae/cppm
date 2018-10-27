@@ -17,7 +17,7 @@ namespace cppm::option
                         " -DCMAKE_CXX_COMPILER={0}"_format(compiler.name) : " ";
 
         return "  cd {0} "_format(config.path.build)
-            +  "&& cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
+            +  "&& cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
             +            comp_opt
             +            luncher
             +            is_ninja
@@ -27,8 +27,6 @@ namespace cppm::option
     
     Build::Build(Config& config) {
         using namespace fmt::literals;
-        cmakelist_build(config);
-        CommandBuilder cmd(config);
         app_.add_option("help")
             .abbr("h")
             .desc("show cppm commands and options")
@@ -37,11 +35,16 @@ namespace cppm::option
             .abbr("r")
             .desc("compile release mode")
             .call_back([&](){
+                cmakelist_build(config);
+                CommandBuilder cmd(config);
+                system(cmd.build().c_str());
                 cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("RELEASE");
             });
         app_.add_command()
             .desc("before make or ninja command")
             .call_back([&](){
+                cmakelist_build(config);
+                CommandBuilder cmd(config);
                 if(!app_.args().empty()) {
                     cmd.build_option += util::accumulate(app_.args(), " ");
                     app_.args().clear();

@@ -10,8 +10,8 @@ builder  = "ninja"
 compiler = "clang++"
 
 [compiler] 
-clang++ = {option = "-std=c++17 -Wall -pthread -fPIC -O0", version = "7.0", ccache=true}
-g++     = {option = "-std=c++17 -Wall -pthread -fPIC -O0", version = "8.0", ccache=true}
+clang++ = {option = "-std=c++17 -Wall -pthread -fPIC -O0 -g", version = "7.0", ccache=true}
+g++     = {option = "-std=c++17 -Wall -pthread -fPIC -O0 -g", version = "8.0", ccache=true}
 
 [builder]
 ninja   = {option = "-j4"}

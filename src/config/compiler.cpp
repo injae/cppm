@@ -1,8 +1,6 @@
 #include "config/compiler.h"
 #include <fmt/format.h>
 
-
-
 namespace cppm
 {
     void Compiler::parse(table_ptr table) {
@@ -22,7 +20,7 @@ namespace cppm
         using namespace fmt::literals;
         return "if(\"${CMAKE_CXX_COMPILER_ID}\" STREQUAL \"Clang\")\n"
              +  "    set(CMAKE_CXX_FLAGS \"${{CMAKE_CXX_FLAGS}} {0}\") \n"_format(list["clang++"].option)
-             + "elseif(\"${{CMAKE_CXX_COMPILER_ID}}\" STREQUAL \"GNU\")  \n"
+             + "elseif(\"${CMAKE_CXX_COMPILER_ID}\" STREQUAL \"GNU\")  \n"
              + "    set(CMAKE_CXX_FLAGS \"${{CMAKE_CXX_FLAGS}} {0}\") \n"_format(list["g++"].option)
              // + \"elseif (\"${{CMAKE_CXX_COMPILER_ID}}\" STREQUAL \"Intel\")\n\"
              // + \"set(CMAKE_CXX_FLAGS \"${{CMAKE_CXX_FLAGS}} {0}\")\"_format();

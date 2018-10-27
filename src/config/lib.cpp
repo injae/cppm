@@ -33,7 +33,7 @@ namespace cppm
             }
             gen += "set({0}_source {1}\n)"_format(lib.name, util::accumulate(sources, "\n\t"));
             
-            gen += "\n\nbuild_library({0} {1}\"{2}\" \"{3}\")"_format( lib.name
+            gen += "\n\nbuild_library({0} {1} \"{2}\" \"{3}\")"_format( lib.name
                                                                  ,lib.type
                                                                  ,var(lib.name+"_source")
                                                                  ,var("thirdparty"));

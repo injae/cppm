@@ -18,9 +18,9 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
 set(MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -pthread -fPIC -O0") 
-elseif("${{CMAKE_CXX_COMPILER_ID}}" STREQUAL "GNU")  
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -pthread -fPIC -O0") 
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -pthread -fPIC -O0 -g") 
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")  
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -pthread -fPIC -O0 -g") 
 endif()
 
 include(${MODULE_PATH}/project_maker.cmake)
@@ -38,6 +38,7 @@ list(APPEND thirdparty  ${Boost_LIBRARIES})
 set(cppm_source 
 	include/option/make.h
 	include/option/build.h
+	include/option/init.h
 	include/option/cppm.h
 	include/option/base_option.h
 	include/util/filesystem.h
@@ -53,6 +54,7 @@ set(cppm_source
 	include/config/bin.h
 	include/config/compiler.h
 	include/config/builder.h
+	src/option/init.cpp
 	src/option/make.cpp
 	src/option/build.cpp
 	src/option/cppm.cpp
