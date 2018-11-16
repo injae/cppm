@@ -24,6 +24,8 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 endif()
 
 include(${MODULE_PATH}/project_maker.cmake)
+
+include(cmake/cppm_install.cmake)
 set(thirdparty)
 find_package(nlpo   REQUIRED)
 list(APPEND thirdparty nlpo::nlpo)
@@ -36,40 +38,41 @@ list(APPEND thirdparty  ${Boost_LIBRARIES})
 
 
 set(cppm_source 
-	include/option/make.h
-	include/option/build.h
-	include/option/init.h
-	include/option/cppm.h
-	include/option/base_option.h
-	include/util/filesystem.h
-	include/util/cmake.h
-	include/util/algorithm.hpp
+	include/config/cmake.h
+	include/config/lib.h
 	include/config/dependency.h
+	include/config/path.h
+	include/config/builder.h
+	include/config/bin.h
 	include/config/config.h
 	include/config/base_config.h
 	include/config/package.h
-	include/config/cmake.h
-	include/config/path.h
-	include/config/lib.h
-	include/config/bin.h
 	include/config/compiler.h
-	include/config/builder.h
+	include/option/build.h
+	include/option/init.h
+	include/option/make.h
+	include/option/base_option.h
+	include/option/cppm.h
+	include/util/cmake.h
+	include/util/algorithm.hpp
+	include/util/filesystem.h
+	include/util/command.h
+	src/config/cmake.cpp
+	src/config/package.cpp
+	src/config/bin.cpp
+	src/config/builder.cpp
+	src/config/config.cpp
+	src/config/dependency.cpp
+	src/config/path.cpp
+	src/config/compiler.cpp
+	src/config/lib.cpp
 	src/option/init.cpp
 	src/option/make.cpp
-	src/option/build.cpp
 	src/option/cppm.cpp
-	src/util/algorithm.cpp
+	src/option/build.cpp
 	src/util/filesystem.cpp
+	src/util/algorithm.cpp
 	src/main.cpp
-	src/config/config.cpp
-	src/config/builder.cpp
-	src/config/lib.cpp
-	src/config/package.cpp
-	src/config/path.cpp
-	src/config/bin.cpp
-	src/config/dependency.cpp
-	src/config/cmake.cpp
-	src/config/compiler.cpp
 )
 
 build_binary(cppm "${cppm_source}" "${thirdparty}")

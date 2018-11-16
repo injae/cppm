@@ -1,4 +1,4 @@
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/utils.cmake)
+#include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/utils.cmake)
 
 function(build_binary name source dependencies)
     add_executable(${name} ${source})

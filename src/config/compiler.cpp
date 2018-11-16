@@ -4,14 +4,21 @@
 namespace cppm
 {
     void Compiler::parse(table_ptr table) {
-        auto compilers = table->get_table("compiler");
-        for(auto& compiler_table : *compilers) {
+        if(auto compilers = table->get_table("compiler")) {
+            for(auto& compiler_table : *compilers) {
+                CompilerType compiler_t;
+                compiler_t.name = compiler_table.first;
+                auto compiler = compilers->get_table(compiler_t.name);
+                compiler_t.option = *compiler->get_as<std::string>("option");
+                compiler_t.version = *compiler->get_as<std::string>("version");
+                compiler_t.ccache = *compiler->get_as<bool>("ccache");
+                list[compiler_t.name] = compiler_t;
+            }
+        }
+        else {
             CompilerType compiler_t;
-            compiler_t.name = compiler_table.first;
-            auto compiler = compilers->get_table(compiler_t.name);
-            compiler_t.option = *compiler->get_as<std::string>("option");
-            compiler_t.version = *compiler->get_as<std::string>("version");
-            compiler_t.ccache = *compiler->get_as<bool>("ccache");
+            compiler_t.name = "g++";
+            compiler_t.ccache = false;
             list[compiler_t.name] = compiler_t;
         }
     }

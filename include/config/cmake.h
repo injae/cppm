@@ -11,13 +11,13 @@ namespace cppm
     {
     public:
         void parse(table_ptr table);
+        std::string generate();
     public:
-        std::string name;
         std::string version;
         std::string option;
         std::vector<std::string> include;
-        std::string compiler;
-        std::string builder;
+        std::string compiler = "g++";
+        std::string builder  = "make";
     };
 }
 

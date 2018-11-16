@@ -4,19 +4,24 @@
 #include "option/cppm.h"
 #include "util/filesystem.h"
 #include "option/build.h"
+#include "option/init.h"
 #include <fmt/format.h>
 
 namespace cppm::option
 {
     Cppm::Cppm() {
-        config_load();
         app_.add_option("help")
             .abbr("h")
             .desc("show cppm commands and options")
             .call_back([&](){ app_.show_help(); });
         app_.add_command("build")
             .desc("make Cmakelists.txt and project build")
-            .call_back([&](){ Build(config_).app().parse(app_);});
+            .call_back([&](){ config_load();
+                              Build(config_).app().parse(app_);
+                            });
+        app_.add_command("init")
+            .desc("make c++ project")
+            .call_back([&](){ Init().app().parse(app_);});
     } 
 
     void Cppm::config_load() {

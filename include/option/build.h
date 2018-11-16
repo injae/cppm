@@ -7,14 +7,11 @@
 
 namespace cppm::option
 {
-    class CommandBuilder
+    struct CommandBuilder
     {
-    public:
-        CommandBuilder(Config& config) : config(config) {}
-        std::string build();
+        std::string build(Config& config);
         std::string cmake_option = "";
         std::string build_option = "";
-        Config& config;
     };
     
     class Build : public base_option

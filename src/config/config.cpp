@@ -47,6 +47,7 @@ namespace cppm
              + compiler.generate()
              + "\n"
              + "include(${MODULE_PATH}/project_maker.cmake)\n"
+             + cmake.generate()
              + "set(thirdparty)\n"
              + dependencies.gen_find_package()
              + "\n"
@@ -56,5 +57,4 @@ namespace cppm
              + "\n"
              ;
     }
-    
 }

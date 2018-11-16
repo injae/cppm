@@ -2,18 +2,21 @@
 #define __CPPM_OPTION_INIT_H__
 
 #include "option/base_option.h"
+#include "util/filesystem.h"
 #include "config/config.h"
 #include <string>
+#include <memory>
 
 namespace cppm::option
 {
     class Init : public base_option
     {
     public:
-        Init(Config& config);
+        Init();
     private:
-        void make_bin(Config& config);
-        void make_lib(Config& config);
+        void make_bin();
+        void make_lib();
+        std::shared_ptr<cpptoml::table> make_project();
     };
 }
 

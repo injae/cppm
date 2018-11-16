@@ -1,10 +1,12 @@
 #include "option/build.h"
 #include "util/algorithm.hpp"
+#include <memory>
 #include <fmt/format.h>
+#include "util/command.h"
 
 namespace cppm::option
 {
-    std::string CommandBuilder::build()
+    std::string CommandBuilder::build(Config& config)
     {
         using namespace fmt::literals;
         auto builder  = config.builder.list[config.cmake.builder];
@@ -22,11 +24,12 @@ namespace cppm::option
             +            luncher
             +            is_ninja
             +  " {0} "_format(cmake_option) + " .. "
-            +  "&& {0} {1} {2}"_format(builder.name, builder.option, build_option);
+            +  "&& {0} {1} {2}"_format(config.cmake.builder, builder.option, build_option);
     }
     
     Build::Build(Config& config) {
         using namespace fmt::literals;
+        auto cmd_ = std::make_shared<CommandBuilder>();
         app_.add_option("help")
             .abbr("h")
             .desc("show cppm commands and options")
@@ -34,22 +37,26 @@ namespace cppm::option
         app_.add_option("release")
             .abbr("r")
             .desc("compile release mode")
-            .call_back([&](){
-                cmakelist_build(config);
-                CommandBuilder cmd(config);
-                system(cmd.build().c_str());
-                cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("RELEASE");
+            .call_back([&, cmd = cmd_](){
+                cmd->cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("RELEASE");
+                app_.call_default();
+            });
+        app_.add_option("debug")
+            .abbr("d")
+            .desc("compile debug mode")
+            .call_back([&, cmd = cmd_](){
+                cmd->cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("DEBUG");
+                app_.call_default();
             });
         app_.add_command()
             .desc("before make or ninja command")
-            .call_back([&](){
+            .call_back([&, cmd = cmd_](){
                 cmakelist_build(config);
-                CommandBuilder cmd(config);
                 if(!app_.args().empty()) {
-                    cmd.build_option += util::accumulate(app_.args(), " ");
+                    cmd->build_option += util::accumulate(app_.args(), " ");
                     app_.args().clear();
                 }
-                system(cmd.build().c_str());
+                system(cmd->build(config).c_str());
             });
     }
     

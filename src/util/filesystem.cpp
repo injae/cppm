@@ -1,5 +1,6 @@
 #include "util/algorithm.hpp"
 #include "util/filesystem.h"
+#include <iostream>
 
 namespace cppm::util
 {
@@ -58,5 +59,10 @@ namespace cppm::util
             if(file.path().filename() == "/")       return std::nullopt;
         }
         return reverse_find_file(path.parent_path(), file_name);
+    }
+
+    auto create(const std::string& path) {
+        if(fs::exists(path)) std::cerr << "is existed" << std::endl;
+        fs::fstream(path, std::ios::out).close();
     }
 }

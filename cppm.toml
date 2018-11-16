@@ -8,14 +8,15 @@ version  = "3.10"
 option   = ""
 builder  = "ninja"
 compiler = "clang++"
+include  = ["cmake/cppm_install.cmake"]
 
 [compiler] 
 clang++ = {option = "-std=c++17 -Wall -pthread -fPIC -O0 -g", version = "7.0", ccache=true}
 g++     = {option = "-std=c++17 -Wall -pthread -fPIC -O0 -g", version = "8.0", ccache=true}
 
 [builder]
-ninja   = {option = "-j4"}
-make    = {option = "-j4"}
+ninja   = {option = "-j8"}
+make    = {option = "-j8"}
 
 [[bin]]
 name   = "cppm"
