@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(cppm LANGUAGES CXX VERSION 2.0.0)
+project(cppm LANGUAGES CXX VERSION 0.1.0)
 
 message(STATUS "We are on a ${CMAKE_SYSTEM_NAME} system")
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
@@ -16,11 +16,16 @@ endif()
 message(STATUS "The host processor is ${CMAKE_HOST_SYSTEM_PROCESSOR}")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
 set(MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-
+list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/.cppm/local")
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -pthread -fPIC -O0 -g") 
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")  
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -pthread -fPIC -O0 -g") 
+endif()
+find_program(CCACHE_EXE ccache)
+if(CCACHE_EXE)
+    set(CMAKE_CXX_COMPILER_LAUNCHER ccache)
+    message("Use ccache")
 endif()
 
 include(${MODULE_PATH}/project_maker.cmake)
@@ -38,6 +43,7 @@ list(APPEND thirdparty  ${Boost_LIBRARIES})
 
 
 set(cppm_source 
+	include/cppm_version.h
 	include/config/cmake.h
 	include/config/lib.h
 	include/config/dependency.h
@@ -55,8 +61,10 @@ set(cppm_source
 	include/option/cppm.h
 	include/util/cmake.h
 	include/util/algorithm.hpp
+	include/util/version.h
 	include/util/filesystem.h
 	include/util/command.h
+	include/package/cppm_package.h
 	src/config/cmake.cpp
 	src/config/package.cpp
 	src/config/bin.cpp
@@ -71,8 +79,10 @@ set(cppm_source
 	src/option/cppm.cpp
 	src/option/build.cpp
 	src/util/filesystem.cpp
+	src/util/version.cpp
 	src/util/algorithm.cpp
 	src/main.cpp
+	src/package/cppm_package.cpp
 )
 
 build_binary(cppm "${cppm_source}" "${thirdparty}")

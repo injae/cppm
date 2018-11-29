@@ -44,7 +44,7 @@ namespace cppm::option
         file.close();
 
         file.open(project.source + "/main.cpp", std::ios::out);
-        file << "int main(int argc, char* argv[]) {\n return 0;}";
+        file << "int main(int argc, char* argv[]) {\n\n return 0; \n}";
         file.close();
     } 
 

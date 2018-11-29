@@ -12,7 +12,6 @@ namespace cppm
         std::string name;
         std::string version;
         std::string option;
-        bool        ccache;
     };
 
     class Compiler : public base_config

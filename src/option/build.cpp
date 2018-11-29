@@ -3,6 +3,7 @@
 #include <memory>
 #include <fmt/format.h>
 #include "util/command.h"
+#include "util/filesystem.h"
 
 namespace cppm::option
 {
@@ -13,18 +14,15 @@ namespace cppm::option
         auto compiler = config.compiler.list[config.cmake.compiler];
         
         auto is_ninja = builder.name == "ninja" ? " -G Ninja" : " ";
-        auto luncher  = compiler.ccache ? 
-                        " -DCMAKE_CXX_COMPILER_LAUNCHER={0}"_format("ccache") : " " ;
-        auto comp_opt = compiler.name != "" ?
+        auto comp_opt = compiler.name != "none" ?
                         " -DCMAKE_CXX_COMPILER={0}"_format(compiler.name) : " ";
 
         return "  cd {0} "_format(config.path.build)
             +  "&& cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
             +            comp_opt
-            +            luncher
             +            is_ninja
-            +  " {0} "_format(cmake_option) + " .. "
-            +  "&& {0} {1} {2}"_format(config.cmake.builder, builder.option, build_option);
+            +  " {0} {1}"_format(config.cmake.option, cmake_option) + " .. "
+            +  "&& sudo {0} {1} {2}"_format(config.cmake.builder, builder.option, build_option);
     }
     
     Build::Build(Config& config) {
@@ -52,14 +50,18 @@ namespace cppm::option
             .desc("before make or ninja command")
             .call_back([&, cmd = cmd_](){
                 cmakelist_build(config);
+                fs::copy_file((std::string(std::getenv("HOME")))+"/.cppm/cmake/project_maker.cmake"
+                                     ,config.path.cmake +"/project_maker.cmake"
+                                     ,fs::copy_option::overwrite_if_exists);
                 if(!app_.args().empty()) {
                     cmd->build_option += util::accumulate(app_.args(), " ");
                     app_.args().clear();
                 }
+                fmt::format(cmd->build(config).c_str());
                 system(cmd->build(config).c_str());
             });
     }
-    
+
     void Build::cmakelist_build(Config& config)
     {
         std::ofstream CmakeLists(config.path.root + "/CMakeLists.txt"); CmakeLists.is_open();

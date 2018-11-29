@@ -15,9 +15,10 @@ namespace cppm
     public:
         std::string version;
         std::string option;
+        std::string compiler;
+        std::string builder;
+        std::vector<std::string> tool_chain;
         std::vector<std::string> include;
-        std::string compiler = "g++";
-        std::string builder  = "make";
     };
 }
 

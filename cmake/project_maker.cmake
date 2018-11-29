@@ -9,8 +9,7 @@ function(build_binary name source dependencies)
     target_link_libraries(${name} PUBLIC ${dependencies})
    # set_target_properties(${name} PROPERTIES LINKER_LANGUAGE CXX)
     
-    include(GNUInstallDirs)
-    install(TARGETS ${name} RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+    install(TARGETS ${name} RUNTIME DESTINATION bin)
 endfunction()
 
 function(library_var_maker name)
@@ -67,11 +66,11 @@ function(build_library name type source dependencies)
     
     include(GNUInstallDirs)
     install(TARGETS ${name} EXPORT ${PROJECT_NAME}-targets
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        ARCHIVE DESTINATION lib 
+        LIBRARY DESTINATION lib
+        RUNTIME DESTINATION bin
     )
-    install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+    install(DIRECTORY include/ DESTINATION include)
     
     install(EXPORT ${CMAKE_PROJECT_NAME}-targets
         FILE ${CMAKE_PROJECT_NAME}-config.cmake
