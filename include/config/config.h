@@ -11,6 +11,7 @@
 #include "config/cmake.h"
 #include "config/compiler.h"
 #include "config/dependency.h"
+#include "package/cppm_package.h"
 
 namespace cppm
 {
@@ -29,6 +30,7 @@ namespace cppm
         Builder      builder;
         Compiler     compiler;
         Dependencies dependencies;
+        CppmPackage  cppm_package;
     };
 }
 

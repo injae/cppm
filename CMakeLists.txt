@@ -65,6 +65,7 @@ set(cppm_source
 	include/util/filesystem.h
 	include/util/command.h
 	include/package/cppm_package.h
+	include/package/cppm_config.h
 	src/config/cmake.cpp
 	src/config/package.cpp
 	src/config/bin.cpp
@@ -82,6 +83,7 @@ set(cppm_source
 	src/util/version.cpp
 	src/util/algorithm.cpp
 	src/main.cpp
+	src/package/cppm_config.cpp
 	src/package/cppm_package.cpp
 )
 
