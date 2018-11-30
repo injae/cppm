@@ -49,15 +49,37 @@ compiler option setting
 ```
 [compiler]
 clang++ = {option = "-std=c++17" ## compiler options
-          ,version = "7.0" ## compiler minimum version
+          ,version = "7.0"} ## compiler minimum version
 ```
 ### 5. builder
 builder option setting
 ```
 [builder]
-ninja = [option = "-j4"]
+ninja = {option = "-j4"}
 ```
 ### 6. bin
+```
+[[bin]]
+name   = "cppm" # bin name
+source = ["include/.*" ,"src/.*"] # source files
+[[bin]]
+name   = "tbin" # bin name
+source = ["include/.*" ,"src/.*"] # source files
+```
+
 ### 7. lib
+```
+[[lib]]
+name   = "nlpo" # lib name
+type = "static" # lib type , static or shared or headonly
+source = ["include/.*" ,"src/.*"] # source files
+```
 ### 8. dependencies
+```
+[dependencies]
+cpptoml = {cmake = "cpptoml"}
+Boost   = {cmake = " ${Boost_LIBRARIES}", components="system filesystem"}
+fmt     = {cmake = "fmt::fmt"}
+nlpo    = {cmake = "nlpo::nlpo"
+```
 
