@@ -20,6 +20,7 @@ namespace cppm
         libs.parse(table);
         compiler.parse(table);
         dependencies.parse(table);
+        cppm_config.load();
     }
     
     std::string Config::generate() {

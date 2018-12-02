@@ -14,7 +14,7 @@ namespace cppm::util
     auto find_file(const fs::path& path, const std::string& file_name) -> std::optional<fs::path>;
     auto reverse_find_file(const fs::path& path, const std::string& file_name) -> std::optional<fs::path>;
     auto find_files(const std::string& path, std::regex filter, bool is_full_path) -> std::vector<std::string>;
-    auto create(const std::string& path);
+    void create(const std::string& path);
 }
 
 #endif

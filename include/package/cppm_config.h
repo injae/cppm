@@ -9,6 +9,7 @@ namespace cppm
     class CppmConfig : public base_config
     {
     public:
+        CppmConfig load(const std::string& path);
         void parse(table_ptr table);
     private:
         CppmPackage package;
