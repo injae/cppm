@@ -11,7 +11,11 @@ cmake:
 compiler: 
     type: clang++
     luncher: ccache
+<<<<<<< HEAD
     option: -std=c++17 -g -Wall -pthread -fPIC -O0 
+=======
+    option: -std=c++17 -Wall -pthread -fPIC -O0
+>>>>>>> new_version
     
 builder: 
     type: ninja 
@@ -28,7 +32,9 @@ binary:
         version: 1.0.0
         source:
             - src/.*
+            - include/.*
         dependencies:
-            - yaml-cpp 0.6.2 yaml-cpp
-            - boost 1.55.0 ${Boost_LIBRARIES}
-            - nieel 0.1.0 nieel::nieel
+            - boost 1.65.0 ${Boost_LIBRARIES}
+            - nlpo 0.1.0 nlpo::nlpo
+            - fmt 5.0.0 fmt::fmt
+            - cpptoml 0.0.0 cpptoml

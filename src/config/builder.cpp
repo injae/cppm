@@ -1,23 +1,21 @@
-#include"config/builder.h"
-#include<nieel/util/hash.hpp>
+#include "config/builder.h"
 
 namespace cppm
 {
-    Builder Builder::parse(YAML::Node& node) {
-        using namespace nieel;
-        Builder builder;
-        for(auto it : node["builder"]) {
-            auto property = it.first.as<std::string>().c_str(); 
-            switch(hash(property))
-            {
-            case "type"_h:
-                builder.type = it.second.as<std::string>();
-                break;
-            case "option"_h:
-                builder.option = it.second.as<std::string>();
-                break;
+    void Builder::parse(table_ptr table) {
+        if(auto builders = table->get_table("builder")) {
+            for(auto& builder_table : *builders) {
+                BuilderType builder_t; 
+                builder_t.name = builder_table.first;
+                auto builder = builders->get_table(builder_t.name);
+                builder_t.option     = *builder->get_as<std::string>("option");
+                list[builder_t.name] = builder_t;
             }
         }
-        return builder;
+        else{
+            BuilderType builder_t;
+            builder_t.name = "make";
+            list[builder_t.name] = builder_t;
+        }
     }
 }

@@ -1,9 +1,12 @@
-[submodule "thirdparty/yaml-cpp"]
-	path = thirdparty/yaml-cpp
-	url = https://github.com/jbeder/yaml-cpp.git
-[submodule "cppm_packages"]
-	path = cppm_packages
-	url = https://github.com/INJAE/cppm_packages.git
 [submodule "thirdparty/nieel"]
 	path = thirdparty/nieel
 	url = https://github.com/INJAE/nieel.git
+[submodule "thirdparty/fmt"]
+	path = thirdparty/fmt
+	url = https://github.com/fmtlib/fmt.git
+[submodule "thirdparty/cpptoml"]
+	path = thirdparty/cpptoml
+	url = https://github.com/skystrife/cpptoml.git
+[submodule "thirdparty/nlpo"]
+	path = thirdparty/nlpo
+	url = https://github.com/INJAE/nlpo.git

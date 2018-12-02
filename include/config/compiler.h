@@ -1,20 +1,26 @@
-#ifndef __CONFIG_COMPILER_H__
-#define __CONFIG_COMPILER_H__
+#ifndef __CPPM_CONFIG_COMPILER_H__
+#define __CPPM_CONFIG_COMPILER_H__
 
-#include<string>
-#include<yaml-cpp/yaml.h>
+#include "config/base_config.h"
+#include <map>
+#include <string>
 
 namespace cppm
 {
-    class Compiler
+    struct CompilerType 
+    {
+        std::string name;
+        std::string version;
+        std::string option;
+    };
+
+    class Compiler : public base_config
     {
     public:
-        static Compiler parse(YAML::Node& node);
+        void parse(table_ptr table);
+        std::string generate();
     public:
-          std::string type   
-        ; std::string luncher
-        ; std::string option
-        ; 
+        std::map<std::string, CompilerType> list;
     };
 }
 
