@@ -1,26 +1,4 @@
 #include "config/cmake.h"
-<<<<<<< HEAD
-#include <nieel/util/hash.hpp>
-
-namespace cppm
-{
-    Cmake Cmake::parse(YAML::Node& node) {
-        using namespace nieel;
-        Cmake cmake;
-        for(auto it : node["cmake"]) {
-            auto property = it.first.as<std::string>().c_str();
-            switch(hash(property))
-            {
-                case "version"_h:
-                    cmake.version     = it.second.as<std::string>(); 
-                    break;
-                case "options"_h:
-                    cmake.options     = it.second.as<std::string>();
-                    break;
-            }
-        }
-        return cmake;
-=======
 #include <fmt/format.h>
 
 namespace cppm
@@ -44,6 +22,5 @@ namespace cppm
         std::string gen = "\n";
         for(auto inc : include) gen += "include({0})\n"_format(inc);
         return gen; 
->>>>>>> new_version
     }
 }

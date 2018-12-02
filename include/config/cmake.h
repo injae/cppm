@@ -1,23 +1,3 @@
-<<<<<<< HEAD
-#ifndef __CONFIG_CMAKE_H__
-#define __CONFIG_CMAKE_H__
-
-#include <string>
-#include <yaml-cpp/yaml.h>
-
-namespace cppm
-{
-    class Cmake
-    {
-    public:
-        static Cmake parse(YAML::Node& node);
-    public:
-        std::string options;
-        std::string version;
-    };
-}
-
-=======
 #ifndef __CPPM_CONFIG_CMAKE_H__
 #define __CPPM_CONFIG_CMAKE_H__
 
@@ -43,5 +23,4 @@ namespace cppm
 }
 
 
->>>>>>> new_version
 #endif

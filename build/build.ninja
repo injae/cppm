@@ -56,195 +56,139 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Order-only phony target for cppm
 
 build cmake_object_order_depends_target_cppm: phony
-build CMakeFiles/cppm.dir/src/url.cpp.o: CXX_COMPILER__cppm ../src/url.cpp || cmake_object_order_depends_target_cppm
+build CMakeFiles/cppm.dir/src/config/cmake.cpp.o: CXX_COMPILER__cppm ../src/config/cmake.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/url.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src
-build CMakeFiles/cppm.dir/src/package/package.cpp.o: CXX_COMPILER__cppm ../src/package/package.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/package/package.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/package
-build CMakeFiles/cppm.dir/src/package/build.cpp.o: CXX_COMPILER__cppm ../src/package/build.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/package/build.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/package
-build CMakeFiles/cppm.dir/src/package/install.cpp.o: CXX_COMPILER__cppm ../src/package/install.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/package/install.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/package
-build CMakeFiles/cppm.dir/src/package/cmake.cpp.o: CXX_COMPILER__cppm ../src/package/cmake.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/package/cmake.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/package
-build CMakeFiles/cppm.dir/src/cmake/generator.cpp.o: CXX_COMPILER__cppm ../src/cmake/generator.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/cmake/generator.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/cmake
-build CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o: CXX_COMPILER__cppm ../src/cmake/find_package.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/cmake
-build CMakeFiles/cppm.dir/src/cmake/cmake_option.cpp.o: CXX_COMPILER__cppm ../src/cmake/cmake_option.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/cmake/cmake_option.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/cmake
-build CMakeFiles/cppm.dir/src/cppm.cpp.o: CXX_COMPILER__cppm ../src/cppm.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/cppm.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src
-build CMakeFiles/cppm.dir/src/main.cpp.o: CXX_COMPILER__cppm ../src/main.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/main.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src
-build CMakeFiles/cppm.dir/src/options/init.cpp.o: CXX_COMPILER__cppm ../src/options/init.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/options/init.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/options
-build CMakeFiles/cppm.dir/src/options/build.cpp.o: CXX_COMPILER__cppm ../src/options/build.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/options/build.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/options
-build CMakeFiles/cppm.dir/src/options/install.cpp.o: CXX_COMPILER__cppm ../src/options/install.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/options/install.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/options
-build CMakeFiles/cppm.dir/src/cppm_options.cpp.o: CXX_COMPILER__cppm ../src/cppm_options.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/cppm_options.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src
-build CMakeFiles/cppm.dir/src/config/library.cpp.o: CXX_COMPILER__cppm ../src/config/library.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/config/library.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
-build CMakeFiles/cppm.dir/src/config/repository.cpp.o: CXX_COMPILER__cppm ../src/config/repository.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/config/repository.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
-build CMakeFiles/cppm.dir/src/config/binary.cpp.o: CXX_COMPILER__cppm ../src/config/binary.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/config/binary.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  INCLUDES = -I../include -I../src -isystem /usr/local/include
-  OBJECT_DIR = CMakeFiles/cppm.dir
-  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
-build CMakeFiles/cppm.dir/src/config/builder.cpp.o: CXX_COMPILER__cppm ../src/config/builder.cpp || cmake_object_order_depends_target_cppm
-  DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/config/builder.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
+  DEP_FILE = CMakeFiles/cppm.dir/src/config/cmake.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
 build CMakeFiles/cppm.dir/src/config/package.cpp.o: CXX_COMPILER__cppm ../src/config/package.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/config/package.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
-build CMakeFiles/cppm.dir/src/config/path.cpp.o: CXX_COMPILER__cppm ../src/config/path.cpp || cmake_object_order_depends_target_cppm
+build CMakeFiles/cppm.dir/src/config/bin.cpp.o: CXX_COMPILER__cppm ../src/config/bin.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/config/path.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
+  DEP_FILE = CMakeFiles/cppm.dir/src/config/bin.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
-build CMakeFiles/cppm.dir/src/config/command.cpp.o: CXX_COMPILER__cppm ../src/config/command.cpp || cmake_object_order_depends_target_cppm
+build CMakeFiles/cppm.dir/src/config/builder.cpp.o: CXX_COMPILER__cppm ../src/config/builder.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/config/command.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
+  DEP_FILE = CMakeFiles/cppm.dir/src/config/builder.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
-build CMakeFiles/cppm.dir/src/config/project.cpp.o: CXX_COMPILER__cppm ../src/config/project.cpp || cmake_object_order_depends_target_cppm
+build CMakeFiles/cppm.dir/src/config/config.cpp.o: CXX_COMPILER__cppm ../src/config/config.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/config/project.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
+  DEP_FILE = CMakeFiles/cppm.dir/src/config/config.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
 build CMakeFiles/cppm.dir/src/config/dependency.cpp.o: CXX_COMPILER__cppm ../src/config/dependency.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/config/dependency.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
-build CMakeFiles/cppm.dir/src/config/cmake.cpp.o: CXX_COMPILER__cppm ../src/config/cmake.cpp || cmake_object_order_depends_target_cppm
+build CMakeFiles/cppm.dir/src/config/path.cpp.o: CXX_COMPILER__cppm ../src/config/path.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/config/cmake.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
+  DEP_FILE = CMakeFiles/cppm.dir/src/config/path.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
 build CMakeFiles/cppm.dir/src/config/compiler.cpp.o: CXX_COMPILER__cppm ../src/config/compiler.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
   DEP_FILE = CMakeFiles/cppm.dir/src/config/compiler.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
-build CMakeFiles/cppm.dir/src/config/thirdparty.cpp.o: CXX_COMPILER__cppm ../src/config/thirdparty.cpp || cmake_object_order_depends_target_cppm
+build CMakeFiles/cppm.dir/src/config/lib.cpp.o: CXX_COMPILER__cppm ../src/config/lib.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/config/thirdparty.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
+  DEP_FILE = CMakeFiles/cppm.dir/src/config/lib.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/config
-build CMakeFiles/cppm.dir/src/utils.cpp.o: CXX_COMPILER__cppm ../src/utils.cpp || cmake_object_order_depends_target_cppm
+build CMakeFiles/cppm.dir/src/option/init.cpp.o: CXX_COMPILER__cppm ../src/option/init.cpp || cmake_object_order_depends_target_cppm
   DEFINES = -DSYSTEM_LINUX
-  DEP_FILE = CMakeFiles/cppm.dir/src/utils.cpp.o.d
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
+  DEP_FILE = CMakeFiles/cppm.dir/src/option/init.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
+  INCLUDES = -I../include -I../src -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/cppm.dir
+  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/option
+build CMakeFiles/cppm.dir/src/option/make.cpp.o: CXX_COMPILER__cppm ../src/option/make.cpp || cmake_object_order_depends_target_cppm
+  DEFINES = -DSYSTEM_LINUX
+  DEP_FILE = CMakeFiles/cppm.dir/src/option/make.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
+  INCLUDES = -I../include -I../src -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/cppm.dir
+  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/option
+build CMakeFiles/cppm.dir/src/option/cppm.cpp.o: CXX_COMPILER__cppm ../src/option/cppm.cpp || cmake_object_order_depends_target_cppm
+  DEFINES = -DSYSTEM_LINUX
+  DEP_FILE = CMakeFiles/cppm.dir/src/option/cppm.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
+  INCLUDES = -I../include -I../src -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/cppm.dir
+  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/option
+build CMakeFiles/cppm.dir/src/option/build.cpp.o: CXX_COMPILER__cppm ../src/option/build.cpp || cmake_object_order_depends_target_cppm
+  DEFINES = -DSYSTEM_LINUX
+  DEP_FILE = CMakeFiles/cppm.dir/src/option/build.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
+  INCLUDES = -I../include -I../src -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/cppm.dir
+  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/option
+build CMakeFiles/cppm.dir/src/util/filesystem.cpp.o: CXX_COMPILER__cppm ../src/util/filesystem.cpp || cmake_object_order_depends_target_cppm
+  DEFINES = -DSYSTEM_LINUX
+  DEP_FILE = CMakeFiles/cppm.dir/src/util/filesystem.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
+  INCLUDES = -I../include -I../src -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/cppm.dir
+  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/util
+build CMakeFiles/cppm.dir/src/util/version.cpp.o: CXX_COMPILER__cppm ../src/util/version.cpp || cmake_object_order_depends_target_cppm
+  DEFINES = -DSYSTEM_LINUX
+  DEP_FILE = CMakeFiles/cppm.dir/src/util/version.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
+  INCLUDES = -I../include -I../src -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/cppm.dir
+  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/util
+build CMakeFiles/cppm.dir/src/util/algorithm.cpp.o: CXX_COMPILER__cppm ../src/util/algorithm.cpp || cmake_object_order_depends_target_cppm
+  DEFINES = -DSYSTEM_LINUX
+  DEP_FILE = CMakeFiles/cppm.dir/src/util/algorithm.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
+  INCLUDES = -I../include -I../src -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/cppm.dir
+  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/util
+build CMakeFiles/cppm.dir/src/main.cpp.o: CXX_COMPILER__cppm ../src/main.cpp || cmake_object_order_depends_target_cppm
+  DEFINES = -DSYSTEM_LINUX
+  DEP_FILE = CMakeFiles/cppm.dir/src/main.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
   INCLUDES = -I../include -I../src -isystem /usr/local/include
   OBJECT_DIR = CMakeFiles/cppm.dir
   OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src
+build CMakeFiles/cppm.dir/src/package/cppm_config.cpp.o: CXX_COMPILER__cppm ../src/package/cppm_config.cpp || cmake_object_order_depends_target_cppm
+  DEFINES = -DSYSTEM_LINUX
+  DEP_FILE = CMakeFiles/cppm.dir/src/package/cppm_config.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
+  INCLUDES = -I../include -I../src -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/cppm.dir
+  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/package
+build CMakeFiles/cppm.dir/src/package/cppm_package.cpp.o: CXX_COMPILER__cppm ../src/package/cppm_package.cpp || cmake_object_order_depends_target_cppm
+  DEFINES = -DSYSTEM_LINUX
+  DEP_FILE = CMakeFiles/cppm.dir/src/package/cppm_package.cpp.o.d
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
+  INCLUDES = -I../include -I../src -isystem /usr/local/include
+  OBJECT_DIR = CMakeFiles/cppm.dir
+  OBJECT_FILE_DIR = CMakeFiles/cppm.dir/src/package
 
 # =============================================================================
 # Link build statements for EXECUTABLE target cppm
@@ -253,9 +197,9 @@ build CMakeFiles/cppm.dir/src/utils.cpp.o: CXX_COMPILER__cppm ../src/utils.cpp |
 #############################################
 # Link the executable cppm
 
-build cppm: CXX_EXECUTABLE_LINKER__cppm CMakeFiles/cppm.dir/src/url.cpp.o CMakeFiles/cppm.dir/src/package/package.cpp.o CMakeFiles/cppm.dir/src/package/build.cpp.o CMakeFiles/cppm.dir/src/package/install.cpp.o CMakeFiles/cppm.dir/src/package/cmake.cpp.o CMakeFiles/cppm.dir/src/cmake/generator.cpp.o CMakeFiles/cppm.dir/src/cmake/find_package.cpp.o CMakeFiles/cppm.dir/src/cmake/cmake_option.cpp.o CMakeFiles/cppm.dir/src/cppm.cpp.o CMakeFiles/cppm.dir/src/main.cpp.o CMakeFiles/cppm.dir/src/options/init.cpp.o CMakeFiles/cppm.dir/src/options/build.cpp.o CMakeFiles/cppm.dir/src/options/install.cpp.o CMakeFiles/cppm.dir/src/cppm_options.cpp.o CMakeFiles/cppm.dir/src/config/library.cpp.o CMakeFiles/cppm.dir/src/config/repository.cpp.o CMakeFiles/cppm.dir/src/config/binary.cpp.o CMakeFiles/cppm.dir/src/config/builder.cpp.o CMakeFiles/cppm.dir/src/config/package.cpp.o CMakeFiles/cppm.dir/src/config/path.cpp.o CMakeFiles/cppm.dir/src/config/command.cpp.o CMakeFiles/cppm.dir/src/config/project.cpp.o CMakeFiles/cppm.dir/src/config/dependency.cpp.o CMakeFiles/cppm.dir/src/config/cmake.cpp.o CMakeFiles/cppm.dir/src/config/compiler.cpp.o CMakeFiles/cppm.dir/src/config/thirdparty.cpp.o CMakeFiles/cppm.dir/src/utils.cpp.o | /usr/local/lib/libyaml-cpp.a /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so /usr/local/lib/libnieel.a /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so
-  FLAGS = -std=c++17 -g -Wall -pthread -fPIC -O0
-  LINK_LIBRARIES = /usr/local/lib/libyaml-cpp.a /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so /usr/local/lib/libnieel.a /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so /usr/lib/x86_64-linux-gnu/libboost_program_options.so /usr/lib/x86_64-linux-gnu/libboost_regex.so
+build cppm: CXX_EXECUTABLE_LINKER__cppm CMakeFiles/cppm.dir/src/config/cmake.cpp.o CMakeFiles/cppm.dir/src/config/package.cpp.o CMakeFiles/cppm.dir/src/config/bin.cpp.o CMakeFiles/cppm.dir/src/config/builder.cpp.o CMakeFiles/cppm.dir/src/config/config.cpp.o CMakeFiles/cppm.dir/src/config/dependency.cpp.o CMakeFiles/cppm.dir/src/config/path.cpp.o CMakeFiles/cppm.dir/src/config/compiler.cpp.o CMakeFiles/cppm.dir/src/config/lib.cpp.o CMakeFiles/cppm.dir/src/option/init.cpp.o CMakeFiles/cppm.dir/src/option/make.cpp.o CMakeFiles/cppm.dir/src/option/cppm.cpp.o CMakeFiles/cppm.dir/src/option/build.cpp.o CMakeFiles/cppm.dir/src/util/filesystem.cpp.o CMakeFiles/cppm.dir/src/util/version.cpp.o CMakeFiles/cppm.dir/src/util/algorithm.cpp.o CMakeFiles/cppm.dir/src/main.cpp.o CMakeFiles/cppm.dir/src/package/cppm_config.cpp.o CMakeFiles/cppm.dir/src/package/cppm_package.cpp.o | /usr/local/lib/libnlpo.a /usr/local/lib/libfmt.a /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
+  FLAGS = -std=c++17 -Wall -pthread -fPIC -O0 -g
+  LINK_LIBRARIES = /usr/local/lib/libnlpo.a /usr/local/lib/libfmt.a /usr/lib/x86_64-linux-gnu/libboost_system.so /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
   OBJECT_DIR = CMakeFiles/cppm.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -320,13 +264,13 @@ default all
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | ../CMakeLists.txt ../cmake/Modules/FindBoost.cmake ../cmake/Modules/FindNieel.cmake ../cmake/Modules/FindYamlCpp.cmake ../cmake/cmake_option.cmake ../cmake/project_maker.cmake ../cmake/utils.cmake /usr/local/lib/cmake/nieel/nieel-config-noconfig.cmake /usr/local/lib/cmake/nieel/nieel-config-version.cmake /usr/local/lib/cmake/nieel/nieel-config.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-config-version.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-config.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-targets-release.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-targets.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/FindBoost.cmake /usr/share/cmake-3.10/Modules/GNUInstallDirs.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-Clang-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | ../CMakeLists.txt ../cmake/cppm_install.cmake ../cmake/project_maker.cmake ../version.h.in /usr/local/lib/cmake/cpptoml/cpptomlConfig.cmake /usr/local/lib/cmake/cpptoml/cpptomlConfigVersion.cmake /usr/local/lib/cmake/cpptoml/cpptomlTargets.cmake /usr/local/lib/cmake/fmt/fmt-config-version.cmake /usr/local/lib/cmake/fmt/fmt-config.cmake /usr/local/lib/cmake/fmt/fmt-targets-release.cmake /usr/local/lib/cmake/fmt/fmt-targets.cmake /usr/local/lib/cmake/nlpo/nlpo-config-noconfig.cmake /usr/local/lib/cmake/nlpo/nlpo-config-version.cmake /usr/local/lib/cmake/nlpo/nlpo-config.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/FindBoost.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-Clang-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake
   pool = console
 
 #############################################
 # A missing CMake input file is not an error.
 
-build ../CMakeLists.txt ../cmake/Modules/FindBoost.cmake ../cmake/Modules/FindNieel.cmake ../cmake/Modules/FindYamlCpp.cmake ../cmake/cmake_option.cmake ../cmake/project_maker.cmake ../cmake/utils.cmake /usr/local/lib/cmake/nieel/nieel-config-noconfig.cmake /usr/local/lib/cmake/nieel/nieel-config-version.cmake /usr/local/lib/cmake/nieel/nieel-config.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-config-version.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-config.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-targets-release.cmake /usr/local/lib/cmake/yaml-cpp/yaml-cpp-targets.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/FindBoost.cmake /usr/share/cmake-3.10/Modules/GNUInstallDirs.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-Clang-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake: phony
+build ../CMakeLists.txt ../cmake/cppm_install.cmake ../cmake/project_maker.cmake ../version.h.in /usr/local/lib/cmake/cpptoml/cpptomlConfig.cmake /usr/local/lib/cmake/cpptoml/cpptomlConfigVersion.cmake /usr/local/lib/cmake/cpptoml/cpptomlTargets.cmake /usr/local/lib/cmake/fmt/fmt-config-version.cmake /usr/local/lib/cmake/fmt/fmt-config.cmake /usr/local/lib/cmake/fmt/fmt-targets-release.cmake /usr/local/lib/cmake/fmt/fmt-targets.cmake /usr/local/lib/cmake/nlpo/nlpo-config-noconfig.cmake /usr/local/lib/cmake/nlpo/nlpo-config-version.cmake /usr/local/lib/cmake/nlpo/nlpo-config.cmake /usr/share/cmake-3.10/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.10/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.10/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.10/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.10/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.10/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.10/Modules/Compiler/Clang.cmake /usr/share/cmake-3.10/Modules/Compiler/GNU.cmake /usr/share/cmake-3.10/Modules/FindBoost.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-Clang-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.10/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.10/Modules/Platform/Linux.cmake /usr/share/cmake-3.10/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.10.2/CMakeCXXCompiler.cmake CMakeFiles/3.10.2/CMakeSystem.cmake: phony
 
 #############################################
 # Clean all the built files.
