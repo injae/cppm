@@ -1,5 +1,5 @@
-#include "util/algorithm.hpp"
 #include "util/filesystem.h"
+#include "util/algorithm.hpp"
 #include <iostream>
 
 namespace cppm::util
@@ -65,4 +65,5 @@ namespace cppm::util
         if(fs::exists(path)) return;
         fs::fstream(path, std::ios::out).close();
     }
+
 }

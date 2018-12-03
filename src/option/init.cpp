@@ -1,13 +1,12 @@
 #include "option/init.h"
-#include <fmt/format.h>
-#include <iostream>
+#include "util/filesystem.h"
 #include "config/path.h"
+#include <iostream>
 #include <cstdlib>
 
 namespace cppm::option
 {
     Init::Init() {
-        using namespace fmt::literals;
         app_.add_option("help")
             .abbr("h")
             .desc("show cppm command and options")

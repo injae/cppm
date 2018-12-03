@@ -11,8 +11,9 @@ namespace cppm
     public:
         CppmConfig load();
         void parse(table_ptr table);
-    private:
+    public:
         CppmPackage package;
+        std::string root_path;
     };
 }
 

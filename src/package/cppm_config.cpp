@@ -6,13 +6,13 @@ namespace cppm
 {
     CppmConfig CppmConfig::load() {
         auto home = std::string(std::getenv("HOME"));
-        auto config_path = home + "/.cppm/";
-        util::create(config_path);
-        util::create(config_path + "cmake/");
-        util::create(config_path + "local/");
-        util::create(config_path + "repo/");
-        util::create(config_path + "config.toml");
-        parse(cpptoml::parse_file(config_path +"config.toml"));
+        root_path = home + "/.cppm/";
+        util::create(root_path);
+        util::create(root_path + "cmake/");
+        util::create(root_path + "local/");
+        util::create(root_path + "repo/");
+        util::create(root_path + "config.toml");
+        parse(cpptoml::parse_file(root_path +"config.toml"));
         return *this;
     }
 

@@ -54,6 +54,7 @@ set(cppm_source
 	include/config/base_config.h
 	include/config/package.h
 	include/config/compiler.h
+	include/option/add.h
 	include/option/build.h
 	include/option/init.h
 	include/option/make.h
@@ -75,6 +76,7 @@ set(cppm_source
 	src/config/path.cpp
 	src/config/compiler.cpp
 	src/config/lib.cpp
+	src/option/add.cpp
 	src/option/init.cpp
 	src/option/make.cpp
 	src/option/cppm.cpp

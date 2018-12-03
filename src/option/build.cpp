@@ -21,6 +21,7 @@ namespace cppm::option
             +  "&& cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
             +            comp_opt
             +            is_ninja
+            +  " -DCMAKE_TOOLCHAIN_FILE=\"{0}\""_format(config.cppm_config.package.toolchains())
             +  " {0} {1}"_format(config.cmake.option, cmake_option) + " .. "
             +  "&& sudo {0} {1} {2}"_format(config.cmake.builder, builder.option, build_option);
     }
@@ -57,7 +58,7 @@ namespace cppm::option
                     cmd->build_option += util::accumulate(app_.args(), " ");
                     app_.args().clear();
                 }
-                fmt::format(cmd->build(config).c_str());
+                //fmt::print(cmd->build(config).c_str());
                 system(cmd->build(config).c_str());
             });
     }

@@ -5,6 +5,7 @@
 #include "util/filesystem.h"
 #include "option/build.h"
 #include "option/init.h"
+#include "option/add.h"
 #include <fmt/format.h>
 
 namespace cppm::option
@@ -14,14 +15,16 @@ namespace cppm::option
             .abbr("h")
             .desc("show cppm commands and options")
             .call_back([&](){ app_.show_help(); });
-        app_.add_command("build")
-            .desc("make Cmakelists.txt and project build")
-            .call_back([&](){ config_load();
-                              Build(config_).app().parse(app_);
-                            });
+        app_.add_command("add")
+            .desc("add cppm config")
+            .call_back([&](){ Add().app().parse(app_);});
         app_.add_command("init")
             .desc("make c++ project")
             .call_back([&](){ Init().app().parse(app_);});
+        app_.add_command("build")
+            .desc("make Cmakelists.txt and project build")
+            .call_back([&](){ config_load();
+                              Build(config_).app().parse(app_);});
     } 
 
     void Cppm::config_load() {

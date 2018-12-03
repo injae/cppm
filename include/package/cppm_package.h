@@ -2,9 +2,8 @@
 #define __CPPM_PACKAGE_CPPM_PACKAGE_H__
 
 #include "config/base_config.h"
-#include "cppm_version.h"
-#include "util/version.h"
 #include <vector>
+#include <string>
 
 namespace cppm
 {
@@ -12,6 +11,8 @@ namespace cppm
     {
     public:
         void parse(table_ptr table);
+        static void add_toolchain(const std::string& toolchain);
+        std::string toolchains();
     private:
         std::vector<std::string> tool_chains;
     };

@@ -2,7 +2,6 @@
 #define __CPPM_OPTION_INIT_H__
 
 #include "option/base_option.h"
-#include "util/filesystem.h"
 #include "config/config.h"
 #include <string>
 #include <memory>
