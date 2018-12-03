@@ -20,7 +20,11 @@ toml file convert CMakelists file
 compile to use cppm.toml
 2. cppm init
 make c++ cmake project
-3. cppm install --> working
+3. cppm add toolchain {args}
+this command add build option -DCMAKE_TOOLCHAIN_FILE={args}
+{args} save ~/.cppm/config.toml file
+
+4. cppm install --> working
 
 
 
