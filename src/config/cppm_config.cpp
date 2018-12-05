@@ -1,4 +1,4 @@
-#include "package/cppm_config.h"
+#include "config/cppm_config.h"
 #include "util/filesystem.h"
 #include <iostream>
 

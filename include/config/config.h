@@ -11,7 +11,7 @@
 #include "config/cmake.h"
 #include "config/compiler.h"
 #include "config/dependency.h"
-#include "package/cppm_config.h"
+#include "config/cppm_config.h"
 
 namespace cppm
 {

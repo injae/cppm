@@ -1,0 +1,5 @@
+[package]
+    name = "fmt"
+    target = "linux"
+    cmake = {name = "fmt::fmt"}
+    download = {git="https://github.com/fmtlib/fmt.git"}

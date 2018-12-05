@@ -4,6 +4,8 @@
 #include <fmt/format.h>
 #include "util/command.h"
 #include "util/filesystem.h"
+#include "package/package.h"
+#include <iostream>
 
 namespace cppm::option
 {
@@ -33,6 +35,21 @@ namespace cppm::option
             .abbr("h")
             .desc("show cppm commands and options")
             .call_back([&](){ app_.show_help(); });
+        app_.add_option("dep")
+            .abbr("D")
+            .desc("transcompile cppm package files")
+            .call_back([&](){
+                if(app_.args().empty()) { std::cerr << "need argument" << std::endl;}
+                for(auto& dep : app_.args()) {
+                    auto table = cpptoml::parse_file(config.path.thirdparty + "/" + dep + ".toml");
+                    package::Package package;
+                    package.parse(table);
+                    auto file = config.path.cmake +"/Modules/Find"+package.name+".cmake";
+                    util::create(file);
+                    util::write(file, package.generate());
+                }
+                app_.args().clear();
+            });
         app_.add_option("release")
             .abbr("r")
             .desc("compile release mode")

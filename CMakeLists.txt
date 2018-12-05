@@ -14,9 +14,9 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 endif()
 # detect host processor
 message(STATUS "The host processor is ${CMAKE_HOST_SYSTEM_PROCESSOR}")
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
+set(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules)
 set(MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/.cppm/local")
+
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -pthread -fPIC -O0 -g") 
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")  
@@ -25,7 +25,7 @@ endif()
 find_program(CCACHE_EXE ccache)
 if(CCACHE_EXE)
     set(CMAKE_CXX_COMPILER_LAUNCHER ccache)
-    message("Use ccache")
+    message("--- use ccache")
 endif()
 
 include(${MODULE_PATH}/project_maker.cmake)
@@ -50,12 +50,15 @@ set(cppm_source
 	include/config/path.h
 	include/config/builder.h
 	include/config/bin.h
+	include/config/cppm_package.h
 	include/config/config.h
 	include/config/base_config.h
 	include/config/package.h
 	include/config/compiler.h
+	include/config/cppm_config.h
 	include/option/add.h
 	include/option/build.h
+	include/option/install.h
 	include/option/init.h
 	include/option/make.h
 	include/option/base_option.h
@@ -65,12 +68,13 @@ set(cppm_source
 	include/util/version.h
 	include/util/filesystem.h
 	include/util/command.h
-	include/package/cppm_package.h
-	include/package/cppm_config.h
+	include/package/package.h
 	src/config/cmake.cpp
 	src/config/package.cpp
 	src/config/bin.cpp
 	src/config/builder.cpp
+	src/config/cppm_config.cpp
+	src/config/cppm_package.cpp
 	src/config/config.cpp
 	src/config/dependency.cpp
 	src/config/path.cpp
@@ -78,6 +82,7 @@ set(cppm_source
 	src/config/lib.cpp
 	src/option/add.cpp
 	src/option/init.cpp
+	src/option/install.cpp
 	src/option/make.cpp
 	src/option/cppm.cpp
 	src/option/build.cpp
@@ -85,8 +90,7 @@ set(cppm_source
 	src/util/version.cpp
 	src/util/algorithm.cpp
 	src/main.cpp
-	src/package/cppm_config.cpp
-	src/package/cppm_package.cpp
+	src/package/package.cpp
 )
 
 build_binary(cppm "${cppm_source}" "${thirdparty}")

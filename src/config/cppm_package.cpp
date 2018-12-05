@@ -1,4 +1,4 @@
-#include "package/cppm_package.h"
+#include "config/cppm_package.h"
 #include "cppm_version.h"
 #include "util/version.h"
 #include "util/filesystem.h"

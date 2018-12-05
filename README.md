@@ -32,8 +32,8 @@ this command add build option -DCMAKE_TOOLCHAIN_FILE={args}
 ### package
 ```
 [package]
- name = "example"     # user package name
- version = "1.0.0"    # user package version
+ name = "example"        # user package name
+ version = "1.0.0"       # user package version
  description = "example" # package description
  ```
 
@@ -42,10 +42,10 @@ cmake setting
 ccache auto use
 ```
 [cmake]
-version = "3.10"  ## cmake minimum version
-option = ""       ## cmake options
-builder = "ninja" ## cppm use builder name, default make
-compiler = "clang++"  ## cppm use compiler name, default g++
+version  = "3.10"    # cmake minimum version
+option   = ""        # cmake options
+builder  = "ninja"   # cppm use builder name, default make
+compiler = "clang++" # cppm use compiler name, default g++
 ```
 
 ### compiler
@@ -53,7 +53,7 @@ compiler option setting
 ```
 [compiler]
 clang++ = {option = "-std=c++17" ## compiler options
-          ,version = "7.0"} ## compiler minimum version
+          ,version = "7.0"}      ## compiler minimum version
 ```
 ### 5. builder
 builder option setting
@@ -62,6 +62,7 @@ builder option setting
 ninja = {option = "-j4"}
 ```
 ### 6. bin
+make binary 
 ```
 [[bin]]
 name   = "cppm" # bin name
@@ -72,17 +73,19 @@ source = ["include/.*" ,"src/.*"] # source files
 ```
 
 ### 7. lib
+make library
 ```
 [[lib]]
-name   = "nlpo" # lib name
-type = "static" # lib type , static or shared or headonly
-source = ["include/.*" ,"src/.*"] # source files
+name   = "nlpo"   # lib name
+type   = "static" # lib type , static or shared or headonly
+source = ["src/.*"] # source files 
 ```
 ### 8. dependencies
+add thirdparty library dependencies
 ```
 [dependencies]
-cpptoml = {cmake = "cpptoml"}
-Boost   = {cmake = " ${Boost_LIBRARIES}", components="system filesystem"}
+cpptoml = {cmake = "cpptoml"} # cmake option is library name in cmake
+Boost   = {cmake = " ${Boost_LIBRARIES}", components="system filesystem"} #components cmake library components
 fmt     = {cmake = "fmt::fmt"}
 nlpo    = {cmake = "nlpo::nlpo"
 ```

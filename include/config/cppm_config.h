@@ -2,7 +2,7 @@
 #define __CPPM_PACKAGE_CPPM_CONFIG_H__
 
 #include "config/base_config.h"
-#include "package/cppm_package.h"
+#include "config/cppm_package.h"
 
 namespace cppm
 {

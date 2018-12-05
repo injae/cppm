@@ -1,0 +1,6 @@
+[package]
+    name     = "boost"
+    target   = "linux" # or windows or xcode
+    cmake    = {name = "${Boost_LIBRARIES}", components="system filesystem"}
+    download = {url="https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz"}
+    build    = {config="./bootstrap.sh && ./b2 install"}

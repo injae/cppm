@@ -1,5 +1,5 @@
 #include "option/add.h"
-#include "package/cppm_package.h"
+#include "config/cppm_package.h"
 
 namespace cppm::option
 {
@@ -9,7 +9,7 @@ namespace cppm::option
             .desc("show cppm command and options")
             .call_back([&](){ app_.show_help(); });
         app_.add_command("toolchain")
-            .desc("add cmake toolchain")
+            .desc("add cmake toolchain #example# cppm add toolchains {toolchain_path}... ")
             .call_back([&](){ this->toolchain(); });
     }
 
