@@ -1,6 +1,6 @@
 include(ExternalProject)
 
-find_package(nlpo)
+#find_package(nlpo)
 
 if(NOT nlpo_FOUND)
 ExternalProject_Add(
