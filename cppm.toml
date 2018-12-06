@@ -25,5 +25,5 @@ source = ["include/.*" ,"src/.*"]
 [dependencies]
 cpptoml = {cmake = "cpptoml"}
 Boost   = {cmake = "${Boost_LIBRARIES}", components="system filesystem"}
-fmt     = {cmake = "fmt::fmt"}
 nlpo    = {cmake = "nlpo::nlpo"}
+fmt     = {cmake = "fmt::fmt"}

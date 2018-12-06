@@ -14,7 +14,7 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 endif()
 # detect host processor
 message(STATUS "The host processor is ${CMAKE_HOST_SYSTEM_PROCESSOR}")
-set(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
 set(MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -32,14 +32,14 @@ include(${MODULE_PATH}/project_maker.cmake)
 
 include(cmake/cppm_install.cmake)
 set(thirdparty)
-find_package(nlpo   REQUIRED)
-list(APPEND thirdparty nlpo::nlpo)
 find_package(fmt   REQUIRED)
 list(APPEND thirdparty fmt::fmt)
+find_package(nlpo   REQUIRED)
+list(APPEND thirdparty nlpo::nlpo)
 find_package(cpptoml   REQUIRED)
 list(APPEND thirdparty cpptoml)
 find_package(Boost  COMPONENTS system filesystem REQUIRED)
-list(APPEND thirdparty  ${Boost_LIBRARIES})
+list(APPEND thirdparty ${Boost_LIBRARIES})
 
 
 set(cppm_source 

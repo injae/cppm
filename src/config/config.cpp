@@ -42,7 +42,7 @@ namespace cppm
              + "\n"
              + "# detect host processor\n"
              + "message(STATUS \"The host processor is ${CMAKE_HOST_SYSTEM_PROCESSOR}\")\n"
-             + "set(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules)\n"
+             + "list(APPEND CMAKE_MODULE_PATH \"${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules\")\n"
              + "set(MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)\n"
             //+ "list(APPEND CMAKE_PREFIX_PATH \"$ENV{HOME}/.cppm/local\")"
              + "\n"
