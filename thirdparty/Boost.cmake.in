@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.10)
+project(Boost-install NONE)
 include(ExternalProject)
 
 find_package(Boost)

@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.10)
+project(cpptoml-install NONE)
 include(ExternalProject)
 
 find_package(cpptoml)

@@ -90,7 +90,6 @@ set(cppm_source
 	src/config/lib.cpp
 	src/option/add.cpp
 	src/option/init.cpp
-	src/option/.#build.cpp
 	src/option/install.cpp
 	src/option/make.cpp
 	src/option/cppm.cpp

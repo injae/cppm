@@ -59,7 +59,9 @@ namespace cppm::package
             else return "";
         };
 
-        return "include(ExternalProject)\n\n"
+        return "cmake_minimum_required(VERSION 3.10)\n"
+             + "project({0}-install NONE)\n"_format(name)
+             + "include(ExternalProject)\n\n"
              + "find_package({0})\n\n"_format(name)
              + "if(NOT {0}_FOUND)\n"_format(name)
              + "ExternalProject_Add(\n"
