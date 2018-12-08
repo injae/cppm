@@ -18,7 +18,7 @@ namespace cppm::package
             auto download_   = package->get_table("download");
             download.url     = download_->get_as<std::string>("url").value_or("");
             download.git.url = download_->get_as<std::string>("git").value_or("");
-            download.git.tag = download_->get_as<std::string>("git_tag").value_or("master");
+            download.git.tag = download_->get_as<std::string>("git_tag").value_or("");
 
             if(auto build_   = package->get_table("build")) {
                 build.config  = build_->get_as<std::string>("config").value_or("");
@@ -30,49 +30,28 @@ namespace cppm::package
 
     std::string Package::generate() {
         using namespace fmt::literals;
-        auto download_ = [&](){
-            if(download.url != "") {
-                return "URL {0}"_format(download.url);
-            }
-            else if(download.git.url != "") {
-                return "GIT_REPOSITORY {0}\n"_format(download.git.url)
-                     + "GIT_TAG {0}\n"_format(download.git.tag);  
-            }
-            else {
-                std::cerr << "need download argument" << std::endl;
-                exit(1);
-            }
-        };
-        auto build_ = [&](){
-            std::string gen;
-            if(build.config != "") 
-                gen += "CONFIGURE_COMMAND {0}\n"_format(build.config);
-            if(build.build != "")
-                gen += "BUILD_COMMAND {0}\n"_format(build.build);
-            if(build.install != "")
-                gen += "INSTALL_COMMAND {0}\n"_format(build.install);
-            return gen;
-        };
-
-        auto cmake_ = [&]() -> std::string {
-            if(cmake.option != "") return "CMAKE_ARGS {0}"_format(cmake.option);
-            else return "";
-        };
-
+        auto is_default = [&](std::string str) { return str != "" ? "" : "#"; };
         return "cmake_minimum_required(VERSION 3.10)\n"
-             + "project({0}-install NONE)\n"_format(name)
-             + "include(ExternalProject)\n\n"
-             + "find_package({0})\n\n"_format(name)
+             + "project({0}-install NONE)\n\n"_format(name)
+             + "#==========================================\n"
+             + "find_package({0} QUIET)\n"_format(name)
              + "if(NOT {0}_FOUND)\n"_format(name)
+             + "include(ExternalProject)\n"
              + "ExternalProject_Add(\n"
              + "{0}\n"_format(name)
-             + download_()
-             + "SOURCE_DIR ${{CMAKE_BINARY_DIR}}/repo/{0}\n"_format(name)
-             + cmake_()
-             + build_()
+             + "{0}URL {1}\n"_format(is_default(download.url), download.url)
+             + "{0}GIT_REPOSITORY {1}\n"_format(is_default(download.git.url),download.git.url)
+             + "{0}GIT_TAG {1}\n"_format(is_default(download.git.tag),download.git.tag)
+             + "SOURCE_DIR ${{CMAKE_BINARY_DIR}}/repo/{0}-src\n"_format(name)
+             + "BINARY_DIR ${{CMAKE_BINARY_DIR}}/repo/{0}\n"_format(name)
+             + "{0}CONFIGURE_COMMAND {1}\n"_format(is_default(build.config),build.config)
+             + "{0}BUILD_COMMAND {1}\n"_format(is_default(build.build), build.build)
+             + "{0}INSTALL_COMMAND {1}\n"_format(is_default(build.install), build.install)
+             + "{0}CMAKE_ARGS {1}\n"_format(is_default(cmake.option), cmake.option)
              + ")\n"
              //+ "find_package({0})\n\n"_format(name)
              + "endif()\n"
+             + "#==========================================\n"
              ;
     }
 }

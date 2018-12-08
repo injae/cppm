@@ -1,13 +1,22 @@
 cmake_minimum_required(VERSION 3.10)
 project(Boost-install NONE)
-include(ExternalProject)
 
-find_package(Boost)
-
+set(Boost_USE_STATIC_LIBS ON)
+#==========================================
+find_package(Boost QUIET)
 if(NOT Boost_FOUND)
+include(ExternalProject)
 ExternalProject_Add(
 Boost
-URL https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gzSOURCE_DIR ${CMAKE_BINARY_DIR}/repo/Boost
+URL https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz
+#GIT_REPOSITORY 
+#GIT_TAG 
+SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/Boost-src
+BINARY_DIR ${CMAKE_BINARY_DIR}/repo/Boost
 CONFIGURE_COMMAND ./bootstrap.sh && ./b2 install
+#BUILD_COMMAND 
+#INSTALL_COMMAND 
+#CMAKE_ARGS 
 )
 endif()
+#==========================================

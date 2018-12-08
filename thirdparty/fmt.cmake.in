@@ -1,14 +1,21 @@
 cmake_minimum_required(VERSION 3.10)
 project(fmt-install NONE)
-include(ExternalProject)
 
-find_package(fmt)
-
+#==========================================
+find_package(fmt QUIET)
 if(NOT fmt_FOUND)
+include(ExternalProject)
 ExternalProject_Add(
 fmt
+#URL 
 GIT_REPOSITORY https://github.com/fmtlib/fmt.git
-GIT_TAG master
-SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/fmt
+#GIT_TAG 
+SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/fmt-src
+BINARY_DIR ${CMAKE_BINARY_DIR}/repo/fmt
+#CONFIGURE_COMMAND 
+#BUILD_COMMAND 
+#INSTALL_COMMAND 
+#CMAKE_ARGS 
 )
 endif()
+#==========================================

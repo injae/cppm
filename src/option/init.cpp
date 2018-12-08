@@ -89,7 +89,7 @@ namespace cppm::option
         fs::create_directory(project.cmake + "/Modules");
 
         auto cppm_path = std::string(std::getenv("HOME")) + "/.cppm/";
-        fs::copy(cppm_path + "cmake/project_maker.cmake", project.cmake+"/project_maker.cmake");
+        fs::copy(cppm_path + "cmake/cppm_tool.cmake", project.cmake+"/cppm_tool.cmake");
         auto config = cpptoml::make_table();
         auto package = cpptoml::make_table();
         package->insert("description", " ");
