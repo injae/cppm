@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 project(nlpo-install NONE)
 
-rind_package(nlpo)
+find_package(nlpo)
 if(NOT nlpo_FOUND)
 include(ExternalProject)
 ExternalProject_Add(nlpo

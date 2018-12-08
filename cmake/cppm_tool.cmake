@@ -1,5 +1,5 @@
 function(download_thirdparty name)
-   if(EXISTS thirdparty/${name}.cmake.in)
+   if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/${name}.cmake.in)
       configure_file(thirdparty/${name}.cmake.in thirdparty/${name}/CMakeLists.txt)
       execute_process(COMMAND cmake --build . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name} )
       add_subdirectory(${CMAKE_BINARY_DIR}/thirdparty/${name})
