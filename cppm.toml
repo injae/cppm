@@ -6,7 +6,7 @@ description = "c++ cmake maker use to toml like Cargo"
 [cmake]
 version  = "3.10"
 #option   = "-DCMAKE_INSTALL_PREFIX=/usr/local"
-builder  = "make"
+builder  = "ninja"
 compiler = "clang++"
 include  = ["cmake/cppm_install.cmake"]
 

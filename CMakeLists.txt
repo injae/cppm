@@ -33,19 +33,19 @@ include(${MODULE_PATH}/cppm_tool.cmake)
 include(cmake/cppm_install.cmake)
 set(thirdparty)
 download_thirdparty(fmt)
-find_package(fmt   REQUIRED)
+find_package(fmt)
 list(APPEND thirdparty fmt::fmt)
 
 download_thirdparty(nlpo)
-find_package(nlpo   REQUIRED)
+find_package(nlpo)
 list(APPEND thirdparty nlpo::nlpo)
 
 download_thirdparty(cpptoml)
-find_package(cpptoml   REQUIRED)
+find_package(cpptoml )
 list(APPEND thirdparty cpptoml)
 
 download_thirdparty(Boost)
-find_package(Boost  COMPONENTS system filesystem REQUIRED)
+find_package(Boost  COMPONENTS system filesystem)
 list(APPEND thirdparty ${Boost_LIBRARIES})
 
 
