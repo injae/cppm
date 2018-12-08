@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.10)
+
+project(nlpo-install NONE)
+
+find_package(nlpo)
+if(NOT nlpo_FOUND)
+include(ExternalProject)
+ExternalProject_Add(nlpo
+    GIT_REPOSITORY https://github.com/INJAE/nlpo.git
+    GIT_TAG        master
+    SOURCE_DIR     "${CMAKE_BINARY_DIR}/repo/nlpo"
+)
+endif()

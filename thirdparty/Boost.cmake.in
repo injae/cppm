@@ -1,0 +1,11 @@
+include(ExternalProject)
+
+find_package(Boost)
+
+if(NOT Boost_FOUND)
+ExternalProject_Add(
+Boost
+URL https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gzSOURCE_DIR ${CMAKE_BINARY_DIR}/repo/Boost
+CONFIGURE_COMMAND ./bootstrap.sh && ./b2 install
+)
+endif()

@@ -44,7 +44,7 @@ namespace cppm::option
                     auto table = cpptoml::parse_file(config.path.thirdparty + "/" + dep + ".toml");
                     package::Package package;
                     package.parse(table);
-                    auto file = config.path.cmake +"/Modules/Find"+package.name+".cmake";
+                    auto file = config.path.thirdparty +"/" + package.name+".cmake.in";
                     util::create(file);
                     util::write(file, package.generate());
                 }
@@ -68,8 +68,8 @@ namespace cppm::option
             .desc("before make or ninja command")
             .call_back([&, cmd = cmd_](){
                 cmakelist_build(config);
-                fs::copy_file((std::string(std::getenv("HOME")))+"/.cppm/cmake/project_maker.cmake"
-                                     ,config.path.cmake +"/project_maker.cmake"
+                fs::copy_file((std::string(std::getenv("HOME")))+"/.cppm/cmake/cppm_tool.cmake"
+                                     ,config.path.cmake +"/cppm_tool.cmake"
                                      ,fs::copy_option::overwrite_if_exists);
                 if(!app_.args().empty()) {
                     cmd->build_option += util::accumulate(app_.args(), " ");

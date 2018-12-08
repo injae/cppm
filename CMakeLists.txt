@@ -28,18 +28,26 @@ if(CCACHE_EXE)
     message("--- use ccache")
 endif()
 
-include(${MODULE_PATH}/project_maker.cmake)
+include(${MODULE_PATH}/cppm_tool.cmake)
 
 include(cmake/cppm_install.cmake)
 set(thirdparty)
+download_thirdparty(fmt)
 find_package(fmt   REQUIRED)
 list(APPEND thirdparty fmt::fmt)
+
+download_thirdparty(nlpo)
 find_package(nlpo   REQUIRED)
 list(APPEND thirdparty nlpo::nlpo)
+
+download_thirdparty(cpptoml)
 find_package(cpptoml   REQUIRED)
 list(APPEND thirdparty cpptoml)
+
+download_thirdparty(Boost)
 find_package(Boost  COMPONENTS system filesystem REQUIRED)
 list(APPEND thirdparty ${Boost_LIBRARIES})
+
 
 
 set(cppm_source 
@@ -82,6 +90,7 @@ set(cppm_source
 	src/config/lib.cpp
 	src/option/add.cpp
 	src/option/init.cpp
+	src/option/.#build.cpp
 	src/option/install.cpp
 	src/option/make.cpp
 	src/option/cppm.cpp

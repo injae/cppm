@@ -6,26 +6,26 @@
 
 namespace cppm::package
 {
-    struct cmake
+    struct cmake_
     {
         std::string name;
         std::string components;
         std::string option;
     };
 
-    struct git
+    struct git_
     {
         std::string url;
         std::string tag;
     };
 
-    struct download
+    struct download_
     {
         std::string url;
-        git git;
+        git_ git;
     };
 
-    struct build
+    struct build_
     {
         std::string config;
         std::string build;
@@ -41,9 +41,9 @@ namespace cppm::package
         std::string name;
         std::string version;
         std::string target;
-        download download;
-        cmake cmake;
-        build build;
+        download_ download;
+        cmake_ cmake;
+        build_ build;
     };
 }
 

@@ -1,5 +1,5 @@
 [package]
-    name     = "boost"
+    name     = "Boost"
     target   = "linux" # or windows or xcode
     cmake    = {name = "${Boost_LIBRARIES}", components="system filesystem"}
     download = {url="https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz"}

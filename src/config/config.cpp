@@ -48,7 +48,7 @@ namespace cppm
              + "\n"
              + compiler.generate()
              + "\n"
-             + "include(${MODULE_PATH}/project_maker.cmake)\n"
+             + "include(${MODULE_PATH}/cppm_tool.cmake)\n"
              + cmake.generate()
              + "set(thirdparty)\n"
              + dependencies.gen_find_package()

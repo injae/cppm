@@ -65,11 +65,11 @@ namespace cppm::package
              + "ExternalProject_Add(\n"
              + "{0}\n"_format(name)
              + download_()
-             + "SOURCE_DIR ${{CMAKE_CURRENT_SOURCE_DIR}}/thirdparty/{0}\n"_format(name)
+             + "SOURCE_DIR ${{CMAKE_BINARY_DIR}}/repo/{0}\n"_format(name)
              + cmake_()
              + build_()
              + ")\n"
-             + "find_package({0})\n\n"_format(name)
+             //+ "find_package({0})\n\n"_format(name)
              + "endif()\n"
              ;
     }

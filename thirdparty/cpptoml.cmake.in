@@ -1,0 +1,12 @@
+include(ExternalProject)
+
+find_package(cpptoml)
+
+if(NOT cpptoml_FOUND)
+ExternalProject_Add(
+cpptoml
+GIT_REPOSITORY https://github.com/skystrife/cpptoml.git
+GIT_TAG master
+SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/cpptoml
+)
+endif()

@@ -1,0 +1,12 @@
+include(ExternalProject)
+
+find_package(fmt)
+
+if(NOT fmt_FOUND)
+ExternalProject_Add(
+fmt
+GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+GIT_TAG master
+SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/fmt
+)
+endif()

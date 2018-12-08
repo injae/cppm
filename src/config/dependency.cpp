@@ -22,8 +22,9 @@ namespace cppm
         std::string gen;
         for(auto& dep : list) {
            auto components = dep.components =="" ? "" : "COMPONENTS " + dep.components;
+           gen += "download_thirdparty({0})\n"_format(dep.name);
            gen += "find_package({0} {1} {2} REQUIRED)\n"_format(dep.name, dep.version, components);
-           gen += "list(APPEND thirdparty {0})\n"_format(dep.cmake_name);
+           gen += "list(APPEND thirdparty {0})\n\n"_format(dep.cmake_name);
         }
         return gen;
     }
