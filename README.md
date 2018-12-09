@@ -5,6 +5,23 @@ Cppm
 ## Goals
 like Rust Cargo 
 
+## Installation
+### Linux
+dependencies is auto install but boost compile is too slow
+if you want to fast install
+use linux package manager
+### Ubuntu example
+```
+sudo apt-get install liboost-all-dev
+```
+
+```
+git clone https://github.com/INJAE/cppm.git
+cd cppm
+sudo cmake -H. -Bbuild
+sudo cmake --build . --target install
+```
+
 ## description
 toml file convert CMakelists file
 
@@ -25,8 +42,6 @@ this command add build option -DCMAKE_TOOLCHAIN_FILE={args}
 {args} save ~/.cppm/config.toml file
 
 4. cppm install --> working
-
-
 
 ## cppm.toml
 ### package
@@ -55,38 +70,38 @@ compiler option setting
 clang++ = {option = "-std=c++17" ## compiler options
           ,version = "7.0"}      ## compiler minimum version
 ```
-### 5. builder
+### builder
 builder option setting
 ```
 [builder]
 ninja = {option = "-j4"}
 ```
-### 6. bin
+### bin
 make binary 
 ```
 [[bin]]
 name   = "cppm" # bin name
-source = ["include/.*" ,"src/.*"] # source files
+source = ["src/.*"] # source files
 [[bin]]
 name   = "tbin" # bin name
-source = ["include/.*" ,"src/.*"] # source files
+source = ["src/.*"] # source files
 ```
 
-### 7. lib
+### lib
 make library
 ```
 [[lib]]
 name   = "nlpo"   # lib name
-type   = "static" # lib type , static or shared or headonly
+type   = "static" # lib type , static or shared or header-only
 source = ["src/.*"] # source files 
 ```
-### 8. dependencies
+### dependencies
 add thirdparty library dependencies
 ```
 [dependencies]
 cpptoml = {cmake = "cpptoml"} # cmake option is library name in cmake
-Boost   = {cmake = " ${Boost_LIBRARIES}", components="system filesystem"} #components cmake library components
+Boost   = {cmake = " ${Boost_LIBRARIES}", components="system filesystem"} # components cmake library components
 fmt     = {cmake = "fmt::fmt"}
-nlpo    = {cmake = "nlpo::nlpo"
+nlpo    = {cmake = "nlpo::nlpo}"
 ```
 
