@@ -7,18 +7,6 @@ macro(download_thirdparty name)
    endif()
 endmacro()
 
-function(build_binary name source dependencies)
-    add_executable(${name} ${source})
-    target_include_directories(${name}
-        PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
-    )
-    target_link_libraries(${name} PUBLIC ${dependencies})
-   # set_target_properties(${name} PROPERTIES LINKER_LANGUAGE CXX)
-    
-    install(TARGETS ${name} RUNTIME DESTINATION bin)
-endfunction()
-
 function(library_var_maker name)
     if(${name} MATCHES ${CMAKE_PROJECT_NAME})
         set(lib_include_dir "include" PARENT_SCOPE)
@@ -27,6 +15,70 @@ function(library_var_maker name)
         set(lib_include_dir "include/${CMAKE_PROJECT_NAME}/${name}" PARENT_SCOPE)
         set(lib_source_dir  "src/${name}" PARENT_SCOPE)
     endif()
+endfunction()
+
+function(target_install name type)
+    library_var_maker(${name})
+    if(${type} MATCHES "BINARY")
+        target_include_directories(${name}
+            PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include
+            PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+        )
+        install(TARGETS ${name} RUNTIME DESTINATION bin)
+    elseif(${type} MATCHES "STATIC" OR ${type} MATCHES "SHARED")
+        target_include_directories(${name}
+            PUBLIC
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_include_dir}>
+                $<INSTALL_INTERFACE:include>
+            PRIVATE
+                ${CMAKE_CURRENT_SOURCE_DIR}/${lib_source_dir}
+        )
+    elseif(${type} MATCHES "INTERFACE") # SAME HEADER_ONLY
+        target_include_directories(${name}
+            INTERFACE
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_include_dir}>
+                $<INSTALL_INTERFACE:include>
+        )
+    else()
+        message(FATAL_ERROR "Wrong Type Need SHARED or STATIC or INTERFACE or BINARY")   
+    endif()
+    if(${type} MATCHES "INTERFACE" OR ${type} MATCHES "SHARED" OR ${type} MATCHES "STATIC")
+        install(TARGETS ${name} EXPORT ${PROJECT_NAME}-targets
+            ARCHIVE DESTINATION lib 
+            LIBRARY DESTINATION lib
+            RUNTIME DESTINATION bin
+        )
+        install(DIRECTORY include/ DESTINATION include)
+
+        install(EXPORT ${CMAKE_PROJECT_NAME}-targets
+            FILE ${CMAKE_PROJECT_NAME}-config.cmake
+            NAMESPACE ${CMAKE_PROJECT_NAME}::
+            DESTINATION lib/cmake/${CMAKE_PROJECT_NAME}
+        )
+        # project-config-version install part
+        include(CMakePackageConfigHelpers)
+        write_basic_package_version_file(
+          ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}-config-version.cmake
+          VERSION ${${CMAKE_PROJECT_NAME}_VERSION}
+          COMPATIBILITY ExactVersion
+        ) 
+
+        install(FILES
+          ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}-config-version.cmake
+          DESTINATION lib/cmake/${CMAKE_PROJECT_NAME}
+        )
+    endif()
+
+endfunction()
+
+function(build_binary name dependencies)
+    target_include_directories(${name}
+        PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include
+        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+    )
+    target_link_libraries(${name} PUBLIC ${dependencies})
+    #set_target_properties(${name} PROPERTIES LINKER_LANGUAGE CXX)
+    install(TARGETS ${name} RUNTIME DESTINATION bin)
 endfunction()
 
 function(build_library name type source dependencies)
@@ -45,7 +97,6 @@ function(build_library name type source dependencies)
         add_library(${name} SHARED ${source}) 
         target_link_libraries(${name} ${dependencies})
         set_target_properties(${name} PROPERTIES LINKER_LANGUAGE CXX)
-        
     endif()
     
     if(NOT ${name} MATCHES ${CMAKE_PROJECT_NAME})
@@ -120,8 +171,6 @@ function(build_library name type source dependencies)
     
     
     # ==================================
-    
-    
 endfunction()
       
     

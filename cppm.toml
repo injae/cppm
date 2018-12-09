@@ -1,6 +1,6 @@
 [package]
 name    = "cppm"
-version = "0.1.0"
+version = "0.1.2"
 description = "c++ cmake maker use to toml like Cargo"
 
 [cmake]
@@ -20,7 +20,7 @@ make    = {option = "-j4"}
 
 [[bin]]
 name   = "cppm"
-source = ["include/.*" ,"src/.*"]
+source = ["src/.*"]
 
 [dependencies]
 cpptoml = {cmake = "cpptoml"}

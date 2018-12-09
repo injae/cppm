@@ -65,7 +65,7 @@ namespace cppm::option
                 app_.call_default();
             });
         app_.add_command()
-            .desc("before make or ninja command")
+            .desc("Build command")
             .call_back([&, cmd = cmd_](){
                 cmakelist_build(config);
                 fs::copy_file((std::string(std::getenv("HOME")))+"/.cppm/cmake/cppm_tool.cmake"

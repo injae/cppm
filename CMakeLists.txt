@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(cppm LANGUAGES CXX VERSION 0.1.0)
+project(cppm LANGUAGES CXX VERSION 0.1.2)
 
 message(STATUS "We are on a ${CMAKE_SYSTEM_NAME} system")
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
@@ -50,33 +50,9 @@ list(APPEND thirdparty ${Boost_LIBRARIES})
 
 
 
-set(cppm_source 
-	include/cppm_version.h
-	include/config/cmake.h
-	include/config/lib.h
-	include/config/dependency.h
-	include/config/path.h
-	include/config/builder.h
-	include/config/bin.h
-	include/config/cppm_package.h
-	include/config/config.h
-	include/config/base_config.h
-	include/config/package.h
-	include/config/compiler.h
-	include/config/cppm_config.h
-	include/option/add.h
-	include/option/build.h
-	include/option/install.h
-	include/option/init.h
-	include/option/make.h
-	include/option/base_option.h
-	include/option/cppm.h
-	include/util/cmake.h
-	include/util/algorithm.hpp
-	include/util/version.h
-	include/util/filesystem.h
-	include/util/command.h
-	include/package/package.h
+add_executable(cppm "")
+target_sources(cppm
+	PRIVATE 
 	src/config/cmake.cpp
 	src/config/package.cpp
 	src/config/bin.cpp
@@ -100,5 +76,7 @@ set(cppm_source
 	src/main.cpp
 	src/package/package.cpp
 )
+target_link_libraries(cppm PUBLIC ${thirdparty})
 
-build_binary(cppm "${cppm_source}" "${thirdparty}")
+target_install(cppm BINARY)
+
