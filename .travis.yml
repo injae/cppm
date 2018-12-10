@@ -5,7 +5,7 @@ dist: xenial
 addons:
   apt:
     packages:
-      -libboost-all-dev
+      - libboost-all-dev
 compiler:
   - clang
   - gcc
