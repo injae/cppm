@@ -12,6 +12,6 @@ compiler:
 os:
   - linux
 script:
-  - sudo -E cmake -H. -Bbuild
-  - cd build && sudo -E cmake --build . --target install
+  - sudo env "PATH=$PATH" cmake -H. -Bbuild
+  - cd build && sudo env "PATH=$PATH" cmake --build . --target install
   
