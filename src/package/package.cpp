@@ -43,15 +43,16 @@ namespace cppm::package
              + "{0}GIT_REPOSITORY {1}\n"_format(is_default(download.git.url),download.git.url)
              + "{0}GIT_TAG {1}\n"_format(is_default(download.git.tag),download.git.tag)
              + "SOURCE_DIR ${{CMAKE_BINARY_DIR}}/repo/{0}\n"_format(name)
-             + "BINARY_DIR ${{CMAKE_BINARY_DIR}}/repo/{0}/build\n"_format(name)
+           //+ "BINARY_DIR ${{CMAKE_BINARY_DIR}}/repo/{0}/build\n"_format(name)
              + "{0}CMAKE_ARGS {1}\n"_format(is_default(cmake.option), cmake.option)
              + "{0}CONFIGURE_COMMAND {1}\n"_format(is_default(build.config),build.config)
              + "{0}BUILD_COMMAND {1}\n"_format(is_default(build.build), build.build)
              + "{0}INSTALL_COMMAND {1}\n"_format(is_default(build.install), build.install)
+             + "BUILD_IN_SOURCE true\n"
              + ")\n"
              //+ "find_package({0})\n\n"_format(name)
              + "endif()\n"
-             + "#==========================================\n"
+             + "#==========================================\n\n"
              ;
     }
 }

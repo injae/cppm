@@ -10,12 +10,13 @@ fmt
 #URL 
 GIT_REPOSITORY https://github.com/fmtlib/fmt.git
 #GIT_TAG 
-SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/fmt-src
-BINARY_DIR ${CMAKE_BINARY_DIR}/repo/fmt
+SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/fmt
 #CMAKE_ARGS 
 #CONFIGURE_COMMAND 
 #BUILD_COMMAND 
 #INSTALL_COMMAND 
+BUILD_IN_SOURCE true
 )
 endif()
 #==========================================
+

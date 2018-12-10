@@ -11,12 +11,13 @@ Boost
 URL https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz
 #GIT_REPOSITORY 
 #GIT_TAG 
-SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/Boost-src
-BINARY_DIR ${CMAKE_BINARY_DIR}/repo/Boost
+SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/Boost
 #CMAKE_ARGS 
 CONFIGURE_COMMAND ./bootstrap.sh && ./b2 install
 #BUILD_COMMAND 
 #INSTALL_COMMAND 
+BUILD_IN_SOURCE true
 )
 endif()
 #==========================================
+
