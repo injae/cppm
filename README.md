@@ -2,8 +2,19 @@ Cppm [![Build Status](https://travis-ci.com/injae/cppm.svg?branch=master)](https
 ========
  C++ cmake project helper
 -------------------------------------
+## description
+toml file convert CMakelists file
+
 ## Goals
 like Rust Cargo 
+
+## Dependencies
+1. cmake-3.10.0
+2. c++-17-compiler
+3. boost
+4. nlpo
+5. cpptoml
+6. fmt
 
 ## Installation
 ### Linux
@@ -22,14 +33,7 @@ sudo cmake -H. -Bbuild
 sudo cmake --build . --target install
 ```
 
-## description
-toml file convert CMakelists file
 
-## Dependencies
-1. boost
-2. nlpo
-3. cpptoml
-4. fmt
 
 ## Document
 ### cppm options and commands

@@ -9,6 +9,7 @@ addons:
     packages:
       - libboost-all-dev
       - libstdc++-7-dev
+      - build-essential
 compiler:
   - clang
   - gcc
