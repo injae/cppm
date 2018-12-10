@@ -13,5 +13,5 @@ os:
   - linux
 script:
   - cmake -H. -Bbuild
-  - cd cmake && cmake --build . --target install
+  - cd build && cmake --build . --target install
   
