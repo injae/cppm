@@ -4,8 +4,11 @@ dist: xenial
 sudo: required
 addons:
   apt:
+    sources:
+      - ubuntu-toolchain-r-test
     packages:
       - libboost-all-dev
+      - libstdc++-7-dev
 compiler:
   - clang
   - gcc
