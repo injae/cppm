@@ -12,10 +12,10 @@ GIT_REPOSITORY https://github.com/injae/nlpo.git
 #GIT_TAG 
 SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/nlpo-src
 BINARY_DIR ${CMAKE_BINARY_DIR}/repo/nlpo
+#CMAKE_ARGS 
 #CONFIGURE_COMMAND 
 #BUILD_COMMAND 
 #INSTALL_COMMAND 
-#CMAKE_ARGS 
 )
 endif()
 #==========================================

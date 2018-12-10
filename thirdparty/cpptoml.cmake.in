@@ -12,10 +12,10 @@ GIT_REPOSITORY https://github.com/skystrife/cpptoml.git
 #GIT_TAG 
 SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/cpptoml-src
 BINARY_DIR ${CMAKE_BINARY_DIR}/repo/cpptoml
+#CMAKE_ARGS 
 #CONFIGURE_COMMAND 
 #BUILD_COMMAND 
 #INSTALL_COMMAND 
-#CMAKE_ARGS 
 )
 endif()
 #==========================================
