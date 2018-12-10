@@ -1,4 +1,4 @@
-Cppm 
+Cppm [![Build Status](https://travis-ci.com/injae/cppm.svg?branch=master)](https://travis-ci.com/injae/cppm)
 ========
  C++ cmake project helper
 -------------------------------------
