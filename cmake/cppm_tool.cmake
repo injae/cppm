@@ -1,6 +1,6 @@
 macro(download_thirdparty name)
    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/${name}.cmake.in)
-      configure_file(thirdparty/${name}.cmake.in thirdparty/${name}/CMakeLists.txt)
+      configure_file(thirdparty/${name}.cmake.in ${CMAKE_BINARY_DIR}/thirdparty/${name}/CMakeLists.txt)
       execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name})
       execute_process(COMMAND cmake --build . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name} )
       add_subdirectory(${CMAKE_BINARY_DIR}/thirdparty/${name})
