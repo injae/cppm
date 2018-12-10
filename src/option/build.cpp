@@ -25,7 +25,7 @@ namespace cppm::option
             +            is_ninja
             +  " -DCMAKE_TOOLCHAIN_FILE=\"{0}\""_format(config.cppm_config.package.toolchains())
             +  " {0} {1}"_format(config.cmake.option, cmake_option) + " .. "
-            +  "&& sudo {0} {1} {2}"_format(config.cmake.builder, builder.option, build_option);
+            +  "&& {0} {1} {2}"_format(config.cmake.builder, builder.option, build_option);
     }
     
     Build::Build(Config& config) {
