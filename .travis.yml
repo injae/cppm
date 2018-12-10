@@ -1,0 +1,17 @@
+language: cpp
+sudo: required
+
+dist: xenial
+addons:
+  apt:
+    packages:
+      -libboost-all-dev
+compiler:
+  - clang
+  - gcc
+os:
+  - linux
+script:
+  - cmake -H. -Bbuild
+  - cd cmake && cmake --build . --target install
+  
