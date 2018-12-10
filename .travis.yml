@@ -1,7 +1,7 @@
 language: cpp
 os: linux
 dist: xenial
-sudo: false
+sudo: required
 addons:
   apt:
     packages:
@@ -12,6 +12,6 @@ compiler:
 os:
   - linux
 script:
-  - sudo cmake -H. -Bbuild
-  - cd build && sudo cmake --build . --target install
+  - sudo -E cmake -H. -Bbuild
+  - cd build && sudo -E cmake --build . --target install
   
