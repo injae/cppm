@@ -5,7 +5,6 @@ sudo: required
 cache:
     apt: true
     ccache: true
-        #- libstdc++-7-dev
   
 matrix:
   include:
@@ -14,16 +13,16 @@ matrix:
     #  addons: &defaults { apt: { packages: ["clang-6.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-xenial-6.0"] } }
 
     # Clang 7.0
-    - env: COMPILER=clang++-7.0
-      addons:  { apt: { packages: ["libboost-all-dev", "libc++-dev", "libc++abi-dev", "build-essential"], sources: ["ubuntu-toolchain-r-test"] } }
+    - env: MATRIX_EVAL="CXX=clang++-7.0"
+      addons:  { apt: { packages: ["libboost-all-dev", "libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-7-dev"], sources: ["ubuntu-toolchain-r-test"] } }
 
     ## GCC 6
     #- env: COMPILER=g++-6
     #  addons: { apt: { packages: ["g++-6", "valgrind"], sources: ["ubuntu-toolchain-r-test"] } }
 
     # GCC 7
-    - env: COMPILER=g++-7
-      addons: { apt: { packages: ["g++-7", "libboost-all-dev", "libc++-dev", "libc++abi-dev", "build-essential"], sources: ["ubuntu-toolchain-r/test"] } }
+    - env: MATRIX_EVAL="CXX=g++-7"
+      addons: { apt: { packages: ["g++-7", "libboost-all-dev", "libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-7-dev"], sources: ["ubuntu-toolchain-r-test"] } }
 
     # Xcode 6.4
     #- os: osx
@@ -40,6 +39,9 @@ matrix:
     ## Xcode 9.1
     #- os: osx
     #  osx_image: xcode9.1
+
+before_install:
+  - eval "${MATRIX_EVAL}"
 
 script:
   - sudo env "PATH=$PATH" cmake -H. -Bbuild
