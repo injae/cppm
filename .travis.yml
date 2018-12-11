@@ -5,16 +5,7 @@ sudo: required
 cache:
     apt: true
     ccache: true
-addons: &defaults
-    apt:
-        sources:
-        - ubuntu-toolchain-r-test
-        packages:
-        - libboost-all-dev
         #- libstdc++-7-dev
-        - libc++-dev
-        - libc++abi-dev
-        - build-essential
   
 matrix:
   include:
@@ -24,7 +15,7 @@ matrix:
 
     # Clang 7.0
     - env: COMPILER=clang++-7.0
-      addons:  { apt: { packages: ["clang-7.0", "valgrind"], sources: ["ubuntu-toolchain-r/test", "llvm-toolchain-xenial-7.0"] } }
+      addons:  { apt: { packages: ["clang-7.0", "libboost-all-dev", "libc++-dev", "libc++abi-dev", "build-essential"], sources: ["ubuntu-toolchain-r/test", "llvm-toolchain-xenial-7.0"] } }
 
     ## GCC 6
     #- env: COMPILER=g++-6
@@ -32,7 +23,7 @@ matrix:
 
     # GCC 7
     - env: COMPILER=g++-7
-      addons: { apt: { packages: ["g++-7", "valgrind"], sources: ["ubuntu-toolchain-r/test"] } }
+      addons: { apt: { packages: ["g++-7", "libboost-all-dev", "libc++-dev", "libc++abi-dev", "build-essential"], sources: ["ubuntu-toolchain-r/test"] } }
 
     # Xcode 6.4
     #- os: osx
