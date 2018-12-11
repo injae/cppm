@@ -1,29 +1,39 @@
 language: cpp
-os: linux
-dist: xenial
 sudo: required
 cache:
   apt: true
 addons:
-  apt:
+apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - libboost-all-dev
-      - libstdc++-7-dev
-      - libc++-dev
-      - libc++abi-dev
-      - build-essential
-      - g++-7
-      - gcc-7
+    - libboost-all-dev
+    - libstdc++-7-dev
+    - libc++-dev
+    - libc++abi-dev
+    - build-essential
 
-compiler:
-  - clang
-  - gcc
+matrix:
+  include:
+    - os: linux
+      dist: xenial
+      compiler: clang
+      
+    - os: linux
+      dist: xenial
+      compiler: gcc
+      addons:
+        apt:
+            packages:
+            - g++-7
+            - gcc-7
+      env:
+        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+
+before_install:
+  - eval "${MATRIX_EVAL}"
 
 script:
-  - sudo env "PATH=$PATH" sudo ln -s /usr/bin/gcc-7 /usr/local/bin/gcc
-  - sudo env "PATH=$PATH" sudo ln -s /usr/bin/g+c-7 /usr/local/bin/g++
   - sudo env "PATH=$PATH" cmake -H. -Bbuild
   - cd build && sudo env "PATH=$PATH" cmake --build . --target install
   
