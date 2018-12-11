@@ -37,7 +37,7 @@ namespace cppm::option
         config->insert("bin", bin_table);
 
         auto project = Path::make((fs::current_path()/name).string());
-        fs::fstream file; 
+        std::fstream file; 
         file.open(project.root + "/cppm.toml", std::ios::out);
         file << *config;
         file.close();
@@ -64,7 +64,7 @@ namespace cppm::option
         config->insert("lib", lib_table);
 
         auto project = Path::make((fs::current_path()/name).string());
-        fs::fstream file; 
+        std::fstream file; 
         file.open(project.root + "/cppm.toml", std::ios::out);
         file << *config;
         file.close();
