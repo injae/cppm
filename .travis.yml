@@ -85,11 +85,14 @@ matrix:
     #  osx_image: xcode9.1
 
 install:
-    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-    CMAKE_URL="https://cmake.org/files/v3.10/cmake-3.10.0-Linux-x86_64.tar.gz"
+    - |
+        if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+        CMAKE_URL="https://cmake.org/files/v3.10/cmake-3.10.0-Linux-x86_64.tar.gz"
         mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
         export PATH=${DEPS_DIR}/cmake/bin:${PATH}
-    fi
+        else
+        brew install cmake || brew upgrade cmake
+        fi
 
 script:
   - sudo env "PATH=$PATH" cmake -H. -Bbuild
