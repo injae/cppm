@@ -10,7 +10,7 @@ addons:
       - libboost-all-dev
       - libstdc++-7-dev
       - libc++-dev
-      - libc++-dev
+      - libc++abi-dev
       - build-essential
 compiler:
   - clang
