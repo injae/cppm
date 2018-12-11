@@ -2,29 +2,35 @@ language: cpp
 sudo: required
 cache:
   apt: true
-addons:
-apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - libboost-all-dev
-    - libstdc++-7-dev
-    - libc++-dev
-    - libc++abi-dev
-    - build-essential
 
 matrix:
   include:
     - os: linux
       dist: xenial
       compiler: clang
+        apt:
+            sources:
+            - ubuntu-toolchain-r-test
+            packages:
+            - libboost-all-dev
+            - libstdc++-7-dev
+            - libc++-dev
+            - libc++abi-dev
+            - build-essential
       
     - os: linux
       dist: xenial
       compiler: gcc
       addons:
         apt:
+            sources:
+            - ubuntu-toolchain-r-test
             packages:
+            - libboost-all-dev
+            - libstdc++-7-dev
+            - libc++-dev
+            - libc++abi-dev
+            - build-essential
             - g++-7
             - gcc-7
       env:
