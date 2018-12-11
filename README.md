@@ -2,6 +2,9 @@ Cppm [![Build Status](https://travis-ci.com/injae/cppm.svg?branch=master)](https
 ========
  C++ cmake project helper
 -------------------------------------
+## Other language README
+[Korean](./document/README-ko.md)
+
 ## description
 toml file convert CMakelists file
 
