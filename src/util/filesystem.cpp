@@ -63,7 +63,7 @@ namespace cppm::util
 
     void create(const std::string& path) {
         if(fs::exists(path)) return;
-        fs::fstream(path, std::ios::out).close();
+        std::fstream(path, std::ios::out).close();
     }
 
 }
