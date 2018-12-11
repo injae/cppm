@@ -10,7 +10,7 @@ like Rust Cargo
 
 ## Dependencies
 1. cmake-3.10.0
-2. c++-17-compiler
+2. c++-17-compiler (g++7 or clang7)
 3. boost
 4. nlpo
 5. cpptoml

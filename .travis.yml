@@ -2,6 +2,8 @@ language: cpp
 os: linux
 dist: xenial
 sudo: required
+cache:
+  apt: true
 addons:
   apt:
     sources:
@@ -18,8 +20,7 @@ addons:
 compiler:
   - clang
   - gcc
-os:
-  - linux
+
 script:
   - sudo env "PATH=$PATH" sudo ln -s /usr/bin/gcc-6 /usr/local/bin/gcc
   - sudo env "PATH=$PATH" sudo ln -s /usr/bin/g+c-6 /usr/local/bin/g++
