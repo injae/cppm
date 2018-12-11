@@ -25,32 +25,40 @@ matrix:
     # speed up Travis builds.
     ##########################################################################
     # Clang 3.5
-    - env: COMPILER=clang++-3.5 
-      addons: { apt: { packages: ["clang-3.5", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-precise-3.5"] } }
+    #- env: COMPILER=clang++-3.5 
+    #  addons: { apt: { packages: ["clang-3.5", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-precise-3.5"] } }
 
     # Clang 3.6
-    - env: COMPILER=clang++-3.6 
-      addons: { apt: { packages: ["clang-3.6", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-precise-3.6"] } }
+    #- env: COMPILER=clang++-3.6 
+    #  addons: { apt: { packages: ["clang-3.6", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-precise-3.6"] } }
 
     # Clang 3.7
-    - env: COMPILER=clang++-3.7
-      addons: { apt: { packages: ["clang-3.7", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-precise-3.7"] } }
+    #- env: COMPILER=clang++-3.7
+    #  addons: { apt: { packages: ["clang-3.7", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-precise-3.7"] } }
 
     # Clang 3.8
-    - env: COMPILER=clang++-3.8 
-      addons: { apt: { packages: ["clang-3.8", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-precise-3.8"] } }
+    #- env: COMPILER=clang++-3.8 
+    #  addons: { apt: { packages: ["clang-3.8", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-precise-3.8"] } }
 
     # Clang 3.9
-    - env: COMPILER=clang++-3.9 
-      addons: { apt: { packages: ["clang-3.9", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-3.9"] } }
+    #- env: COMPILER=clang++-3.9 
+    #  addons: { apt: { packages: ["clang-3.9", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-3.9"] } }
 
     # Clang 4.0
-    - env: COMPILER=clang++-4.0
-      addons: { apt: { packages: ["clang-4.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-4.0"] } }
+    #- env: COMPILER=clang++-4.0
+    #  addons: { apt: { packages: ["clang-4.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-4.0"] } }
 
     # Clang 5.0
-    - env: COMPILER=clang++-5.0
-      addons: &defaults { apt: { packages: ["clang-5.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-5.0"] } }
+    #- env: COMPILER=clang++-5.0
+    #  addons: &defaults { apt: { packages: ["clang-5.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-5.0"] } }
+
+    # Clang 6.0
+    - env: COMPILER=clang++-6.0
+      addons: &defaults { apt: { packages: ["clang-6.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-6.0"] } }
+
+    # Clang 7.0
+    - env: COMPILER=clang++-7.0
+      addons: &defaults { apt: { packages: ["clang-7.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-7.0"] } }
 
     # GCC 6
     - env: COMPILER=g++-6
@@ -61,20 +69,20 @@ matrix:
       addons: { apt: { packages: ["g++-7", "valgrind"], sources: ["ubuntu-toolchain-r-test"] } }
 
     # Xcode 6.4
-    - os: osx
-      osx_image: xcode6.4
+    #- os: osx
+    #  osx_image: xcode6.4
 
-    # Xcode 7.3
-    - os: osx
-      osx_image: xcode7.3
+    ## Xcode 7.3
+    #- os: osx
+    #  osx_image: xcode7.3
 
-    # Xcode 8.3
-    - os: osx
-      osx_image: xcode8.3
+    ## Xcode 8.3
+    #- os: osx
+    #  osx_image: xcode8.3
 
-    # Xcode 9.1
-    - os: osx
-      osx_image: xcode9.1
+    ## Xcode 9.1
+    #- os: osx
+    #  osx_image: xcode9.1
 
 install:
     if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
