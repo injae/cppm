@@ -1,12 +1,12 @@
-language: cpp
-sudo: required
-cache:
-  apt: true
 
 matrix:
   include:
     - os: linux
       dist: xenial
+      language: cpp
+      sudo: required
+      cache:
+        apt: true
       compiler: clang
         apt:
             sources:
@@ -20,6 +20,10 @@ matrix:
       
     - os: linux
       dist: xenial
+      language: cpp
+      sudo: required
+      cache:
+        apt: true
       compiler: gcc
       addons:
         apt:
