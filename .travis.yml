@@ -2,9 +2,6 @@ language: cpp
 os: linux
 dist: xenial
 sudo: required
-cache:
-    apt: true
-    ccache: true
   
 matrix:
   include:
@@ -16,6 +13,7 @@ matrix:
     - env: MATRIX_EVAL="CXX=clang++"
       compiler: clang
       addons:  { apt: { packages: ["libboost-all-dev", "libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-7-dev"], sources: ["ubuntu-toolchain-r-test"] } }
+      cache: {apt: true, ccache: true}
 
     ## GCC 6
     #- env: COMPILER=g++-6
@@ -24,6 +22,7 @@ matrix:
     # GCC 7
     - env: MATRIX_EVAL="CXX=g++-7"
       addons: { apt: { packages: ["g++-7", "libboost-all-dev", "libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-7-dev"], sources: ["ubuntu-toolchain-r-test"] } }
+      cache: {apt: true, ccache: true}
 
     # Xcode 6.4
     #- os: osx
