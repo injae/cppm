@@ -29,7 +29,7 @@ namespace cppm
         source->push_back(toolchain);
         config->insert("toolchains", source);
         table->insert("config", config);
-        fs::fstream file(config_path);
+        std::fstream file(config_path);
         file << *table;
         file.close();
     }
