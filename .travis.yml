@@ -11,7 +11,6 @@ matrix:
 
     # Clang 7.0
     - env: MATRIX_EVAL="CXX=clang++"
-      compiler: clang
       addons:  { apt: { packages: ["libboost-all-dev", "libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-7-dev"], sources: ["ubuntu-toolchain-r-test"] } }
       cache: {apt: true, ccache: true}
 
