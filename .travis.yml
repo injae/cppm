@@ -13,7 +13,8 @@ matrix:
     #  addons: &defaults { apt: { packages: ["clang-6.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-xenial-6.0"] } }
 
     # Clang 7.0
-    - env: MATRIX_EVAL="CXX=clang++-7"
+    - env: MATRIX_EVAL="CXX=clang++"
+      compiler: clang
       addons:  { apt: { packages: ["libboost-all-dev", "libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-7-dev"], sources: ["ubuntu-toolchain-r-test"] } }
 
     ## GCC 6
