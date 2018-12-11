@@ -1,17 +1,17 @@
 language: cpp
 os: linux
-dist: trusty
+dist: xenial
 sudo: required
 cache:
     apt: true
     ccache: true
-addons:
+addons: &defaults
     apt:
         sources:
         - ubuntu-toolchain-r-test
         packages:
         - libboost-all-dev
-        - libstdc++-7-dev
+        #- libstdc++-7-dev
         - libc++-dev
         - libc++abi-dev
         - build-essential
@@ -42,23 +42,23 @@ matrix:
 
     # Clang 3.9
     #- env: COMPILER=clang++-3.9 
-    #  addons: { apt: { packages: ["clang-3.9", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-3.9"] } }
+    #  addons: { apt: { packages: ["clang-3.9", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-xenial-3.9"] } }
 
     # Clang 4.0
     #- env: COMPILER=clang++-4.0
-    #  addons: { apt: { packages: ["clang-4.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-4.0"] } }
+    #  addons: { apt: { packages: ["clang-4.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-xenial-4.0"] } }
 
     # Clang 5.0
     #- env: COMPILER=clang++-5.0
-    #  addons: &defaults { apt: { packages: ["clang-5.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-5.0"] } }
+    #  addons: &defaults { apt: { packages: ["clang-5.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-xenial-5.0"] } }
 
-#    # Clang 6.0
-#    - env: COMPILER=clang++-6.0
-#      addons: &defaults { apt: { packages: ["clang-6.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-6.0"] } }
+    ## Clang 6.0
+    #- env: COMPILER=clang++-6.0
+    #  addons: &defaults { apt: { packages: ["clang-6.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-xenial-6.0"] } }
 
     # Clang 7.0
     - env: COMPILER=clang++-7.0
-      addons: &defaults { apt: { packages: ["clang-7.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-7.0"] } }
+      addons:  { apt: { packages: ["clang-7.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-xenial-7.0"] } }
 
     ## GCC 6
     #- env: COMPILER=g++-6
@@ -83,16 +83,6 @@ matrix:
     ## Xcode 9.1
     #- os: osx
     #  osx_image: xcode9.1
-
-install:
-    - |
-      if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-          CMAKE_URL="https://cmake.org/files/v3.10/cmake-3.10.0-Linux-x86_64.tar.gz"
-          mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
-          export PATH=${DEPS_DIR}/cmake/bin:${PATH}
-      else
-          brew install cmake || brew upgrade cmake
-      fi
 
 script:
   - sudo env "PATH=$PATH" cmake -H. -Bbuild
