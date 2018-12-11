@@ -49,6 +49,7 @@ install:
         mkdir cmake && travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
         export PATH=${DEPS_DIR}/cmake/bin:${PATH}
     fi
+
 script:
   - sudo env "PATH=$PATH" cmake -H. -Bbuild
   - cd build && sudo env "PATH=$PATH" cmake --build . --target install
