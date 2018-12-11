@@ -12,12 +12,17 @@ addons:
       - libc++-dev
       - libc++abi-dev
       - build-essential
+      - g++-7
+      - gcc-7
+
 compiler:
   - clang
   - gcc
 os:
   - linux
 script:
+  - sudo env "PATH=$PATH" sudo ln -s /usr/bin/gcc-6 /usr/local/bin/gcc
+  - sudo env "PATH=$PATH" sudo ln -s /usr/bin/g+c-6 /usr/local/bin/g++
   - sudo env "PATH=$PATH" cmake -H. -Bbuild
   - cd build && sudo env "PATH=$PATH" cmake --build . --target install
   
