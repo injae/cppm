@@ -12,20 +12,12 @@ namespace cppm::option
     std::string CommandBuilder::build(Config& config)
     {
         using namespace fmt::literals;
-        auto builder  = config.builder.list[config.cmake.builder];
-        auto compiler = config.compiler.list[config.cmake.compiler];
-        
-        auto is_ninja = builder.name == "ninja" ? " -G Ninja" : " ";
-        auto comp_opt = compiler.name != "none" ?
-                        " -DCMAKE_CXX_COMPILER={0}"_format(compiler.name) : " ";
 
         return "  cd {0} "_format(config.path.build)
             +  "&& cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON"
-            +            comp_opt
-            +            is_ninja
             +  " -DCMAKE_TOOLCHAIN_FILE=\"{0}\""_format(config.cppm_config.package.toolchains())
             +  " {0} {1}"_format(config.cmake.option, cmake_option) + " .. "
-            +  "&& {0} {1} {2}"_format(config.cmake.builder, builder.option, build_option);
+            +  "&& cmake --build . -- {0}"_format(build_option);
     }
     
     Build::Build(Config& config) {
@@ -49,6 +41,34 @@ namespace cppm::option
                     util::write(file, package.generate());
                 }
                 app_.args().clear();
+            });
+        app_.add_option("ninja")
+            .abbr("n")
+            .desc("ninja use to build ")
+            .call_back([&, cmd = cmd_](){
+                cmd->cmake_option += " -G Ninja ";
+                app_.call_default();
+            });
+        app_.add_option("make")
+            .abbr("m")
+            .desc("Unix make use to build ")
+            .call_back([&, cmd = cmd_](){
+                cmd->cmake_option += " -G \"Unix Makefiles\" ";
+                app_.call_default();
+            });
+        app_.add_option("gcc")
+            .abbr("g")
+            .desc("g++ use to compile ")
+            .call_back([&, cmd = cmd_](){
+                cmd->cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("g++");
+                app_.call_default();
+            });
+        app_.add_option("clang")
+            .abbr("c")
+            .desc("clang++ use to compile ")
+            .call_back([&, cmd = cmd_](){
+                cmd->cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("clang++");
+                app_.call_default();
             });
         app_.add_option("release")
             .abbr("r")

@@ -1,9 +1,11 @@
-Cppm [![Build Status](https://travis-ci.com/injae/cppm.svg?branch=master)](https://travis-ci.com/injae/cppm)
+Cppm 
+[![Build Status](https://travis-ci.com/injae/cppm.svg?branch=master)](https://travis-ci.com/injae/cppm) 
+[![HitCount](http://hits.dwyl.io/injae/injae/cppm.svg)](http://hits.dwyl.io/injae/injae/cppm)
 ========
  C++ cmake project helper
 -------------------------------------
 ## Other language README
-[Korean](./document/README-ko.md)
+[한국어](./document/README-ko.md)
 
 ## description
 toml file convert CMakelists file
@@ -66,8 +68,6 @@ ccache auto use
 [cmake]
 version  = "3.10"    # cmake minimum version
 option   = ""        # cmake options
-builder  = "ninja"   # cppm use builder name, default make
-compiler = "clang++" # cppm use compiler name, default g++
 ```
 
 ### compiler
@@ -76,12 +76,6 @@ compiler option setting
 [compiler]
 clang++ = {option = "-std=c++17" ## compiler options
           ,version = "7.0"}      ## compiler minimum version
-```
-### builder
-builder option setting
-```
-[builder]
-ninja = {option = "-j4"}
 ```
 ### bin
 make binary 

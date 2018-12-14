@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(cppm LANGUAGES CXX VERSION 0.1.2)
+project(cppm LANGUAGES CXX VERSION 0.1.3)
 
 message(STATUS "We are on a ${CMAKE_SYSTEM_NAME} system")
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
@@ -30,7 +30,6 @@ endif()
 
 include(${MODULE_PATH}/cppm_tool.cmake)
 
-include(cmake/cppm_install.cmake)
 set(thirdparty)
 download_thirdparty(nlpo)
 find_package(nlpo   REQUIRED)
