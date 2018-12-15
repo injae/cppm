@@ -14,6 +14,7 @@ namespace cppm
         for(const auto& bin_table : *table_array) {
             Bin bin;
             bin.name = *bin_table->get_as<std::string>("name");
+            bin.install = bin_table->get_as<bool>("install").value_or(true);
             auto source = bin_table->get_array_of<std::string>("source");
             if(source) for(const auto& src : *source) {bin.sources.push_back(src);} 
             list.emplace_back(std::move(bin));
@@ -23,6 +24,7 @@ namespace cppm
     std::string Bins::generate(Config& config) {
         using namespace fmt::literals;
         using namespace util::cmake;
+
         std::string gen;
         for(const auto& bin : list) {
             std::vector<std::string> sources;
@@ -33,7 +35,7 @@ namespace cppm
             gen += "add_executable({0} \"\")\n"_format(bin.name);
             gen += "target_sources({0}\n\tPRIVATE {1}\n)\n"_format(bin.name, util::accumulate(sources, "\n\t"));
             gen += "target_link_libraries({0} PUBLIC {1})"_format(bin.name , var("thirdparty"));
-            gen += "\n\ntarget_install({0} {1})\n"_format(bin.name, "BINARY");
+            gen += "\n\ntarget_install({0} {1} {2})\n"_format(bin.name, "BINARY", bin.install ? "TRUE":"FALSE");
             //gen += "\n\nbuild_binary({0} \"{1}\")"_format(bin.name , var("thirdparty"));
         }
         return gen;

@@ -1,5 +1,8 @@
 Cppm [![Build Status](https://travis-ci.com/injae/cppm.svg?branch=master)](https://travis-ci.com/injae/cppm)
 ========
+|Linux|Windows|
+|[![Build Status](https://travis-ci.com/injae/cppm.svg?branch=master)](https://travis-ci.com/injae/cppm)||
+
  C++ Cmake Project Helper
 -------------------------------------
 ## 설명
@@ -38,9 +41,15 @@ sudo cmake --build . --target install
 ### cppm option과 command들
 1. cppm build
 cppm.toml을 바탕으로 c++ cmake 프로젝트를 빌드합니다.
+옵션을 줘서 컴파일러와 빌더를 변경할수있습니다.
+-c clang 컴파일러 사용
+-n ninja 빌더 사용
+-m make 빌더 사용 (default)
+-g gcc 컴파일러 사용 (default)
+
 2. cppm init
 cppm 프로젝트를 생성합니다.
-make c++ cmake project
+
 3. cppm add toolchain {args}
 이 커맨드는 Cmake 툴체인을 추가할때 사용합니다.
 -DCMAKE_TOOLCHAIN_FILE={args}
@@ -66,8 +75,6 @@ ccache는 자동으로 감지해서 설치가 되어있으면 알아서 사용�
 [cmake]
 version  = "3.10"    # cmake 최소 버전 CPPM은 최소 3.10.0이 필요합니다. 이유는 Vcpkg가 3.10.0 부터 지원하기 때문에 사용의 편리함을 위해 기본을 3.10.0으로 설정했습니다.
 option   = ""        # 빌드할 때 사용할 CMake 옵션입니다. 예시 -DCMAKE_TOOLCHAIN_FILE=xxx 를 넣으면 cmake -DCMAKE_TOOLCHAIN_FILE=xxx 와 같은 결과가 발생됩니다.
-builder  = "ninja"   # cppm이 빌드할 때 사용하는 Builder를 설정합니다. make 혹은 ninja가 사용가능합니다. 기본은 make입니다.
-compiler = "clang++" # cppm이 빌드할 때 사용하는 Compiler를 설정합니다. g++ 혹은 clang++를 사용합니다.  기본은 g++입니다.
 ```
 
 ### compiler
@@ -78,14 +85,9 @@ compiler = "clang++" # cppm이 빌드할 때 사용하는 Compiler를 설정합�
 clang++ = {option = "-std=c++17" ## compiler options
           ,version = "7.0"}      ## compiler minimum version
 ```
-### builder
-builder option setting
-```
-[builder]
-ninja = {option = "-j4"}
-```
 ### bin
-make binary 
+Binary 프로젝트 설정
+여러개를 설정가능합니다.
 ```
 [[bin]]
 name   = "cppm" # bin name
@@ -96,7 +98,8 @@ source = ["src/.*"] # source files
 ```
 
 ### lib
-make library
+Library 프로젝트 설정
+여러개를 설정가능합니다.
 ```
 [[lib]]
 name   = "nlpo"   # lib name
@@ -104,11 +107,19 @@ type   = "static" # lib type , static or shared or header-only
 source = ["src/.*"] # source files 
 ```
 ### dependencies
-add thirdparty library dependencies
+프로젝트의 Dependencies 설정
+각각 인자는 아래와 같이 변환됩니다.
+{0} = {cmake = {1}, version = {2} components = {3}} == find_package({0} {2} components = {2})
+target_link_libraries("project" PUBLIC {0})
+이렇게 변환 됩니다.
+cmake 인자는 필수인자입니다.
+만약 cmake인자에 들어갈 값을 못찾으면
+/usr/local/lib/cmake/cpptoml/ 에서 라이브러리 이름을 찾아 
+{0}config.cmake나 {0}target.cmaked에서 찾으시면 됩니다.
 ```
 [dependencies]
-cpptoml = {cmake = "cpptoml"} # cmake option is library name in cmake
-Boost   = {cmake = " ${Boost_LIBRARIES}", components="system filesystem"} # components cmake library components
+cpptoml = {cmake = "cpptoml"}
+Boost   = {cmake = " ${Boost_LIBRARIES}", components="system filesystem"}
 fmt     = {cmake = "fmt::fmt"}
 nlpo    = {cmake = "nlpo::nlpo}"
 ```

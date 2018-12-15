@@ -15,6 +15,7 @@ namespace cppm
             Lib lib;
             lib.name = *lib_table->get_as<std::string>("name");
             lib.type = *lib_table->get_as<std::string>("type");
+            lib.install = lib_table->get_as<bool>("type").value_or(true);
             auto source = lib_table->get_array_of<std::string>("source");
             if(source) for(const auto& src : *source) {lib.sources.push_back(src);} 
             list.emplace_back(std::move(lib));
@@ -43,7 +44,7 @@ namespace cppm
                 gen += "set_target_properties({0} PROPERTIES LINKER_LANGUAGE CXX)\n"_format(lib.name);
             }
             gen += "target_link_libraries({0} PUBLIC {1})"_format(lib.name , var("thirdparty"));
-            gen += "\n\ntarget_install({0} {1})\n"_format(lib.name, lib_type(lib.type));
+            gen += "\n\ntarget_install({0} {1} {2})\n"_format(lib.name, lib.type, lib.install ? "TRUE" : "FALSE");
         }
         return gen;
     }

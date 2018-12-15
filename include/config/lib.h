@@ -12,6 +12,7 @@ namespace cppm
     {
         std::string name;
         std::string type;
+        bool install;
         std::vector<std::string> sources;
     };
 

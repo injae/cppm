@@ -11,6 +11,7 @@ namespace cppm
     struct Bin 
     {
         std::string name;
+        bool install;
         std::vector<std::string> sources;
     };
 

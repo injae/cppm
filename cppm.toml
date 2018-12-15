@@ -15,6 +15,7 @@ g++     = {option = "-std=c++17 -Wall -pthread -fPIC -O0 -g", version = "7.0"}
 [[bin]]
 name   = "cppm"
 source = ["src/.*"]
+install = false
 
 [dependencies]
 cpptoml = {cmake = "cpptoml"}

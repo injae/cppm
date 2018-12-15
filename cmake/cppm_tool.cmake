@@ -17,7 +17,8 @@ function(library_var_maker name)
     endif()
 endfunction()
 
-function(target_install name type)
+
+function(target_include name type)
     library_var_maker(${name})
     if(${type} MATCHES "BINARY")
         target_include_directories(${name}
@@ -42,7 +43,34 @@ function(target_install name type)
     else()
         message(FATAL_ERROR "Wrong Type Need SHARED or STATIC or INTERFACE or BINARY")   
     endif()
-    if(${type} MATCHES "INTERFACE" OR ${type} MATCHES "SHARED" OR ${type} MATCHES "STATIC")
+endfunction()
+
+function(target_install name type install)
+    library_var_maker(${name})
+    if(${type} MATCHES "BINARY")
+        target_include_directories(${name}
+            PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include
+            PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+        )
+        install(TARGETS ${name} RUNTIME DESTINATION bin)
+    elseif(${type} MATCHES "STATIC" OR ${type} MATCHES "SHARED")
+        target_include_directories(${name}
+            PUBLIC
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_include_dir}>
+                $<INSTALL_INTERFACE:include>
+            PRIVATE
+                ${CMAKE_CURRENT_SOURCE_DIR}/${lib_source_dir}
+        )
+    elseif(${type} MATCHES "INTERFACE") # SAME HEADER_ONLY
+        target_include_directories(${name}
+            INTERFACE
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_include_dir}>
+                $<INSTALL_INTERFACE:include>
+        )
+    else()
+        message(FATAL_ERROR "Wrong Type Need SHARED or STATIC or INTERFACE or BINARY")   
+    endif()
+    if(${type} MATCHES "INTERFACE" OR ${type} MATCHES "SHARED" OR ${type} MATCHES "STATIC" AND ${install} MATCHES "TRUE")
         install(TARGETS ${name} EXPORT ${PROJECT_NAME}-targets
             ARCHIVE DESTINATION lib 
             LIBRARY DESTINATION lib

@@ -30,6 +30,7 @@ endif()
 
 include(${MODULE_PATH}/cppm_tool.cmake)
 
+include(cmake/cppm_install.cmake)
 set(thirdparty)
 download_thirdparty(nlpo)
 find_package(nlpo   REQUIRED)
@@ -77,5 +78,5 @@ target_sources(cppm
 )
 target_link_libraries(cppm PUBLIC ${thirdparty})
 
-target_install(cppm BINARY)
+target_install(cppm BINARY FALSE)
 
