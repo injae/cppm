@@ -1,7 +1,10 @@
 Cppm 
-[![Build Status](https://travis-ci.com/injae/cppm.svg?branch=master)](https://travis-ci.com/injae/cppm) 
 [![HitCount](http://hits.dwyl.io/injae/injae/cppm.svg)](http://hits.dwyl.io/injae/injae/cppm)
 ========
+|Linux|Windows|
+|-----|-------|
+|[![Build Status](https://travis-ci.com/injae/cppm.svg?branch=master)](https://travis-ci.com/injae/cppm)|Working|
+-------------------------------------
  C++ cmake project helper
 -------------------------------------
 ## Other language README
@@ -83,9 +86,11 @@ make binary
 [[bin]]
 name   = "cppm" # bin name
 source = ["src/.*"] # source files
+install = # true and false (default => true)
 [[bin]]
 name   = "tbin" # bin name
 source = ["src/.*"] # source files
+install = # true and false (default => true)
 ```
 
 ### lib
@@ -94,6 +99,7 @@ make library
 [[lib]]
 name   = "nlpo"   # lib name
 type   = "static" # lib type , static or shared or header-only
+install = # true and false (default => true)
 source = ["src/.*"] # source files 
 ```
 ### dependencies

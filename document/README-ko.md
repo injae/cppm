@@ -1,9 +1,10 @@
 Cppm 
+[![HitCount](http://hits.dwyl.io/injae/injae/cppm.svg)](http://hits.dwyl.io/injae/injae/cppm)
 ========
 |Linux|Windows|
 |-----|-------|
 |[![Build Status](https://travis-ci.com/injae/cppm.svg?branch=master)](https://travis-ci.com/injae/cppm)|Working|
-
+-------------------------------------
  C++ Cmake Project Helper
 -------------------------------------
 ## 설명
@@ -40,7 +41,7 @@ sudo cmake --build . --target install
 
 ## Document
 ### cppm option과 command들
-1. cppm build
+1. cppm build {0}
 cppm.toml을 바탕으로 c++ cmake 프로젝트를 빌드합니다.
 옵션을 줘서 컴파일러와 빌더를 변경할수있습니다.
 -c clang 컴파일러 사용
@@ -48,8 +49,18 @@ cppm.toml을 바탕으로 c++ cmake 프로젝트를 빌드합니다.
 -m make 빌더 사용 (default)
 -g gcc 컴파일러 사용 (default)
 
+{0}에 들어가는 인자들은 make나 ninja에서 사용하는 인자들입니다.
+만약 프로젝트를 sudo make install 같이 쓰고 싶으면 
+sudo cppm build install 같이 사용하시면 됩니다.
+
+cppm build -D {라이브러리이름}
+ 이 옵션은 thirdparty/에 존재하는 {라이브러리이름}.toml을 cppm package install에서 쓸수있게 cmake파일로 transcompile하는 명령어입니다. 예제는 thirdparty/를 보시면 있습니다. 
+만약 파일이름이 Boost.toml이면 cppm build -D Boost이렇게 하시면 Boost.cmake.in 파일이 생성이 됩니다.
+
 2. cppm init
 cppm 프로젝트를 생성합니다.
+   -b binary 프로젝트 생성
+   -l library 프로젝트 생성
 
 3. cppm add toolchain {args}
 이 커맨드는 Cmake 툴체인을 추가할때 사용합니다.
@@ -93,8 +104,10 @@ Binary 프로젝트 설정
 [[bin]]
 name   = "cppm" # bin name
 source = ["src/.*"] # source files
+install = # true and false (default => true) 이 설정을 false로 할경우 install할때 설치가 되지않습니다. 빌드 디렉토리에만 설치가 됩니다.
 [[bin]]
 name   = "tbin" # bin name
+install = # true and false (default => true)
 source = ["src/.*"] # source files
 ```
 
@@ -105,6 +118,7 @@ Library 프로젝트 설정
 [[lib]]
 name   = "nlpo"   # lib name
 type   = "static" # lib type , static or shared or header-only
+install = # true and false (default => true)
 source = ["src/.*"] # source files 
 ```
 ### dependencies
