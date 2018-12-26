@@ -28,7 +28,7 @@ if(CCACHE_EXE)
     message("--- use ccache")
 endif()
 
-list(APPEND CMAKE_TOOLCHAIN_FILE "$ENV{HOME}/.cppm/local")
+list(APPEND CMAKE_TOOLCHAIN_FILE "$ENV{HOME}/.cppm/local/lib/cmake")
 include(${MODULE_PATH}/cppm_tool.cmake)
 
 include(cmake/cppm_install.cmake)
