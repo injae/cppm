@@ -51,17 +51,17 @@ namespace cppm::option
             .abbr("n")
             .desc("ninja use to build this option remove build directory")
             .call_back([&, cmd = cmd_](){
+                fs::remove_all(config.path.build);
                 cmd->cmake_option += " -G Ninja ";
                 app_.call_default();
-                fs::remove_all(config.path.build);
             });
         app_.add_option("make")
             .abbr("m")
             .desc("Unix make use to build this option remove build directory")
             .call_back([&, cmd = cmd_](){
+                fs::remove_all(config.path.build);
                 cmd->cmake_option += " -G \"Unix Makefiles\" ";
                 app_.call_default();
-                fs::remove_all(config.path.build);
             });
         app_.add_option("gcc")
             .abbr("g")
@@ -97,6 +97,7 @@ namespace cppm::option
         app_.add_command()
             .desc("Build command")
             .call_back([&, cmd_, none_tc](){
+                fs::create_directories(config.path.build);
                 if(!*none_tc) {
                     cmakelist_build(config);
                     fs::copy_file((std::string(std::getenv("HOME")))+"/.cppm/cmake/cppm_tool.cmake"

@@ -1,6 +1,8 @@
 [package]
     name     = "Boost"
+    version  = "1.65.1"
     target   = "linux" # or windows or xcode
     cmake    = {name = "${Boost_LIBRARIES}", components="system filesystem"}
-    download = {url="https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz"}
+    download = {url="https://dl.bintray.com/boostorg/release/1.65.1/source/boost_1_65_1.tar.gz"}
     build    = {config="./bootstrap.sh && ./b2 install"}
+    header   = "set(Boost_USE_STATIC_LIBS ON)"

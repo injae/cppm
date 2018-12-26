@@ -9,8 +9,8 @@ include  = ["cmake/cppm_install.cmake"]
 #option   = "-DCMAKE_INSTALL_PREFIX=/usr/local"
 
 [compiler] 
-clang++ = {option = "-std=c++17 -Wall -pthread -fPIC -O0 -g", version = "7.0"}
-g++     = {option = "-std=c++17 -Wall -pthread -fPIC -O0 -g", version = "7.0"}
+clang++ = {option = "-std=c++17 -Wall -pthread -fPIC -O0 -g ", version = "7.0"}
+g++     = {option = "-std=c++17 -Wall -pthread -fPIC -O0 -g ", version = "7.0"}
 
 [[bin]]
 name   = "cppm"
@@ -18,7 +18,7 @@ source = ["src/.*"]
 install = false
 
 [dependencies]
-cpptoml = {cmake = "cpptoml"}
-Boost   = {cmake = "${Boost_LIBRARIES}", components="system filesystem"}
-fmt     = {cmake = "fmt::fmt"}
-nlpo    = {cmake = "nlpo::nlpo"}
+cpptoml = {module = "cpptoml"}
+Boost   = {module = "${Boost_LIBRARIES}", version ="1.65.1", components="system filesystem"}
+fmt     = {module = "fmt::fmt"}
+nlpo    = {module = "nlpo::nlpo"}

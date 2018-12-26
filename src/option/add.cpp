@@ -12,7 +12,7 @@ namespace cppm::option
             .desc("add cmake toolchain #example# cppm add toolchains {toolchain_path}... ")
             .call_back([&](){ this->toolchain(); });
         app_.add_command("dep")
-            .desc("add cmake toolchain #example# cppm add toolchains {toolchain_path}... ")
+            .desc("add dependeny {dependency_names}... ")
             .call_back([&](){ this->dependencies(config); });
     }
 

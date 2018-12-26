@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
-project(nlpo-install NONE)
+project(nlpo--install NONE)
 
 #==========================================
-find_package(nlpo QUIET)
-if(NOT nlpo_FOUND)
+#Header#==========================================
+find_package(nlpo  QUIET)
+if(NOT nlpo_FOUND AND NOT nlpo_FIND_VERSION_EXACT)
 include(ExternalProject)
 ExternalProject_Add(
 nlpo
@@ -11,7 +12,7 @@ nlpo
 GIT_REPOSITORY https://github.com/injae/nlpo.git
 #GIT_TAG 
 SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/nlpo
-#CMAKE_ARGS 
+CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local 
 #CONFIGURE_COMMAND 
 #BUILD_COMMAND 
 #INSTALL_COMMAND 
@@ -19,4 +20,5 @@ BUILD_IN_SOURCE true
 )
 endif()
 #==========================================
+#Footer#==========================================
 

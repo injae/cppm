@@ -2,6 +2,7 @@
 #define __CPPM_PACKAGE_PACKAGE_H__
 
 #include "config/base_config.h"
+#include "config/config.h"
 #include <string>
 
 namespace cppm::package
@@ -37,10 +38,13 @@ namespace cppm::package
     public:
         void parse(table_ptr table);
         std::string generate();
+        void add_dependency(Config& config);
     public:
         std::string name;
         std::string version;
         std::string target;
+        std::string header;
+        std::string footer;
         download_ download;
         cmake_ cmake;
         build_ build;

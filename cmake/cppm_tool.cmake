@@ -1,11 +1,11 @@
 
-macro(download_thirdparty name)
-   find_package(${name} QUIET)
-   if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/${name}.cmake.in AND NOT ${name}_FOUND)
+macro(download_thirdparty name version)
+   #find_package(${name} ${version} QUIET)
+   if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/${name}.cmake.in)#AND NOT ${name}_FOUND AND NOT ${name}_FIND_VERSION_EXACT)
       configure_file(thirdparty/${name}.cmake.in ${CMAKE_BINARY_DIR}/thirdparty/${name}/CMakeLists.txt)
+      message($ENV{HOME})
       execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name})
-      execute_process(COMMAND cmake --build . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name} )
-      add_subdirectory(${CMAKE_BINARY_DIR}/thirdparty/${name})
+      execute_process(COMMAND cmake  --build . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name} )
    endif()
 endmacro()
 
@@ -18,7 +18,6 @@ function(library_var_maker name)
         set(lib_source_dir  "src/${name}" PARENT_SCOPE)
     endif()
 endfunction()
-
 
 function(target_include name type)
     library_var_maker(${name})

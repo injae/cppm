@@ -1,18 +1,18 @@
 cmake_minimum_required(VERSION 3.10)
-project(Boost-install NONE)
+project(Boost-1.65.1-install NONE)
 
-set(Boost_USE_STATIC_LIBS ON)
 #==========================================
-find_package(Boost QUIET)
-if(NOT Boost_FOUND)
+#Header#==========================================
+find_package(Boost 1.65.1 QUIET)
+if(NOT Boost_FOUND AND NOT Boost_FIND_VERSION_EXACT)
 include(ExternalProject)
 ExternalProject_Add(
 Boost
-URL https://dl.bintray.com/boostorg/release/1.68.0/source/boost_1_68_0.tar.gz
+URL https://dl.bintray.com/boostorg/release/1.65.1/source/boost_1_65_1.tar.gz
 #GIT_REPOSITORY 
 #GIT_TAG 
 SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/Boost
-#CMAKE_ARGS 
+#CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local 
 CONFIGURE_COMMAND ./bootstrap.sh && ./b2 install
 #BUILD_COMMAND 
 #INSTALL_COMMAND 
@@ -20,4 +20,5 @@ BUILD_IN_SOURCE true
 )
 endif()
 #==========================================
+#Footer#==========================================
 

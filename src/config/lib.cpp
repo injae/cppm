@@ -44,7 +44,7 @@ namespace cppm
                 gen += "set_target_properties({0} PROPERTIES LINKER_LANGUAGE CXX)\n"_format(lib.name);
             }
             gen += "target_link_libraries({0} PUBLIC {1})"_format(lib.name , var("thirdparty"));
-            gen += "\n\ntarget_install({0} {1} {2})\n"_format(lib.name, lib.type, lib.install ? "TRUE" : "FALSE");
+            gen += "\n\ntarget_install({0} {1} {2})\n"_format(lib.name, lib_type(lib.type), lib.install ? "TRUE" : "FALSE");
         }
         return gen;
     }

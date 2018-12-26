@@ -8,10 +8,12 @@ namespace cppm
 {
     struct Dependency
     {
+        using table_ptr = std::shared_ptr<cpptoml::table>;
         std::string name;
         std::string cmake_name;
         std::string version;
         std::string components;
+        void insert(table_ptr table);
     };
 
     class Dependencies : public base_config

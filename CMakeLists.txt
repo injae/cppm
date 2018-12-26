@@ -18,9 +18,9 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
 set(MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -pthread -fPIC -O0 -g") 
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -pthread -fPIC -O0 -g ") 
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")  
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -pthread -fPIC -O0 -g") 
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -pthread -fPIC -O0 -g ") 
 endif()
 find_program(CCACHE_EXE ccache)
 if(CCACHE_EXE)
@@ -28,24 +28,25 @@ if(CCACHE_EXE)
     message("--- use ccache")
 endif()
 
+list(APPEND CMAKE_TOOLCHAIN_FILE "$ENV{HOME}/.cppm/local")
 include(${MODULE_PATH}/cppm_tool.cmake)
 
 include(cmake/cppm_install.cmake)
 set(thirdparty)
-download_thirdparty(nlpo)
+download_thirdparty(nlpo "")
 find_package(nlpo   REQUIRED)
 list(APPEND thirdparty nlpo::nlpo)
 
-download_thirdparty(fmt)
+download_thirdparty(fmt "")
 find_package(fmt   REQUIRED)
 list(APPEND thirdparty fmt::fmt)
 
-download_thirdparty(cpptoml)
+download_thirdparty(cpptoml "")
 find_package(cpptoml   REQUIRED)
 list(APPEND thirdparty cpptoml)
 
-download_thirdparty(Boost)
-find_package(Boost  COMPONENTS system filesystem REQUIRED)
+download_thirdparty(Boost "1.65.1")
+find_package(Boost 1.65.1 COMPONENTS system filesystem REQUIRED)
 list(APPEND thirdparty ${Boost_LIBRARIES})
 
 

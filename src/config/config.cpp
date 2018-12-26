@@ -48,6 +48,7 @@ namespace cppm
              + "\n"
              + compiler.generate()
              + "\n"
+             + "list(APPEND CMAKE_TOOLCHAIN_FILE \"$ENV{HOME}/.cppm/local\")\n"
              + "include(${MODULE_PATH}/cppm_tool.cmake)\n"
              + cmake.generate()
              + "set(thirdparty)\n"
