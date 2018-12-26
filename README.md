@@ -106,9 +106,9 @@ source = ["src/.*"] # source files
 add thirdparty library dependencies
 ```
 [dependencies]
-cpptoml = {cmake = "cpptoml"} # cmake option is library name in cmake
-Boost   = {cmake = " ${Boost_LIBRARIES}", components="system filesystem"} # components cmake library components
-fmt     = {cmake = "fmt::fmt"}
-nlpo    = {cmake = "nlpo::nlpo}"
+cpptoml = {module = "cpptoml"} # cmake option is library name in cmake
+Boost   = {module = " ${Boost_LIBRARIES}", components="system filesystem"} # components cmake library components
+fmt     = {module = "fmt::fmt"}
+nlpo    = {module = "nlpo::nlpo}"
 ```
 

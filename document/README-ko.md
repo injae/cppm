@@ -123,19 +123,19 @@ install = # true and false (default => true)
 source = ["src/.*"] # source files 
 ```
 ### dependencies
-프로젝트의 Dependencies 설정
+프로젝트의 Dependencies 설정  
 각각 인자는 아래와 같이 변환됩니다.  
-{0} = {cmake = {1}, version = {2} components = {3}} == find_package({0} {2} components = {2})  
+{0} = {module = {1}, version = {2} components = {3}} == find_package({0} {2} components = {2})  
 target_link_libraries("project" PUBLIC {0})  
 이렇게 변환 됩니다.  
-cmake 인자는 필수인자입니다.  
-만약 cmake인자에 들어갈 값을 못찾으면  
-/usr/local/lib/cmake/cpptoml/ 에서 라이브러리 이름을 찾아   
+module 인자는 필수인자입니다.  
+만약 module인자에 들어갈 값을 못찾으면  
+/usr/local/lib/cmake/{0}/ or ~/.cppm/local/cmake/{0} 에서 라이브러리 이름을 찾아   
 {0}config.cmake나 {0}target.cmaked에서 찾으시면 됩니다.  
 ```
 [dependencies]
-cpptoml = {cmake = "cpptoml"}
-Boost   = {cmake = " ${Boost_LIBRARIES}", components="system filesystem"}
-fmt     = {cmake = "fmt::fmt"}
-nlpo    = {cmake = "nlpo::nlpo}"
+cpptoml = {module = "cpptoml"}
+Boost   = {module = " ${Boost_LIBRARIES}", components="system filesystem"}
+fmt     = {module = "fmt::fmt"}
+nlpo    = {module = "nlpo::nlpo}"
 ```
