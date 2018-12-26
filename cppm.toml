@@ -19,6 +19,6 @@ install = false
 
 [dependencies]
 cpptoml = {module = "cpptoml"}
-Boost   = {module = "${Boost_LIBRARIES}", version ="1.65.1", components="system filesystem"}
+Boost   = {module = "${Boost_LIBRARIES}", components="system filesystem"}
 fmt     = {module = "fmt::fmt"}
 nlpo    = {module = "nlpo::nlpo"}

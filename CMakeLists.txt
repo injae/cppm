@@ -29,7 +29,6 @@ if(CCACHE_EXE)
 endif()
 
 list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/.cppm/local/lib/cmake")
-message(:${CMAKE_PREFIX_PATH})
 include(${MODULE_PATH}/cppm_tool.cmake)
 
 include(cmake/cppm_install.cmake)
@@ -46,9 +45,11 @@ download_thirdparty(cpptoml "")
 find_package(cpptoml   REQUIRED)
 list(APPEND thirdparty cpptoml)
 
-download_thirdparty(Boost "1.65.1")
-find_package(Boost 1.65.1 COMPONENTS system filesystem REQUIRED)
+download_thirdparty(Boost "")
+find_package(Boost  COMPONENTS system filesystem REQUIRED)
 list(APPEND thirdparty ${Boost_LIBRARIES})
+
+
 
 add_executable(cppm "")
 target_sources(cppm
