@@ -1,8 +1,10 @@
 #include "option/init.h"
 #include "util/filesystem.h"
+#include "package/package.h"
 #include "config/path.h"
 #include <iostream>
 #include <cstdlib>
+#include <fmt/format.h>
 
 namespace cppm::option
 {
@@ -19,6 +21,15 @@ namespace cppm::option
             .abbr("l")
             .desc("initialize new c++ library project")
             .call_back([&](){ this->make_lib(); });
+        app_.add_option("dep")
+            .abbr("d")
+            .desc("initialize cppm dependency project")
+            .call_back([&](){ this->make_dep(); });
+    }
+
+    void Init::make_dep() {
+        if(app_.args().size() > 1) { fmt::print(stderr, "too many argument"); exit(1); }
+        package::cppkg::init(app_.get_arg());
     }
 
     void Init::make_bin() {

@@ -1,7 +1,0 @@
-[package]
-    name     = "cpptoml"
-#    version  = "lastest"
-    target   = "linux" # or windows or xcode
-    cmake    = {name = "cpptoml"}
-    download = {git="https://github.com/skystrife/cpptoml.git"}
-#   build    = {config = "", build = "", install = ""}

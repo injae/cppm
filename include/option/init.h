@@ -15,6 +15,7 @@ namespace cppm::option
     private:
         void make_bin();
         void make_lib();
+        void make_dep();
         std::shared_ptr<cpptoml::table> make_project();
     };
 }

@@ -17,9 +17,11 @@ namespace cppm::option
     class Build : public base_option
     {
     public:
-        Build(Config& config);
+        Build();
     private:
-        void cmakelist_build(Config& config);
+        void cmakelist_build();
+        void dep();
+        void dependency_check();
     };
 }
 

@@ -2,24 +2,42 @@ cmake_minimum_required(VERSION 3.10)
 project(cpptoml--install NONE)
 
 #==========================================
-#Header#==========================================
+#Header
+#==========================================
 find_package(cpptoml  QUIET)
 if(NOT cpptoml_FOUND AND NOT cpptoml_FIND_VERSION_EXACT)
-include(ExternalProject)
-ExternalProject_Add(
-cpptoml
-#URL 
-GIT_REPOSITORY https://github.com/skystrife/cpptoml.git
-#GIT_TAG 
-SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/cpptoml
-CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local 
-#CONFIGURE_COMMAND 
-#BUILD_COMMAND 
-#INSTALL_COMMAND 
-BUILD_IN_SOURCE true
-)
+    include(ExternalProject)
+    if(NOT WIN32)
+ # Linux or OSX Setting
+        ExternalProject_Add(
+        cpptoml
+        #URL 
+        GIT_REPOSITORY https://github.com/skystrife/cpptoml.git
+        #GIT_TAG 
+        SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/cpptoml
+        CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local "
+        #CONFIGURE_COMMAND 
+        #BUILD_COMMAND 
+        #INSTALL_COMMAND 
+        BUILD_IN_SOURCE true
+        )
+    else(NOT WIN32)
+ # Windows Setting
+        ExternalProject_Add(
+        cpptoml
+        #URL 
+        GIT_REPOSITORY https://github.com/skystrife/cpptoml.git
+        #GIT_TAG 
+        SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/cpptoml
+        CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local "
+        #CONFIGURE_COMMAND 
+        #BUILD_COMMAND 
+        #INSTALL_COMMAND 
+        BUILD_IN_SOURCE true
+        )
+    endif(NOT WIN32)
 endif()
 #==========================================
-#Footer#==========================================
-
+#Footer
+#==========================================
 

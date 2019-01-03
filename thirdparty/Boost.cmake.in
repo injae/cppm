@@ -1,24 +1,43 @@
 cmake_minimum_required(VERSION 3.10)
-project(Boost-1.65.1-install NONE)
+project(Boost-1.58.0-install NONE)
 
 #==========================================
-#Header#==========================================
-find_package(Boost 1.65.1 QUIET)
+#Header
+#==========================================
+find_package(Boost 1.58.0 QUIET)
 if(NOT Boost_FOUND AND NOT Boost_FIND_VERSION_EXACT)
-include(ExternalProject)
-ExternalProject_Add(
-Boost
-URL https://dl.bintray.com/boostorg/release/1.65.1/source/boost_1_65_1.tar.gz
-#GIT_REPOSITORY 
-#GIT_TAG 
-SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/Boost
-#CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local 
-CONFIGURE_COMMAND ./bootstrap.sh && ./b2 install
-#BUILD_COMMAND 
-#INSTALL_COMMAND 
-BUILD_IN_SOURCE true
-)
+    include(ExternalProject)
+    if(NOT WIN32)
+ # Linux or OSX Setting
+        ExternalProject_Add(
+        Boost
+        URL http://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58_0.tar.gz
+        #GIT_REPOSITORY 
+        #GIT_TAG 
+        SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/Boost
+        CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local "
+        CONFIGURE_COMMAND "./bootstrap.sh && ./b2 install"
+        #BUILD_COMMAND 
+        #INSTALL_COMMAND 
+        BUILD_IN_SOURCE true
+        )
+    else(NOT WIN32)
+ # Windows Setting
+        ExternalProject_Add(
+        Boost
+        URL http://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58_0.tar.gz
+        #GIT_REPOSITORY 
+        #GIT_TAG 
+        SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/Boost
+        CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local "
+        CONFIGURE_COMMAND ".\boostrap.bat && .\b2"
+        #BUILD_COMMAND 
+        #INSTALL_COMMAND 
+        BUILD_IN_SOURCE true
+        )
+    endif(NOT WIN32)
 endif()
 #==========================================
-#Footer#==========================================
+#Footer
+#==========================================
 

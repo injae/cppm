@@ -22,6 +22,10 @@ namespace cppm
         dependencies.parse(table);
         cppm_config.load();
     }
+
+    void Config::write(table_ptr table) {
+        
+    }
     
     std::string Config::generate() {
         using namespace fmt::literals;

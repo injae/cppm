@@ -12,6 +12,7 @@ namespace cppm::package
         std::string name;
         std::string components;
         std::string option;
+        std::string find_lib;
     };
 
     struct git_
@@ -26,29 +27,29 @@ namespace cppm::package
         git_ git;
     };
 
-    struct build_
-    {
-        std::string config;
-        std::string build;
-        std::string install;
-    };
-
     class Package : public base_config
     {
     public:
         void parse(table_ptr table);
         std::string generate();
-        void add_dependency(Config& config);
     public:
         std::string name;
         std::string version;
-        std::string target;
+        std::string find_cmake;
         std::string header;
         std::string footer;
         download_ download;
         cmake_ cmake;
-        build_ build;
     };
+
+namespace cppkg
+{
+    void init(const std::string& name);
+    void build(const std::string& name);
+    void regist(const std::string& name);
+    std::string search(const std::string& name, const std::string& version); //return to path
+    void install(Config& config, const std::string& path); //return to path
+}
 }
 
 #endif

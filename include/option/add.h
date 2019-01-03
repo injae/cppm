@@ -11,10 +11,10 @@ namespace cppm::option
     class Add : public base_option
     {
     public:
-        Add(Config& config);
+        Add();
     private:
         void toolchain();
-        void dependencies(Config config);
+        void dependencies();
     };
 }
 

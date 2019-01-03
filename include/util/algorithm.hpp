@@ -13,6 +13,11 @@ namespace cppm::util
         src.insert(src.end(), des.begin(), des.end());
     }
 
+    template<typename Collection, typename Func>
+    void for_each(Collection& col, Func func) {
+        std::for_each(col.begin(), col.end(), func);
+    }
+
     template<typename Collection>
     std::string accumulate(Collection stl, std::string token="") {
         return std::accumulate(begin(stl), end(stl), std::string{},

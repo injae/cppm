@@ -14,7 +14,7 @@ namespace cppm
         }
     }
     std::string CppmPackage::toolchains() {
-        return util::accumulate(tool_chains, " ").erase(0,1);
+        return util::accumulate(tool_chains, ",").erase(0,1);
     }
 
     void CppmPackage::add_toolchain(const std::string& toolchain) {

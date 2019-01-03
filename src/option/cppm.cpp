@@ -6,6 +6,8 @@
 #include "option/build.h"
 #include "option/init.h"
 #include "option/add.h"
+#include "util/algorithm.hpp"
+
 #include <fmt/format.h>
 
 namespace cppm::option
@@ -17,20 +19,23 @@ namespace cppm::option
             .call_back([&](){ app_.show_help(); });
         app_.add_command("add")
             .desc("add cppm config")
-            .call_back([&](){ Add(config_).app().parse(app_);});
+            .call_back([&](){ Add().app().parse(app_); });
         app_.add_command("init")
             .desc("make c++ project")
-            .call_back([&](){ Init().app().parse(app_);});
+            .call_back([&](){ Init().app().parse(app_); });
         app_.add_command("build")
-            .desc("make Cmakelists.txt and project build")
-            .call_back([&](){ config_load();
-                              Build(config_).app().parse(app_);});
+            .desc("make CmakeLists.txt and project build")
+            .call_back([&](){ Build().app().parse(app_); });
+        app_.add_command("run")
+            .desc("run binary file(run build/{project_name}) argument is binary argument")
+            .call_back([&](){ _run(); });
     } 
 
-    void Cppm::config_load() {
-        auto path = cppm::util::reverse_find_file(fs::current_path(), "cppm.toml");
-        if(!path) std::cout << "can't find cppm.toml" << std::endl;
-        config_ = cppm::Config::load(path->parent_path().string());
+    void Cppm::_run() {
+        config_load();
+        auto binary_path = config_.path.build +"/"+ config_.package.name;
+        auto args = util::accumulate(app_.args(), " "); app_.args().clear();
+        system((binary_path + args).c_str());
     }
 
     void Cppm::run(int argc, char **argv) {

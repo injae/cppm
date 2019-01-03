@@ -4,6 +4,9 @@ file(MAKE_DIRECTORY ${cppm_project_dir}/repo)
 file(MAKE_DIRECTORY ${cppm_project_dir}/local)
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/cmake/project_maker.cmake DESTINATION ${cppm_project_dir}/cmake )
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake     DESTINATION ${cppm_project_dir}/cmake )
+if(NOT EXISTS "$ENV{HOME}/.cppm/repo/cppkg")
+  execute_process(COMMAND git clone https://github.com/injae/cppkg.git $ENV{HOME}/.cppm/repo/cppkg)
+endif()
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/version.h.in"
                "${CMAKE_CURRENT_SOURCE_DIR}/include/cppm_version.h")

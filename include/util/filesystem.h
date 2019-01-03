@@ -14,11 +14,11 @@ namespace cppm::util
     auto recursive_file_list(const fs::path& path)-> std::optional<std::vector<fs::directory_entry>>;
     auto find_file(const fs::path& path, const std::string& file_name) -> std::optional<fs::path>;
     auto reverse_find_file(const fs::path& path, const std::string& file_name) -> std::optional<fs::path>;
+    void recursive_copy(const fs::path& src, const fs::path&dst);
     auto find_files(const std::string& path, std::regex filter, bool is_full_path) -> std::vector<std::string>;
     void create(const std::string& path);
     template<typename T> void write(const std::string& path, T content) {
-        std::fstream file; 
-        file.open(path);
+        std::fstream file(path, std::ios::out);
         file << content;
         file.close();
     }

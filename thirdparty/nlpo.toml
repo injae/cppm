@@ -1,5 +1,0 @@
-[package]
-    name = "nlpo"
-    target = "linux"
-    cmake = {name = "nlpo::nlpo"}
-    download = {git="https://github.com/injae/nlpo.git"}

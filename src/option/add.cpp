@@ -1,9 +1,14 @@
 #include "option/add.h"
 #include "config/cppm_package.h"
+#include "package/package.h"
+#include "util/filesystem.h"
+
+#include <iostream>
+#include <fmt/format.h>
 
 namespace cppm::option
 {
-    Add::Add(Config& config) {
+    Add::Add() {
         app_.add_option("help")
             .abbr("h")
             .desc("show cppm command and options")
@@ -11,9 +16,9 @@ namespace cppm::option
         app_.add_command("toolchain")
             .desc("add cmake toolchain #example# cppm add toolchains {toolchain_path}... ")
             .call_back([&](){ this->toolchain(); });
-        app_.add_command("dep")
-            .desc("add dependeny {dependency_names}... ")
-            .call_back([&](){ this->dependencies(config); });
+        app_.add_command("cppkg")
+            .desc("add new cppkg")
+            .call_back([&](){ this->dependencies(); });
     }
 
     void Add::toolchain() {
@@ -23,10 +28,10 @@ namespace cppm::option
         }
     }
 
-    void Add::dependencies(Config config) {
-        if(!app_.args().empty()) {
-            app_.args().front();
-            app_.args().pop_front();
-        }
+    void Add::dependencies() {
+        if(app_.args().empty())    { fmt::print(stderr,"need argument");}
+        if(app_.args().size() > 1) { fmt::print(stderr,"too many argument");}
+        package::cppkg::regist(app_.get_arg());
     }
+
 }

@@ -12,7 +12,7 @@ namespace cppm::option
         Cppm();
         void run(int argc, char* argv[]);
     private:
-        void config_load();
+        void _run();
     private:
         Config config_;
     };

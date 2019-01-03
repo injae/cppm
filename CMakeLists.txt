@@ -45,8 +45,8 @@ download_thirdparty(cpptoml "")
 find_package(cpptoml   REQUIRED)
 list(APPEND thirdparty cpptoml)
 
-download_thirdparty(Boost "")
-find_package(Boost  COMPONENTS system filesystem REQUIRED)
+download_thirdparty(Boost "1.58.0")
+find_package(Boost 1.58.0 COMPONENTS system filesystem REQUIRED)
 list(APPEND thirdparty ${Boost_LIBRARIES})
 
 
@@ -54,6 +54,34 @@ list(APPEND thirdparty ${Boost_LIBRARIES})
 add_executable(cppm "")
 target_sources(cppm
 	PRIVATE 
+	include/cppm_version.h
+	include/config/cmake.h
+	include/config/lib.h
+	include/config/dependency.h
+	include/config/path.h
+	include/config/builder.h
+	include/config/bin.h
+	include/config/cppm_package.h
+	include/config/config.h
+	include/config/base_config.h
+	include/config/package.h
+	include/config/compiler.h
+	include/config/cppm_config.h
+	include/option/add.h
+	include/option/build.h
+	include/option/install.h
+	include/option/init.h
+	include/option/make.h
+	include/option/base_option.h
+	include/option/cppm.h
+	include/util/cmake.h
+	include/util/hash.hpp
+	include/util/algorithm.hpp
+	include/util/system.hpp
+	include/util/version.h
+	include/util/filesystem.h
+	include/util/command.h
+	include/package/package.h
 	src/config/cmake.cpp
 	src/config/package.cpp
 	src/config/bin.cpp
@@ -71,6 +99,7 @@ target_sources(cppm
 	src/option/make.cpp
 	src/option/cppm.cpp
 	src/option/build.cpp
+	src/option/base_option.cpp
 	src/util/filesystem.cpp
 	src/util/version.cpp
 	src/util/algorithm.cpp
@@ -79,5 +108,5 @@ target_sources(cppm
 )
 target_link_libraries(cppm PUBLIC ${thirdparty})
 
-target_install(cppm BINARY FALSE)
+target_install(cppm BINARY TRUE)
 

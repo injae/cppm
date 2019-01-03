@@ -52,7 +52,9 @@ function(target_install name type install)
             PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include
             PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
         )
-        install(TARGETS ${name} RUNTIME DESTINATION bin)
+        if(${install} MATCHES "TRUE" )
+            install(TARGETS ${name} RUNTIME DESTINATION bin)
+        endif(${install} MATCHES "TRUE")
     elseif(${type} MATCHES "STATIC" OR ${type} MATCHES "SHARED")
         target_include_directories(${name}
             PUBLIC

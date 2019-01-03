@@ -21,6 +21,7 @@ namespace cppm
         static Config load(const std::string& path);
         void parse(table_ptr table);
         std::string generate();
+        static void write(table_ptr table);
     public:
         Path         path;
         Cmake        cmake;

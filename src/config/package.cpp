@@ -13,4 +13,5 @@ namespace cppm
         version      = package->get_as<std::string>("version").value_or("0.0.1");
         description  = package->get_as<std::string>("description").value_or("");
     }
+
 }
