@@ -38,10 +38,6 @@ download_thirdparty(nlpo "")
 find_package(nlpo   REQUIRED)
 list(APPEND thirdparty nlpo::nlpo)
 
-download_thirdparty(PicoSHA2 "")
-find_package(PicoSHA2   REQUIRED)
-list(APPEND thirdparty picosha2::picosha2)
-
 download_thirdparty(fmt "")
 find_package(fmt   REQUIRED)
 list(APPEND thirdparty fmt::fmt)
