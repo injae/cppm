@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(cppm LANGUAGES CXX VERSION 0.1.3)
+project(cppm LANGUAGES CXX VERSION 0.1.4)
 
 message(STATUS "We are on a ${CMAKE_SYSTEM_NAME} system")
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
@@ -14,7 +14,7 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 endif()
 # detect host processor
 message(STATUS "The host processor is ${CMAKE_HOST_SYSTEM_PROCESSOR}")
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
 set(MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -29,6 +29,7 @@ if(CCACHE_EXE)
 endif()
 
 list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/.cppm/local/lib/cmake")
+list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/.cppm/local/lib/pkgconfig")
 include(${MODULE_PATH}/cppm_tool.cmake)
 
 include(cmake/cppm_install.cmake)
@@ -36,6 +37,10 @@ set(thirdparty)
 download_thirdparty(nlpo "")
 find_package(nlpo   REQUIRED)
 list(APPEND thirdparty nlpo::nlpo)
+
+download_thirdparty(PicoSHA2 "")
+find_package(PicoSHA2   REQUIRED)
+list(APPEND thirdparty picosha2::picosha2)
 
 download_thirdparty(fmt "")
 find_package(fmt   REQUIRED)

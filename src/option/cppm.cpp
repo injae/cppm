@@ -23,6 +23,12 @@ namespace cppm::option
         app_.add_command("init")
             .desc("make c++ project")
             .call_back([&](){ Init().app().parse(app_); });
+        app_.add_command("update")
+            .desc("update cppkg repos")
+            .call_back([&](){ _update(); });
+        app_.add_command("search")
+            .desc("search cppkg")
+            .call_back([&](){ _update(); });
         app_.add_command("build")
             .desc("make CmakeLists.txt and project build")
             .call_back([&](){ Build().app().parse(app_); });
@@ -36,6 +42,13 @@ namespace cppm::option
         auto binary_path = config_.path.build +"/"+ config_.package.name;
         auto args = util::accumulate(app_.args(), " "); app_.args().clear();
         system((binary_path + args).c_str());
+    }
+
+    void Cppm::_update() {
+        using namespace fmt::literals;
+        auto cppkg_path = "{0}/.cppm/repo/cppkg"_format(getenv("HOME"));
+        auto command = "cd {0} && git fetch"_format(cppkg_path);
+        system(command.c_str());
     }
 
     void Cppm::run(int argc, char **argv) {

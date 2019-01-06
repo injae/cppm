@@ -34,8 +34,8 @@ namespace cppm::package
         std::string generate();
     public:
         std::string name;
+        std::string description;
         std::string version;
-        std::string find_cmake;
         std::string header;
         std::string footer;
         download_ download;

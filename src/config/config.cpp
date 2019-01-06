@@ -46,13 +46,14 @@ namespace cppm
              + "\n"
              + "# detect host processor\n"
              + "message(STATUS \"The host processor is ${CMAKE_HOST_SYSTEM_PROCESSOR}\")\n"
-             + "list(APPEND CMAKE_MODULE_PATH \"${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules\")\n"
+             + "list(APPEND CMAKE_MODULE_PATH \"${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/\")\n"
              + "set(MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)\n"
             //+ "list(APPEND CMAKE_PREFIX_PATH \"$ENV{HOME}/.cppm/local\")"
              + "\n"
              + compiler.generate()
              + "\n"
              + "list(APPEND CMAKE_PREFIX_PATH \"$ENV{HOME}/.cppm/local/lib/cmake\")\n"
+             + "list(APPEND CMAKE_PREFIX_PATH \"$ENV{HOME}/.cppm/local/lib/pkgconfig\")\n"
              + "include(${MODULE_PATH}/cppm_tool.cmake)\n"
              + cmake.generate()
              + "set(thirdparty)\n"

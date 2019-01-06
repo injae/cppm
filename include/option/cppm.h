@@ -13,6 +13,7 @@ namespace cppm::option
         void run(int argc, char* argv[]);
     private:
         void _run();
+        void _update();
     private:
         Config config_;
     };

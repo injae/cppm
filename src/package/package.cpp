@@ -14,6 +14,7 @@ namespace cppm::package
             version = package->get_as<std::string>("version").value_or("");
             header  = package->get_as<std::string>("header").value_or("");
             footer  = package->get_as<std::string>("footer").value_or("");
+            description = package->get_as<std::string>("description").value_or("");
 
             auto cmake_      = package->get_table("cmake");
             cmake.name       = cmake_->get_as<std::string>("name").value_or("");
@@ -47,8 +48,9 @@ namespace cppm::package
              + "        {0}URL {1}\n"_format(is_default(download.url), download.url)
              + "        {0}GIT_REPOSITORY {1}\n"_format(is_default(download.git.url),download.git.url)
              + "        {0}GIT_TAG {1}\n"_format(is_default(download.git.tag),download.git.tag)
-             + "        SOURCE_DIR ${{CMAKE_BINARY_DIR}}/repo/{0}\n"_format(name)
+             + "        SOURCE_DIR repo\n"_format(name)
            //+ "        BINARY_DIR ${{CMAKE_BINARY_DIR}}/repo/{0}/build\n"_format(name)
+             + "        # Defulat cppkg install path if you want to install global path, remove this options"
              + "        CMAKE_ARGS \"{0} {1}\"\n"_format("-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local", cmake.option)
              + "        #CONFIGURE_COMMAND \n"
              + "        #BUILD_COMMAND \n"
@@ -62,7 +64,7 @@ namespace cppm::package
              + "        {0}URL {1}\n"_format(is_default(download.url), download.url)
              + "        {0}GIT_REPOSITORY {1}\n"_format(is_default(download.git.url),download.git.url)
              + "        {0}GIT_TAG {1}\n"_format(is_default(download.git.tag),download.git.tag)
-             + "        SOURCE_DIR ${{CMAKE_BINARY_DIR}}/repo/{0}\n"_format(name)
+             + "        SOURCE_DIR repo\n"_format(name)
            //+ "        BINARY_DIR ${{CMAKE_BINARY_DIR}}/repo/{0}/build\n"_format(name)
              + "        CMAKE_ARGS \"{0} {1}\"\n"_format("-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local", cmake.option)
              + "        #CONFIGURE_COMMAND \n"
@@ -90,18 +92,16 @@ namespace cppkg {
         }
         util::create("{0}.toml"_format(package.name));
         util::write( "{0}.toml"_format(package.name)
-                   , "[package]\n"
-                   + "name = {0}\n"_format(value(package.name))
+                   , "[package]\n" + "name = {0}\n"_format(value(package.name))
                    + "# if you use git repo, package version is lastest\n"
                    + "version = {0}\n"_format(value(package.version))
                    + "# library name in cmake, cppm.toml use this value \n"
                    + "# [dependencies]\n"
                    + "# ${library_name} = {module =${value}}\n"
-                   + "cmake = {{name = {0}}}\n"_format(value(package.cmake.name))
+                   + "cmake = {{name = {0}, findlib={1}}}\n"_format(value(package.cmake.name),value(package.cmake.find_lib))
                    + "# write download value git or url\n"
-                   + "#download(git={0})\n"_format(value(""))
-                   + "#download(url={0})\n"_format(value(""))
-                   + "find_cmake = {0}\n"_format(value(package.find_cmake))
+                   + "#download = {{git={0}}}\n"_format(value(""))
+                   + "#download = {{url={0}}}\n"_format(value(""))
                    ); 
     }
 
@@ -161,9 +161,14 @@ namespace cppkg {
         //auto value = [](auto str){ return "\"{0}\""_format(str);};
         Package package;
         package.parse(cpptoml::parse_file("{0}{1}/{2}"_format(path,package.version,"cppkg.toml")));
-        if(package.find_cmake != "") {
-            fs::copy("{0}{1}"_format(path,package.find_cmake)
-                    ,"{0}/Modules/{1}"_format(config.path.cmake,package.find_cmake));
+        fmt::print("{0}\n",package.cmake.find_lib);
+        if(package.cmake.find_lib != "") {
+            fmt::print("Install {0} to {1}/Modules/\n",package.cmake.find_lib,config.path.cmake);
+            if(!fs::exists("{0}/Modules/"_format(config.path.cmake))) {
+                fs::create_directories("{0}/Modules"_format(config.path.cmake));
+            }
+            fs::copy("{0}/{1}"_format(path,package.cmake.find_lib)
+                    ,"{0}/Modules/{1}"_format(config.path.cmake,package.cmake.find_lib));
         }
         fs::copy("{0}/{1}.cmake.in"_format(path,package.name)
                 ,"{0}/{1}.cmake.in"_format(config.path.thirdparty,package.name));

@@ -1,12 +1,12 @@
 [package]
 name    = "cppm"
-version = "0.1.4"
+version = "0.1.0"
 description = "c++ cmake maker use to toml like Cargo"
 
 [cmake]
 version  = "3.10"
 include  = ["cmake/cppm_install.cmake"]
-#option   = "-DCMAKE_INSTALL_PREFIX=/usr/local"
+option   = ""
 
 [compiler] 
 clang++ = {option = "-std=c++17 -Wall -pthread -fPIC -O0 -g ", version = "7.0"}
@@ -21,3 +21,4 @@ cpptoml = {module = "cpptoml"}
 Boost   = {module = "${Boost_LIBRARIES}", version = "1.58.0", components="system filesystem"}
 fmt     = {module = "fmt::fmt"}
 nlpo    = {module = "nlpo::nlpo"}
+PicoSHA2= {module = "picosha2::picosha2"}
