@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(cppm LANGUAGES CXX VERSION 0.1.4)
+project(cppm LANGUAGES CXX VERSION 0.1.0)
 
 message(STATUS "We are on a ${CMAKE_SYSTEM_NAME} system")
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
@@ -110,6 +110,7 @@ target_sources(cppm
 	src/util/algorithm.cpp
 	src/main.cpp
 	src/package/package.cpp
+	src/package/repo.h
 )
 target_link_libraries(cppm PUBLIC ${thirdparty})
 

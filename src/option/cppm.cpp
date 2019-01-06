@@ -1,12 +1,12 @@
-#include <iostream>
 #include <string>
 
 #include "option/cppm.h"
 #include "util/filesystem.h"
+#include "util/algorithm.hpp"
 #include "option/build.h"
 #include "option/init.h"
 #include "option/add.h"
-#include "util/algorithm.hpp"
+#include "package/package.h"
 
 #include <fmt/format.h>
 
@@ -28,7 +28,7 @@ namespace cppm::option
             .call_back([&](){ _update(); });
         app_.add_command("search")
             .desc("search cppkg")
-            .call_back([&](){ _update(); });
+            .call_back([&](){ _search(); });
         app_.add_command("build")
             .desc("make CmakeLists.txt and project build")
             .call_back([&](){ Build().app().parse(app_); });
@@ -51,6 +51,9 @@ namespace cppm::option
         system(command.c_str());
     }
 
+    void Cppm::_search() {
+        using namespace fmt::literals;
+    }
     void Cppm::run(int argc, char **argv) {
         app_.parse(argc, argv);
     }
