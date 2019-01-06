@@ -14,7 +14,7 @@ if(NOT nlpo_FOUND AND NOT nlpo_FIND_VERSION_EXACT)
         #URL 
         GIT_REPOSITORY https://github.com/injae/nlpo.git
         #GIT_TAG 
-        SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/nlpo
+        SOURCE_DIR repo
         CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local "
         #CONFIGURE_COMMAND 
         #BUILD_COMMAND 
@@ -28,7 +28,7 @@ if(NOT nlpo_FOUND AND NOT nlpo_FIND_VERSION_EXACT)
         #URL 
         GIT_REPOSITORY https://github.com/injae/nlpo.git
         #GIT_TAG 
-        SOURCE_DIR ${CMAKE_BINARY_DIR}/repo/nlpo
+        SOURCE_DIR repo
         CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local "
         #CONFIGURE_COMMAND 
         #BUILD_COMMAND 

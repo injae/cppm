@@ -1,4 +1,5 @@
 #include "config/path.h"
+#include <fmt/format.h>
 
 namespace cppm
 {

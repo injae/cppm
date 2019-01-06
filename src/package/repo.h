@@ -3,17 +3,18 @@
 
 #include <map>
 #include "util/version.h"
+#include <string>
 
-namespace cppm::cppkg
+namespace cppm::package::cppkg
 {
-    struct cppkg {
+    struct Cppkg {
         struct Repo{
             struct Pkg {
                 std::map<Version,std::string> versions;
             };
             std::map<std::string, Pkg> pkgs;
         };
-        std::map<std::string,Repo> repos;
+        std::map<std::string, Repo> repos;
     };
 }
 

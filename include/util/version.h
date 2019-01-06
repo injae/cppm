@@ -11,9 +11,9 @@ namespace cppm
     public:
         Version() {};
         Version(std::string version);
-        bool operator< (const Version&  other);
-        bool operator> (const Version&  other);
-        bool operator== (const Version& other);
+        bool operator< (const Version&  other) const;
+        bool operator> (const Version&  other) const;
+        bool operator== (const Version& other) const;
         Version& operator= (const std::string& str);
         std::string str();
         operator std::string() const;

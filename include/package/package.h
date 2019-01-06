@@ -3,6 +3,7 @@
 
 #include "config/base_config.h"
 #include "config/config.h"
+#include "package/repo.h"
 #include <string>
 
 namespace cppm::package
@@ -45,6 +46,7 @@ namespace cppm::package
 namespace cppkg
 {
     void init(const std::string& name);
+    Cppkg list();
     void build(const std::string& name);
     void regist(const std::string& name);
     std::string search(const std::string& name, const std::string& version); //return to path

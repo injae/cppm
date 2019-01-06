@@ -13,7 +13,7 @@ namespace cppm
         std::sscanf(version.c_str(), "%d.%d.%d.%d", &major, &minor, &revision, &build);
     }
     
-    bool Version::operator < (const Version& other) {
+    bool Version::operator < (const Version& other) const {
         if(lastest && lastest == other.lastest) return false;
         if(!lastest && other.lastest) return true;
         if(major < other.major)
@@ -27,7 +27,7 @@ namespace cppm
 		return false; 
     }
     
-    bool Version::operator > (const Version& other) {
+    bool Version::operator > (const Version& other) const {
         if(other.lastest && lastest == other.lastest) return false;
         if(lastest && !other.lastest) return true;
         if(major > other.major)
@@ -41,7 +41,7 @@ namespace cppm
 		return false; 
     }
     
-    bool Version::operator == (const Version& other) {
+    bool Version::operator == (const Version& other) const {
         if(lastest && lastest == other.lastest) return true;
         return major    == other.major
 			&& minor    == other.minor

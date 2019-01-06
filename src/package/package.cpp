@@ -133,6 +133,27 @@ namespace cppkg {
         fmt::print("update {0}/{1} in local-repo [\"{2}\"]\n", package.name, package.version, pack_path);
     }
 
+    Cppkg list() {
+        using namespace fmt::literals;
+        auto root_path = "{0}/.cppm/repo"_format(getenv("HOME"));
+        Cppkg cppkg;
+        auto repos = *util::file_list(root_path);
+        for(auto repo : repos) {
+            auto rname = repo.path().filename().string();
+            auto pkgs = *util::file_list("{0}/{1}"_format(root_path,rname));
+            for(auto& pkg : pkgs) {
+                auto pname = pkg.path().filename().string();
+                if(pname == ".git" || pname == "README.md") continue;
+                auto versions = *util::file_list("{0}/{1}/{2}"_format(root_path,rname,pname));
+                for(auto& ver : versions) {
+                    auto vname = ver.path().filename().string();
+                    cppkg.repos[rname].pkgs[pname].versions[vname] = ver.path().string();
+                }
+            }
+        }
+        return cppkg;
+    }
+
     std::string search(const std::string& name, const std::string& version) {
         using namespace fmt::literals;
         auto cppkg_path = "{0}/.cppm/repo"_format(getenv("HOME"));

@@ -1,5 +1,6 @@
 #include "config/package.h"
 #include <iostream>
+#include <fmt/format.h>
 
 namespace cppm
 {

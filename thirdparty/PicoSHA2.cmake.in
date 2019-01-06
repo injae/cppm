@@ -15,10 +15,10 @@ if(NOT PicoSHA2_FOUND AND NOT PicoSHA2_FIND_VERSION_EXACT)
         #GIT_TAG 
         SOURCE_DIR repo
         #CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local "
-        CONFIGURE_COMMAND  ""
-        BUILD_COMMAND  ""
-        INSTALL_COMMAND ""
-        BUILD_IN_SOURCE true
+        #CONFIGURE_COMMAND 
+        #BUILD_COMMAND 
+        #INSTALL_COMMAND 
+        #BUILD_IN_SOURCE true
         )
     else(NOT WIN32)
  # Windows Setting
@@ -28,10 +28,10 @@ if(NOT PicoSHA2_FOUND AND NOT PicoSHA2_FIND_VERSION_EXACT)
         #GIT_TAG 
         SOURCE_DIR repo
         #CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local "
-        CONFIGURE_COMMAND  ""
-        BUILD_COMMAND  ""
-        INSTALL_COMMAND ""
-        BUILD_IN_SOURCE true
+        #CONFIGURE_COMMAND 
+        #BUILD_COMMAND 
+        #INSTALL_COMMAND 
+        #BUILD_IN_SOURCE true
         )
     endif(NOT WIN32)
     set(CMAKE_INSTALL_PREFIX $ENV{HOME}/.cppm/local)
@@ -59,4 +59,3 @@ endif()
 #==========================================
 #Footer
 #==========================================
-

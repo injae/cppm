@@ -38,8 +38,9 @@ namespace cppm::option
     } 
 
     void Cppm::_run() {
+        using namespace fmt::literals;
         config_load();
-        auto binary_path = config_.path.build +"/"+ config_.package.name;
+        auto binary_path = "{0}/{1}"_format(config_.path.build,config_.package.name);
         auto args = util::accumulate(app_.args(), " "); app_.args().clear();
         system((binary_path + args).c_str());
     }
@@ -53,6 +54,14 @@ namespace cppm::option
 
     void Cppm::_search() {
         using namespace fmt::literals;
+        auto list = package::cppkg::list();
+        for(auto& [rname, repo] : list.repos) {
+            for(auto& [pname, pkg] : repo.pkgs) {
+                for(auto& [vname, ver] : pkg.versions) {
+                    fmt::print("{0}\t\t{1}\n", pname, std::string(vname));
+                }
+            }
+        }
     }
     void Cppm::run(int argc, char **argv) {
         app_.parse(argc, argv);

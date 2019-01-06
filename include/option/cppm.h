@@ -16,7 +16,6 @@ namespace cppm::option
         void _update();
         void _search();
     private:
-        Config config_;
     };
 }
 
