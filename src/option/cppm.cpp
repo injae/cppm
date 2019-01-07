@@ -58,7 +58,7 @@ namespace cppm::option
         for(auto& [rname, repo] : list.repos) {
             for(auto& [pname, pkg] : repo.pkgs) {
                 for(auto& [vname, ver] : pkg.versions) {
-                    fmt::print("{0}\t\t{1}\n", pname, std::string(vname));
+                    fmt::print("{:<10}{:^20}\n", pname, std::string(vname));
                 }
             }
         }
