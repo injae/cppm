@@ -33,6 +33,9 @@ namespace cppm
              + "\n"
              + "project({0} LANGUAGES CXX VERSION {1})\n"_format(package.name, package.version)
              + "\n"
+             + "set(CMAKE_CXX_STANDARD {})\n"_format(package.cpp_version)
+             + "set(CMAKE_CXX_STANDARD_REQUIRED ON)\n"
+             + "set(CMAKE_CXX_EXTENSIONS OFF)\n"
              + "message(STATUS \"We are on a ${CMAKE_SYSTEM_NAME} system\")\n"
              + "if(${CMAKE_SYSTEM_NAME} STREQUAL \"Linux\")\n"
              + "    add_definitions(-DSYSTEM_LINUX)\n"

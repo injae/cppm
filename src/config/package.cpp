@@ -13,6 +13,7 @@ namespace cppm
         name         = *package->get_as<std::string>("name");
         version      = package->get_as<std::string>("version").value_or("0.0.1");
         description  = package->get_as<std::string>("description").value_or("");
+        cpp_version  = package->get_as<std::string>("c++-version").value_or("14");
     }
 
 }

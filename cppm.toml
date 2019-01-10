@@ -2,6 +2,7 @@
 name    = "cppm"
 version = "0.1.0"
 description = "c++ cmake maker use to toml like Cargo"
+c++-version = "17"
 
 [cmake]
 version  = "3.10"
@@ -9,8 +10,8 @@ include  = ["cmake/cppm_install.cmake"]
 option   = ""
 
 [compiler] 
-clang++ = {option = "-std=c++17 -Wall -pthread -fPIC -O0 -g ", version = "7.0"}
-g++     = {option = "-std=c++17 -Wall -pthread -fPIC -O0 -g ", version = "7.0"}
+clang++ = {option = "-Wall -pthread -fPIC -O0 -g ", version = "7.0"}
+g++     = {option = "-Wall -pthread -fPIC -O0 -g ", version = "7.0"}
 
 [[bin]]
 name   = "cppm"

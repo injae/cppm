@@ -13,6 +13,7 @@ namespace cppm
         std::string name;
         std::string version;
         std::string description;
+        std::string cpp_version;
     };
 }
 
