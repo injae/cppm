@@ -1,9 +1,14 @@
 Cppm 
-[![HitCount](http://hits.dwyl.io/injae/injae/cppm.svg)](http://hits.dwyl.io/injae/injae/cppm)
 ========
 |Linux|Windows|
-|-----|-------|
-|[![Build Status](https://travis-ci.com/injae/cppm.svg?branch=master)](https://travis-ci.com/injae/cppm)||
+|:----|:------|
+[![Linux build status][1]][2] | [![Windows build status][3]][4] |
+
+[1]: https://travis-ci.com/injae/cppm.svg?branch=master
+[2]: https://travis-ci.com/injae/cppm
+[3]: https://ci.appveyor.com/api/projects/status/6ovjp02higajbxhm?svg=true
+[4]: https://ci.appveyor.com/project/injae/cppm
+
 -------------------------------------
  C++ Cmake Project Helper
 -------------------------------------
@@ -16,7 +21,7 @@ Rust의 Cargo 처럼 편하게 사용하는것이 목표입니다.
 
 ## Dependencies
 1. cmake-3.10.0
-2. c++-17-compiler
+2. c++-17-compiler (g++7 or clang7)
 3. boost
 4. nlpo
 5. cpptoml
@@ -39,37 +44,7 @@ sudo cmake -H. -Bbuild
 sudo cmake --build . --target install
 ```
 
-
 ## Document
-### cppm option과 command들
-1. cppm build {0}  
-cppm.toml을 바탕으로 c++ cmake 프로젝트를 빌드합니다.  
-옵션을 줘서 컴파일러와 빌더를 변경할수있습니다.  
--c clang 컴파일러 사용  
--n ninja 빌더 사용  
--m make 빌더 사용 (default)  
--g gcc 컴파일러 사용 (default)  
-
-{0}에 들어가는 인자들은 make나 ninja에서 사용하는 인자들입니다.  
-만약 프로젝트를 sudo make install 같이 쓰고 싶으면   
-sudo cppm build install 같이 사용하시면 됩니다.  
-
-cppm build -D {라이브러리이름}  
- 이 옵션은 thirdparty/에 존재하는 {라이브러리이름}.toml을 cppm package install에서 쓸수있게 cmake파일로 transcompile하는 명령어입니다. 예제는 thirdparty/를 보시면 있습니다.   
-만약 파일이름이 Boost.toml이면 cppm build -D Boost이렇게 하시면 Boost.cmake.in 파일이 생성이 됩니다.  
-
-2. cppm init  
-cppm 프로젝트를 생성합니다.  
-   -b binary 프로젝트 생성  
-   -l library 프로젝트 생성  
-
-3. cppm add toolchain {args}  
-이 커맨드는 Cmake 툴체인을 추가할때 사용합니다.  
--DCMAKE_TOOLCHAIN_FILE={args}  
-Cmake 위와같은 CMake 옵션을 빌드할때 추가합니다.  
-그리고 툴체인은 ~/.cppm/config.toml 파일에 저장됩니다.
-
-4. cppm install --> 작업중
 
 ## cppm.toml
 ### package
@@ -79,6 +54,7 @@ Cmake 위와같은 CMake 옵션을 빌드할때 추가합니다.
  name = "example"        # 패키지의 이름입니다.
  version = "1.0.0"       # 패키지의 버전입니다.
  description = "example" # 패키지의 설명입니다.
+ cpp_version = "14" # 사용하는 c++ 버전을 넣습니다. Example: 98 11 14 17  기본값 14
  ```
 
 ### cmake
@@ -86,8 +62,8 @@ Cmake 관련한 설정
 ccache는 자동으로 감지해서 설치가 되어있으면 알아서 사용하게 되있습니다.
 ```
 [cmake]
-version  = "3.10"    # cmake 최소 버전 CPPM은 최소 3.10.0이 필요합니다. 이유는 Vcpkg가 3.10.0 부터 지원하기 때문에 사용의 편리함을 위해 기본을 3.10.0으로 설정했습니다.
-option   = ""        # 빌드할 때 사용할 CMake 옵션입니다. 예시 -DCMAKE_TOOLCHAIN_FILE=xxx 를 넣으면 cmake -DCMAKE_TOOLCHAIN_FILE=xxx 와 같은 결과가 발생됩니다.
+version  = "3.10"    # cmake 최소 버전 CPPM은 최소 3.10.0이 필요합니다. 이유는 Vcpkg가 3.10.0 부터 지원하기 때문에 사용의 편리함을 위해 기본을 3.10.0으로 설정했습니다.  
+option   = ""        # 빌드할 때 사용할 CMake 옵션입니다. 예시 -DCMAKE_TOOLCHAIN_FILE=xxx 를 넣으면 cmake -DCMAKE_TOOLCHAIN_FILE=xxx 와 같은 결과가 발생됩니다.  
 ```
 
 ### compiler

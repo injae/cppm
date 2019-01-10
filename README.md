@@ -1,12 +1,9 @@
 Cppm 
-[![HitCount](http://hits.dwyl.io/injae/injae/cppm.svg)](http://hits.dwyl.io/injae/injae/cppm)
 ========
 |Linux|Windows|
 |:----|:------|
 [![Linux build status][1]][2] | [![Windows build status][3]][4] |
-<!--
-|[![Build Status](https://travis-ci.com/injae/cppm.svg?branch=master)](https://travis-ci.com/injae/cppm)||
--->
+
 [1]: https://travis-ci.com/injae/cppm.svg?branch=master
 [2]: https://travis-ci.com/injae/cppm
 [3]: https://ci.appveyor.com/api/projects/status/6ovjp02higajbxhm?svg=true
@@ -48,19 +45,7 @@ sudo cmake -H. -Bbuild
 sudo cmake --build . --target install
 ```
 
-
-
 ## Document
-### cppm options and commands
-1. cppm build
-compile to use cppm.toml
-2. cppm init
-make c++ cmake project
-3. cppm add toolchain {args}
-this command add build option -DCMAKE_TOOLCHAIN_FILE={args}
-{args} save ~/.cppm/config.toml file
-
-4. cppm install --> working
 
 ## cppm.toml
 ### package
