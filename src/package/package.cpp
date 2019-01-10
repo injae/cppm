@@ -48,10 +48,11 @@ namespace cppm::package
              + "        {0}URL {1}\n"_format(is_default(download.url), download.url)
              + "        {0}GIT_REPOSITORY {1}\n"_format(is_default(download.git.url),download.git.url)
              + "        {0}GIT_TAG {1}\n"_format(is_default(download.git.tag),download.git.tag)
-             + "        SOURCE_DIR repo\n"_format(name)
+             + "        SOURCE_DIR $ENV{HOME}/.cppm/install\n"
            //+ "        BINARY_DIR ${{CMAKE_BINARY_DIR}}/repo/{0}/build\n"_format(name)
-             + "        # Defulat cppkg install path if you want to install global path, remove this options"
-             + "        CMAKE_ARGS \"{0} {1}\"\n"_format("-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local", cmake.option)
+             + "        # Defulat cppkg install path if you want to install global path, remove this options\n"
+             + "        #if you want local install add CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local\n"
+             + "        CMAKE_ARGS \" ${{CMAKE_ARGS}} {0}\"\n"_format(cmake.option)
              + "        #CONFIGURE_COMMAND \n"
              + "        #BUILD_COMMAND \n"
              + "        #INSTALL_COMMAND \n"
@@ -64,9 +65,10 @@ namespace cppm::package
              + "        {0}URL {1}\n"_format(is_default(download.url), download.url)
              + "        {0}GIT_REPOSITORY {1}\n"_format(is_default(download.git.url),download.git.url)
              + "        {0}GIT_TAG {1}\n"_format(is_default(download.git.tag),download.git.tag)
-             + "        SOURCE_DIR repo\n"_format(name)
+             + "        SOURCE_DIR $ENV{HOME}/.cppm/install\n"
            //+ "        BINARY_DIR ${{CMAKE_BINARY_DIR}}/repo/{0}/build\n"_format(name)
-             + "        CMAKE_ARGS \"{0} {1}\"\n"_format("-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local", cmake.option)
+             + "        #if you want local install add CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local\n"
+             + "        CMAKE_ARGS \" ${{CMAKE_ARGS}} {0}\"\n"_format(cmake.option)
              + "        #CONFIGURE_COMMAND \n"
              + "        #BUILD_COMMAND \n"
              + "        #INSTALL_COMMAND \n"
@@ -82,10 +84,16 @@ namespace cppm::package
 namespace cppkg {
     void init(const std::string& name) {
         using namespace fmt::literals;
-        package::Package package;
+        Package package;
         package.name = name;
         package.version = "lastest";
+        init(package);
+    }
+
+    void init(Package& package) {
+        using namespace fmt::literals;
         auto value = [](const std::string& str) { return "\""+ str +"\""; };
+        auto is_default = [](std::string str) { return str != "" ? "" : "#"; };
         if(fs::exists(package.name + ".toml")) {
             fmt::print(stderr, "existed {0}", package.name);
             exit(1);
@@ -95,14 +103,19 @@ namespace cppkg {
                    , "[package]\n" + "name = {0}\n"_format(value(package.name))
                    + "# if you use git repo, package version is lastest\n"
                    + "version = {0}\n"_format(value(package.version))
+                   + "description = \"\"\n"
                    + "# library name in cmake, cppm.toml use this value \n"
                    + "# [dependencies]\n"
-                   + "# ${library_name} = {module =${value}}\n"
-                   + "cmake = {{name = {0}, findlib={1}}}\n"_format(value(package.cmake.name),value(package.cmake.find_lib))
+                   + "#${library_name} = {module =${value}}\n"
+                   + "cmake = {{name = {0}, findlib={1}}}\n"_format(value(package.cmake.name)
+                                                                   ,value(package.cmake.find_lib))
                    + "# write download value git or url\n"
-                   + "#download = {{git={0}}}\n"_format(value(""))
-                   + "#download = {{url={0}}}\n"_format(value(""))
+                   + "{0}download = {{git={1}}}\n"_format(is_default(package.download.git.url)
+                                                         ,value(package.download.git.url))
+                   + "{0}download = {{url={1}}}\n"_format(is_default(package.download.url)
+                                                         ,value(package.download.url))
                    ); 
+
     }
 
     void build(const std::string& name) {

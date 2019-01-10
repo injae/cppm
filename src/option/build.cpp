@@ -6,6 +6,7 @@
 #include "util/filesystem.h"
 #include "package/package.h"
 #include <iostream>
+#include <thread>
 
 namespace cppm::option
 {
@@ -26,9 +27,6 @@ namespace cppm::option
     
     Build::Build() {
         using namespace fmt::literals;
-        auto cmd_ = std::make_shared<CommandBuilder>();
-        auto none_tc = std::make_shared<bool>(false);
-        auto clean   = std::make_shared<bool>(false);
         app_.add_option("help")
             .abbr("h")
             .desc("show cppm commands and options")
@@ -36,79 +34,79 @@ namespace cppm::option
         app_.add_option("dep")
             .abbr("D")
             .desc("build cppm package file")
-            .call_back([&](){
-                dep();
-            });
+            .args("{cppkg name}")
+            .call_back([&](){ dep(); });
         app_.add_option("ninja")
             .abbr("n")
             .desc("ninja use to build this option remove build directory")
-            .call_back([&, cmd = cmd_, clean = clean](){
-                *clean = true;
-                cmd->cmake_option += " -G Ninja ";
+            .call_back([&](){
+                clean = true;
+                cmd.cmake_option += " -G Ninja ";
                 app_.call_default();
             });
         app_.add_option("make")
             .abbr("m")
             .desc("Unix make use to build this option remove build directory")
-            .call_back([&, cmd = cmd_, clean = clean](){
-                *clean = true;
-                cmd->cmake_option += " -G \"Unix Makefiles\" ";
+            .call_back([&](){
+                clean = true;
+                cmd.cmake_option += " -G \"Unix Makefiles\" ";
                 app_.call_default();
             });
         app_.add_option("gcc")
             .abbr("g")
             .desc("g++ use to compile ")
-            .call_back([&, cmd = cmd_](){
-                cmd->cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("g++");
+            .call_back([&](){
+                cmd.cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("g++");
                 app_.call_default();
             });
         app_.add_option("clang")
             .abbr("c")
             .desc("clang++ use to compile ")
-            .call_back([&, cmd = cmd_](){
-                cmd->cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("clang++");
+            .call_back([&](){
+                cmd.cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("clang++");
                 app_.call_default();
             });
         app_.add_option("release")
             .abbr("r")
             .desc("compile release mode")
-            .call_back([&, cmd = cmd_](){
-                cmd->cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("RELEASE");
+            .call_back([&](){
+                cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("RELEASE");
                 app_.call_default();
             });
         app_.add_option("debug")
             .abbr("d")
             .desc("compile debug mode")
-            .call_back([&, cmd = cmd_](){
-                cmd->cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("DEBUG");
+            .call_back([&](){
+                cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("DEBUG");
                 app_.call_default();
             });
         app_.add_option("ntc")
             .desc("not change CMakeLists.txt test options")
-            .call_back([this, none_tc = none_tc]() { *none_tc = true; app_.call_default();
-            });
+            .call_back([this]() { none_tc = true; app_.call_default();});
         app_.add_command()
             .desc("Build command")
-            .call_back([&, cmd_, none_tc, clean](){
+            .args("{cppm options} {builder options}")
+            .call_back([&](){
                 config_load();
                 fs::create_directories(config_.path.build);
-                if(!*none_tc) {
+                cmd.build_option += "-j{}"_format(std::thread::hardware_concurrency());
+                if(!none_tc) {
                     dependency_check();
                     cmakelist_build();
                     fs::copy_file((std::string(std::getenv("HOME")))+"/.cppm/cmake/cppm_tool.cmake"
                                   ,config_.path.cmake +"/cppm_tool.cmake"
                                   ,fs::copy_option::overwrite_if_exists);
                 }
-                if(*clean) {
+                if(clean) {
                     fs::remove_all(config_.path.build);
                     fs::create_directory(config_.path.build);
                 }
                 if(!app_.args().empty()) {
-                    cmd_->build_option += util::accumulate(app_.args(), " ");
+                    cmd.build_option += util::accumulate(app_.args(), " ");
                     app_.args().clear();
                 }
                 //fmt::print(cmd_->build(config).c_str());
-                system(cmd_->build(config_).c_str());
+                system(cmd.build(config_).c_str());
             });
     }
 

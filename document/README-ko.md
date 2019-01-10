@@ -3,7 +3,7 @@ Cppm
 ========
 |Linux|Windows|
 |-----|-------|
-|[![Build Status](https://travis-ci.com/injae/cppm.svg?branch=master)](https://travis-ci.com/injae/cppm)|Working|
+|[![Build Status](https://travis-ci.com/injae/cppm.svg?branch=master)](https://travis-ci.com/injae/cppm)||
 -------------------------------------
  C++ Cmake Project Helper
 -------------------------------------

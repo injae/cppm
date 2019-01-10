@@ -46,6 +46,7 @@ namespace cppm::package
 namespace cppkg
 {
     void init(const std::string& name);
+    void init(Package& package);
     Cppkg list();
     void build(const std::string& name);
     void regist(const std::string& name);

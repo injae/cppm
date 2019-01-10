@@ -10,7 +10,7 @@ namespace cppm::package::cppkg
     struct Cppkg {
         struct Repo{
             struct Pkg {
-                std::map<Version,std::string> versions;
+                std::map<Version, std::string> versions;
             };
             std::map<std::string, Pkg> pkgs;
         };

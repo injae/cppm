@@ -22,6 +22,9 @@ namespace cppm::option
         void cmakelist_build();
         void dep();
         void dependency_check();
+        CommandBuilder cmd;
+        bool none_tc = false;
+        bool clean = false;
     };
 }
 

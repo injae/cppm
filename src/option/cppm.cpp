@@ -34,6 +34,7 @@ namespace cppm::option
             .call_back([&](){ Build().app().parse(app_); });
         app_.add_command("run")
             .desc("run binary file(run build/{project_name}) argument is binary argument")
+            .args("{binary options}")
             .call_back([&](){ _run(); });
     } 
 
@@ -48,17 +49,25 @@ namespace cppm::option
     void Cppm::_update() {
         using namespace fmt::literals;
         auto cppkg_path = "{0}/.cppm/repo/cppkg"_format(getenv("HOME"));
-        auto command = "cd {0} && git fetch"_format(cppkg_path);
+        auto command = "cd {0} && git pull"_format(cppkg_path);
         system(command.c_str());
     }
 
     void Cppm::_search() {
         using namespace fmt::literals;
         auto list = package::cppkg::list();
+        fmt::print("{:<15}{:<20}{:<40}{:<70}\n", "Name", "Version","Description","Use");
+        fmt::print("{:=<15}{:=<20}{:=<40}{:=<70}\n", "=", "=","=","=");
         for(auto& [rname, repo] : list.repos) {
             for(auto& [pname, pkg] : repo.pkgs) {
                 for(auto& [vname, ver] : pkg.versions) {
-                    fmt::print("{:<10}{:^20}\n", pname, std::string(vname));
+                    package::Package package;
+                    package.parse(cpptoml::parse_file("{0}/{1}"_format(ver,"cppkg.toml")));
+                    auto component = package.cmake.components != ""
+                                   ? " components=\"{0}\""_format(package.cmake.components) : "";
+                    auto use = "{0}={{module=\"{1}\", version=\"{2}\"{3}}}"_format
+                                (package.name, package.cmake.name, package.version, component);
+                    fmt::print("{:<15}{:<20}{:<40}{:<70}\n", pname, std::string(vname), package.description, use);
                 }
             }
         }

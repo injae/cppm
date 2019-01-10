@@ -70,9 +70,9 @@ target_sources(cppm
 	include/config/cppm_config.h
 	include/option/add.h
 	include/option/build.h
+	include/option/cppkg.h
 	include/option/install.h
 	include/option/init.h
-	include/option/make.h
 	include/option/base_option.h
 	include/option/cppm.h
 	include/util/cmake.h
@@ -97,8 +97,8 @@ target_sources(cppm
 	src/option/add.cpp
 	src/option/init.cpp
 	src/option/install.cpp
-	src/option/make.cpp
 	src/option/cppm.cpp
+	src/option/cppkg.cpp
 	src/option/build.cpp
 	src/option/base_option.cpp
 	src/util/filesystem.cpp

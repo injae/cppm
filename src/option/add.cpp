@@ -15,9 +15,11 @@ namespace cppm::option
             .call_back([&](){ app_.show_help(); });
         app_.add_command("toolchain")
             .desc("add cmake toolchain #example# cppm add toolchains {toolchain_path}... ")
+            .args("{path}")
             .call_back([&](){ this->toolchain(); });
         app_.add_command("cppkg")
             .desc("add new cppkg")
+            .args("{name}")
             .call_back([&](){ this->dependencies(); });
     }
 

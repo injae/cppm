@@ -17,7 +17,7 @@ name   = "cppm"
 source = ["include/.*", "src/.*"]
 
 [dependencies]
-cpptoml = {module = "cpptoml"}
-Boost   = {module = "${Boost_LIBRARIES}", version = "1.58.0", components="system filesystem"}
-fmt     = {module = "fmt::fmt"}
-nlpo    = {module = "nlpo::nlpo"}
+cpptoml  = {module = "cpptoml"}
+Boost    = {module = "${Boost_LIBRARIES}", version = "1.58.0", components="system filesystem"}
+fmt      = {module = "fmt::fmt"}
+nlpo     = {module = "nlpo::nlpo"}

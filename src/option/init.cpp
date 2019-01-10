@@ -1,6 +1,6 @@
 #include "option/init.h"
 #include "util/filesystem.h"
-#include "package/package.h"
+#include "option/cppkg.h"
 #include "config/path.h"
 #include <iostream>
 #include <cstdlib>
@@ -16,21 +16,20 @@ namespace cppm::option
         app_.add_option("bin")
             .abbr("b")
             .desc("initialize new c++ binary project")
+            .args("{name}")
             .call_back([&](){ this->make_bin(); });
         app_.add_option("lib")
             .abbr("l")
             .desc("initialize new c++ library project")
+            .args("{name}")
             .call_back([&](){ this->make_lib(); });
-        app_.add_option("dep")
-            .abbr("d")
+        app_.add_command("dep")
             .desc("initialize cppm dependency project")
-            .call_back([&](){ this->make_dep(); });
+            .args("{name}")
+            .call_back([&](){ Cppkg().app().parse(app_); });
+
     }
 
-    void Init::make_dep() {
-        if(app_.args().size() > 1) { fmt::print(stderr, "too many argument"); exit(1); }
-        package::cppkg::init(app_.get_arg());
-    }
 
     void Init::make_bin() {
         auto config = make_project();
