@@ -3,7 +3,7 @@ Cppm
 ========
 |Linux|Windows|
 |:----|:------|
-[![Linux build status][1]][2]|[![Windows build status][3][4]]
+[![Linux build status][1]][2] | [![Windows build status][3]][4] |
 <!--
 |[![Build Status](https://travis-ci.com/injae/cppm.svg?branch=master)](https://travis-ci.com/injae/cppm)||
 -->
