@@ -37,21 +37,21 @@ include(${MODULE_PATH}/cppm_tool.cmake)
 
 include(cmake/cppm_install.cmake)
 set(thirdparty)
+download_thirdparty(Boost "1.58.0")
+find_package(Boost 1.58.0 COMPONENTS system filesystem REQUIRED)
+list(APPEND thirdparty ${Boost_LIBRARIES})
+
 download_thirdparty(nlpo "")
 find_package(nlpo   REQUIRED)
 list(APPEND thirdparty nlpo::nlpo)
-
-download_thirdparty(fmt "")
-find_package(fmt   REQUIRED)
-list(APPEND thirdparty fmt::fmt)
 
 download_thirdparty(cpptoml "")
 find_package(cpptoml   REQUIRED)
 list(APPEND thirdparty cpptoml)
 
-download_thirdparty(Boost "1.58.0")
-find_package(Boost 1.58.0 COMPONENTS system filesystem REQUIRED)
-list(APPEND thirdparty ${Boost_LIBRARIES})
+download_thirdparty(fmt "")
+find_package(fmt   REQUIRED)
+list(APPEND thirdparty fmt::fmt)
 
 
 
