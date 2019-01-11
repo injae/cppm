@@ -35,9 +35,6 @@ namespace cppm::package
         auto version_ = version == "lastest" ? "" : version;
         return "cmake_minimum_required(VERSION 3.10)\n"
              + "project({0}-{1}-install NONE)\n\n"_format(name, version_)
-             + "#==========================================\n"
-             + "#Header\n"
-             + "#==========================================\n"
              + "find_package({0} {1} QUIET)\n"_format(name, version_)
              + "if(NOT {0}_FOUND AND NOT {0}_FIND_VERSION_EXACT)\n"_format(name)
              + "    include(ExternalProject)\n"
@@ -76,9 +73,6 @@ namespace cppm::package
              + "        )\n"
              + "    endif(NOT WIN32)\n"
              + "endif()\n"
-             + "#==========================================\n"
-             + "#Footer\n"
-             + "#==========================================\n\n"
              ;
     }
 namespace cppkg {

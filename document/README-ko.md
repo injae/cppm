@@ -126,19 +126,27 @@ nlpo    = {module = "nlpo::nlpo}"
 cmake dependencies auto install package
 
 ## Cppkg Structure
-Example) Nlpo
-. nlpo
+Example: exam
+. exam
 +-- cppkg.toml  # cppkg config
-+-- nlpo.cmake.in # cppkg library auto installer
-+-- FindNlpo.cmake # Find{lib}.cmake module
++-- eaxm.cmake.in # cppkg library auto installer
++-- FindExam.cmake # Find{lib}.cmake module
 
 ## Usage
 cppm.toml
-Example) Nlpo
+Example: exam
+```
+cppm search
+```
+add this option in cppm.toml
+cppm.toml
 ```
 [dependencies]
-nlpo = {module="nlpo", version="lastest", findlib}
+exam = {module="exam::exam", version="lastest"}
 ```
+
+
+
 
 
 
