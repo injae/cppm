@@ -126,27 +126,106 @@ nlpo    = {module = "nlpo::nlpo}"
 cmake dependencies auto install package
 
 ## Cppkg Structure
-Example: exam
-. exam
-+-- cppkg.toml  # cppkg config
-+-- eaxm.cmake.in # cppkg library auto installer
-+-- FindExam.cmake # Find{lib}.cmake module
 
 ## Usage
-cppm.toml
+### Add dependencies
 Example: exam
+search package
 ```
 cppm search
+Name           Version             Description                             Use                                                                   
+=================================================================================================================================================
+exam           lastest             example package                         exam = {module="exam::exam", version="lastest"}
 ```
 add this option in cppm.toml
+
 cppm.toml
 ```
 [dependencies]
 exam = {module="exam::exam", version="lastest"}
 ```
+if can't find package
+add new package in local repo
 
+```
+cppm init -d exam
+```
+and edit exam.toml file
 
+exam.toml
+``` 
+[package]
+    name     = "exam"
+    version  = "lastest" # git repo version is lastest
+    description = "cppkg example"
+    cmake    = {name = {exam cmake library name}}
+    download = {git="{git repo}"} # or url
+```
+build exam.toml
+```
+cppm build -D exam
+```
+Result
+```
+. exam
++-- lastest/
+|   +-- cppkg.toml  # == exam.toml
+|   +-- eaxm.cmake.in # cppkg library auto installer
++-- {other version}
+```
+add other options in cppkg.toml and eaxm.cmake.in
 
+cppkg.toml
+```
+[package]
+    name     = "exam"
+    version  = "lastest" # git repo version is lastest
+    description = "cppkg example"
+    cmake    = {name = {exam cmake library name}, finlib={Findlib.cmake file}}
+    download = {git="{git repo}"} # or url
+```
+cmake.findlib options value auto install your project cmake/Modules path
+Find{name}.cmake is none cmake project finder
+
+exam.cmake.in
+```
+cmake_minimum_required(VERSION 3.10)
+project(exam--install NONE)
+
+find_package(exam QUIET)
+if(NOT exam_FOUND AND NOT exam_FIND_VERSION_EXACT)
+    include(ExternalProject)
+    if(NOT WIN32)
+ # Linux or OSX Setting
+        ExternalProject_Add(
+        exam
+        GIT_REPOSITORY {git repo}
+        SOURCE_DIR repo
+        # Defulat cppkg install path if you want to install global path, remove this options
+        #if you want local install add CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local
+        CMAKE_ARGS "${CMAKE_ARGS}"
+        #CONFIGURE_COMMAND
+        #BUILD_COMMAND 
+        #INSTALL_COMMAND 
+        BUILD_IN_SOURCE true
+        )
+    else(NOT WIN32)
+ # Windows Setting
+        ExternalProject_Add(
+        exam
+        GIT_REPOSITORY {git repo}
+        SOURCE_DIR repo
+        # Defulat cppkg install path if you want to install global path, remove this options
+        #if you want local install add CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local
+        CMAKE_ARGS "${CMAKE_ARGS}"
+        #CONFIGURE_COMMAND
+        #BUILD_COMMAND 
+        #INSTALL_COMMAND 
+        BUILD_IN_SOURCE true
+        )
+    endif(NOT WIN32)
+endif()
+```
 
 
 
