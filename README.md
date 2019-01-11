@@ -1,5 +1,3 @@
-Cppm 
-========
 |Linux|Windows|
 |:----|:------|
 [![Linux build status][1]][2] | [![Windows build status][3]][4] |
@@ -9,12 +7,12 @@ Cppm
 [3]: https://ci.appveyor.com/api/projects/status/6ovjp02higajbxhm?svg=true
 [4]: https://ci.appveyor.com/project/injae/cppm
 
-[한국어](./document/README-ko.md)
-
 Cppm 
 ========
 > c++ cmake project helper
-> cppm.toml 파일을 CMAKE 프로젝트로 변환시켜줍니다.   
+> cppm.toml file convert cmake project   
+
+[한국어](./document/README-ko.md)
 
 Features
 ========
@@ -25,12 +23,6 @@ Features
 - [x] regist cppkg package in local repository (cppm add cppkg {name})
 - [x] cppkg repository update (cppm update)
 - [ ] Cppkg package search caching
-
-## description
-toml file convert CMakelists file
-
-## Goals
-like Rust Cargo 
 
 ## Dependencies
 1. cmake-3.10.0
@@ -47,7 +39,7 @@ if you want to fast install
 use linux package manager
 ### Ubuntu example
 ```
-sudo apt-get install liboost-all-dev #fast install, boost compiler very slow
+sudo apt-get install liboost-all-dev #fast install, boost compile very slow
 ```
 
 ```
@@ -57,8 +49,6 @@ sudo cmake -H. -Bbuild
 sudo cmake --build . --target install
 ```
 
-Document
-========
 # cppm.toml
 ## package
 ```
@@ -121,35 +111,33 @@ nlpo    = {module = "nlpo::nlpo}"
 ```
 
 # Cppkg
-cmake dependencies auto install package
-
-## Cppkg Structure
+> cmake dependencies auto install package
 
 ## Usage
 ### Add dependencies
-Example: exam
-search package
-default cppm use package repo => [cppkg](https://github.com/injae/cppkg.git)
+Example: exam  
+default cppm use package repo => [cppkg](https://github.com/injae/cppkg.git)  
+1. search package  
 ```
 cppm search
 Name           Version             Description                             Use                                                                   
 =================================================================================================================================================
 exam           lastest             example package                         exam = {module="exam::exam", version="lastest"}
 ```
-add this option in cppm.toml
+2. add this option in cppm.toml
 
 cppm.toml
 ```
 [dependencies]
 exam = {module="exam::exam", version="lastest"}
 ```
-if can't find package
-add new package in local repo
+
+1. if you can't find package add new package in local repo
 
 ```
-cppm init -d exam
+cppm init dep exam
 ```
-and edit exam.toml file
+2. edit exam.toml file
 
 exam.toml
 ``` 
@@ -160,7 +148,7 @@ exam.toml
     cmake    = {name = {exam cmake library name}}
     download = {git="{git repo}"} # or url
 ```
-build exam.toml
+3. build exam.toml
 ```
 cppm build -D exam
 ```
@@ -172,9 +160,9 @@ Result
 |   +-- eaxm.cmake.in # cppkg library auto installer
 +-- {other version}
 ```
-add other options in cppkg.toml and eaxm.cmake.in
+4. add other options in cppkg.toml and eaxm.cmake.in
 
-cppkg.toml
+### cppkg.toml
 ```
 [package]
     name     = "exam"
@@ -183,8 +171,8 @@ cppkg.toml
     cmake    = {name = {exam cmake library name}, finlib={Findlib.cmake file}}
     download = {git="{git repo}"} # or url
 ```
-cmake.findlib options value auto install your project cmake/Modules path
-Find{name}.cmake is none cmake project finder
+cmake.findlib options value auto install your project cmake/Modules path  
+Find{name}.cmake is none cmake project finder  
 
 exam.cmake.in
 ```
@@ -225,8 +213,15 @@ if(NOT exam_FOUND AND NOT exam_FIND_VERSION_EXACT)
     endif(NOT WIN32)
 endif()
 ```
-
-
-
+5. add your local cppkg repository
+```
+cppm add cppkg exam
+```
+if dependency is cmake base project, you can add too simple
+```
+cppm init dep -g {git repo} -m exam::exam -r exam # git repo default version is lastest
+# or
+cppm init dep -u {zip url} -v {version} -m exam::exam -r exam # url is not have default version, need version
+```
 
 
