@@ -78,10 +78,8 @@ option   = ""        # 빌드할 때 사용할 CMake 옵션입니다. 예시 -DC
 여기서 설정한 옵션은 CMakeLists.txt에 저장이 됩니다.
 ```
 [compiler]
-clang++ = {option = "" ## compiler options
-          ,version = "7.0"}      ## compiler minimum version
-g++ = {option = "" ## compiler options
-          ,version = "7.0"}      ## compiler minimum version
+clang++ = {option = ""} ## compiler options
+g++ = {option = ""} ## compiler options
 ```
 ## bin
 Binary 프로젝트 설정  
