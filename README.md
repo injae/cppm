@@ -132,12 +132,12 @@ cppm.toml
 exam = {module="exam::exam", version="lastest"}
 ```
 
-1. if you can't find package add new package in local repo
+if you can't find package add new package in local repo
 
 ```
 cppm init dep exam
 ```
-2. edit exam.toml file
+1. edit exam.toml file
 
 exam.toml
 ``` 
@@ -148,7 +148,7 @@ exam.toml
     cmake    = {name = {exam cmake library name}}
     download = {git="{git repo}"} # or url
 ```
-3. build exam.toml
+2. build exam.toml
 ```
 cppm build -D exam
 ```
@@ -160,7 +160,7 @@ Result
 |   +-- eaxm.cmake.in # cppkg library auto installer
 +-- {other version}
 ```
-4. add other options in cppkg.toml and eaxm.cmake.in
+3. add other options in cppkg.toml and eaxm.cmake.in
 
 ### cppkg.toml
 ```
@@ -213,7 +213,7 @@ if(NOT exam_FOUND AND NOT exam_FIND_VERSION_EXACT)
     endif(NOT WIN32)
 endif()
 ```
-5. add your local cppkg repository
+4. add your local cppkg repository
 ```
 cppm add cppkg exam
 ```
