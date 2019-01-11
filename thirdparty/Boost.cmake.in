@@ -31,7 +31,7 @@ if(NOT Boost_FOUND AND NOT Boost_FIND_VERSION_EXACT)
         SOURCE_DIR repo
         CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local "
         CONFIGURE_COMMAND cmd boostrap.bat 
-        BUILD_COMMAND b2 toolset=msvc-14.0
+        BUILD_COMMAND bjam
         #INSTALL_COMMAND 
         BUILD_IN_SOURCE true
         )
