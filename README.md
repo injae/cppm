@@ -217,11 +217,13 @@ endif()
 ```
 cppm add cppkg exam
 ```
-if dependency is cmake base project, you can add too simple
+if dependency is cmake base project, you can add too simple  
+git repo default version is lastest  
+url is not have default version, need version  
 ```
-cppm init dep -g {git repo} -m exam::exam -r exam # git repo default version is lastest
-# or
-cppm init dep -u {zip url} -v {version} -m exam::exam -r exam # url is not have default version, need version
+cppm init dep -g {git repo} -m exam::exam -r exam
+#or
+cppm init dep -u {zip url} -v {version} -m exam::exam -r exam 
 ```
 
 
