@@ -44,6 +44,14 @@ namespace cppm::option
                 cmd.cmake_option += " -G Ninja ";
                 app_.call_default();
             });
+        app_.add_option("Generator")
+            .abbr("G")
+            .desc("cmake -G option")
+            .args("{Generator}")
+            .call_back([&](){
+                cmd.cmake_option += " -G {}"_format(app_.get_arg());
+                app_.call_default();
+            });
         app_.add_option("make")
             .abbr("m")
             .desc("Unix make use to build this option remove build directory")

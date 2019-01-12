@@ -10,7 +10,8 @@ namespace cppm
     {
         using table_ptr = std::shared_ptr<cpptoml::table>;
         std::string name;
-        std::string cmake_name;
+        std::string module;
+        bool none_module;
         std::string version;
         std::string components;
         void insert(table_ptr table);

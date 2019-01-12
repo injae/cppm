@@ -57,9 +57,8 @@ namespace cppm
              + "\n"
              + "list(APPEND CMAKE_PREFIX_PATH \"$ENV{HOME}/.cppm/local/lib/cmake\")\n"
              + "list(APPEND CMAKE_PREFIX_PATH \"$ENV{HOME}/.cppm/local/lib/pkgconfig\")\n"
-             + "include(${MODULE_PATH}/cppm_tool.cmake)\n"
+             + "include(${MODULE_PATH}/cppm_tool.cmake)"
              + cmake.generate()
-             + "set(thirdparty)\n"
              + dependencies.gen_find_package()
              + "\n"
              + libs.generate(*this)

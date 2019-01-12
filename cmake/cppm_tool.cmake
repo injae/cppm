@@ -1,4 +1,3 @@
-
 macro(download_thirdparty name version)
    find_package(${name} ${version} QUIET)
    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/${name}.cmake.in)# AND NOT ${name}_FOUND AND NOT ${name}_FIND_VERSION_EXACT)
@@ -6,6 +5,33 @@ macro(download_thirdparty name version)
       execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name})
       execute_process(COMMAND cmake  --build . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name} )
    endif()
+endmacro()
+
+macro(find_cppkg)
+    if(NOT DEFINED thirdparty)
+      set(thirdparty "")
+    endif()
+    set(options)
+    set(oneValueArg)
+    set(multiValueArgs COMPONENTS MODULE)
+    cmake_parse_arguments(ARG "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+    list(GET ARG_UNPARSED_ARGUMENTS 0 name)
+    list(GET ARG_UNPARSED_ARGUMENTS 1 version)
+    if(version STREQUAL "lastest")
+      set(version "")
+    endif()
+    if(DEFINED ARG_COMPONENTS)
+      find_package(${name} ${version} COMPONENTS ${ARG_COMPONENTS} QUIET)
+    else()
+      find_package(${name} ${version} QUIET)
+    endif()
+
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/${name}.cmake.in)
+       configure_file(thirdparty/${name}.cmake.in ${CMAKE_BINARY_DIR}/thirdparty/${name}/CMakeLists.txt)
+       execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name})
+       execute_process(COMMAND cmake  --build . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name} )
+   endif()
+    list(APPEND thirdparty ${ARG_MODULE})
 endmacro()
 
 function(library_var_maker name)
@@ -18,44 +44,21 @@ function(library_var_maker name)
     endif()
 endfunction()
 
-function(target_include name type)
+function(cppm_target_install)
+    set(options BINARY STATIC SHARED INTERFACE INSTALL)
+    set(oneValueArgs)
+    set(multiValueArgs)
+    cmake_parse_arguments(ARG "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+    list(GET ARG_UNPARSED_ARGUMENTS 0 name)
     library_var_maker(${name})
-    if(${type} MATCHES "BINARY")
-        target_include_directories(${name}
-            PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include
-            PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
-        )
-        install(TARGETS ${name} RUNTIME DESTINATION bin)
-    elseif(${type} MATCHES "STATIC" OR ${type} MATCHES "SHARED")
-        target_include_directories(${name}
-            PUBLIC
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_include_dir}>
-                $<INSTALL_INTERFACE:include>
-            PRIVATE
-                ${CMAKE_CURRENT_SOURCE_DIR}/${lib_source_dir}
-        )
-    elseif(${type} MATCHES "INTERFACE") # SAME HEADER_ONLY
-        target_include_directories(${name}
-            INTERFACE
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_include_dir}>
-                $<INSTALL_INTERFACE:include>
-        )
-    else()
-        message(FATAL_ERROR "Wrong Type Need SHARED or STATIC or INTERFACE or BINARY")   
-    endif()
-endfunction()
+    target_link_libraries(${name} PUBLIC ${thirdparty})
 
-function(target_install name type install)
-    library_var_maker(${name})
-    if(${type} MATCHES "BINARY")
+    if(${ARG_BINARY})
         target_include_directories(${name}
             PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include
             PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
         )
-        if(${install} MATCHES "TRUE" )
-            install(TARGETS ${name} RUNTIME DESTINATION bin)
-        endif(${install} MATCHES "TRUE")
-    elseif(${type} MATCHES "STATIC" OR ${type} MATCHES "SHARED")
+    elseif(${ARG_STATIC} OR ${ARG_SHARED})
         target_include_directories(${name}
             PUBLIC
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_include_dir}>
@@ -63,16 +66,18 @@ function(target_install name type install)
             PRIVATE
                 ${CMAKE_CURRENT_SOURCE_DIR}/${lib_source_dir}
         )
-    elseif(${type} MATCHES "INTERFACE") # SAME HEADER_ONLY
+    elseif(${ARG_INTERFACE})
         target_include_directories(${name}
             INTERFACE
                 $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_include_dir}>
                 $<INSTALL_INTERFACE:include>
         )
-    else()
-        message(FATAL_ERROR "Wrong Type Need SHARED or STATIC or INTERFACE or BINARY")   
     endif()
-    if(${type} MATCHES "INTERFACE" OR ${type} MATCHES "SHARED" OR ${type} MATCHES "STATIC" AND ${install} MATCHES "TRUE")
+
+    if(${ARG_BINARY} OR ${ARG_INSTALL})
+        install(TARGETS ${name} RUNTIME DESTINATION bin)
+    endif()
+    if(${ARG_STATIC} OR ${ARG_SHARED} OR ${ARG_INTERFACE} AND ${ARG_INSTALL})
         install(TARGETS ${name} EXPORT ${PROJECT_NAME}-targets
             ARCHIVE DESTINATION lib 
             LIBRARY DESTINATION lib
@@ -98,87 +103,8 @@ function(target_install name type install)
           DESTINATION lib/cmake/${CMAKE_PROJECT_NAME}
         )
     endif()
-
 endfunction()
 
-function(build_binary name dependencies)
-    target_include_directories(${name}
-        PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
-    )
-    target_link_libraries(${name} PUBLIC ${dependencies})
-    #set_target_properties(${name} PROPERTIES LINKER_LANGUAGE CXX)
-    install(TARGETS ${name} RUNTIME DESTINATION bin)
-endfunction()
-
-function(build_library name type source dependencies)
-    library_var_maker(${name})
-
-    if(${type} MATCHES "static")
-        add_library(${name} STATIC ${source})
-        target_link_libraries(${name} ${dependencies})
-        set_target_properties(${name} PROPERTIES LINKER_LANGUAGE CXX)
-        
-    elseif(${type} MATCHES "header_only")
-        add_library(${name} INTERFACE)
-        target_link_libraries(${name} INTERFACE ${dependencies})
-        
-    else()
-        add_library(${name} SHARED ${source}) 
-        target_link_libraries(${name} ${dependencies})
-        set_target_properties(${name} PROPERTIES LINKER_LANGUAGE CXX)
-    endif()
-    
-    if(NOT ${name} MATCHES ${CMAKE_PROJECT_NAME})
-        set_target_properties(${name} PROPERTIES PREFIX "lib${PROJECT_NAME}-")
-    endif()
-    
-    if(${type} MATCHES "header_only")
-        target_include_directories(${name}
-            INTERFACE
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_include_dir}>
-        )
-        target_include_directories(${name}
-            SYSTEM INTERFACE 
-                $<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include>
-        )
-    else()
-        target_include_directories(${name}
-            PUBLIC
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_include_dir}>
-                $<INSTALL_INTERFACE:include>
-            PRIVATE
-                ${CMAKE_CURRENT_SOURCE_DIR}/${lib_source_dir}
-        )
-    endif()
-    
-    include(GNUInstallDirs)
-    install(TARGETS ${name} EXPORT ${PROJECT_NAME}-targets
-        ARCHIVE DESTINATION lib 
-        LIBRARY DESTINATION lib
-        RUNTIME DESTINATION bin
-    )
-    install(DIRECTORY include/ DESTINATION include)
-    
-    install(EXPORT ${CMAKE_PROJECT_NAME}-targets
-        FILE ${CMAKE_PROJECT_NAME}-config.cmake
-        NAMESPACE ${CMAKE_PROJECT_NAME}::
-        DESTINATION lib/cmake/${CMAKE_PROJECT_NAME}
-    )
-    
-    # project-config-version install part
-    include(CMakePackageConfigHelpers)
-    write_basic_package_version_file(
-      ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}-config-version.cmake
-      VERSION ${${CMAKE_PROJECT_NAME}_VERSION}
-      COMPATIBILITY ExactVersion
-    ) 
-    
-    install(FILES
-      ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}-config-version.cmake
-      DESTINATION lib/cmake/${CMAKE_PROJECT_NAME}
-    )
-    # ===================================
     
     # pkg-config install part
     
@@ -198,10 +124,6 @@ function(build_library name type source dependencies)
     #    ${PKGCONFIG_INSTALL_DIR}
     # )
     
-    
-    
-    # ==================================
-endfunction()
       
     
     # set(INSTALL_LIB_DIR "${CMAKE_INSTALL_PREFIX}/lib" CACHE PATH "Installation directory for libraries")

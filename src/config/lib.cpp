@@ -43,8 +43,7 @@ namespace cppm
                 gen += "target_sources({0}\n\tPRIVATE {1}\n)\n"_format(lib.name, util::accumulate(sources, "\n\t"));
                 gen += "set_target_properties({0} PROPERTIES LINKER_LANGUAGE CXX)\n"_format(lib.name);
             }
-            gen += "target_link_libraries({0} PUBLIC {1})"_format(lib.name , var("thirdparty"));
-            gen += "\n\ntarget_install({0} {1} {2})\n"_format(lib.name, lib_type(lib.type), lib.install ? "TRUE" : "FALSE");
+            gen += "\n\ncppm_target_install({0} {1} {2})\n"_format(lib.name, lib_type(lib.type), lib.install ? "INSTALL" : "");
         }
         return gen;
     }

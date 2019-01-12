@@ -135,7 +135,7 @@ exam = {module="exam::exam", version="lastest"}
 if you can't find package add new package in local repo
 
 ```
-cppm init dep exam
+cppm init cppkg exam
 ```
 1. edit exam.toml file
 
@@ -221,9 +221,9 @@ if dependency is cmake base project, you can add too simple
 git repo default version is lastest  
 url is not have default version, need version  
 ```
-cppm init dep -g {git repo} -m exam::exam -r exam
+cppm init cppkg -g {git repo} -m exam::exam -r exam
 #or
-cppm init dep -u {zip url} -v {version} -m exam::exam -r exam 
+cppm init cppkg -u {zip url} -v {version} -m exam::exam -r exam 
 ```
 
 

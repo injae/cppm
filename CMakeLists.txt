@@ -34,25 +34,11 @@ endif()
 list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/.cppm/local/lib/cmake")
 list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/.cppm/local/lib/pkgconfig")
 include(${MODULE_PATH}/cppm_tool.cmake)
-
 include(cmake/cppm_install.cmake)
-set(thirdparty)
-download_thirdparty(Boost "1.58.0")
-find_package(Boost 1.58.0 COMPONENTS system filesystem REQUIRED)
-list(APPEND thirdparty ${Boost_LIBRARIES})
-
-download_thirdparty(nlpo "")
-find_package(nlpo   REQUIRED)
-list(APPEND thirdparty nlpo::nlpo)
-
-download_thirdparty(cpptoml "")
-find_package(cpptoml   REQUIRED)
-list(APPEND thirdparty cpptoml)
-
-download_thirdparty(fmt "")
-find_package(fmt   REQUIRED)
-list(APPEND thirdparty fmt::fmt)
-
+find_cppkg(Boost 1.58.0 COMPONENTS system filesystem MODULE Boost::filesystem)
+find_cppkg(nlpo lastest  MODULE nlpo::nlpo)
+find_cppkg(cpptoml lastest  MODULE cpptoml)
+find_cppkg(fmt lastest  MODULE fmt::fmt)
 
 
 add_executable(cppm "")
@@ -111,7 +97,7 @@ target_sources(cppm
 	src/package/package.cpp
 	src/package/repo.h
 )
-target_link_libraries(cppm PUBLIC ${thirdparty})
 
-target_install(cppm BINARY TRUE)
+
+cppm_target_install(cppm BINARY INSTALL)
 
