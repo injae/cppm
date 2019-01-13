@@ -30,12 +30,19 @@ init:
 #- if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2013" ( set generator="Visual Studio 12 2013%arch%" )
 - echo %generator%
 
+cache:
+  - c:\Tools\vcpkg\installed
+
+install:
+  - vcpkg install boost
+
 before_build:
 - cmd: |-
+    echo $HOME
     mkdir build
     cd build
     cmake --version
-    cmake .. -G %generator%
+    cmake -G %generator% -DCMAKE_TOOLCHAIN_FILE=c:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
 build:
   project: c:\projects\cppm\build\template.sln
   verbosity: minimal
