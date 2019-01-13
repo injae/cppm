@@ -58,11 +58,7 @@ namespace cppm::option
             fmt::print("cppm_path: "); 
             std::string path;
             std::cin >> path;
-            app_.args().push_back("config");
-            app_.args().push_back("add");
-            app_.args().push_back("cppm_path");
-            app_.args().push_back(path);
-            return;
+            CppmPackage::add_cppm_path(path);
         }
         system("cd {} && git pull && cppm build install"_format(config.cppm_path).c_str());
     }

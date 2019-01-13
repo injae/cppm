@@ -36,7 +36,7 @@ namespace cppm::option
 
     void Cppkg::_update() {
         using namespace fmt::literals;
-       auto cppkg_path = "{0}/.cppm/repo/cppkg"_format(getenv("HOME"));
+        auto cppkg_path = "{0}/.cppm/repo/cppkg"_format(getenv("HOME"));
         auto command = "cd {0} && git pull"_format(cppkg_path);
         system(command.c_str());
     }
