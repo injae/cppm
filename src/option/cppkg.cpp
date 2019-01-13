@@ -1,5 +1,6 @@
 #include "option/cppkg.h"
 #include "package/package.h"
+#include "option/cppkg_init.h"
 
 #include <fmt/format.h>
 
@@ -12,44 +13,69 @@ namespace cppm::option
             .abbr("h")
             .desc("show cppm command and options")
             .call_back([&](){ app_.show_help(); });
-        app_.add_option("git")
-            .abbr("g")
-            .desc("add git repo")
-            .args("{repo}")
-            .call_back([&](){ pkg.download.git.url = app_.get_arg();
-                              pkg.version = "lastest";});
-        app_.add_option("url")
-            .abbr("u")
-            .desc("add url repo Require --version")
-            .args("{url}")
-            .call_back([&](){ pkg.download.url = app_.get_arg(); });
-        app_.add_option("module")
-            .abbr("m")
-            .desc("add module name")
-            .args("{module}")
-            .call_back([&](){ pkg.cmake.name = app_.get_arg(); });
-        app_.add_option("v")
-            .abbr("u")
-            .desc("add library version Require --url")
-            .args("{version}")
-            .call_back([&](){ pkg.version = app_.get_arg(); });
-        app_.add_option("regist")
-            .desc("cmake base library install to local cppkg repo, Require --url or --git")
-            .abbr("r")
-            .call_back([&](){ regist = true; });
-        app_.add_command()
+        app_.add_command("init")
+            .desc("init cppkg")
+            .args("{option} {name}")
+            .call_back([&](){ CppkgInit().app().parse(app_); });
+        app_.add_command("build")
+            .desc("build cppm package file")
+            .args("{cppkg name}")
+            .call_back([&](){ _build(); });
+        app_.add_command("update")
+            .desc("update cppkg repo")
+            .call_back([&](){ _update(); });
+        app_.add_command("search")
+            .desc("search cppkg repo, default is show all")
             .args("{name}")
-            .call_back([&](){
-                if(app_.args().size() > 1) { fmt::print(stderr, "too many argument"); exit(1); }
-                if(!regist) package::cppkg::init(app_.get_arg());
-                if(pkg.download.git.url == ""
-                   && pkg.download.url == "") {fmt::print(stderr,"need --url or --git"); exit(1);}
-                if(pkg.version    == "") {fmt::print(stderr,"need --version"); exit(1);}
-                if(pkg.cmake.name == "") {fmt::print(stderr,"need --module"); exit(1);}
-                pkg.name = app_.get_arg();
-                package::cppkg::init(pkg);
-                package::cppkg::build("{0}"_format(pkg.name));
-                package::cppkg::regist("{0}/{1}"_format(pkg.name,pkg.version));
-            });
+            .call_back([&](){ _search(); });
+        app_.add_command("push")
+            .desc("push cppkg in local repo")
+            .args("{name}")
+            .call_back([&](){ _push(); });
+    }
+
+    void Cppkg::_update() {
+        using namespace fmt::literals;
+       auto cppkg_path = "{0}/.cppm/repo/cppkg"_format(getenv("HOME"));
+        auto command = "cd {0} && git pull"_format(cppkg_path);
+        system(command.c_str());
+    }
+
+    void Cppkg::_build() {
+        if(app_.args().empty())    { fmt::print(stderr,"need argument");     exit(1);}
+        if(app_.args().size() > 1) { fmt::print(stderr,"too many argument"); exit(1);}
+        package::cppkg::build(app_.get_arg());
+    }
+
+    void Cppkg::_push() {
+        if(app_.args().empty())    { fmt::print(stderr,"need argument");}
+        if(app_.args().size() > 1) { fmt::print(stderr,"too many argument");}
+        package::cppkg::regist(app_.get_arg());
+    }
+
+    void Cppkg::_search() {
+        using namespace fmt::literals;
+        auto list = package::cppkg::list();
+        fmt::print("{:<15}{:<20}{:<40}{:<70}\n", "Name", "Version","Description","Use");
+        fmt::print("{:=<15}{:=<20}{:=<40}{:=<70}\n", "=", "=","=","=");
+        std::string arg;
+        if(!app_.args().empty()){ arg = app_.get_arg(); }
+        for(auto& [rname, repo] : list.repos) {
+            for(auto& [pname, pkg] : repo.pkgs) {
+                for(auto& [vname, ver] : pkg.versions) {
+                    package::Package package;
+                    package.parse(cpptoml::parse_file("{0}/{1}"_format(ver,"cppkg.toml")));
+                    if(!arg.empty()) {
+                        if(   pname.find(arg) == std::string::npos
+                           && package.description.find(arg) == std::string::npos)  {break;}
+                    }
+                    auto component = package.cmake.components != ""
+                                   ? " components=\"{0}\""_format(package.cmake.components) : "";
+                    auto use = "{0}={{module=\"{1}\", version=\"{2}\"{3}}}"_format
+                                (package.name, package.cmake.name, package.version, component);
+                    fmt::print("{:<15}{:<20}{:<40}{:<70}\n", pname, std::string(vname), package.description, use);
+                }
+            }
+        }
     }
 }

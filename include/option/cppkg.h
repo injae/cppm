@@ -11,8 +11,10 @@ namespace cppm::option
     public:
         Cppkg();
     private:
-        package::Package pkg;
-        bool regist = false;
+        void _search();
+        void _update();
+        void _build();
+        void _push();
     };
 }
 

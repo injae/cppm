@@ -13,8 +13,8 @@ namespace cppm::option
     public:
         Add();
     private:
-        void toolchain();
-        void dependencies();
+        void _toolchain();
+        void _cppm_path();
     };
 }
 

@@ -31,11 +31,6 @@ namespace cppm::option
             .abbr("h")
             .desc("show cppm commands and options")
             .call_back([&](){ app_.show_help(); });
-        app_.add_option("dep")
-            .abbr("D")
-            .desc("build cppm package file")
-            .args("{cppkg name}")
-            .call_back([&](){ dep(); });
         app_.add_option("ninja")
             .abbr("n")
             .desc("ninja use to build this option remove build directory")
@@ -132,12 +127,6 @@ namespace cppm::option
             auto path = cppkg::search(dep.name, dep.version);
             cppkg::install(config_,path);
         }
-    }
-
-    void Build::dep() {
-        if(app_.args().empty())    { fmt::print(stderr,"need argument");     exit(1);}
-        if(app_.args().size() > 1) { fmt::print(stderr,"too many argument"); exit(1);}
-        package::cppkg::build(app_.get_arg());
     }
 
     void Build::cmakelist_build()

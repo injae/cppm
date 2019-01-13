@@ -14,8 +14,6 @@ namespace cppm::option
     private:
         void _run();
         void _update();
-        void _search();
-    private:
     };
 }
 

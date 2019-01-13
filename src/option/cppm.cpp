@@ -1,12 +1,15 @@
 #include <string>
+#include <iostream>
 
 #include "option/cppm.h"
 #include "util/filesystem.h"
 #include "util/algorithm.hpp"
 #include "option/build.h"
 #include "option/init.h"
-#include "option/add.h"
+#include "option/cppm_config.h"
 #include "package/package.h"
+#include "config/cppm_package.h"
+#include "option/cppkg.h"
 
 #include <fmt/format.h>
 
@@ -17,18 +20,15 @@ namespace cppm::option
             .abbr("h")
             .desc("show cppm commands and options")
             .call_back([&](){ app_.show_help(); });
-        app_.add_command("add")
-            .desc("add cppm config")
-            .call_back([&](){ Add().app().parse(app_); });
+        app_.add_command("config")
+            .desc("cppm config setting")
+            .call_back([&](){ CppmConfig().app().parse(app_); });
         app_.add_command("init")
             .desc("make c++ project")
             .call_back([&](){ Init().app().parse(app_); });
         app_.add_command("update")
-            .desc("update cppkg repos")
+            .desc("update cppm version")
             .call_back([&](){ _update(); });
-        app_.add_command("search")
-            .desc("search cppkg")
-            .call_back([&](){ _search(); });
         app_.add_command("build")
             .desc("make CmakeLists.txt and project build")
             .call_back([&](){ Build().app().parse(app_); });
@@ -36,6 +36,9 @@ namespace cppm::option
             .desc("run binary file(run build/{project_name}) argument is binary argument")
             .args("{binary options}")
             .call_back([&](){ _run(); });
+        app_.add_command("cppkg")
+            .desc("cppkg option and commands")
+            .call_back([&](){ Cppkg().app().parse(app_); });
     } 
 
     void Cppm::_run() {
@@ -48,30 +51,22 @@ namespace cppm::option
 
     void Cppm::_update() {
         using namespace fmt::literals;
-        auto cppkg_path = "{0}/.cppm/repo/cppkg"_format(getenv("HOME"));
-        auto command = "cd {0} && git pull"_format(cppkg_path);
-        system(command.c_str());
+        CppmPackage config;
+        config.parse(cpptoml::parse_file(CppmPackage::config_path()));
+        if(config.cppm_path.empty()) {
+            fmt::print("this commmand need to cppm path\n");
+            fmt::print("cppm_path: "); 
+            std::string path;
+            std::cin >> path;
+            app_.args().push_back("config");
+            app_.args().push_back("add");
+            app_.args().push_back("cppm_path");
+            app_.args().push_back(path);
+            return;
+        }
+        system("cd {} && git pull && cppm build install"_format(config.cppm_path).c_str());
     }
 
-    void Cppm::_search() {
-        using namespace fmt::literals;
-        auto list = package::cppkg::list();
-        fmt::print("{:<15}{:<20}{:<40}{:<70}\n", "Name", "Version","Description","Use");
-        fmt::print("{:=<15}{:=<20}{:=<40}{:=<70}\n", "=", "=","=","=");
-        for(auto& [rname, repo] : list.repos) {
-            for(auto& [pname, pkg] : repo.pkgs) {
-                for(auto& [vname, ver] : pkg.versions) {
-                    package::Package package;
-                    package.parse(cpptoml::parse_file("{0}/{1}"_format(ver,"cppkg.toml")));
-                    auto component = package.cmake.components != ""
-                                   ? " components=\"{0}\""_format(package.cmake.components) : "";
-                    auto use = "{0}={{module=\"{1}\", version=\"{2}\"{3}}}"_format
-                                (package.name, package.cmake.name, package.version, component);
-                    fmt::print("{:<15}{:<20}{:<40}{:<70}\n", pname, std::string(vname), package.description, use);
-                }
-            }
-        }
-    }
     void Cppm::run(int argc, char **argv) {
         app_.parse(argc, argv);
     }

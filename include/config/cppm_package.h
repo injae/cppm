@@ -12,9 +12,12 @@ namespace cppm
     public:
         void parse(table_ptr table);
         static void add_toolchain(const std::string& toolchain);
+        static void add_cppm_path(const std::string& path);
+        static std::string config_path();
         std::string toolchains();
-    private:
+    public:
         std::vector<std::string> tool_chains;
+        std::string cppm_path;
     };
 }
 

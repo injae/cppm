@@ -10,8 +10,13 @@ namespace cppm
     void CppmPackage::parse(table_ptr table) {
         if(auto config = table->get_table("config")) {
             auto source = config->get_array_of<std::string>("toolchains");
-            if(source) for(const auto& src : *source) {tool_chains.push_back(src);} 
+            if(source)for(const auto& src : *source) {tool_chains.push_back(src);} 
+            cppm_path = config->get_as<std::string>("cppm_path").value_or("");
         }
+    }
+    std::string CppmPackage::config_path() {
+        auto home = std::string(std::getenv("HOME"));
+        return home +"/.cppm/config.toml";
     }
     std::string CppmPackage::toolchains() {
         return util::accumulate(tool_chains, ",").erase(0,1);
@@ -32,5 +37,19 @@ namespace cppm
         std::fstream file(config_path);
         file << *table;
         file.close();
+    }
+    void CppmPackage::add_cppm_path(const std::string& path) {
+        auto home = std::string(std::getenv("HOME"));
+        auto config_path = home +"/.cppm/config.toml";
+        util::create(config_path);
+        auto table = cpptoml::parse_file(config_path);
+        auto config = table->get_table("config");
+        if(!config) config = cpptoml::make_table();
+        config->insert("cppm_path", cpptoml::make_value(path));
+        table->insert("config", config);
+        std::fstream file(config_path);
+        file << *table;
+        file.close();
+        
     }
 }

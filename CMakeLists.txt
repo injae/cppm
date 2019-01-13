@@ -58,11 +58,13 @@ target_sources(cppm
 	include/config/compiler.h
 	include/config/cppm_config.h
 	include/option/add.h
+	include/option/cppkg_init.h
 	include/option/build.h
 	include/option/cppkg.h
 	include/option/install.h
 	include/option/init.h
 	include/option/base_option.h
+	include/option/cppm_config.h
 	include/option/cppm.h
 	include/util/cmake.h
 	include/util/hash.hpp
@@ -85,6 +87,8 @@ target_sources(cppm
 	src/config/lib.cpp
 	src/option/add.cpp
 	src/option/init.cpp
+	src/option/cppkg_init.cpp
+	src/option/cppm_config.cpp
 	src/option/install.cpp
 	src/option/cppm.cpp
 	src/option/cppkg.cpp

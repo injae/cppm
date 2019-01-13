@@ -22,7 +22,6 @@ Features
 - [x] cmake project initialize (cppm init {options} {name})
 - [x] regist cppkg package in local repository (cppm add cppkg {name})
 - [x] cppkg repository update (cppm update)
-- [ ] Cppkg package search caching
 
 ## Dependencies
 1. cmake-3.10.0
@@ -34,9 +33,9 @@ Features
 
 ## Installation
 ### Linux
-dependencies is auto install but boost compile is too slow
-if you want to fast install
-use linux package manager
+> dependencies is auto install but boost compile is too slow
+> if you want to fast install
+> use linux package manager
 ### Ubuntu example
 ```
 sudo apt-get install liboost-all-dev #fast install, boost compile very slow
@@ -59,8 +58,7 @@ sudo cmake --build . --target install
  ```
 
 ### cmake
-cmake setting
-ccache auto use
+> ccache auto use
 ```
 [cmake]
 version  = "3.10"    # cmake minimum version
@@ -68,14 +66,12 @@ option   = ""        # cmake options
 ```
 
 ### compiler
-compiler option setting
 ```
 [compiler]
 clang++ = {option = ""} ## compiler options
 g++     = {option = ""} ## compiler options
 ```
 ### bin
-make binary 
 ```
 [[bin]]
 name   = "cppm" # bin name
@@ -88,7 +84,6 @@ install = # true and false (default => true) value is defulat can't install
 ```
 
 ### lib
-make library
 ```
 [[lib]]
 name   = "nlpo"   # lib name
@@ -97,11 +92,11 @@ source = ["src/.*"] # source files
 install = # true and false (default => true) value is defulat can't install
 ```
 ### dependencies
-add thirdparty library dependencies
-{0} = {module = {1}, version = {2} components = {3}} == find_package({0} {2} components = {2})  
-target_link_libraries("project" PUBLIC {0})  
-{1}: necessary
-{2}: default => lastest
+> add thirdparty library dependencies  
+> {0} = {module = {1}, version = {2} components = {3}} == find_package({0} {2} components = {2})  
+> target_link_libraries("project" PUBLIC {0})  
+> {1}: necessary  
+> {2}: default => lastest  
 ```
 [dependencies]
 cpptoml = {module = "cpptoml"} # cmake option is library name in cmake
@@ -115,11 +110,11 @@ nlpo    = {module = "nlpo::nlpo}"
 
 ## Usage
 ### Add dependencies
-Example: exam  
-default cppm use package repo => [cppkg](https://github.com/injae/cppkg.git)  
+> xample: exam  
+> default cppm use package repo => [cppkg](https://github.com/injae/cppkg.git)  
 1. search package  
 ```
-cppm search
+cppm cppkg search exam
 Name           Version             Description                             Use                                                                   
 =================================================================================================================================================
 exam           lastest             example package                         exam = {module="exam::exam", version="lastest"}
@@ -135,7 +130,7 @@ exam = {module="exam::exam", version="lastest"}
 if you can't find package add new package in local repo
 
 ```
-cppm init cppkg exam
+cppm cppkg init exam
 ```
 1. edit exam.toml file
 
@@ -150,7 +145,7 @@ exam.toml
 ```
 2. build exam.toml
 ```
-cppm build -D exam
+cppm cppkg build exam
 ```
 Result
 ```
@@ -215,15 +210,15 @@ endif()
 ```
 4. add your local cppkg repository
 ```
-cppm add cppkg exam
+cppm cppkg push exam
 ```
-if dependency is cmake base project, you can add too simple  
-git repo default version is lastest  
-url is not have default version, need version  
+ if dependency is cmake base project, you can add too simple  
+ git repo default version is lastest  
+ url is not have default version, need version  
 ```
-cppm init cppkg -g {git repo} -m exam::exam -r exam
+cppm cppkg init -g {git repo} -m exam::exam -r exam
 #or
-cppm init cppkg -u {zip url} -v {version} -m exam::exam -r exam 
+cppm cppkg init -u {zip url} -v {version} -m exam::exam -r exam 
 ```
 
 

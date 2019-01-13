@@ -23,11 +23,6 @@ namespace cppm::option
             .desc("initialize new c++ library project")
             .args("{name}")
             .call_back([&](){ this->make_lib(); });
-        app_.add_command("cppkg")
-            .desc("initialize cppm dependency project")
-            .args("{name}")
-            .call_back([&](){ Cppkg().app().parse(app_); });
-
     }
 
 
