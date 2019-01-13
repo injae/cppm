@@ -9,6 +9,7 @@
 #include "option/cppm_config.h"
 #include "package/package.h"
 #include "config/cppm_package.h"
+#include "cppm_version.h"
 #include "option/cppkg.h"
 
 #include <fmt/format.h>
@@ -20,6 +21,10 @@ namespace cppm::option
             .abbr("h")
             .desc("show cppm commands and options")
             .call_back([&](){ app_.show_help(); });
+        app_.add_option("version")
+            .abbr("v")
+            .desc("show cppm version")
+            .call_back([&](){ fmt::print("cppm version {}\n", CPPM_VERSION);});
         app_.add_command("config")
             .desc("cppm config setting")
             .call_back([&](){ CppmConfig().app().parse(app_); });
