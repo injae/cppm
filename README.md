@@ -97,10 +97,12 @@ install = # true and false (default => true) value is defulat can't install
 > target_link_libraries("project" PUBLIC {0})  
 > {1}: necessary  
 > {2}: default => lastest  
+> The 'no_module' option is used when target does not have module name 
+> and is linked with cmake value.
 ```
 [dependencies]
 cpptoml = {module = "cpptoml"} # cmake option is library name in cmake
-Boost   = {module = " ${Boost_LIBRARIES}", components="system filesystem", no_module=true}
+Boost   = {module = " ${Boost_LIBRARIES}", components="system filesystem", no_module=true} 
 fmt     = {module = "fmt::fmt"}
 nlpo    = {module = "nlpo::nlpo}"
 ```
