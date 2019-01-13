@@ -129,6 +129,7 @@ exam = {module="exam::exam", version="lastest"}
 
 if you can't find package add new package in local repo
 
+### Generate New Package Auto Installer and Add your local repository
 ```
 cppm cppkg init exam
 ```
