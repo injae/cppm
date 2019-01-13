@@ -74,7 +74,7 @@ function(cppm_target_install)
         )
     endif()
 
-    if(${ARG_BINARY} OR ${ARG_INSTALL})
+    if(${ARG_BINARY} AND ${ARG_INSTALL})
         install(TARGETS ${name} RUNTIME DESTINATION bin)
     endif()
     if(${ARG_STATIC} OR ${ARG_SHARED} OR ${ARG_INTERFACE} AND ${ARG_INSTALL})
