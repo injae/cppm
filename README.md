@@ -9,9 +9,9 @@
 
 Cppm 
 ========
-> c++ cmake project helper
-> cppm.toml file convert cmake project   
-
+> c++ cmake project manger  
+> cppm.toml file convert to CMakeLists.txt file   
+> c++ dependency auto install, only use cmake files  
 [한국어](./document/README-ko.md)
 
 Features
