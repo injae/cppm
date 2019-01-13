@@ -100,7 +100,7 @@ install = # true and false (default => true) value is defulat can't install
 ```
 [dependencies]
 cpptoml = {module = "cpptoml"} # cmake option is library name in cmake
-Boost   = {module = " ${Boost_LIBRARIES}", components="system filesystem"}
+Boost   = {module = " ${Boost_LIBRARIES}", components="system filesystem", no_module=true}
 fmt     = {module = "fmt::fmt"}
 nlpo    = {module = "nlpo::nlpo}"
 ```

@@ -13,7 +13,7 @@ namespace cppm
             auto dep = deps->get_table(dependency.name);
             if(!dep->get_as<std::string>("module")) std::cerr << "need module\n";
             dependency.module = *dep->get_as<std::string>("module");
-            dependency.none_module = dep->get_as<bool>("none_module").value_or(false);
+            dependency.none_module = dep->get_as<bool>("no_module").value_or(false);
             dependency.version     = dep->get_as<std::string>("version").value_or("lastest");
             dependency.components  = dep->get_as<std::string>("components").value_or("");
             list.emplace_back(dependency);
