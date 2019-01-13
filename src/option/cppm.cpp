@@ -59,6 +59,8 @@ namespace cppm::option
             std::string path;
             std::cin >> path;
             CppmPackage::add_cppm_path(path);
+            system("cd {} && git pull && cppm build install"_format(path).c_str());
+            return;
         }
         system("cd {} && git pull && cppm build install"_format(config.cppm_path).c_str());
     }
