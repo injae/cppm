@@ -12,6 +12,7 @@
 #include "config/compiler.h"
 #include "config/dependency.h"
 #include "config/cppm_config.h"
+#include "config/hunter.h"
 
 namespace cppm
 {
@@ -27,11 +28,12 @@ namespace cppm
         Cmake        cmake;
         Bins         bins;
         Libs         libs;
+        Hunter       hunter;
         Package      package;
         Builder      builder;
         Compiler     compiler;
         Dependencies dependencies;
-        CppmConfig  cppm_config;
+        CppmConfig   cppm_config;
     };
 }
 

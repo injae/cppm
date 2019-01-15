@@ -99,6 +99,9 @@ namespace cppm::option
                     fs::copy_file((std::string(std::getenv("HOME")))+"/.cppm/cmake/cppm_tool.cmake"
                                   ,config_.path.cmake +"/cppm_tool.cmake"
                                   ,fs::copy_option::overwrite_if_exists);
+                    fs::copy_file((std::string(std::getenv("HOME")))+"/.cppm/cmake/HunterGate.cmake"
+                                  ,config_.path.cmake +"/HunterGate.cmake"
+                                  ,fs::copy_option::overwrite_if_exists);
                 }
                 if(clean) {
                     fs::remove_all(config_.path.build);
@@ -119,6 +122,7 @@ namespace cppm::option
         std::vector<Dependency> not_installed_dep;
 
         for(auto dep : config_.dependencies.list) {
+            if(dep.hunter) { continue; }
             if(!fs::exists("{0}/{1}.cmake.in"_format(config_.path.thirdparty,dep.name))) {
                 not_installed_dep.push_back(dep);
             }

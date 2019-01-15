@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 
+include(cmake/HunterGate.cmake)
+HunterGate(
+   URL "https://github.com/ruslo/hunter/archive/v0.23.89.tar.gz"
+   SHA1 "a370290a8b32987755a36d64807bf8c7f5b61730"
+)
 project(cppm LANGUAGES CXX VERSION 1.0.0)
 
 set(CMAKE_CXX_STANDARD 17)
@@ -21,9 +26,9 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
 set(MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pthread -fPIC -O0 -g ") 
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pthread -fPIC -O0 -g") 
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")  
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pthread -fPIC -O0 -g ") 
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pthread -fPIC -O0 -g") 
 endif()
 find_program(CCACHE_EXE ccache)
 if(CCACHE_EXE)
@@ -35,10 +40,11 @@ list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/.cppm/local/lib/cmake")
 list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/.cppm/local/lib/pkgconfig")
 include(${MODULE_PATH}/cppm_tool.cmake)
 include(cmake/cppm_install.cmake)
-find_cppkg(Boost 1.58.0 COMPONENTS system filesystem MODULE Boost::filesystem)
-find_cppkg(nlpo lastest  MODULE nlpo::nlpo)
-find_cppkg(cpptoml lastest  MODULE cpptoml)
-find_cppkg(fmt lastest  MODULE fmt::fmt)
+find_cppkg(cppfs lastest  MODULE cppfs::cppfs )
+find_cppkg(Boost 1.58.0 COMPONENTS system filesystem MODULE Boost::filesystem HUNTER)
+find_cppkg(nlpo lastest  MODULE nlpo::nlpo )
+find_cppkg(cpptoml lastest  MODULE cpptoml )
+find_cppkg(fmt lastest  MODULE fmt::fmt )
 
 
 add_executable(cppm "")
@@ -56,6 +62,7 @@ target_sources(cppm
 	include/config/base_config.h
 	include/config/package.h
 	include/config/compiler.h
+	include/config/hunter.h
 	include/config/cppm_config.h
 	include/option/add.h
 	include/option/cppkg_init.h
@@ -76,6 +83,7 @@ target_sources(cppm
 	include/package/package.h
 	src/config/cmake.cpp
 	src/config/package.cpp
+	src/config/hunter.cpp
 	src/config/bin.cpp
 	src/config/builder.cpp
 	src/config/cppm_config.cpp

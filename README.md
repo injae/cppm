@@ -22,9 +22,11 @@ Features
 - [x] cmake project initialize (cppm init {options} {name})
 - [x] regist cppkg package in local repository (cppm add cppkg {name})
 - [x] cppkg repository update (cppm update)
+- [x] hunter package dependency available 
 
 ## Dependencies
 1. cmake-3.10.0
+2. hunter package [hunter](https://github.com/ruslo/hunter)  
 2. c++-17-compiler (g++7 or clang7)
 3. boost
 4. nlpo
@@ -63,6 +65,13 @@ sudo cmake --build . --target install
 [cmake]
 version  = "3.10"    # cmake minimum version
 option   = ""        # cmake options
+```
+### hunter
+> hunter package can use
+```
+[hunter]
+url = "" # default url: https://github.com/ruslo/hunter/archive/v0.23.89.tar.gz
+sha1 =  "" # default sha1: a370290a8b32987755a36d64807bf8c7f5b61730
 ```
 
 ### compiler
@@ -103,7 +112,7 @@ install = # true and false (default => true) value is defulat can't install
 [dependencies]
 cpptoml = {module = "cpptoml"} # cmake option is library name in cmake
 Boost   = {module = " ${Boost_LIBRARIES}", components="system filesystem", no_module=true} 
-fmt     = {module = "fmt::fmt"}
+fmt     = {module = "fmt::fmt" HUNTER} # search and install to use hunter package manager
 nlpo    = {module = "nlpo::nlpo}"
 ```
 

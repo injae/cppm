@@ -3,10 +3,12 @@
 
 #include <optional>
 #include <regex>
-#include <boost/filesystem.hpp>
 #include <fstream>
+#include <string>
 
+#include <boost/filesystem.hpp>
 namespace fs = boost::filesystem;
+
 
 namespace cppm::util
 {
@@ -22,5 +24,6 @@ namespace cppm::util
         file << content;
         file.close();
     }
+    std::string current_dir();
 }
 #endif

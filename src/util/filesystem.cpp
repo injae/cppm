@@ -2,6 +2,14 @@
 #include "util/algorithm.hpp"
 #include <iostream>
 
+#ifdef WINDOWS
+#include <direct.h>
+#define GetCurrentDir _getcwd
+#else
+#include <unistd.h>
+#define GetCurrentDir getcwd
+#endif
+
 namespace cppm::util
 {
     auto file_list(const fs::path& path) -> std::optional<std::vector<fs::directory_entry>> {
@@ -66,12 +74,19 @@ namespace cppm::util
         std::fstream(path, std::ios::out).close();
     }
 
+    std::string current_dir() {
+        char buff[FILENAME_MAX];
+        GetCurrentDir( buff, FILENAME_MAX );
+        std::string current_working_dir(buff);
+        return current_working_dir;
+    }
+
     void recursive_copy(const fs::path &src, const fs::path &dst)
     {
         //if (fs::exists(dst)){throw std::runtime_error(dst.generic_string() + " exists");}
         if (fs::is_directory(src)) {
             fs::create_directories(dst);
-            for (fs::directory_entry& item : fs::directory_iterator(src)) {
+            for (fs::directory_entry item : fs::directory_iterator(src)) {
             recursive_copy(item.path(), dst/item.path().filename());
             }
         } 
