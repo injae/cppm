@@ -10,8 +10,8 @@ include  = ["cmake/cppm_install.cmake"]
 option   = ""
 
 [compiler] 
-clang++ = {option = "-Wall -pthread -fPIC -O0 -g ", version = "7.0"}
-g++     = {option = "-Wall -pthread -fPIC -O0 -g ", version = "7.0"}
+clang++ = {option = "-Wall -pthread -fPIC -O0 -g"}
+g++     = {option = "-Wall -pthread -fPIC -O0 -g"}
 
 [[bin]]
 name   = "cppm"
@@ -21,4 +21,5 @@ source = ["include/.*", "src/.*"]
 cpptoml  = {module = "cpptoml"}
 fmt      = {module = "fmt::fmt"}
 nlpo     = {module = "nlpo::nlpo"}
-Boost    = {module = "Boost::filesystem", version = "1.58.0", components="system filesystem"}
+Boost    = {module = "Boost::filesystem", version = "1.58.0", components="system filesystem", hunter=true}
+cppfs    = {module = "cppfs::cppfs"}

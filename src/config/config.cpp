@@ -15,6 +15,7 @@ namespace cppm
     void Config::parse(table_ptr table) {
         package.parse(table);
         cmake.parse(table);
+        hunter.parse(table);
         builder.parse(table);
         bins.parse(table);
         libs.parse(table);
@@ -31,6 +32,7 @@ namespace cppm
         using namespace fmt::literals;
         return "cmake_minimum_required(VERSION {0})\n"_format("3.10")
              + "\n"
+             + hunter.generate()
              + "project({0} LANGUAGES CXX VERSION {1})\n"_format(package.name, package.version)
              + "\n"
              + "set(CMAKE_CXX_STANDARD {})\n"_format(package.cpp_version)

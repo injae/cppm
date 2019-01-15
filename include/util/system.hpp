@@ -53,27 +53,33 @@ namespace cppm::util::system
     }
 }
 
-namespace nieel::compiler
-{
-    #if   defined(_MSC_VER)
-         #define COMPILER_NAME "msvc"  // visual studio  
-         #define COMPILER_VERSION _MSC_VER
-    #elif defined(__GNUC__)
-	     #define COMPILER_NAME "gcc"   // gcc
-         #define COMPILER_VERSION __GNUC__##__GNUC_MINOR__
-    #elif defined(__clang__)
-	    #define COMPILER_NAME "clang" // clang
-        #define COMPILER_VERSION __clang_major__##__clang_minor__##__clang_patchlevel__
-    #elif defined(__EMSCRIPTEN__)
-        #define COMPILER_NAME "wsm"   // web assembly
-    #elif defined(__MINGW32__) "mingw"  
-	    #define COMPILER_NAME "mingw" // mingw 32bit mingw-w64 32bit
-    #elif defined(__MINGW64__) "mingw" 
-	    #define COMPILER_NAME "mingw" // mingw-w64 64bit
-    #else
-	    #define COMPILER_NAME NULL    // can't find 
-    #endif
+#if   defined(_MSC_VER)
+        #define COMPILER_NAME "msvc"  // visual studio  
+        #define COMPILER_VERSION _MSC_VER
+        #define USE_MSVC
+#elif defined(__GNUC__)
+        #define COMPILER_NAME "gcc"   // gcc
+        #define COMPILER_VERSION __GNUC__##__GNUC_MINOR__
+        #define USE_GCC
+#elif defined(__clang__)
+    #define COMPILER_NAME "clang" // clang
+    #define COMPILER_VERSION __clang_major__##__clang_minor__##__clang_patchlevel__
+        #define USE_CLANG
+#elif defined(__EMSCRIPTEN__)
+    #define COMPILER_NAME "wsm"   // web assembly
+        #define USE_WSM
+#elif defined(__MINGW32__) "mingw"  
+    #define COMPILER_NAME "mingw" // mingw 32bit mingw-w64 32bit
+        #define USE_MINGW32
+#elif defined(__MINGW64__) "mingw" 
+    #define COMPILER_NAME "mingw" // mingw-w64 64bit
+        #define USE_MINGW64
+#else
+    #define COMPILER_NAME NULL    // can't find 
+#endif
 
+namespace cppm::util::compiler
+{
     constexpr const char* what() { return (COMPILER_NAME == NULL) ? "" : COMPILER_NAME; }
 }
 
