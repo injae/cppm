@@ -1,6 +1,6 @@
 [package]
 name    = "cppm"
-version = "1.0.0"
+version = "1.0.1"
 description = "c++ cmake maker use to toml like Cargo"
 c++-version = "17"
 
