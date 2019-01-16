@@ -40,10 +40,12 @@ namespace cppm::package
         if(download.url     != "") url = "URL {0}"_format(download.url);
         
         desc += "# Other Options:\n";
-        desc += "# - Linux Configure:\n";
-        desc += "#    L_CONFIGURE, L_BUILD, L_INSTALL\n";
-        desc += "# - Windows Configure:\n";
-        desc += "#    W_CONFIGURE, W_BUILD, W_INSTALL\n";
+        desc += "# - Linux Configures:\n";
+        desc += "#    L_CONFIGURE {...}, L_BUILD {...}, L_INSTALL {...}\n";
+        desc += "# - Windows Configures:\n";
+        desc += "#    W_CONFIGURE {...}, W_BUILD {...}, W_INSTALL {...}\n";
+        desc += "# - Install Path Options:\n";
+        desc += "#    LOCAL(default) GLOBAL \n";
 
         return "cmake_minimum_required(VERSION 3.10)\n"
              + "project({0}-{1}-install NONE)\n\n"_format(name, version)
