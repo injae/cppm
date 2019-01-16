@@ -5,7 +5,7 @@ HunterGate(
    URL "https://github.com/ruslo/hunter/archive/v0.23.89.tar.gz"
    SHA1 "a370290a8b32987755a36d64807bf8c7f5b61730"
 )
-project(cppm LANGUAGES CXX VERSION 1.0.0)
+project(cppm LANGUAGES CXX VERSION 1.0.1)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
