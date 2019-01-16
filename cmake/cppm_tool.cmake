@@ -128,48 +128,57 @@ function(download_package)
     set(multiValueArgs CMAKE_ARGS W_CONFIGURE W_BUILD W_INSTALL
                                   L_CONFIGURE L_BUILD L_INSTALL)
     cmake_parse_arguments(ARG "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+
     list(GET ARG_UNPARSED_ARGUMENTS 0 name)
     list(GET ARG_UNPARSED_ARGUMENTS 1 version)
-    if(LOCAL)
-      set(_INSTALL_PREFIX "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local ")
-    elseif(GLOBAL)
+    list(REMOVE_AT ARG_UNPARSED_ARGUMENTS 0 1)
+
+    if(ARG_LOCAL)
+      set(L_INSTALL_PREFIX "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local ")
+      set(W_INSTALL_PREFIX "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}\\.cppm\\local ")
+    elseif(ARG_GLOBAL)
       set(_INSTALL_PREFIX "")
     else()
       message(FATAL_ERROR "Need Option LOCAL or GLOBAL")
     endif()
-    if(version STREQUAL "lastest")
+
+    if(${version} STREQUAL "lastest")
       set(version "")
     endif()
+
     include(ExternalProject)
     find_package(Git REQUIRED)
     find_package(${name} ${version} QUIET)
-    if(NOT "${name}_FOUND" AND NOT "${name}_FIND_VERSION_EXACT")
+    if(NOT "${${name}_FOUND}" AND NOT "${${name}_FIND_VERSION_EXACT}")
         if(NOT WIN32)
           ExternalProject_Add(
             ${name}
             URL ${ARG_URL}
-            GIT ${ARG_GIT}
+            GIT_REPOSITORY ${ARG_GIT}
             GIT_TAG ${ARG_GIT_TAG}
             SOURCE_DIR $ENV{HOME}/.cppm/install
-            CMAKE_ARGS ${CMAKR_ARGS} ${_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
+            CMAKE_ARGS ${CMAKR_ARGS} ${L_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
             CONFIGURE_COMMAND ${ARG_L_CONFIGURE}
             BUILD_COMMAND ${ARG_L_BUILD}
             INSTALL_COMMAND ${ARG_L_INSTALL}
             BUILD_IN_SOURCE true
+            ${ARG_UNPARSED_ARGUMENTS}
           )
-        else()
+        else(NOT WIN32)
           ExternalProject_Add(
             ${name}
             URL ${ARG_URL}
-            GIT ${ARG_GIT}
-            SOURCE_DIR $ENV{HOME}/.cppm/install
-            CMAKE_ARGS ${CMAKR_ARGS} ${_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
+            GIT_REPOSITORY ${ARG_GIT}
+            GIT_TAG ${ARG_GIT_TAG}
+            SOURCE_DIR $ENV{HOME}\.cppm\install
+            CMAKE_ARGS ${CMAKR_ARGS} ${W_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
             CONFIGURE_COMMAND ${ARG_W_CONFIGURE}
             BUILD_COMMAND ${ARG_W_BUILD}
             INSTALL_COMMAND ${ARG_W_INSTALL}
             BUILD_IN_SOURCE true
+            ${ARG_UNPARSED_ARGUMENTS}
           )
-        endif()
+        endif(NOT WIN32)
     endif()
 endfunction()
 

@@ -37,10 +37,9 @@ namespace cppm::package
         std::string name;
         std::string description;
         std::string version;
-        std::string header;
-        std::string footer;
         download_ download;
         cmake_ cmake;
+        bool global = false;
     };
 
 namespace cppkg

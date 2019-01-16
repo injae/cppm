@@ -12,9 +12,8 @@ namespace cppm::package
         if(auto package = table->get_table("package")) {
             name    = package->get_as<std::string>("name").value_or("");
             version = package->get_as<std::string>("version").value_or("");
-            header  = package->get_as<std::string>("header").value_or("");
-            footer  = package->get_as<std::string>("footer").value_or("");
             description = package->get_as<std::string>("description").value_or("");
+            global  = package->get_as<bool>("global").value_or(false);
 
             auto cmake_      = package->get_table("cmake");
             cmake.name       = cmake_->get_as<std::string>("name").value_or("");
@@ -31,49 +30,27 @@ namespace cppm::package
 
     std::string Package::generate() {
         using namespace fmt::literals;
-        auto is_default = [&](std::string str) { return str != "" ? "" : "#"; };
-        auto version_ = version == "lastest" ? "" : version;
+        std::string git_url;
+        std::string git_tag;
+        std::string url;
+        std::string desc; 
+        std::string install = global ? "GLOBAL" : "LOCAL";
+        if(download.git.url != "") git_url = "GIT {0}"_format(download.git.url);
+        if(download.git.tag != "") git_tag = "GIT_TAG {0}"_format(download.git.tag);
+        if(download.url     != "") url = "URL {0}"_format(download.url);
+        
+        desc += "# Other Options:\n";
+        desc += "# - Linux Configure:\n";
+        desc += "#    L_CONFIGURE, L_BUILD, L_INSTALL\n";
+        desc += "# - Windows Configure:\n";
+        desc += "#    W_CONFIGURE, W_BUILD, W_INSTALL\n";
+
         return "cmake_minimum_required(VERSION 3.10)\n"
-             + "project({0}-{1}-install NONE)\n\n"_format(name, version_)
-             + "find_package({0} {1} QUIET)\n"_format(name, version_)
-             + "if(NOT {0}_FOUND AND NOT {0}_FIND_VERSION_EXACT)\n"_format(name)
-             + "    include(ExternalProject)\n"
-             + "    if(NOT WIN32)\n"
-             + " # Linux or OSX Setting\n"
-             + "        ExternalProject_Add(\n"
-             + "        {0}\n"_format(name)
-             + "        {0}URL {1}\n"_format(is_default(download.url), download.url)
-             + "        {0}GIT_REPOSITORY {1}\n"_format(is_default(download.git.url),download.git.url)
-             + "        {0}GIT_TAG {1}\n"_format(is_default(download.git.tag),download.git.tag)
-             + "        SOURCE_DIR $ENV{HOME}/.cppm/install\n"
-           //+ "        BINARY_DIR ${{CMAKE_BINARY_DIR}}/repo/{0}/build\n"_format(name)
-             + "        # Defulat cppkg install path if you want to install global path, remove this options\n"
-             + "        #if you want local install add CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local\n"
-             + "        CMAKE_ARGS \" ${{CMAKE_ARGS}} {0}\"\n"_format(cmake.option)
-             + "        #CONFIGURE_COMMAND \n"
-             + "        #BUILD_COMMAND \n"
-             + "        #INSTALL_COMMAND \n"
-             + "        BUILD_IN_SOURCE true\n"
-             + "        )\n"
-             + "    else(NOT WIN32)\n"
-             + " # Windows Setting\n"
-             + "        ExternalProject_Add(\n"
-             + "        {0}\n"_format(name)
-             + "        {0}URL {1}\n"_format(is_default(download.url), download.url)
-             + "        {0}GIT_REPOSITORY {1}\n"_format(is_default(download.git.url),download.git.url)
-             + "        {0}GIT_TAG {1}\n"_format(is_default(download.git.tag),download.git.tag)
-             + "        SOURCE_DIR $ENV{HOME}/.cppm/install\n"
-           //+ "        BINARY_DIR ${{CMAKE_BINARY_DIR}}/repo/{0}/build\n"_format(name)
-             + "        #if you want local install add CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local\n"
-             + "        CMAKE_ARGS \" ${{CMAKE_ARGS}} {0}\"\n"_format(cmake.option)
-             + "        #CONFIGURE_COMMAND \n"
-             + "        #BUILD_COMMAND \n"
-             + "        #INSTALL_COMMAND \n"
-             + "        BUILD_IN_SOURCE true\n"
-             + "        )\n"
-             + "    endif(NOT WIN32)\n"
-             + "endif()\n"
-             ;
+             + "project({0}-{1}-install NONE)\n\n"_format(name, version)
+             + "include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)\n"
+             + "download_package({0} {1} {2} {3} {4} {5})\n\n"_format(
+                                name, version, git_url, git_tag, url, install)
+             + desc;
     }
 namespace cppkg {
     void init(const std::string& name) {
@@ -98,6 +75,7 @@ namespace cppkg {
                    + "# if you use git repo, package version is lastest\n"
                    + "version = {0}\n"_format(value(package.version))
                    + "description = \"\"\n"
+                   + "global={0}\n"_format(package.global ? "true" : "false")
                    + "# library name in cmake, cppm.toml use this value \n"
                    + "# [dependencies]\n"
                    + "#${library_name} = {module =${value}}\n"
@@ -109,7 +87,6 @@ namespace cppkg {
                    + "{0}download = {{url={1}}}\n"_format(is_default(package.download.url)
                                                          ,value(package.download.url))
                    ); 
-
     }
 
     void build(const std::string& name) {
@@ -124,6 +101,7 @@ namespace cppkg {
         }
         fs::create_directories(dir_name);
         fs::copy(package.name + ".toml", "{0}/{1}"_format(dir_name,"cppkg.toml"));
+        fs::remove(package.name + ".toml");
         auto file = "{0}/{1}.cmake.in"_format(dir_name,package.name);
         util::write(file, package.generate());
     }

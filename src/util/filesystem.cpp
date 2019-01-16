@@ -2,7 +2,7 @@
 #include "util/algorithm.hpp"
 #include <iostream>
 
-#ifdef WINDOWS
+#ifdef _WIN32
 #include <direct.h>
 #define GetCurrentDir _getcwd
 #else

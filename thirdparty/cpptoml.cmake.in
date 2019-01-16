@@ -1,43 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
-project(cpptoml--install NONE)
+project(cpptoml-lastest-install NONE)
 
-#==========================================
-#Header
-#==========================================
-find_package(cpptoml  QUIET)
-if(NOT cpptoml_FOUND AND NOT cpptoml_FIND_VERSION_EXACT)
-    include(ExternalProject)
-    if(NOT WIN32)
- # Linux or OSX Setting
-        ExternalProject_Add(
-        cpptoml
-        #URL 
-        GIT_REPOSITORY https://github.com/skystrife/cpptoml.git
-        #GIT_TAG 
-        SOURCE_DIR repo
-        CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local "
-        #CONFIGURE_COMMAND 
-        #BUILD_COMMAND 
-        #INSTALL_COMMAND 
-        BUILD_IN_SOURCE true
-        )
-    else(NOT WIN32)
- # Windows Setting
-        ExternalProject_Add(
-        cpptoml
-        #URL 
-        GIT_REPOSITORY https://github.com/skystrife/cpptoml.git
-        #GIT_TAG 
-        SOURCE_DIR repo
-        CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local "
-        #CONFIGURE_COMMAND 
-        #BUILD_COMMAND 
-        #INSTALL_COMMAND 
-        BUILD_IN_SOURCE true
-        )
-    endif(NOT WIN32)
-endif()
-#==========================================
-#Footer
-#==========================================
-
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
+download_package(cpptoml lastest GIT https://github.com/skystrife/cpptoml.git   LOCAL)
+# Other Options:
+# - Linux Configure:
+#    L_CONFIGURE, L_BUILD, L_INSTALL
+# - Windows Configure:
+#    W_CONFIGURE, W_BUILD, W_INSTALL
