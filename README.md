@@ -57,6 +57,7 @@ sudo cmake --build . --target install
  name = "example"        # user package name
  version = "1.0.0"       # user package version
  description = "example" # package description
+ c++-version = "17"      # default 17 
  ```
 
 ### cmake
@@ -64,21 +65,22 @@ sudo cmake --build . --target install
 ```
 [cmake]
 version  = "3.10"    # cmake minimum version
-option   = ""        # cmake options
+include = ["cmake/cppm_install.cmake","..."] # include cmake files
+option   = "..."        # cmake options
 ```
 ### hunter
 > hunter package can use
 ```
 [hunter]
-url = "" # default url: https://github.com/ruslo/hunter/archive/v0.23.89.tar.gz
-sha1 =  "" # default sha1: a370290a8b32987755a36d64807bf8c7f5b61730
+url = "..." # default url: https://github.com/ruslo/hunter/archive/v0.23.89.tar.gz
+sha1 =  "..." # default sha1: a370290a8b32987755a36d64807bf8c7f5b61730
 ```
 
 ### compiler
 ```
 [compiler]
-clang++ = {option = ""} ## compiler options
-g++     = {option = ""} ## compiler options
+clang++ = {option = "..."} ## compiler options
+g++     = {option = "..."} ## compiler options
 ```
 ### bin
 ```
@@ -175,6 +177,7 @@ Result
     name     = "exam"
     version  = "lastest" # git repo version is lastest
     description = "cppkg example"
+    global = false
     cmake    = {name = {exam cmake library name}, finlib={Findlib.cmake file}}
     download = {git="{git repo}"} # or url
 ```
@@ -186,39 +189,16 @@ exam.cmake.in
 cmake_minimum_required(VERSION 3.10)
 project(exam--install NONE)
 
-find_package(exam QUIET)
-if(NOT exam_FOUND AND NOT exam_FIND_VERSION_EXACT)
-    include(ExternalProject)
-    if(NOT WIN32)
- # Linux or OSX Setting
-        ExternalProject_Add(
-        exam
-        GIT_REPOSITORY {git repo}
-        SOURCE_DIR repo
-        # Defulat cppkg install path if you want to install global path, remove this options
-        #if you want local install add CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local
-        CMAKE_ARGS "${CMAKE_ARGS}"
-        #CONFIGURE_COMMAND
-        #BUILD_COMMAND 
-        #INSTALL_COMMAND 
-        BUILD_IN_SOURCE true
-        )
-    else(NOT WIN32)
- # Windows Setting
-        ExternalProject_Add(
-        exam
-        GIT_REPOSITORY {git repo}
-        SOURCE_DIR repo
-        # Defulat cppkg install path if you want to install global path, remove this options
-        #if you want local install add CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local
-        CMAKE_ARGS "${CMAKE_ARGS}"
-        #CONFIGURE_COMMAND
-        #BUILD_COMMAND 
-        #INSTALL_COMMAND 
-        BUILD_IN_SOURCE true
-        )
-    endif(NOT WIN32)
-endif()
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
+download_package(exam lastest GIT https://github.com/exam/exam.git   LOCAL)
+# Other Options:
+# - Linux Configure:
+#    L_CONFIGURE {...}, L_BUILD {...}, L_INSTALL {...}
+# - Windows Configure: 
+#    W_CONFIGURE {...}, W_BUILD {...}, W_INSTALL {...}
+# - Install Path Option:
+#    LOCAL(default) GLOBAL
+#    
 ```
 4. add your local cppkg repository
 ```
@@ -228,9 +208,9 @@ cppm cppkg push exam
  git repo default version is lastest  
  url is not have default version, need version  
 ```
-cppm cppkg init -g {git repo} -m exam::exam -r exam
+cppm cppkg init -g {git repo} -m exam::exam -p exam
 #or
-cppm cppkg init -u {zip url} -v {version} -m exam::exam -r exam 
+cppm cppkg init -u {zip url} -v {version} -m exam::exam -p exam 
 ```
 
 
