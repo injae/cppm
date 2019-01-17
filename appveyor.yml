@@ -2,6 +2,7 @@ version: '{build}'
 branches:
   only:
   - master
+  - dev
 clone_folder: c:\project\cppm
 image:
 #- Visual Studio 2013
