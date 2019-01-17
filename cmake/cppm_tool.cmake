@@ -125,7 +125,7 @@ function(download_package)
     list(GET ARG_UNPARSED_ARGUMENTS 1 version)
     list(REMOVE_AT ARG_UNPARSED_ARGUMENTS 0 1)
     set(HOME)
-    string(REPLACE "\\" "/" HOME $ENV{HOME})
+    string(REPLACE "\\" "/" HOME "$ENV{HOME}")
 
     if(ARG_LOCAL)
       set(_INSTALL_PREFIX "-DCMAKE_INSTALL_PREFIX=${HOME}/.cppm/local ")
