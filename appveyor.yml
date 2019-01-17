@@ -45,6 +45,7 @@ before_build:
     cmake --version
     cmake -G %generator% ..
 
+
 build:
   project: c:\projects\cppm\build\template.sln
   verbosity: minimal
