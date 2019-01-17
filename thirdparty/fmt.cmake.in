@@ -1,43 +1,13 @@
 cmake_minimum_required(VERSION 3.10)
-project(fmt--install NONE)
+project(fmt-lastest-install NONE)
 
-#==========================================
-#Header
-#==========================================
-find_package(fmt  QUIET)
-if(NOT fmt_FOUND AND NOT fmt_FIND_VERSION_EXACT)
-    include(ExternalProject)
-    if(NOT WIN32)
- # Linux or OSX Setting
-        ExternalProject_Add(
-        fmt
-        #URL 
-        GIT_REPOSITORY https://github.com/fmtlib/fmt.git
-        #GIT_TAG 
-        SOURCE_DIR "$ENV{HOME}/.cppm/install"
-        CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local "
-        #CONFIGURE_COMMAND 
-        #BUILD_COMMAND 
-        #INSTALL_COMMAND 
-        BUILD_IN_SOURCE true
-        )
-    else(NOT WIN32)
- # Windows Setting
-        ExternalProject_Add(
-        fmt
-        #URL 
-        GIT_REPOSITORY https://github.com/fmtlib/fmt.git
-        #GIT_TAG 
-        SOURCE_DIR "$ENV{HOME}\.cppm\install"
-        CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}\.cppm\local "
-        #CONFIGURE_COMMAND 
-        #BUILD_COMMAND 
-        #INSTALL_COMMAND 
-        BUILD_IN_SOURCE true
-        )
-    endif(NOT WIN32)
-endif()
-#==========================================
-#Footer
-#==========================================
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
+download_package(fmt lastest GIT https://github.com/fmtlib/fmt.git   LOCAL)
 
+# Other Options:
+# - Linux Configures:
+#    L_CONFIGURE {...}, L_BUILD {...}, L_INSTALL {...}
+# - Windows Configures:
+#    W_CONFIGURE {...}, W_BUILD {...}, W_INSTALL {...}
+# - Install Path Options:
+#    LOCAL(default) GLOBAL 

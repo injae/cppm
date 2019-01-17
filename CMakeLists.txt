@@ -5,7 +5,7 @@ HunterGate(
    URL "https://github.com/ruslo/hunter/archive/v0.23.89.tar.gz"
    SHA1 "a370290a8b32987755a36d64807bf8c7f5b61730"
 )
-project(cppm LANGUAGES CXX VERSION 1.0.1)
+project(cppm LANGUAGES CXX VERSION 1.0.2)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -33,14 +33,13 @@ endif()
 find_program(CCACHE_EXE ccache)
 if(CCACHE_EXE)
     set(CMAKE_CXX_COMPILER_LAUNCHER ccache)
-    message("--- use ccache")
+    message("-- [cppm] Find ccache")
 endif()
 
 list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/.cppm/local/lib/cmake")
 list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/.cppm/local/lib/pkgconfig")
 include(${MODULE_PATH}/cppm_tool.cmake)
 include(cmake/cppm_install.cmake)
-find_cppkg(cppfs lastest  MODULE cppfs::cppfs )
 find_cppkg(Boost 1.58.0 COMPONENTS system filesystem MODULE Boost::filesystem HUNTER)
 find_cppkg(nlpo lastest  MODULE nlpo::nlpo )
 find_cppkg(cpptoml lastest  MODULE cpptoml )

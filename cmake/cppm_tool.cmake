@@ -1,12 +1,3 @@
-macro(download_thirdparty name version)
-   find_package(${name} ${version} QUIET)
-   if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/${name}.cmake.in)# AND NOT ${name}_FOUND AND NOT ${name}_FIND_VERSION_EXACT)
-      configure_file(thirdparty/${name}.cmake.in ${CMAKE_BINARY_DIR}/thirdparty/${name}/CMakeLists.txt)
-      execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name})
-      execute_process(COMMAND cmake  --build . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name} )
-   endif()
-endmacro()
-
 macro(find_cppkg)
     if(NOT DEFINED thirdparty)
       set(thirdparty "")
@@ -35,6 +26,7 @@ macro(find_cppkg)
     endif()
 
     if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/${name}.cmake.in)
+       message("-- [cppm] Load ${name} cppkg file")
        configure_file(thirdparty/${name}.cmake.in ${CMAKE_BINARY_DIR}/thirdparty/${name}/CMakeLists.txt)
        execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name})
        execute_process(COMMAND cmake  --build . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name} )
@@ -147,9 +139,12 @@ function(download_package)
     endif()
 
     include(ExternalProject)
-    find_package(Git REQUIRED)
     find_package(${name} ${version} QUIET)
     if(NOT "${${name}_FOUND}" AND NOT "${${name}_FIND_VERSION_EXACT}")
+        message("-- [cppm] Can not find ${name} package")
+        message("-- [cppm] Download ${name} package")
+        #find_package(Git REQUIRED)
+
         if(NOT WIN32)
           ExternalProject_Add(
             ${name}
@@ -179,6 +174,8 @@ function(download_package)
             ${ARG_UNPARSED_ARGUMENTS}
           )
         endif(NOT WIN32)
+    else()
+        message("-- [cppm] Find ${name} package")
     endif()
 endfunction()
 
