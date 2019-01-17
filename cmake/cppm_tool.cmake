@@ -165,7 +165,7 @@ function(download_package)
             URL ${ARG_URL}
             GIT_REPOSITORY ${ARG_GIT}
             GIT_TAG ${ARG_GIT_TAG}
-            SOURCE_DIR $ENV{HOME}\.cppm\install
+            SOURCE_DIR $ENV{HOME}\\.cppm\\install
             CMAKE_ARGS ${CMAKR_ARGS} ${W_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
             CONFIGURE_COMMAND ${ARG_W_CONFIGURE}
             BUILD_COMMAND ${ARG_W_BUILD}
