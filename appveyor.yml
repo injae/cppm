@@ -33,19 +33,13 @@ init:
 - echo %generator%
 
 cache:
-  - c:\Tools\vcpkg\installed
   - '%HOME%\.cppm'
-#install:
-#  - vcpkg install boost
 
 before_build:
 - cmd: |-
-    echo $HOME
-    mkdir build
+    cmake -H. -Bbuild -G %generator%
     cd build
-    cmake --version
-    cmake -G %generator% ..
-
+    cmake --build . --target install
 
 build:
   project: c:\projects\cppm\build\template.sln
