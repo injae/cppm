@@ -47,6 +47,7 @@ sudo apt-get install liboost-all-dev #fast install, boost compile very slow
 git clone https://github.com/INJAE/cppm.git
 cd cppm
 sudo cmake -H. -Bbuild
+cd build
 sudo cmake --build . --target install
 ```
 
