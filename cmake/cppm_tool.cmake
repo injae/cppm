@@ -144,6 +144,7 @@ function(download_package)
         message("-- [cppm] Can not find ${name} package")
         message("-- [cppm] Download ${name} package")
         #find_package(Git REQUIRED)
+
         if(NOT WIN32)
           ExternalProject_Add(
             ${name}
