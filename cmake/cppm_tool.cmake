@@ -124,10 +124,11 @@ function(download_package)
     list(GET ARG_UNPARSED_ARGUMENTS 0 name)
     list(GET ARG_UNPARSED_ARGUMENTS 1 version)
     list(REMOVE_AT ARG_UNPARSED_ARGUMENTS 0 1)
+    set(HOME)
+    string(REPLACE "\\" "/" HOME $ENV{HOME})
 
     if(ARG_LOCAL)
-      set(L_INSTALL_PREFIX "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}/.cppm/local ")
-      set(W_INSTALL_PREFIX "-DCMAKE_INSTALL_PREFIX=$ENV{HOME}\\.cppm\\local ")
+      set(_INSTALL_PREFIX "-DCMAKE_INSTALL_PREFIX=${HOME}/.cppm/local ")
     elseif(ARG_GLOBAL)
       set(_INSTALL_PREFIX "")
     else()
@@ -151,8 +152,8 @@ function(download_package)
             URL ${ARG_URL}
             GIT_REPOSITORY ${ARG_GIT}
             GIT_TAG ${ARG_GIT_TAG}
-            SOURCE_DIR $ENV{HOME}/.cppm/install
-            CMAKE_ARGS ${CMAKR_ARGS} ${L_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
+            SOURCE_DIR ${HOME}/.cppm/install/${name}
+            CMAKE_ARGS ${CMAKR_ARGS} ${_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
             CONFIGURE_COMMAND ${ARG_L_CONFIGURE}
             BUILD_COMMAND ${ARG_L_BUILD}
             INSTALL_COMMAND ${ARG_L_INSTALL}
@@ -165,8 +166,8 @@ function(download_package)
             URL ${ARG_URL}
             GIT_REPOSITORY ${ARG_GIT}
             GIT_TAG ${ARG_GIT_TAG}
-            SOURCE_DIR $ENV{HOME}\\.cppm\\install
-            CMAKE_ARGS ${CMAKR_ARGS} ${W_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
+            SOURCE_DIR ${HOME}/.cppm/install/${name}
+            CMAKE_ARGS ${CMAKR_ARGS} ${_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
             CONFIGURE_COMMAND ${ARG_W_CONFIGURE}
             BUILD_COMMAND ${ARG_W_BUILD}
             INSTALL_COMMAND ${ARG_W_INSTALL}
