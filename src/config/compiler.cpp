@@ -34,7 +34,7 @@ namespace cppm
              + "find_program(CCACHE_EXE ccache)\n"
              + "if(CCACHE_EXE)\n"
              + "    set(CMAKE_CXX_COMPILER_LAUNCHER ccache)\n"
-             + "    message(\"--- use ccache\")\n"
+             + "    message(\"-- [cppm] Find ccache\")\n"
              + "endif()\n"; 
     }
 }

@@ -19,6 +19,7 @@ environment:
 matrix:
   fast_finish: true
 
+
 # skip unsupported combinations
 init:
 - set arch=
@@ -32,9 +33,9 @@ init:
 
 cache:
   - c:\Tools\vcpkg\installed
-
-install:
-  - vcpkg install boost
+  - '%HOME%\.cppm'
+#install:
+#  - vcpkg install boost
 
 before_build:
 - cmd: |-
@@ -42,14 +43,9 @@ before_build:
     mkdir build
     cd build
     cmake --version
-    cmake -G %generator% -DCMAKE_TOOLCHAIN_FILE=c:/Tools/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+    cmake -G %generator% ..
+
 build:
   project: c:\projects\cppm\build\template.sln
   verbosity: minimal
   parallel: true
-#only_commits:
-#  files:
-#    - CMakeLists.txt
-#    - appveyor.yml
-#    - source/
-#    - cmake/
