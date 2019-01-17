@@ -1,3 +1,9 @@
+macro(cppm_setting)
+  string(REPLACE "\\" "/" HOME "$ENV{HOME}")
+  list(APPEND CMAKE_PREFIX_PATH "${HOME}/.cppm/local/lib/cmake")
+  list(APPEND CMAKE_PREFIX_PATH "${HOME}/.cppm/local/lib/pkgconfig")
+endmacro()
+
 macro(find_cppkg)
     if(NOT DEFINED thirdparty)
       set(thirdparty "")

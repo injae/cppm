@@ -36,11 +36,9 @@ if(CCACHE_EXE)
     message("-- [cppm] Find ccache")
 endif()
 
-
-list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/.cppm/local/lib/cmake")
-list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/.cppm/local/lib/pkgconfig")
-
 include(${MODULE_PATH}/cppm_tool.cmake)
+cppm_setting()
+
 include(cmake/cppm_install.cmake)
 find_cppkg(Boost 1.58.0 COMPONENTS system filesystem MODULE Boost::filesystem HUNTER)
 find_cppkg(nlpo lastest  MODULE nlpo::nlpo )
