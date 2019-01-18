@@ -39,6 +39,11 @@ cache:
 before_build:
 - cmd: |-
     cmake -H. -Bbuild -G %generator%
-    cd build
-    cmake --build . --target install
+    ls
+
+
+build:
+  project: c:\projects\cppm\build\cppm.sln
+  verbosity: minimal
+  parallel: true
 
