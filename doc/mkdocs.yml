@@ -1,0 +1,6 @@
+site_name: Cppm Docs
+theme: readthedocs
+nav:
+  - Home: index.md
+  - Installation: installation.md
+  - Cppm.toml: cppm.toml.md
