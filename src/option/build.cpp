@@ -5,14 +5,17 @@
 #include "util/command.h"
 #include "util/filesystem.h"
 #include "package/package.h"
+#include "util/system.hpp"
 #include <iostream>
 #include <thread>
 
+using namespace fmt::literals;
+
 namespace cppm::option
 {
+
     std::string CommandBuilder::build(Config& config)
     {
-        using namespace fmt::literals;
         auto has_toolchains = [&config]() -> std::string {
            return config.cppm_config.package.toolchains() == "" ?
            "" : " -DCMAKE_TOOLCHAIN_FILE=\"{0}\""_format(config.cppm_config.package.toolchains());
@@ -26,7 +29,6 @@ namespace cppm::option
     }
     
     Build::Build() {
-        using namespace fmt::literals;
         app_.add_option("help")
             .abbr("h")
             .desc("show cppm commands and options")
@@ -92,7 +94,12 @@ namespace cppm::option
             .call_back([&](){
                 config_load();
                 fs::create_directories(config_.path.build);
-                cmd.build_option += "-j{}"_format(std::thread::hardware_concurrency());
+                if(util::compiler::what() == "msvc"_format()) {
+                    cmd.build_option += "/MP{}"_format(std::thread::hardware_concurrency());
+                }
+                else {
+                    cmd.build_option += "-j{}"_format(std::thread::hardware_concurrency());
+                }
                 if(!none_tc) {
                     dependency_check();
                     cmakelist_build();
@@ -117,7 +124,6 @@ namespace cppm::option
     }
 
     void Build::dependency_check() {
-        using namespace fmt::literals;
         using namespace package;
         std::vector<Dependency> not_installed_dep;
 

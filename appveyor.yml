@@ -34,15 +34,11 @@ init:
 
 cache:
   - '%HOME%\.cppm'
+  - '%HOME%\.hunter'
 
 before_build:
 - cmd: |-
     cmake -H. -Bbuild -G %generator%
     cd build
     cmake --build . --target install
-
-build:
-  project: c:\projects\cppm\build\template.sln
-  verbosity: minimal
-  parallel: true
 
