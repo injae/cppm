@@ -44,7 +44,7 @@ before_build:
 
 
 build:
-  project: c:\projects\cppm\build\cppm.sln
+  project: C:\project\cppm\build\cppm.sln
   verbosity: minimal
   parallel: true
 
