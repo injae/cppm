@@ -9,8 +9,8 @@ image:
 #- Visual Studio 2015
 - Visual Studio 2017
 configuration:
-- Release
 - Debug
+- Release
 platform:
 - x64
 environment:
@@ -36,10 +36,8 @@ cache:
   - '%HOME%\.cppm'
   - '%HOME%\.hunter'
 
-before_build:
-- cmd: |-
-    cmake -H. -Bbuild -G %generator%
-build:
-  project: C:\project\cppm\build\cppm.sln
-  parallel: true
+build_script:
+    - cmake -H. -Bbuild -G %generator%
+    - cd build
+    - cmake --build . --target install
 

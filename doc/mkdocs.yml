@@ -2,5 +2,7 @@ site_name: Cppm Docs
 theme: readthedocs
 nav:
   - Home: index.md
-  - Installation: installation.md
-  - Cppm.toml: cppm.toml.md
+  - Quick start: installation.md
+  - cppm.toml: cppm.toml.md
+  - config.toml: cppm_config.md
+  - Cppkg: cppkg.md
