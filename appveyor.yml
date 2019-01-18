@@ -39,6 +39,7 @@ cache:
 before_build:
 - cmd: |-
     cmake -H. -Bbuild -G %generator%
+    cd build
     ls
 
 
