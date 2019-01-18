@@ -9,8 +9,8 @@ image:
 #- Visual Studio 2015
 - Visual Studio 2017
 configuration:
-- Release
 - Debug
+- Release
 platform:
 - x64
 environment:
@@ -33,22 +33,12 @@ init:
 - echo %generator%
 
 cache:
-  - c:\Tools\vcpkg\installed
   - '%HOME%\.cppm'
-#install:
-#  - vcpkg install boost
+  - '%HOME%\.hunter'
 
-before_build:
-- cmd: |-
-    echo $HOME
-    mkdir build
-    cd build
-    cmake --version
-    cmake -G %generator% ..
+build_script:
+    - cmake -H. -Bbuild -G %generator%
+    - cd build
+    - cmake --build . --target install
 
-
-build:
-  project: c:\projects\cppm\build\template.sln
-  verbosity: minimal
-  parallel: true
 

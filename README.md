@@ -12,7 +12,7 @@ Cppm
 > c++ cmake project manger  
 > cppm.toml file convert to CMakeLists.txt file   
 > c++ dependency auto install, only use cmake files  
-[한국어](./document/README-ko.md)
+[Document](https://injae.github.io/cppm/)
 
 Features
 ========
@@ -39,10 +39,6 @@ Features
 > if you want to fast install
 > use linux package manager
 ### Ubuntu example
-```
-sudo apt-get install liboost-all-dev #fast install, boost compile very slow
-```
-
 ```
 git clone https://github.com/INJAE/cppm.git
 cd cppm
