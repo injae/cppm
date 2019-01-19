@@ -30,11 +30,6 @@ namespace cppm
              // + \"set(CMAKE_CXX_FLAGS \"${{CMAKE_CXX_FLAGS}} {0}\")\"_format();
              // + \"elseif (\"${{CMAKE_CXX_COMPILER_ID}}\"\" STREQUAL \"MSVC\") \n\"
              // + \"set(CMAKE_CXX_FLAGS \"${{CMAKE_CXX_FLAGS}} {0}\")\"_format();
-             + "endif()\n"
-             + "find_program(CCACHE_EXE ccache)\n"
-             + "if(CCACHE_EXE)\n"
-             + "    set(CMAKE_CXX_COMPILER_LAUNCHER ccache)\n"
-             + "    message(\"-- [cppm] Find ccache\")\n"
-             + "endif()\n"; 
+             + "endif()\n";
     }
 }

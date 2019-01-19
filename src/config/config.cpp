@@ -35,10 +35,11 @@ namespace cppm
              + hunter.generate()
              + "project({0} LANGUAGES CXX VERSION {1})\n"_format(package.name, package.version)
              + "\n"
+             + "include(cmake/cppm_tool.cmake)\n"
+             + "cppm_setting()\n"
              + "set(CMAKE_CXX_STANDARD {})\n"_format(package.cpp_version)
              + "set(CMAKE_CXX_STANDARD_REQUIRED ON)\n"
              + "set(CMAKE_CXX_EXTENSIONS OFF)\n"
-             + "message(STATUS \"We are on a ${CMAKE_SYSTEM_NAME} system\")\n"
              + "if(${CMAKE_SYSTEM_NAME} STREQUAL \"Linux\")\n"
              + "    add_definitions(-DSYSTEM_LINUX)\n"
              + "elseif(${CMAKE_SYSTEM_NAME} STREQUAL \"Darwin\")\n"
@@ -50,15 +51,11 @@ namespace cppm
              + "endif()"
              + "\n"
              + "# detect host processor\n"
-             + "message(STATUS \"The host processor is ${CMAKE_HOST_SYSTEM_PROCESSOR}\")\n"
              + "list(APPEND CMAKE_MODULE_PATH \"${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/\")\n"
-             + "set(MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)\n"
             //+ "list(APPEND CMAKE_PREFIX_PATH \"$ENV{HOME}/.cppm/local\")"
              + "\n"
              + compiler.generate()
              + "\n"
-             + "include(${MODULE_PATH}/cppm_tool.cmake)\n"
-             + "cppm_setting()\n"
              + cmake.generate()
              + dependencies.gen_find_package()
              + "\n"

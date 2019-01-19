@@ -5,12 +5,13 @@ HunterGate(
    URL "https://github.com/ruslo/hunter/archive/v0.23.89.tar.gz"
    SHA1 "a370290a8b32987755a36d64807bf8c7f5b61730"
 )
-project(cppm LANGUAGES CXX VERSION 1.0.2)
+project(cppm LANGUAGES CXX VERSION 1.0.3)
 
+include(cmake/cppm_tool.cmake)
+cppm_setting()
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-message(STATUS "We are on a ${CMAKE_SYSTEM_NAME} system")
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     add_definitions(-DSYSTEM_LINUX)
 elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
@@ -21,23 +22,14 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     add_definitions(-DSYSTEM_WINDOWS)
 endif()
 # detect host processor
-message(STATUS "The host processor is ${CMAKE_HOST_SYSTEM_PROCESSOR}")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
-set(MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pthread -fPIC -O0 -g") 
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")  
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pthread -fPIC -O0 -g") 
 endif()
-find_program(CCACHE_EXE ccache)
-if(CCACHE_EXE)
-    set(CMAKE_CXX_COMPILER_LAUNCHER ccache)
-    message("-- [cppm] Find ccache")
-endif()
 
-include(${MODULE_PATH}/cppm_tool.cmake)
-cppm_setting()
 
 include(cmake/cppm_install.cmake)
 find_cppkg(Boost 1.58.0 COMPONENTS system filesystem MODULE Boost::filesystem HUNTER)
@@ -86,6 +78,8 @@ target_sources(cppm
 	src/config/bin.cpp
 	src/config/builder.cpp
 	src/config/cppm_config.cpp
+	src/config/CMakeFiles/CMakeSystem.cmake
+	src/config/CMakeFiles/CMakeOutput.log
 	src/config/cppm_package.cpp
 	src/config/config.cpp
 	src/config/dependency.cpp
