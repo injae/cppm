@@ -53,7 +53,7 @@ before_install:
   - eval "${MATRIX_EVAL}"
 
 script:
-  - if ["$TRAVIS_OS_NAME" == "osx"]; then cmake -H. -Bbuild -G Xcode
-  - if ["$TRAVIS_OS_NAME" == "osx"]; then cd build &&  cmake --build . --target install
-  - if ["$TRAVIS_OS_NAME" == "linux"]; then sudo env "PATH=$PATH" cmake -H. -Bbuild 
-  - if ["$TRAVIS_OS_NAME" == "linux"]; then cd build &&  sudo env "PATH=$PATH" cmake --build . --target install
+  - if [["$TRAVIS_OS_NAME" == "osx"]]; then cmake -H. -Bbuild -G Xcode;
+  - if [["$TRAVIS_OS_NAME" == "osx"]]; then cd build &&  cmake --build . --target install;
+  - if [["$TRAVIS_OS_NAME" == "linux"]]; then sudo env "PATH=$PATH" cmake -H. -Bbuild ;
+  - if [["$TRAVIS_OS_NAME" == "linux"]]; then cd build &&  sudo env "PATH=$PATH" cmake --build . --target install;
