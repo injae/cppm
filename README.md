@@ -7,12 +7,12 @@
 [3]: https://ci.appveyor.com/api/projects/status/6ovjp02higajbxhm?svg=true
 [4]: https://ci.appveyor.com/project/injae/cppm
 
-Cppm [Document](https://injae.github.io/cppm/)
+Cppm 
 ========
 > c++ cmake project manger  
 > cppm.toml file convert to CMakeLists.txt file   
 > c++ dependency auto install, only use cmake files  
-
+> [Document Site](https://injae.github.io/cppm/)
 Features
 ========
 - [x] cmake dependencies auto installer (cppkg)
