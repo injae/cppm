@@ -1,6 +1,7 @@
 language: cpp
-os: linux
-dist: xenial
+os:
+  - linux
+  - osx
 sudo: required
   
 matrix:
@@ -10,38 +11,49 @@ matrix:
     #  addons: &defaults { apt: { packages: ["clang-6.0", "valgrind"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-xenial-6.0"] } }
 
     # Clang 7.0
-    - env: MATRIX_EVAL="CXX=clang++"
-      addons:  { apt: { packages: ["libboost-all-dev", "libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-7-dev"], sources: ["ubuntu-toolchain-r-test"] } }
-      cache: {apt: true, ccache: true}
+    - os: linux
+      dist: xenial
+      env: MATRIX_EVAL="CXX=clang++"
+      addons:  { apt: { packages: ["libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-7-dev", "ccache"], sources: ["ubuntu-toolchain-r-test"] } }
+      cache: {apt: true, ccache: true, directories: ["$home/.hunter", "$home/.cppm"]}
 
     ## GCC 6
     #- env: COMPILER=g++-6
     #  addons: { apt: { packages: ["g++-6", "valgrind"], sources: ["ubuntu-toolchain-r-test"] } }
 
     # GCC 7
-    - env: MATRIX_EVAL="CXX=g++-7"
-      addons: { apt: { packages: ["g++-7", "libboost-all-dev", "libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-7-dev"], sources: ["ubuntu-toolchain-r-test"] } }
-      cache: {apt: true, ccache: true}
+    - os: linux
+      dist: xenial
+      env: MATRIX_EVAL="CXX=g++-7"
+      addons: { apt: { packages: ["g++-7", "libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-7-dev", "ccache"], sources: ["ubuntu-toolchain-r-test"] } }
+      cache: {apt: true, ccache: true, directories: ["$home/.hunter", "$home/.cppm"]}
 
     # Xcode 6.4
-    #- os: osx
-    #  osx_image: xcode6.4
+    - os: osx
+      addons: { homebrew: { packages: ["cmake", "ccache"]}}
+      osx_image: xcode6.4
+      cache: { directories: "$HOME/Library/Caches/Homebrew"}
 
-    ## Xcode 7.3
-    #- os: osx
-    #  osx_image: xcode7.3
+    - os: osx
+      addons: { homebrew: { packages: ["cmake", "ccache"]}}
+      osx_image: xcode7.3
+      cache: { directories: "$HOME/Library/Caches/Homebrew"}
 
-    ## Xcode 8.3
-    #- os: osx
-    #  osx_image: xcode8.3
+    - os: osx
+      addons: { homebrew: { packages: ["cmake", "ccache"]}}
+      osx_image: xcode8.3
+      cache: { directories: "$HOME/Library/Caches/Homebrew"}
 
-    ## Xcode 9.1
-    #- os: osx
-    #  osx_image: xcode9.1
+    - os: osx
+      addons: { homebrew: { packages: ["cmake", "ccache"]}}
+      osx_image: xcode9.1
+      cache: { directories: "$HOME/Library/Caches/Homebrew"}
 
 before_install:
   - eval "${MATRIX_EVAL}"
 
 script:
-  - sudo env "PATH=$PATH" cmake -H. -Bbuild
-  - cd build && sudo env "PATH=$PATH" cmake --build . --target install
+  - if ["$TRAVIS_OS_NAME" == "osx"]; then cmake -H. -Bbuild -G Xcode
+  - if ["$TRAVIS_OS_NAME" == "osx"]; then cd build &&  cmake --build . --target install
+  - if ["$TRAVIS_OS_NAME" == "linux"]; then sudo env "PATH=$PATH" cmake -H. -Bbuild 
+  - if ["$TRAVIS_OS_NAME" == "linux"]; then cd build &&  sudo env "PATH=$PATH" cmake --build . --target install
