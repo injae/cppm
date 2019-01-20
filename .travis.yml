@@ -58,6 +58,6 @@ before_install:
   - eval "${MATRIX_EVAL}"
 
 script:
-  - "${SUDO}" cmake -H. -Bbuild
-  - cd build && "${SUDO}" cmake --build . --target install;
+  - eval "${SUDO}" cmake -H. -Bbuild
+  - cd build && eval "${SUDO}" cmake --build . --target install;
 
