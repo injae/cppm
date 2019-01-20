@@ -24,7 +24,7 @@ Features
 - [x] hunter package dependency available 
 
 ## Dependencies
-1. cmake-3.10.0
+1. cmake-3.6.0
 2. hunter package [hunter](https://github.com/ruslo/hunter)  
 2. c++-17-compiler (g++7 or clang7)
 3. boost
