@@ -1,11 +1,15 @@
 |Linux|Windows|
 |:----|:------|
 [![Linux build status][1]][2] | [![Windows build status][3]][4] |
-
+[![Standard]([7])]([8])
 [1]: https://travis-ci.com/injae/cppm.svg?branch=master
 [2]: https://travis-ci.com/injae/cppm
 [3]: https://ci.appveyor.com/api/projects/status/6ovjp02higajbxhm?svg=true
 [4]: https://ci.appveyor.com/project/injae/cppm
+[5]:
+[6]:
+[7]: https://img.shields.io/badge/c%2B%2B-14/17/20-blue.svg
+[8]: https://en.wikipedia.org/wiki/C%2B%2B#Standardization
 
 Cppm 
 ========
@@ -120,7 +124,7 @@ nlpo    = {module = "nlpo::nlpo}"
 
 ## Usage
 ### Add dependencies
-> xample: exam  
+> example: exam  
 > default cppm use package repo => [cppkg](https://github.com/injae/cppkg.git)  
 1. search package  
 ```

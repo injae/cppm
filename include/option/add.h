@@ -17,7 +17,4 @@ namespace cppm::option
         void _cppm_path();
     };
 }
-
-
-
 #endif
