@@ -60,3 +60,4 @@ before_install:
 script:
   - "${SUDO}" cmake -H. -Bbuild
   - cd build && "${SUDO}" cmake --build . --target install;
+
