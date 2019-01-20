@@ -12,7 +12,7 @@ Cppm
 > c++ cmake project manger  
 > cppm.toml file convert to CMakeLists.txt file   
 > c++ dependency auto install, only use cmake files  
-> [Document Site](https://injae.github.io/cppm/)
+> [Document Site](https://injae.github.io/cppm/)  
 Features
 ========
 - [x] cmake dependencies auto installer (cppkg)
