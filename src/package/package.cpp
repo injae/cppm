@@ -47,7 +47,7 @@ namespace cppm::package
         desc += "# - Install Path Options:\n";
         desc += "#    LOCAL(default) GLOBAL \n";
 
-        return "cmake_minimum_required(VERSION 3.10)\n"
+        return "cmake_minimum_required(VERSION 3.6)\n"
              + "project({0}-{1}-install NONE)\n\n"_format(name, version)
              + "include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)\n"
              + "download_package({0} {1} {2} {3} {4} {5})\n\n"_format(
