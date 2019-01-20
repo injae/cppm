@@ -1,7 +1,4 @@
 language: cpp
-os:
-  - linux
-  - osx
 sudo: required
   
 matrix:
@@ -13,7 +10,9 @@ matrix:
     # Clang 7.0
     - os: linux
       dist: xenial
-      env: MATRIX_EVAL="CXX=clang++"
+      env:
+        - MATRIX_EVAL="CXX=clang++"
+        - SUDO="sudo env \"PATH=$PATH\""
       addons:  { apt: { packages: ["libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-7-dev", "ccache"], sources: ["ubuntu-toolchain-r-test"] } }
       cache: {apt: true, ccache: true, directories: ["$home/.hunter", "$home/.cppm"]}
 
@@ -24,27 +23,33 @@ matrix:
     # GCC 7
     - os: linux
       dist: xenial
-      env: MATRIX_EVAL="CXX=g++-7"
+      env:
+        - MATRIX_EVAL="CXX=g++-7"
+        - SUDO="sudo env \"PATH=$PATH\""
       addons: { apt: { packages: ["g++-7", "libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-7-dev", "ccache"], sources: ["ubuntu-toolchain-r-test"] } }
       cache: {apt: true, ccache: true, directories: ["$home/.hunter", "$home/.cppm"]}
 
     # Xcode 6.4
     - os: osx
+      env: SUDO=""
       addons: { homebrew: { packages: ["cmake", "ccache"]}}
       osx_image: xcode6.4
       cache: { directories: "$HOME/Library/Caches/Homebrew"}
 
     - os: osx
+      env: SUDO=""
       addons: { homebrew: { packages: ["cmake", "ccache"]}}
       osx_image: xcode7.3
       cache: { directories: "$HOME/Library/Caches/Homebrew"}
 
     - os: osx
+      env: SUDO=""
       addons: { homebrew: { packages: ["cmake", "ccache"]}}
       osx_image: xcode8.3
       cache: { directories: "$HOME/Library/Caches/Homebrew"}
 
     - os: osx
+      env: SUDO=""
       addons: { homebrew: { packages: ["cmake", "ccache"]}}
       osx_image: xcode9.1
       cache: { directories: "$HOME/Library/Caches/Homebrew"}
@@ -53,7 +58,5 @@ before_install:
   - eval "${MATRIX_EVAL}"
 
 script:
-  - if [["$TRAVIS_OS_NAME" == "osx"]]; then cmake -H. -Bbuild -G Xcode;
-  - if [["$TRAVIS_OS_NAME" == "osx"]]; then cd build &&  cmake --build . --target install;
-  - if [["$TRAVIS_OS_NAME" == "linux"]]; then sudo env "PATH=$PATH" cmake -H. -Bbuild ;
-  - if [["$TRAVIS_OS_NAME" == "linux"]]; then cd build &&  sudo env "PATH=$PATH" cmake --build . --target install;
+  - "${SUDO}" cmake -H. -Bbuild
+  - cd build && "${SUDO}" cmake --build . --target install;
