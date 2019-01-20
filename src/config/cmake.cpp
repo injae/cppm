@@ -6,7 +6,7 @@ namespace cppm
     void Cmake::parse(table_ptr table)
     {
         if(auto cmake = table->get_table("cmake")) {
-            version    = cmake->get_as<std::string>("version" ).value_or("3.10");
+            version    = cmake->get_as<std::string>("version" ).value_or("3.6");
             option     = cmake->get_as<std::string>("option"  ).value_or("");
             builder    = cmake->get_as<std::string>("builder" ).value_or("make");
             compiler   = cmake->get_as<std::string>("compiler").value_or("none");
