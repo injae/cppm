@@ -1,12 +1,11 @@
 |Linux|Windows|
 |:----|:------|
 [![Linux build status][1]][2] | [![Windows build status][3]][4] |
+
 [1]: https://travis-ci.com/injae/cppm.svg?branch=master
 [2]: https://travis-ci.com/injae/cppm
 [3]: https://ci.appveyor.com/api/projects/status/6ovjp02higajbxhm?svg=true
 [4]: https://ci.appveyor.com/project/injae/cppm
-[5]:
-[6]:
 
 Cppm 
 ========
