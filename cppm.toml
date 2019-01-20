@@ -5,7 +5,7 @@ description = "c++ cmake maker use to toml like Cargo"
 c++-version = "17"
 
 [cmake]
-version  = "3.60"
+version  = "3.6"
 include  = ["cmake/cppm_install.cmake"]
 
 [compiler] 
