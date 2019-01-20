@@ -30,7 +30,7 @@ namespace cppm
     
     std::string Config::generate() {
         using namespace fmt::literals;
-        return "cmake_minimum_required(VERSION {0})\n"_format("3.10")
+        return "cmake_minimum_required(VERSION {0})\n"_format(cmake.version)
              + "\n"
              + hunter.generate()
              + "project({0} LANGUAGES CXX VERSION {1})\n"_format(package.name, package.version)
