@@ -1,13 +1,15 @@
 |Linux|Windows|
 |:----|:------|
-[![Linux build status][1]][2] | [![Windows build status][3]][4] |
+[![Linux build status][1]][2] | [![Windows build status][3]][4] | 
 
 [1]: https://travis-ci.com/injae/cppm.svg?branch=master
 [2]: https://travis-ci.com/injae/cppm
 [3]: https://ci.appveyor.com/api/projects/status/6ovjp02higajbxhm?svg=true
 [4]: https://ci.appveyor.com/project/injae/cppm
+[5]: https://aleen42.github.io/badges/src/gitbook_2.svg
+[6]: https://cppm.gitbook.io/project/
 
-Cppm 
+Cppm [![gitbook][5]][6]
 ========
 > c++ cmake project manger  
 > cppm.toml file convert to CMakeLists.txt file   
