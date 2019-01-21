@@ -13,8 +13,7 @@ Cppm
 > cppm.toml file convert to CMakeLists.txt file   
 > c++ dependency auto install, only use cmake files  
 
-Features
-========
+## Features
 - [x] cmake dependencies auto installer (cppkg)
 - [x] generate build command (cppm build {options})
 - [x] Cppkg package search (cppm search)
@@ -42,7 +41,6 @@ cd build
 sudo cmake --build . --target install
 ```
 
-Document
-==============
-## [GitBook](https://cppm.gitbook.io/project/)
+## Document
+### [GitBook](https://cppm.gitbook.io/project/)
 
