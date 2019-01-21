@@ -9,9 +9,6 @@ project(cppm LANGUAGES CXX VERSION 1.0.3)
 
 include(cmake/cppm_tool.cmake)
 cppm_setting()
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     add_definitions(-DSYSTEM_LINUX)
 elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
@@ -25,9 +22,11 @@ endif()
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pthread -fPIC -O0 -g") 
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pthread -fPIC -O0 -g -std=c++17") 
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")  
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pthread -fPIC -O0 -g") 
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pthread -fPIC -O0 -g -std=c++17") 
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC") 
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
 endif()
 
 
