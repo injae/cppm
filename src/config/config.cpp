@@ -37,9 +37,9 @@ namespace cppm
              + "\n"
              + "include(cmake/cppm_tool.cmake)\n"
              + "cppm_setting()\n"
-             + "set(CMAKE_CXX_STANDARD {})\n"_format(package.cpp_version)
-             + "set(CMAKE_CXX_STANDARD_REQUIRED ON)\n"
-             + "set(CMAKE_CXX_EXTENSIONS OFF)\n"
+            //+ "set(CMAKE_CXX_STANDARD {})\n"_format(package.cpp_version)
+            //+ "set(CMAKE_CXX_STANDARD_REQUIRED ON)\n"
+            //+ "set(CMAKE_CXX_EXTENSIONS OFF)\n"
              + "if(${CMAKE_SYSTEM_NAME} STREQUAL \"Linux\")\n"
              + "    add_definitions(-DSYSTEM_LINUX)\n"
              + "elseif(${CMAKE_SYSTEM_NAME} STREQUAL \"Darwin\")\n"
