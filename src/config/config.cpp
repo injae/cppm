@@ -35,26 +35,16 @@ namespace cppm
              + hunter.generate()
              + "project({0} LANGUAGES CXX VERSION {1})\n"_format(package.name, package.version)
              + "\n"
+             + compiler.generate()
              + "include(cmake/cppm_tool.cmake)\n"
              + "cppm_setting()\n"
             //+ "set(CMAKE_CXX_STANDARD {})\n"_format(package.cpp_version)
             //+ "set(CMAKE_CXX_STANDARD_REQUIRED ON)\n"
             //+ "set(CMAKE_CXX_EXTENSIONS OFF)\n"
-             + "if(${CMAKE_SYSTEM_NAME} STREQUAL \"Linux\")\n"
-             + "    add_definitions(-DSYSTEM_LINUX)\n"
-             + "elseif(${CMAKE_SYSTEM_NAME} STREQUAL \"Darwin\")\n"
-             + "    add_definitions(-DSYSTEM_DARWIN)\n"
-             + "elseif(${CMAKE_SYSTEM_NAME} STREQUAL \"AIX\")\n"
-             + "    add_definitions(-DSYSTEM_AIX)\n"
-             + "elseif(${CMAKE_SYSTEM_NAME} MATCHES \"Windows\")\n"
-             + "    add_definitions(-DSYSTEM_WINDOWS)\n"
-             + "endif()"
-             + "\n"
              + "# detect host processor\n"
              + "list(APPEND CMAKE_MODULE_PATH \"${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/\")\n"
             //+ "list(APPEND CMAKE_PREFIX_PATH \"$ENV{HOME}/.cppm/local\")"
              + "\n"
-             + compiler.generate()
              + "\n"
              + cmake.generate()
              + dependencies.gen_find_package()
