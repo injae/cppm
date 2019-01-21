@@ -22,7 +22,7 @@ namespace cppm
     }
     std::string Compiler::generate() {
         using namespace fmt::literals;
-        return "if(\"${CMAKE_CXX_COMPILER_ID}\" STREQUAL \"Clang\")\n"
+        return "if(\"${CMAKE_CXX_COMPILER_ID}\" STREQUAL \"Clang\" OR \"${CMAKE_CXX_COMPILER_ID}\" STREQUAL \"AppleClang\")\n"
              + "    set(CMAKE_CXX_FLAGS \"${{CMAKE_CXX_FLAGS}} {0}\") \n"_format(list["clang"].option)
              + "elseif(\"${CMAKE_CXX_COMPILER_ID}\" STREQUAL \"GNU\")  \n"
              + "    set(CMAKE_CXX_FLAGS \"${{CMAKE_CXX_FLAGS}} {0}\") \n"_format(list["gcc"].option)
