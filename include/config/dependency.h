@@ -13,6 +13,7 @@ namespace cppm
         std::string module;
         bool none_module;
         bool hunter;
+        std::string link_type;
         std::string version;
         std::string components;
         void insert(table_ptr table);

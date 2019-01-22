@@ -12,9 +12,10 @@ namespace cppm
             dependency.name = dep_table.first;
             auto dep = deps->get_table(dependency.name);
             if(!dep->get_as<std::string>("module")) std::cerr << "need module\n";
-            dependency.module = *dep->get_as<std::string>("module");
+            dependency.module      = *dep->get_as<std::string>("module");
+            dependency.link_type   = dep->get_as<std::string>("lnk_type").value_or("public");
             dependency.none_module = dep->get_as<bool>("no_module").value_or(false);
-            dependency.hunter = dep->get_as<bool>("hunter").value_or(false);
+            dependency.hunter      = dep->get_as<bool>("hunter").value_or(false);
             dependency.version     = dep->get_as<std::string>("version").value_or("lastest");
             dependency.components  = dep->get_as<std::string>("components").value_or("");
             list.emplace_back(dependency);
@@ -39,10 +40,10 @@ namespace cppm
            auto components = dep.components =="" ? "" : "COMPONENTS " + dep.components;
            auto hunter = dep.hunter ? "HUNTER" : "";
            auto module = dep.none_module ? "" :"MODULE {0}"_format(dep.module);
-           gen += "find_cppkg({0} {1} {2} {3} {4})\n"_format(
-                   dep.name,dep.version,components,module, hunter);
+           gen += "find_cppkg({0} {1} {2} {3} {4} {5})\n"_format(
+                              dep.name,dep.version,components,module, dep.link_type , hunter);
            if(dep.none_module) {
-               gen += "list(APPEND thirdparty {})\n"_format(dep.module);
+               gen += "list(APPEND {}_thirdparty {})\n"_format(dep.link_type,dep.module);
            }
         }
         return gen;
