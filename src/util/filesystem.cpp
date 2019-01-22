@@ -30,7 +30,6 @@ namespace cppm::util
             if(!std::regex_match(file, what, filter)) continue;
             if(!is_full_path) {
                 matching_files.push_back(file);
-                fmt::print(file +"\n");
             }
             else matching_files.push_back(it.path().generic_string());
         }

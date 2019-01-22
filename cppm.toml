@@ -9,7 +9,7 @@ include  = ["cmake/cppm_install.cmake"]
 [compiler] 
 clang = {option = "-Wall -pthread -fPIC -O0 -g -std=c++17"}
 gcc   = {option = "-Wall -pthread -fPIC -O0 -g -std=c++17"}
-msvc  = {option = "/std:c++17"}
+msvc  = {option = "/std:c++17 /MP"}
 
 
 [[bin]]
