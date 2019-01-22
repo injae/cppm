@@ -94,10 +94,7 @@ namespace cppm::option
             .call_back([&](){
                 config_load();
                 fs::create_directories(config_.path.build);
-                if(util::compiler::what() == "msvc"_format()) {
-                    cmd.build_option += "/MP {}"_format(std::thread::hardware_concurrency());
-                }
-                else {
+                if(util::compiler::what() != "msvc"_format()) {
                     cmd.build_option += "-j{}"_format(std::thread::hardware_concurrency());
                 }
                 if(!none_tc) {
