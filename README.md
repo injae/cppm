@@ -36,13 +36,21 @@ Cppm [![gitbook][5]][6]
 ## Installation
 ### Ubuntu example
 ```
+sudo apt-get install build-essential
 git clone https://github.com/INJAE/cppm.git
 cd cppm
 sudo cmake -H. -Bbuild
 cd build
 sudo cmake --build . --target install
 ```
-
+### Windows example
+```
+git clone https://github.com/INJAE/cppm.git
+cd cppm
+sudo cmake -H. -Bbuild
+cd build
+sudo cmake --build . --target install
+```
 ## Document
 ### [GitBook](https://cppm.gitbook.io/project/)
 
