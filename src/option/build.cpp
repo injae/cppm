@@ -95,7 +95,7 @@ namespace cppm::option
                 config_load();
                 fs::create_directories(config_.path.build);
                 if(util::compiler::what() == "msvc"_format()) {
-                    cmd.build_option += "/MP{}"_format(std::thread::hardware_concurrency());
+                    cmd.build_option += "/MP {}"_format(std::thread::hardware_concurrency());
                 }
                 else {
                     cmd.build_option += "-j{}"_format(std::thread::hardware_concurrency());
