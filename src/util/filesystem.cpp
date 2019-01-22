@@ -21,13 +21,12 @@ namespace cppm::util
  
     auto find_files(const std::string& path, std::regex filter, bool is_full_path) -> std::vector<std::string> {
         auto files = *recursive_file_list(path);
-        fmt::print(path + "\n");
         std::vector<std::string> matching_files;
+        fs::path path_(path);
         fs::directory_iterator end_itr;
         for(auto it : files) {
             std::smatch what;
-            auto file = str::erase(it.path().generic_string(), path + "/");
-            fmt::print(file+ "\n");
+            auto file = str::erase(it.path().generic_string(), path_.generic_path().string() + "/");
             if(!std::regex_match(file, what, filter)) continue;
             if(!is_full_path)  matching_files.push_back(file);
             else matching_files.push_back(it.path().generic_string());

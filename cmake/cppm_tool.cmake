@@ -2,33 +2,6 @@ macro(cppm_setting)
   string(REPLACE "\\" "/" HOME "$ENV{HOME}")
   list(APPEND CMAKE_PREFIX_PATH "${HOME}/.cppm/local/lib/cmake")
   list(APPEND CMAKE_PREFIX_PATH "${HOME}/.cppm/local/lib/pkgconfig")
-  message("Build Project")
-  message(STATUS "[cppm] CMake Version: ${CMAKE_VERSION}")
-  message(STATUS "[cppm] System Name: ${CMAKE_SYSTEM_NAME}")
-  message(STATUS "[cppm] System Version: ${CMAKE_SYSTEM_VERSION}")
-  message(STATUS "[cppm] System Processor: ${CMAKE_HOST_SYSTEM_PROCESSOR}")
-  message(STATUS "[cppm] Compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
-  message(STATUS "[cppm] Generator: ${CMAKE_GENERATOR}")
-
-  set(CPPM_ROOT "${HOME}/.cppm")
-  message(STATUS "[cppm] CPPM_ROOT: ${HOME}/.cppm")
-  find_program(CCACHE_EXE ccache)
-  if(CCACHE_EXE)
-      set(CMAKE_CXX_COMPILER_LAUNCHER ccache)
-      message(STATUS "[cppm] Find ccache")
-  endif()
-  message(STATUS "[cppm] Compiler Flags:${CMAKE_CXX_FLAGS}")
-
-  if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
-      add_definitions(-DSYSTEM_LINUX)
-  elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
-      add_definitions(-DSYSTEM_DARWIN)
-  elseif(${CMAKE_SYSTEM_NAME} STREQUAL "AIX")
-      add_definitions(-DSYSTEM_AIX)
-  elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
-      add_definitions(-DSYSTEM_WINDOWS)
-  endif()
-
 endmacro()
 
 macro(find_cppkg)
@@ -46,7 +19,7 @@ macro(find_cppkg)
     endif()
 
     if(ARG_HUNTER) 
-        message(STATUS "[cppm] Load ${name} hunter file")
+        message("-- [cppm] Load ${name} hunter file")
         if(DEFINED ARG_COMPONENTS)
           hunter_add_package(${name} COMPONENTS ${ARG_COMPONENTS})
         else()
@@ -63,7 +36,7 @@ macro(find_cppkg)
     if(NOT "${${name}_FOUND}")
 
         if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/${name}.cmake.in)
-          message(STATUS "[cppm] Load ${name} cppkg file")
+          message("-- [cppm] Load ${name} cppkg file")
           configure_file(thirdparty/${name}.cmake.in ${CMAKE_BINARY_DIR}/thirdparty/${name}/CMakeLists.txt)
           execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name})
           execute_process(COMMAND cmake  --build . WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name} )
@@ -76,11 +49,11 @@ macro(find_cppkg)
     endif()
 
    if("${${name}_FOUND}")
-     message(STATUS "[cppm] Find Package: ${name}/${${name}_VERSION}")
+     message("-- [cppm] Find Package: ${name}/${${name}_VERSION}")
    endif()
 
    if(DEFINED ARG_MODULE)
-     message(STATUS "[cppm] Load Module : ${ARG_MODULE}")
+     message("-- [cppm] Load module: ${ARG_MODULE}")
      list(APPEND thirdparty ${ARG_MODULE})
    endif()
 
@@ -125,9 +98,6 @@ function(cppm_target_install)
                 $<INSTALL_INTERFACE:include>
         )
     endif()
-        message("\nPackage Information")
-        message(STATUS "Name: ${CMAKE_PROJECT_NAME}")
-        message(STATUS "Version: ${${CMAKE_PROJECT_NAME}_VERSION}")
 
     if(${ARG_BINARY} AND ${ARG_INSTALL})
         install(TARGETS ${name} RUNTIME DESTINATION bin)
@@ -157,14 +127,7 @@ function(cppm_target_install)
           ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}-config-version.cmake
           DESTINATION lib/cmake/${CMAKE_PROJECT_NAME}
         )
-        message(STATUS "Module : ${CMAKE_PROJECT_NAME}::${name}")
-        #message(STATUS "cppm.toml: ${CMAKE_PROJECT_NAME} = {module=\"${CMAKE_PROJECT_NAME}::${name}\" version=\"${${CMAKE_PROJECT_NAME}_VERSION}\"}")
     endif()
-        string(REPLACE " " "\n   - " Dependencies "${thirdparty}")
-        string(REPLACE ";" "\n   - " Dependencies "${thirdparty}")
-    
-        message(STATUS "Dependencies:")
-        message("   - ${Dependencies}\n")
 endfunction()
 
 function(download_package)
@@ -188,7 +151,6 @@ function(download_package)
       message(FATAL_ERROR "Need Option LOCAL or GLOBAL")
     endif()
 
-    set(_version ${version})
     if(${version} STREQUAL "lastest")
       set(version "")
     endif()
@@ -196,21 +158,22 @@ function(download_package)
     include(ExternalProject)
     find_package(${name} ${version} QUIET)
     if(NOT "${${name}_FOUND}" AND NOT "${${name}_FIND_VERSION_EXACT}")
-        message(STATUS "[cppm] Can not find ${name} package")
-        message(STATUS "[cppm] Download ${name} package")
+        message("-- [cppm] Can not find ${name} package")
+        message("-- [cppm] Download ${name} package")
+        #find_package(Git REQUIRED)
+
         if(NOT WIN32)
           ExternalProject_Add(
             ${name}
             URL ${ARG_URL}
             GIT_REPOSITORY ${ARG_GIT}
             GIT_TAG ${ARG_GIT_TAG}
-            SOURCE_DIR ${HOME}/.cppm/install/${name}/${_version}
+            SOURCE_DIR ${HOME}/.cppm/install/${name}
             CMAKE_ARGS ${CMAKR_ARGS} ${_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
             CONFIGURE_COMMAND ${ARG_L_CONFIGURE}
             BUILD_COMMAND ${ARG_L_BUILD}
             INSTALL_COMMAND ${ARG_L_INSTALL}
             BUILD_IN_SOURCE true
-            LOG_DOWNLOAD true
             ${ARG_UNPARSED_ARGUMENTS}
           )
         else(NOT WIN32)
@@ -219,19 +182,17 @@ function(download_package)
             URL ${ARG_URL}
             GIT_REPOSITORY ${ARG_GIT}
             GIT_TAG ${ARG_GIT_TAG}
-            SOURCE_DIR ${HOME}/.cppm/install/${name}/${_version}
+            SOURCE_DIR ${HOME}/.cppm/install/${name}
             CMAKE_ARGS ${CMAKR_ARGS} ${_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
             CONFIGURE_COMMAND ${ARG_W_CONFIGURE}
             BUILD_COMMAND ${ARG_W_BUILD}
             INSTALL_COMMAND ${ARG_W_INSTALL}
             BUILD_IN_SOURCE true
-            LOG_DOWNLOAD true
             ${ARG_UNPARSED_ARGUMENTS}
           )
         endif(NOT WIN32)
-        message(STATUS "[cppm] Cache Direcroty ${HOME}/.cppm/install/${name}/${_version}")
     else()
-        message(STATUS "[cppm] Find ${name} package")
+        message("-- [cppm] Find ${name} package")
     endif()
 endfunction()
 
