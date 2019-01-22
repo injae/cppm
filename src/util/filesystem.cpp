@@ -21,6 +21,7 @@ namespace cppm::util
  
     auto find_files(const std::string& path, std::regex filter, bool is_full_path) -> std::vector<std::string> {
         auto files = *recursive_file_list(path);
+        fmt::print(path + "\n");
         std::vector<std::string> matching_files;
         fs::directory_iterator end_itr;
         for(auto it : files) {
