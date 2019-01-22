@@ -23,7 +23,7 @@ Cppm [![gitbook][5]][6]
 > If there is a library you want to add, please issue a pull request to the [Cppkg repository](https://github.com/injae/cppkg)  
 
 ## Installation
-### Ubuntu example
+### Ubuntu
 ```
 sudo apt-get install build-essential
 git clone https://github.com/INJAE/cppm.git
@@ -32,13 +32,13 @@ sudo cmake -H. -Bbuild
 cd build
 sudo cmake --build . --target install
 ```
-### Windows example
+### Windows
 ```
 git clone https://github.com/INJAE/cppm.git
 cd cppm
-sudo cmake -H. -Bbuild
+cmake -H. -Bbuild
 cd build
-sudo cmake --build . --target install
+cmake --build . --target install
 ```
 
 ## Features
