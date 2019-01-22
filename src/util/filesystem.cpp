@@ -1,5 +1,6 @@
 #include "util/filesystem.h"
 #include "util/algorithm.hpp"
+#include <fmt/format.h>
 #include <iostream>
 
 #ifdef _WIN32
@@ -24,10 +25,11 @@ namespace cppm::util
         fs::directory_iterator end_itr;
         for(auto it : files) {
             std::smatch what;
-            auto file = str::erase(it.path().string(), path + "/");
+            auto file = str::erase(it.path().generic_string(), path + "/");
+            fmt::print(file+ "\n");
             if(!std::regex_match(file, what, filter)) continue;
             if(!is_full_path)  matching_files.push_back(file);
-            else matching_files.push_back(it.path().string());
+            else matching_files.push_back(it.path().generic_string());
         }
         return matching_files;
     }
