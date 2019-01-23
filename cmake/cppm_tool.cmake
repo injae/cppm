@@ -1,13 +1,8 @@
 macro(cppm_setting)
-  set(options NO_MESSAGE)
-  set(oneValueArg)
-  set(multiValueArgs)
-  cmake_parse_arguments(ARG "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-
   string(REPLACE "\\" "/" HOME "$ENV{HOME}")
   list(APPEND CMAKE_PREFIX_PATH "${HOME}/.cppm/local/lib/cmake")
   list(APPEND CMAKE_PREFIX_PATH "${HOME}/.cppm/local/lib/pkgconfig")
-  if(NOT ${ARG_NO_MESSAGE})
+  if(NOT ${NO_MESSAGE})
     message("Build Project")
     message(STATUS "[cppm] CMake Version: ${CMAKE_VERSION}")
     message(STATUS "[cppm] System Name: ${CMAKE_SYSTEM_NAME}")
@@ -20,13 +15,13 @@ macro(cppm_setting)
   find_program(CCACHE_EXE ccache)
   if(CCACHE_EXE)
       set(CMAKE_CXX_COMPILER_LAUNCHER ccache)
-      if(NOT ${ARG_NO_MESSAGE})
+      if(NOT ${NO_MESSAGE})
           message(STATUS "[cppm] Find ccache")
       endif()
   endif()
   
   set(CPPM_ROOT "${HOME}/.cppm")
-  if(NOT ${ARG_NO_MESSAGE})
+  if(NOT ${NO_MESSAGE})
        message(STATUS "[cppm] CPPM_ROOT: ${HOME}/.cppm")
        message(STATUS "[cppm] Compiler Flags:${CMAKE_CXX_FLAGS}")
   endif()
@@ -187,8 +182,7 @@ function(cppm_target_install)
         write_basic_package_version_file(
           ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}-config-version.cmake
           VERSION ${${CMAKE_PROJECT_NAME}_VERSION}
-          COMPATIBIL
-          ITY ExactVersion
+          COMPATIBILITY ExactVersion
         ) 
 
         install(FILES
@@ -220,12 +214,12 @@ function(download_package)
     set(multiValueArgs CMAKE_ARGS W_CONFIGURE W_BUILD W_INSTALL
                                   L_CONFIGURE L_BUILD L_INSTALL)
     cmake_parse_arguments(ARG "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-
     list(GET ARG_UNPARSED_ARGUMENTS 0 name)
     list(GET ARG_UNPARSED_ARGUMENTS 1 version)
     list(REMOVE_AT ARG_UNPARSED_ARGUMENTS 0 1)
 
-    cppm_setting(NO_MESSAGE)
+    set(NO_MESSAGE TRUE)
+    cppm_setting()
 
     if(ARG_LOCAL)
       set(_INSTALL_PREFIX "-DCMAKE_INSTALL_PREFIX=${HOME}/.cppm/local ")
@@ -239,28 +233,25 @@ function(download_package)
     if(${version} STREQUAL "lastest")
       set(version "")
     endif()
+    message("${ARG_GIT}")
 
     include(ExternalProject)
     find_package(${name} ${version} QUIET)
     if(NOT "${${name}_FOUND}" AND NOT "${${name}_FIND_VERSION_EXACT}")
         message(STATUS "[cppm] Can not find ${name} package")
         message(STATUS "[cppm] Download ${name} package")
-        file(MAKE_DIRECTORY ${HOME}/.cppm/install)
-        file(MAKE_DIRECTORY ${HOME}/.cppm/install/${name})
-        file(MAKE_DIRECTORY ${HOME}/.cppm/install/${name}/${_version})
         if(NOT WIN32)
           ExternalProject_Add(
             ${name}
-            URL ${ARG_URL}
+            #URL ${ARG_URL}
             GIT_REPOSITORY ${ARG_GIT}
-            GIT_TAG ${ARG_GIT_TAG}
+            #GIT_TAG ${ARG_GIT_TAG}
             SOURCE_DIR ${HOME}/.cppm/install/${name}/${_version}
             CMAKE_ARGS ${CMAKR_ARGS} ${_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
             CONFIGURE_COMMAND ${ARG_L_CONFIGURE}
             BUILD_COMMAND ${ARG_L_BUILD}
             INSTALL_COMMAND ${ARG_L_INSTALL}
             BUILD_IN_SOURCE true
-            LOG_DOWNLOAD true
             ${ARG_UNPARSED_ARGUMENTS}
           )
         else(NOT WIN32)
@@ -275,7 +266,6 @@ function(download_package)
             BUILD_COMMAND ${ARG_W_BUILD}
             INSTALL_COMMAND ${ARG_W_INSTALL}
             BUILD_IN_SOURCE true
-            LOG_DOWNLOAD true
             ${ARG_UNPARSED_ARGUMENTS}
           )
         endif(NOT WIN32)
