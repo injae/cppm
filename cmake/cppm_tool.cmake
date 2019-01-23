@@ -245,6 +245,8 @@ function(download_package)
     if(NOT "${${name}_FOUND}" AND NOT "${${name}_FIND_VERSION_EXACT}")
         message(STATUS "[cppm] Can not find ${name} package")
         message(STATUS "[cppm] Download ${name} package")
+        file(MAKE_DIRECTORY ${HOME}/.cppm/install)
+        file(MAKE_DIRECTORY ${HOME}/.cppm/install/${name})
         file(MAKE_DIRECTORY ${HOME}/.cppm/install/${name}/${_version})
         if(NOT WIN32)
           ExternalProject_Add(
