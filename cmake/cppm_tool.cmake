@@ -187,7 +187,8 @@ function(cppm_target_install)
         write_basic_package_version_file(
           ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}-config-version.cmake
           VERSION ${${CMAKE_PROJECT_NAME}_VERSION}
-          COMPATIBILITY ExactVersion
+          COMPATIBIL
+          ITY ExactVersion
         ) 
 
         install(FILES
@@ -244,6 +245,7 @@ function(download_package)
     if(NOT "${${name}_FOUND}" AND NOT "${${name}_FIND_VERSION_EXACT}")
         message(STATUS "[cppm] Can not find ${name} package")
         message(STATUS "[cppm] Download ${name} package")
+        file(MAKE_DIRECTORY ${HOME}/.cppm/install/${name}/${_version})
         if(NOT WIN32)
           ExternalProject_Add(
             ${name}
