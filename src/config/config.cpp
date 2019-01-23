@@ -47,7 +47,7 @@ namespace cppm
              + "\n"
              + "\n"
              + cmake.generate()
-             + dependencies.gen_find_package()
+             + dependencies.gen_find_cppkg()
              + "\n"
              + libs.generate(*this)
              + "\n"

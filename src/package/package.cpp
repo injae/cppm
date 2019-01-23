@@ -25,6 +25,7 @@ namespace cppm::package
             download.url     = download_->get_as<std::string>("url").value_or("");
             download.git.url = download_->get_as<std::string>("git").value_or("");
             download.git.tag = download_->get_as<std::string>("git_tag").value_or("");
+            deps.parse(table);
         }
     }
 
@@ -50,6 +51,7 @@ namespace cppm::package
         return "cmake_minimum_required(VERSION 3.6)\n"
              + "project({0}-{1}-install NONE)\n\n"_format(name, version)
              + "include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)\n"
+             + deps.gen_find_package()
              + "download_package({0} {1} {2} {3} {4} {5})\n\n"_format(
                                 name, version, git_url, git_tag, url, install)
              + desc;
@@ -76,7 +78,7 @@ namespace cppkg {
                    , "[package]\n" + "name = {0}\n"_format(value(package.name))
                    + "# if you use git repo, package version is lastest\n"
                    + "version = {0}\n"_format(value(package.version))
-                   + "description = \"\"\n"
+                   + "description = {0}\n"_format(value(package.description))
                    + "global={0}\n"_format(package.global ? "true" : "false")
                    + "# library name in cmake, cppm.toml use this value \n"
                    + "# [dependencies]\n"
@@ -88,6 +90,7 @@ namespace cppkg {
                                                          ,value(package.download.git.url))
                    + "{0}download = {{url={1}}}\n"_format(is_default(package.download.url)
                                                          ,value(package.download.url))
+                   + package.deps.generate()
                    ); 
     }
 
@@ -106,6 +109,9 @@ namespace cppkg {
         fs::remove(package.name + ".toml");
         auto file = "{0}/{1}.cmake.in"_format(dir_name,package.name);
         util::write(file, package.generate());
+        auto dep_file = "{0}/dep.cmake"_format(dir_name);
+        util::create(dep_file);
+        util::write(dep_file,package.deps.gen_find_package());
     }
 
     void regist(const std::string& name) {
@@ -178,9 +184,11 @@ namespace cppkg {
             fs::copy("{0}/{1}"_format(path,package.cmake.find_lib)
                     ,"{0}/Modules/{1}"_format(config.path.cmake,package.cmake.find_lib));
         }
-        fs::copy("{0}/{1}.cmake.in"_format(path,package.name)
-                ,"{0}/{1}.cmake.in"_format(config.path.thirdparty,package.name));
-        fmt::print("Add Dependency {0}/{1}\n",package.name,package.version);
+        //fs::copy("{0}/{1}.cmake.in"_format(path,package.name)
+        //        ,"{0}/{1}.cmake.in"_format(config.path.thirdparty,package.name));
+        util::recursive_copy(path,"{0}/{1}/{2}"_format(
+                             config.path.thirdparty,package.name,package.version));
+        fmt::print("Install Cppkg {0}/{1}\n",package.name,package.version);
         //fmt::print("add this in cppm.toml\n");
         //fmt::print("[dependencies]\n");
         //fmt::print("{0}={{module={1}, version={2}, components={3}}}\n"
