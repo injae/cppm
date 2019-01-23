@@ -13,7 +13,6 @@ using namespace fmt::literals;
 
 namespace cppm::option
 {
-
     std::string CommandBuilder::build(Config& config)
     {
         auto has_toolchains = [&config]() -> std::string {
@@ -88,6 +87,19 @@ namespace cppm::option
         app_.add_option("ntc")
             .desc("not change CMakeLists.txt test options")
             .call_back([this]() { none_tc = true; app_.call_default();});
+        app_.add_option("export")
+            .desc("export cppkg")
+            .call_back([&]() { config_load(); export_cppkg(); });
+        app_.add_command("install")
+            .desc("cmake target install ")
+            .call_back([this]() {
+                config_load();
+                auto cmd = "cmake --build {} --target install "_format(config_.path.build);
+                if(util::compiler::what() != "msvc"_format()) {
+                    cmd += "-- -j{}"_format(std::thread::hardware_concurrency());
+                }
+                system(cmd.c_str());
+            });
         app_.add_command()
             .desc("Build command")
             .args("{cppm options} {builder options}")
@@ -126,7 +138,7 @@ namespace cppm::option
 
         for(auto dep : config_.dependencies.list) {
             if(dep.hunter) { continue; }
-            if(!fs::exists("{0}/{1}.cmake.in"_format(config_.path.thirdparty,dep.name))) {
+            if(!fs::exists("{0}/{1}/{2}/{1}.cmake.in"_format(config_.path.thirdparty,dep.name,dep.version))) {
                 not_installed_dep.push_back(dep);
             }
         }
@@ -141,5 +153,19 @@ namespace cppm::option
         std::ofstream CmakeLists(config_.path.root + "/CMakeLists.txt"); CmakeLists.is_open();
         CmakeLists << config_.generate();
         CmakeLists.close();
+    }
+
+    void Build::export_cppkg() {
+        package::Package pkg;
+        pkg.name = config_.package.name;
+        pkg.description = config_.package.description;
+        pkg.download.git.url = config_.package.git_repo;
+        if(pkg.download.git.url == "") {fmt::print(stderr, "need git_repo"); exit(1);}
+        pkg.version = "lastest";
+        pkg.deps = config_.dependencies;
+        pkg.global = false;
+        package::cppkg::init(pkg);
+        package::cppkg::build(pkg.name);
+        package::cppkg::regist("{}/{}"_format(pkg.name,pkg.version));
     }
 }

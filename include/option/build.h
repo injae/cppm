@@ -21,6 +21,7 @@ namespace cppm::option
     private:
         void cmakelist_build();
         void dependency_check();
+        void export_cppkg();
         CommandBuilder cmd;
         bool none_tc = false;
         bool clean = false;

@@ -3,6 +3,7 @@
 
 #include "config/base_config.h"
 #include "config/config.h"
+#include "config/dependency.h"
 #include "package/repo.h"
 #include <string>
 
@@ -37,6 +38,7 @@ namespace cppm::package
         std::string name;
         std::string description;
         std::string version;
+        Dependencies deps;
         download_ download;
         cmake_ cmake;
         bool global = false;

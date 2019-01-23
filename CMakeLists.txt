@@ -24,10 +24,10 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
 
 
 include(cmake/cppm_install.cmake)
-find_cppkg(Boost 1.58.0 COMPONENTS system filesystem MODULE Boost::filesystem HUNTER)
-find_cppkg(nlpo lastest  MODULE nlpo::nlpo )
-find_cppkg(cpptoml lastest  MODULE cpptoml )
-find_cppkg(fmt lastest  MODULE fmt::fmt )
+find_cppkg(Boost 1.58.0 COMPONENTS system filesystem MODULE Boost::filesystem PUBLIC HUNTER)
+find_cppkg(nlpo lastest  MODULE nlpo::nlpo PUBLIC )
+find_cppkg(cpptoml lastest  MODULE cpptoml PUBLIC )
+find_cppkg(fmt lastest  MODULE fmt::fmt PUBLIC )
 
 
 add_executable(cppm "")
@@ -78,6 +78,7 @@ target_sources(cppm
 	src/config/path.cpp
 	src/config/compiler.cpp
 	src/config/lib.cpp
+	src/config/.#lib.cpp
 	src/option/add.cpp
 	src/option/init.cpp
 	src/option/cppkg_init.cpp

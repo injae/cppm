@@ -24,6 +24,7 @@ namespace cppm
     public:
         void parse(table_ptr table);
         std::string gen_find_package();
+        std::string gen_find_cppkg();
         std::string generate();
     public:
         std::vector<Dependency> list;
