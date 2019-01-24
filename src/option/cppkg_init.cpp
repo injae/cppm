@@ -51,7 +51,7 @@ namespace cppm::option
                 pkg.name = app_.get_arg();
                 package::cppkg::init(pkg);
                 package::cppkg::build("{0}"_format(pkg.name));
-                if(!regist) {
+                if(regist) {
                     if(pkg.download.git.url == ""
                     && pkg.download.url == "") {fmt::print(stderr,"need --url or --git"); exit(1);}
                     if(pkg.version    == "") {fmt::print(stderr,"need --version"); exit(1);}

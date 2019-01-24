@@ -136,7 +136,7 @@ namespace cppkg {
             auto pkgs = *util::file_list("{0}/{1}"_format(root_path,rname));
             for(auto& pkg : pkgs) {
                 auto pname = pkg.path().filename().string();
-                if(pname == ".git" || pname == "README.md") continue;
+                if(pname == ".git" || pname == "README.md" || pname == "_cppm_test") continue;
                 auto versions = *util::file_list("{0}/{1}/{2}"_format(root_path,rname,pname));
                 for(auto& ver : versions) {
                     auto vname = ver.path().filename().string();

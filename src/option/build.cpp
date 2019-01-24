@@ -158,6 +158,11 @@ namespace cppm::option
     void Build::export_cppkg() {
         package::Package pkg;
         pkg.name = config_.package.name;
+        for(auto& lib : config_.libs.list) {
+            if(lib.install){
+                pkg.cmake.name += "{0}::{1} "_format(config_.package.name,lib.name);
+            }
+        }
         pkg.description = config_.package.description;
         pkg.download.git.url = config_.package.git_repo;
         if(pkg.download.git.url == "") {fmt::print(stderr, "need git_repo"); exit(1);}
