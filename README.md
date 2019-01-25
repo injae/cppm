@@ -39,7 +39,11 @@ cd cppm
 cmake -H. -Bbuild
 cd build
 cmake --build . --target install
+# Adding to Window Path
+setx /M path=%path%;C:\Program Files (x86)\cppm\bin
 ```
+
+
 
 ## Features
 - [x] cmake dependencies auto installer (cppkg)

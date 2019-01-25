@@ -233,19 +233,22 @@ function(download_package)
     if(${version} STREQUAL "lastest")
       set(version "")
     endif()
-    message("${ARG_GIT}")
 
+    enable_language(CXX)
     include(ExternalProject)
     find_package(${name} ${version} QUIET)
     if(NOT "${${name}_FOUND}" AND NOT "${${name}_FIND_VERSION_EXACT}")
         message(STATUS "[cppm] Can not find ${name} package")
         message(STATUS "[cppm] Download ${name} package")
+        if(NOT EXISTS ${HOME}/.cppm/install/${name})
+            file(MAKE_DIRECTORY ${HOME}/.cppm/install/${name})
+        endif()
         if(NOT WIN32)
           ExternalProject_Add(
             ${name}
-            #URL ${ARG_URL}
+            URL ${ARG_URL}
             GIT_REPOSITORY ${ARG_GIT}
-            #GIT_TAG ${ARG_GIT_TAG}
+            GIT_TAG ${ARG_GIT_TAG}
             SOURCE_DIR ${HOME}/.cppm/install/${name}/${_version}
             CMAKE_ARGS ${CMAKR_ARGS} ${_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
             CONFIGURE_COMMAND ${ARG_L_CONFIGURE}

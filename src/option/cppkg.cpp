@@ -56,8 +56,14 @@ namespace cppm::option
     void Cppkg::_search() {
         using namespace fmt::literals;
         auto list = package::cppkg::list();
-        fmt::print("{:<15}{:<20}{:<40}{:<70}\n", "Name", "Version","Description","Use");
-        fmt::print("{:=<15}{:=<20}{:=<40}{:=<70}\n", "=", "=","=","=");
+        auto string_cut = [&](std::string& str) {
+            if(str.size() > 50) {
+                return str.substr(0,48) + "$";
+            }
+            return str;
+        };
+        fmt::print("{:<20}{:<20}{:<50}{:<70}\n", "Name", "Version","Description","Use");
+        fmt::print("{:=<20}{:=<20}{:=<50}{:=<70}\n", "=", "=","=","=");
         std::string arg;
         if(!app_.args().empty()){ arg = app_.get_arg(); }
         for(auto& [rname, repo] : list.repos) {
@@ -73,7 +79,7 @@ namespace cppm::option
                                    ? " components=\"{0}\""_format(package.cmake.components) : "";
                     auto use = "{0}={{module=\"{1}\", version=\"{2}\"{3}}}"_format
                                 (package.name, package.cmake.name, package.version, component);
-                    fmt::print("{:<15}{:<20}{:<40}{:<70}\n", pname, std::string(vname), package.description, use);
+                    fmt::print("{:<20}{:<20}{:<50}{:<70}\n", pname, std::string(vname), string_cut(package.description), use);
                 }
             }
         }
