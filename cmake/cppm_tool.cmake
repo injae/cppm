@@ -66,6 +66,7 @@ macro(find_cppkg)
         configure_file(thirdparty/${name}/${version_}/${name}.cmake.in
                        ${CMAKE_BINARY_DIR}/thirdparty/${name}/${version_}/CMakeLists.txt)
         execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+                                                 -DCMAKE_CXX_COMPILER="${CMAKE_CXX_COMPILER}"
                         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name}/${version_})
         execute_process(COMMAND cmake  --build .
                         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name}/${version_})
@@ -218,6 +219,7 @@ macro(download_package)
     list(GET ARG_UNPARSED_ARGUMENTS 1 version)
     list(REMOVE_AT ARG_UNPARSED_ARGUMENTS 0 1)
 
+    message("${CMAKE_CXX_COMPILER}")
     set(NO_MESSAGE TRUE)
     cppm_setting()
 
@@ -234,7 +236,6 @@ macro(download_package)
       set(version "")
     endif()
 
-    enable_language(CXX)
     include(ExternalProject)
     find_package(${name} ${version} QUIET)
     if(NOT "${${name}_FOUND}" AND NOT "${${name}_FIND_VERSION_EXACT}")
@@ -250,7 +251,7 @@ macro(download_package)
             GIT_REPOSITORY ${ARG_GIT}
             GIT_TAG ${ARG_GIT_TAG}
             SOURCE_DIR ${HOME}/.cppm/install/${name}/${_version}
-            CMAKE_ARGS ${CMAKR_ARGS} ${_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
+            CMAKE_ARGS ${CMAKE_ARGS} ${_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
             CONFIGURE_COMMAND ${ARG_L_CONFIGURE}
             BUILD_COMMAND ${ARG_L_BUILD}
             INSTALL_COMMAND ${ARG_L_INSTALL}
@@ -264,7 +265,7 @@ macro(download_package)
             GIT_REPOSITORY ${ARG_GIT}
             GIT_TAG ${ARG_GIT_TAG}
             SOURCE_DIR ${HOME}/.cppm/install/${name}/${_version}
-            CMAKE_ARGS ${CMAKR_ARGS} ${_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
+            CMAKE_ARGS ${CMAKE_ARGS} ${_INSTALL_PREFIX} ${ARG_CMAKE_ARGS}
             CONFIGURE_COMMAND ${ARG_W_CONFIGURE}
             BUILD_COMMAND ${ARG_W_BUILD}
             INSTALL_COMMAND ${ARG_W_INSTALL}
