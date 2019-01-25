@@ -4,7 +4,7 @@
 
 [1]: https://travis-ci.com/injae/cppm.svg?branch=master
 [2]: https://travis-ci.com/injae/cppm
-[3]: https://ci.appveyor.com/api/projects/status/6ovjp02higajbxhm?branch=master?svg=true
+[3]: https://ci.appveyor.com/api/projects/status/6ovjp02higajbxhm?svg=true?branch=master
 [4]: https://ci.appveyor.com/project/injae/cppm
 [5]: https://aleen42.github.io/badges/src/gitbook_2.svg
 [6]: https://cppm.gitbook.io/project/
