@@ -7,7 +7,6 @@ HunterGate(
 )
 project(cppm LANGUAGES CXX VERSION 1.0.4)
 
-message("${CMAKE_CXX_COMPILER}")
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pthread -fPIC -O0 -g -std=c++17") 
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")  
@@ -95,6 +94,7 @@ target_sources(cppm
 	src/package/package.cpp
 	src/package/repo.h
 )
+
 
 cppm_target_install(cppm BINARY INSTALL)
 
