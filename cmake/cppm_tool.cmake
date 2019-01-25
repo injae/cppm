@@ -208,7 +208,7 @@ function(cppm_target_install)
         message("   - ${deps}\n")
 endfunction()
 
-function(download_package)
+macro(download_package)
     set(options LOCAL GLOBAL)
     set(oneValueArgs URL GIT GIT_TAG)
     set(multiValueArgs CMAKE_ARGS W_CONFIGURE W_BUILD W_INSTALL
@@ -276,7 +276,7 @@ function(download_package)
     else()
         message(STATUS "[cppm] Find ${name} package")
     endif()
-endfunction()
+endmacro()
 
     # pkg-config install part
     

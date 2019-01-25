@@ -93,6 +93,7 @@ target_sources(cppm
 	src/main.cpp
 	src/package/package.cpp
 	src/package/repo.h
+	src/package/.#package.cpp
 )
 
 
