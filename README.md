@@ -42,7 +42,11 @@ cmake --build . --target install
 # Adding to Window Path
 setx /M path=%path%;C:\Program Files (x86)\cppm\bin
 ```
-
+## OSX
+AppleClang is not supported.
+AppleClang does not support the C++ standard perfectly. 
+Set GCC or Clang as the default compiler to compile on OSX.
+Ex) #include<optional> is not available. 
 
 
 ## Features
@@ -53,6 +57,8 @@ setx /M path=%path%;C:\Program Files (x86)\cppm\bin
 - [x] regist cppkg package in local repository (cppm add cppkg {name})
 - [x] cppkg repository update (cppm update)
 - [x] hunter package dependency available 
+- [ ] unit test option
+- [ ] sub project option
 
 ## Document
 ### [GitBook](https://cppm.gitbook.io/project/)
