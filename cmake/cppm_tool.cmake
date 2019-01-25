@@ -219,7 +219,6 @@ macro(download_package)
     list(GET ARG_UNPARSED_ARGUMENTS 1 version)
     list(REMOVE_AT ARG_UNPARSED_ARGUMENTS 0 1)
 
-    message("${CMAKE_CXX_COMPILER}")
     set(NO_MESSAGE TRUE)
     cppm_setting()
 
