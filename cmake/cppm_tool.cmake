@@ -65,8 +65,8 @@ macro(find_cppkg)
     if(EXISTS ${new_cppkg})
         configure_file(thirdparty/${name}/${version_}/${name}.cmake.in
                        ${CMAKE_BINARY_DIR}/thirdparty/${name}/${version_}/CMakeLists.txt)
-        execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-                                                 -DCMAKE_CXX_COMPILER="${CMAKE_CXX_COMPILER}"
+        execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" 
+                                                 "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}" .
                         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name}/${version_})
         execute_process(COMMAND cmake  --build .
                         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/thirdparty/${name}/${version_})
@@ -234,7 +234,7 @@ macro(download_package)
     if(${version} STREQUAL "lastest")
       set(version "")
     endif()
-
+    
     include(ExternalProject)
     find_package(${name} ${version} QUIET)
     if(NOT "${${name}_FOUND}" AND NOT "${${name}_FIND_VERSION_EXACT}")

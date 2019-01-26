@@ -49,7 +49,7 @@ namespace cppm::package
         desc += "#    LOCAL(default) GLOBAL \n";
 
         return "cmake_minimum_required(VERSION 3.6)\n"
-             + "project({0}-{1}-install NONE)\n\n"_format(name, version)
+             + "project({0}-{1}-install C CXX)\n\n"_format(name, version)
              + "include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)\n"
              + deps.gen_find_package()
              + "download_package({0} {1} {2} {3} {4} {5})\n\n"_format(

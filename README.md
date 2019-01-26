@@ -46,7 +46,7 @@ setx /M path=%path%;C:\Program Files (x86)\cppm\bin
 AppleClang is not supported.
 AppleClang does not support the C++ standard perfectly. 
 Set GCC or Clang as the default compiler to compile on OSX.
-Ex) #include<optional> is not available. 
+Ex. #include<optional> is not available. 
 
 
 ## Features
