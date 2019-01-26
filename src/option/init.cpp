@@ -6,6 +6,8 @@
 #include <cstdlib>
 #include <fmt/format.h>
 
+using namespace fmt::literals;
+
 namespace cppm::option
 {
     Init::Init() {
@@ -25,62 +27,53 @@ namespace cppm::option
             .call_back([&](){ this->make_lib(); });
     }
 
-
     void Init::make_bin() {
-        auto config = make_project();
-        auto bin = cpptoml::make_table();
-        auto name = *config->get_table("package")->get_as<std::string>("name");
-        bin->insert("name", name);
+        auto name = app_.args().front();
+        auto value = [&](const std::string& str){ return "\"{}\""_format(str);};
+        auto gen = make_project();
 
-        auto source = cpptoml::make_array();
-        source->push_back("include/.*");
-        source->push_back("src/.*");
-        bin->insert("source", source);
-
-        auto bin_table = cpptoml::make_table_array();
-        bin_table->push_back(bin);
-        config->insert("bin", bin_table);
+        gen += "[[bin]]\n"
+            +  "   name = {}\n"_format(value(name))
+            +  "   source = [{}]\n"_format(value("src/.*"))
+            ;
 
         auto project = Path::make((fs::current_path()/name).string());
         std::fstream file; 
         file.open(project.root + "/cppm.toml", std::ios::out);
-        file << *config;
+        file << gen;
         file.close();
 
         file.open(project.source + "/main.cpp", std::ios::out);
-        file << "int main(int argc, char* argv[]) {\n\n return 0; \n}";
+        file << "\nint main(int argc, char* argv[]) {\n\n     return 0; \n}";
         file.close();
+        app_.args().pop_front();
     } 
 
     void Init::make_lib() {
-        auto config = make_project();
-        auto lib = cpptoml::make_table();
-        auto name = *config->get_table("package")->get_as<std::string>("name");
-        lib->insert("name", name);
-        lib->insert("type", "shared");
+        auto name = app_.args().front();
+        auto value = [&](const std::string& str){ return "\"{}\""_format(str);};
+        auto gen = make_project();
 
-        auto source = cpptoml::make_array();
-        source->push_back("include/.*");
-        source->push_back("src/.*");
-        lib->insert("source", source);
-
-        auto lib_table = cpptoml::make_table_array();
-        lib_table->push_back(lib);
-        config->insert("lib", lib_table);
+        gen += "[[lib]]\n"
+            +  "   name = {}\n"_format(value(name))
+            +  "   type = {}\n"_format(value("shared"))
+            +  "   source = [{}]\n"_format(value("src/.*"))
+            ;
 
         auto project = Path::make((fs::current_path()/name).string());
         std::fstream file; 
         file.open(project.root + "/cppm.toml", std::ios::out);
-        file << *config;
+        file << gen;
         file.close();
 
         fs::create_directory(project.include + "/" + name);
+        app_.args().pop_front();
     }
 
-    std::shared_ptr<cpptoml::table> Init::make_project() {
+    std::string Init::make_project() {
         if(app_.args().size() <= 0)  { std::cerr << "need project name"  << std::endl; exit(1);}
         if(app_.args().size() >  1)  { std::cerr << "too many argument"  << std::endl; exit(1);}
-        auto project_name = app_.args().front(); app_.args().pop_front();
+        auto project_name = app_.args().front();
 
         if(fs::exists(project_name)) { std::cerr << "this name is exist" << std::endl; exit(1);}
         fs::create_directory(project_name);
@@ -95,13 +88,18 @@ namespace cppm::option
 
         auto cppm_path = std::string(std::getenv("HOME")) + "/.cppm/";
         fs::copy(cppm_path + "cmake/cppm_tool.cmake", project.cmake+"/cppm_tool.cmake");
-        auto config = cpptoml::make_table();
-        auto package = cpptoml::make_table();
-        package->insert("description", " ");
-        package->insert("version"    , "0.0.1");
-        package->insert("name"       , project_name);
-        config->insert("package", package);
 
-        return config;
+        auto value = [&](const std::string& str){ return "\"{}\""_format(str);};
+        return "[package]\n"
+             + "   name = {}\n"_format(value(project_name))
+             + "   version = {}\n"_format(value("0.0.1"))
+             + "   description = {}\n"_format(value(""))
+             + "\n"
+             + "[compiler]\n"
+             + "   clang = {{option = {0}}}\n"_format(value("-std=c++14 -Wall "))
+             + "   gcc   = {{option = {0}}}\n"_format(value("-std=c++14 -Wall "))
+             + "   msvc  = {{option = {0}}}\n"_format(value("/std:c++14 /MP"))
+             + "\n"
+             ;
     }
 }
