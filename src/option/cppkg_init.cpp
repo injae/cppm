@@ -35,6 +35,11 @@ namespace cppm::option
             .desc("add module name")
             .args("{module}")
             .call_back([&](){ pkg.cmake.name = app_.get_arg(); });
+        app_.add_option("des")
+            .abbr("d")
+            .desc("add description")
+            .args("{description}")
+            .call_back([&](){ pkg.description = app_.get_arg(); });
         app_.add_option("version")
             .abbr("v")
             .desc("add library version Require --version")
@@ -54,8 +59,8 @@ namespace cppm::option
                 if(regist) {
                     if(pkg.download.git.url == ""
                     && pkg.download.url == "") {fmt::print(stderr,"need --url or --git"); exit(1);}
-                    if(pkg.version    == "") {fmt::print(stderr,"need --version"); exit(1);}
-                    if(pkg.cmake.name == "") {fmt::print(stderr,"need --module"); exit(1);}
+                    if(pkg.version    == "")   {fmt::print(stderr,"need --version"); exit(1);}
+                    if(pkg.cmake.name == "")   {fmt::print(stderr,"need --module"); exit(1);}
                     package::cppkg::regist("{0}/{1}"_format(pkg.name,pkg.version));
                 }
             });
