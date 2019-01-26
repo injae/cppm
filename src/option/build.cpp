@@ -94,7 +94,9 @@ namespace cppm::option
             .desc("cmake target install ")
             .call_back([this]() {
                 config_load();
-                auto cmd = "cmake --build {} --target install "_format(config_.path.build);
+                std::string cmd;
+                if(util::compiler::what() != "msvc"_format()) {cmd += "sudo ";}
+                cmd += "cmake --build {} --target install "_format(config_.path.build);
                 if(util::compiler::what() != "msvc"_format()) {
                     cmd += "-- -j{}"_format(std::thread::hardware_concurrency());
                 }
