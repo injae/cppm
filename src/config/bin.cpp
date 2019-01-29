@@ -32,10 +32,7 @@ namespace cppm
                 auto result = util::find_files(config.path.root, std::regex(src), false);
                 sources.insert(sources.end(), result.begin(), result.end());
             }
-            gen += "add_executable({0} \"\")\n"_format(bin.name);
-            gen += "target_sources({0}\n\tPRIVATE {1}\n)\n"_format(bin.name, util::accumulate(sources, "\n\t"));
-            gen += "\n\ncppm_target_install({0} {1} {2})\n"_format(bin.name, "BINARY", bin.install ? "INSTALL":"");
-            //gen += "\n\nbuild_binary({0} \"{1}\")"_format(bin.name , var("thirdparty"));
+            gen += "\n\ncppm_target_install({0} {1} {2}\nSOURCES {3}\n)\n"_format(bin.name, "BINARY", bin.install ? "INSTALL":"", util::accumulate(sources, "\n\t"));
         }
         return gen;
     }

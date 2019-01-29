@@ -30,9 +30,10 @@ find_cppkg(cpptoml lastest  MODULE cpptoml PUBLIC )
 find_cppkg(fmt lastest  MODULE fmt::fmt PUBLIC )
 
 
-add_executable(cppm "")
-target_sources(cppm
-	PRIVATE 
+
+
+cppm_target_install(cppm BINARY INSTALL
+SOURCES 
 	include/cppm_version.h
 	include/config/cmake.h
 	include/config/lib.h
@@ -70,8 +71,6 @@ target_sources(cppm
 	src/config/bin.cpp
 	src/config/builder.cpp
 	src/config/cppm_config.cpp
-	src/config/CMakeFiles/CMakeSystem.cmake
-	src/config/CMakeFiles/CMakeOutput.log
 	src/config/cppm_package.cpp
 	src/config/config.cpp
 	src/config/dependency.cpp
@@ -94,7 +93,4 @@ target_sources(cppm
 	src/package/package.cpp
 	src/package/repo.h
 )
-
-
-cppm_target_install(cppm BINARY INSTALL)
 

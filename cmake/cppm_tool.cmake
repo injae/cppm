@@ -35,7 +35,6 @@ macro(cppm_setting)
   elseif(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
       add_definitions(-DSYSTEM_WINDOWS)
   endif()
-
 endmacro()
 
 macro(find_cppkg)
@@ -123,10 +122,46 @@ endfunction()
 function(cppm_target_install)
     set(options BINARY STATIC SHARED INTERFACE INSTALL)
     set(oneValueArgs)
-    set(multiValueArgs)
+    set(multiValueArgs SOURCES)
     cmake_parse_arguments(ARG "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
     list(GET ARG_UNPARSED_ARGUMENTS 0 name)
     library_var_maker(${name})
+
+    if(${ARG_BINARY})
+        add_executable(${name} "")
+        target_include_directories(${name}
+            PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include
+            PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
+        )
+    elseif(${ARG_STATIC} OR ${ARG_SHARED})
+        if(${ARG_STATIC})
+            add_library(${name} STATIC "")
+        elseif(${ARG_SHARED})
+            add_library(${name} SHARED "")
+        endif()
+        add_library(${PROJECT_NAME}::${name} ALIAS ${name})
+        set_target_properties(${name} PROPERTIES LINKER_LANGUAGE CXX)
+        target_include_directories(${name}
+            PUBLIC
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_include_dir}>
+                $<INSTALL_INTERFACE:include>
+            PRIVATE
+                ${CMAKE_CURRENT_SOURCE_DIR}/${lib_source_dir}
+        )
+    elseif(${ARG_INTERFACE})
+        add_library(${name} INTERFACE)
+        add_library(${PROJECT_NAME}::${name} ALIAS ${name})
+        target_include_directories(${name}
+            INTERFACE
+                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_include_dir}>
+                $<INSTALL_INTERFACE:include>
+        )
+    endif()
+
+    if(DEFINED ARG_SOURCES)
+        target_sources(${name} PRIVATE ${ARG_SOURCES})
+    endif()
+
     if(DEFINED public_thirdparty)
         target_link_libraries(${name} PUBLIC ${public_thirdparty})
     endif()
@@ -136,31 +171,9 @@ function(cppm_target_install)
     if(DEFINED interface_thirdparty)
         target_link_libraries(${name} INTERFACE ${interface_thirdparty})
     endif()
-
-
-    if(${ARG_BINARY})
-        target_include_directories(${name}
-            PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include
-            PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
-        )
-    elseif(${ARG_STATIC} OR ${ARG_SHARED})
-        target_include_directories(${name}
-            PUBLIC
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_include_dir}>
-                $<INSTALL_INTERFACE:include>
-            PRIVATE
-                ${CMAKE_CURRENT_SOURCE_DIR}/${lib_source_dir}
-        )
-    elseif(${ARG_INTERFACE})
-        target_include_directories(${name}
-            INTERFACE
-                $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/${lib_include_dir}>
-                $<INSTALL_INTERFACE:include>
-        )
-    endif()
-        message("\nPackage Information")
-        message(STATUS "Name: ${CMAKE_PROJECT_NAME}")
-        message(STATUS "Version: ${${CMAKE_PROJECT_NAME}_VERSION}")
+    message("\nPackage Information")
+    message(STATUS "Name: ${CMAKE_PROJECT_NAME}")
+    message(STATUS "Version: ${${CMAKE_PROJECT_NAME}_VERSION}")
 
     if(${ARG_BINARY} AND ${ARG_INSTALL})
         install(TARGETS ${name} RUNTIME DESTINATION bin)
