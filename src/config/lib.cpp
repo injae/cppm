@@ -38,12 +38,12 @@ namespace cppm
                 auto result = util::find_files(config.path.root, std::regex(src), false);
                 sources.insert(sources.end(), result.begin(), result.end());
             }
-            gen += "add_library({0} {1} {2})\n"_format(lib.name, lib_type(lib.type), (lib_type(lib.type) != "INTERFACE") ? "\"\"" : "");
+            std::string sources_;
             if(lib_type(lib.type) != "INTERFACE") {
-                gen += "target_sources({0}\n\tPRIVATE {1}\n)\n"_format(lib.name, util::accumulate(sources, "\n\t"));
-                gen += "set_target_properties({0} PROPERTIES LINKER_LANGUAGE CXX)\n"_format(lib.name);
+                 sources_ = "\nSOURCES {}\n"_format(util::accumulate(sources, "\n\t"));
             }
-            gen += "\n\ncppm_target_install({0} {1} {2})\n"_format(lib.name, lib_type(lib.type), lib.install ? "INSTALL" : "");
+            gen += "\n\ncppm_target_install({0} {1} {2} {3})\n"_format(
+                   lib.name, lib_type(lib.type), lib.install ? "INSTALL" : "", sources_);
         }
         return gen;
     }
