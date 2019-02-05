@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 3.6)
+project(Catch2-lastest-install C CXX)
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
+download_package(Catch2 lastest GIT https://github.com/catchorg/Catch2.git   LOCAL
+                 CMAKE_ARGS -DCATCH_BUILD_TESTING=OFF)
+
+# Other Options:
+# - Linux Configures:
+#    L_CONFIGURE {...}, L_BUILD {...}, L_INSTALL {...}
+# - Windows Configures:
+#    W_CONFIGURE {...}, W_BUILD {...}, W_INSTALL {...}
+# - Install Path Options:
+#    LOCAL(default) GLOBAL 

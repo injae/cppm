@@ -2,18 +2,15 @@
 #define __CPPM_CONFIG_LIB_H__
 
 #include "config/base_config.h"
+#include "config/base_target.h"
 #include <vector>
 
 namespace cppm
 {
-    class Config;
-
-    struct Lib
+    class Lib : public base_target
     {
-        std::string name;
+    public:
         std::string type;
-        bool install;
-        std::vector<std::string> sources;
     };
 
     class Libs : public base_config

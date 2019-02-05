@@ -1,0 +1,14 @@
+[package]
+name = "Catch2"
+# if you use git repo, package version is lastest
+version = "lastest"
+description = "modern, C++-native, header-only, test framework for unit-tests"
+global=false
+# library name in cmake, cppm.toml use this value 
+# [dependencies]
+#${library_name} = {module =${value}}
+cmake = {name = "Catch2::Catch2", findlib=""}
+# write download value git or url
+download = {git="https://github.com/catchorg/Catch2.git"}
+#download = {url=""}
+[dependencies]

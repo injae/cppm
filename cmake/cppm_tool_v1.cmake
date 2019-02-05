@@ -38,9 +38,9 @@ macro(cppm_setting)
 endmacro()
 
 macro(find_cppkg)
-    set(options HUNTER)
+    set(options HUNTER PUBLIC PRIVATE INTERFACE)
     set(oneValueArg)
-    set(multiValueArgs COMPONENTS)
+    set(multiValueArgs COMPONENTS MODULE)
     cmake_parse_arguments(ARG "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
     list(GET ARG_UNPARSED_ARGUMENTS 0 name)
     list(GET ARG_UNPARSED_ARGUMENTS 1 version)
@@ -94,29 +94,46 @@ macro(find_cppkg)
      message(STATUS "[cppm] Find Package: ${name}/${${name}_VERSION}")
    endif()
 
+   if(DEFINED ARG_MODULE)
+     message(STATUS "[cppm] Load Module : ${ARG_MODULE}")
+     if(ARG_PUBLIC)
+         list(APPEND public_thirdparty ${ARG_MODULE})
+     elseif(ARG_PRIVATE)
+         list(APPEND private_thirdparty ${ARG_MODULE})
+     elseif(ARG_INTERFACE)
+         list(APPEND interface_thirdparty ${ARG_MODULE})
+     else()
+         list(APPEND public_thirdparty ${ARG_MODULE})
+     endif()
+   endif()
+
 endmacro()
 
-macro(cppm_target_define)
-    cmake_parse_arguments(ARG "BINARY;STATIC;SHARED;INTERFACE" "" "SOURCES" ${ARGN})
-    list(GET ARG_UNPARSED_ARGUMENTS 0 name)
-
+function(library_var_maker name)
     if(${name} MATCHES ${CMAKE_PROJECT_NAME})
-        set(lib_include_dir "include")
-        set(lib_source_dir  "src")
+        set(lib_include_dir "include" PARENT_SCOPE)
+        set(lib_source_dir  "src" PARENT_SCOPE)
     else()
-        set(lib_include_dir "include/${CMAKE_PROJECT_NAME}/${name}")
-        set(lib_source_dir  "src/${name}")
+        set(lib_include_dir "include/${CMAKE_PROJECT_NAME}/${name}" PARENT_SCOPE)
+        set(lib_source_dir  "src/${name}" PARENT_SCOPE)
     endif()
+endfunction()
+
+function(cppm_target_install)
+    set(options BINARY STATIC SHARED INTERFACE INSTALL)
+    set(oneValueArgs)
+    set(multiValueArgs SOURCES)
+    cmake_parse_arguments(ARG "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+    list(GET ARG_UNPARSED_ARGUMENTS 0 name)
+    library_var_maker(${name})
 
     if(${ARG_BINARY})
         add_executable(${name} "")
-        set(${name}_target_type "BINARY")
         target_include_directories(${name}
             PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}/include
             PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src
         )
     elseif(${ARG_STATIC} OR ${ARG_SHARED})
-        set(${name}_target_type "LIBRARY")
         if(${ARG_STATIC})
             add_library(${name} STATIC "")
         elseif(${ARG_SHARED})
@@ -132,7 +149,6 @@ macro(cppm_target_define)
                 ${CMAKE_CURRENT_SOURCE_DIR}/${lib_source_dir}
         )
     elseif(${ARG_INTERFACE})
-        set(${name}_target_type "LIBRARY")
         add_library(${name} INTERFACE)
         add_library(${PROJECT_NAME}::${name} ALIAS ${name})
         target_include_directories(${name}
@@ -145,42 +161,24 @@ macro(cppm_target_define)
     if(DEFINED ARG_SOURCES)
         target_sources(${name} PRIVATE ${ARG_SOURCES})
     endif()
-endmacro()
 
-macro(cppm_target_dependencies)
-    cmake_parse_arguments(ARG "" "" "PRIVATE;PUBLIC;INTERFACE" ${ARGN})
-    list(GET ARG_UNPARSED_ARGUMENTS 0 name)
-    if(DEFINED ARG_PUBLIC)
-        target_link_libraries(${name} PUBLIC ${ARG_PUBLIC})
+    if(DEFINED public_thirdparty)
+        target_link_libraries(${name} PUBLIC ${public_thirdparty})
     endif()
-    if(DEFINED ARG_PRIVATE)
-        target_link_libraries(${name} PRIVATE ${ARG_PRIVATE})
+    if(DEFINED private_thirdparty)
+        target_link_libraries(${name} PRIVATE ${private_thirdparty})
     endif()
-    if(DEFINED ARG_INTERFACE)
-        target_link_libraries(${name} INTERFACE ${ARG_INTERFACE})
+    if(DEFINED interface_thirdparty)
+        target_link_libraries(${name} INTERFACE ${interface_thirdparty})
     endif()
-    set(deps)
-    string(REPLACE " " "\n   - " pub_dep "${ARG_PRIVATE}")
-    string(REPLACE ";" "\n   - " pub_dep "${ARG_PRIVATE}")
-    list(APPEND deps "${pub_dep}")
-    string(REPLACE " " "\n   - " pri_dep "${ARG_PUBLIC}")
-    string(REPLACE ";" "\n   - " pri_dep "${ARG_PUBLIC}")
-    list(APPEND deps "${pri_dep}")
-    string(REPLACE " " "\n   - " int_dep "${ARG_INTERFACE}")
-    string(REPLACE ";" "\n   - " int_dep "${ARG_INTERFACE}")
-    list(APPEND deps "${int_dep}")
-    string(REPLACE ";" " " deps "${deps}")
-    message(STATUS "Dependencies:")
-    message("   - ${deps}\n")
-endmacro()
+    message("\nPackage Information")
+    message(STATUS "Name: ${CMAKE_PROJECT_NAME}")
+    message(STATUS "Version: ${${CMAKE_PROJECT_NAME}_VERSION}")
 
-macro(cppm_target_install)
-    cmake_parse_arguments(ARG "" "" "" ${ARGN})
-    list(GET ARG_UNPARSED_ARGUMENTS 0 name)
-    if(${${name}_target_type} MATCHES "BINARY")
+    if(${ARG_BINARY} AND ${ARG_INSTALL})
         install(TARGETS ${name} RUNTIME DESTINATION bin)
     endif()
-    if(${${name}_target_type} MATCHES "LIBRARY")
+    if(${ARG_STATIC} OR ${ARG_SHARED} OR ${ARG_INTERFACE} AND ${ARG_INSTALL})
         install(TARGETS ${name} EXPORT ${PROJECT_NAME}-targets
             ARCHIVE DESTINATION lib 
             LIBRARY DESTINATION lib
@@ -208,7 +206,21 @@ macro(cppm_target_install)
         message(STATUS "Module : ${CMAKE_PROJECT_NAME}::${name}")
         #message(STATUS "cppm.toml: ${CMAKE_PROJECT_NAME} = {module=\"${CMAKE_PROJECT_NAME}::${name}\" version=\"${${CMAKE_PROJECT_NAME}_VERSION}\"}")
     endif()
-endmacro()
+        set(deps)
+        string(REPLACE " " "\n   - " pub_dep "${public_thirdparty}")
+        string(REPLACE ";" "\n   - " pub_dep "${public_thirdparty}")
+        list(APPEND deps "${pub_dep}")
+        string(REPLACE " " "\n   - " pri_dep "${private_thirdparty}")
+        string(REPLACE ";" "\n   - " pri_dep "${private_thirdparty}")
+        list(APPEND deps "${pri_dep}")
+        string(REPLACE " " "\n   - " int_dep "${interface_thirdparty}")
+        string(REPLACE ";" "\n   - " int_dep "${interface_thirdparty}")
+        list(APPEND deps "${int_dep}")
+        string(REPLACE ";" " " deps "${deps}")
+    
+        message(STATUS "Dependencies:")
+        message("   - ${deps}\n")
+endfunction()
 
 macro(download_package)
     set(options LOCAL GLOBAL)
@@ -278,3 +290,50 @@ macro(download_package)
         message(STATUS "[cppm] Find ${name} package")
     endif()
 endmacro()
+
+    # pkg-config install part
+    
+    # set(PKGCONFIG_INSTALL_DIR
+    #    "${CMAKE_INSTALL_DATAROOTDIR}/pkgconfig"
+    #    CACHE PATH "Path where ${CMAKE_PROJECT_NAME}.pc is installed"
+    # )
+    # configure_file(
+    #  ${CMAKE_CURRENT_SOURCE_DIR}/CMake/${CMAKE_PROJECT_NAME}.pc.in
+    #  ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.pc
+    #  @ONLY
+    # )
+    # install(
+    #  FILES
+    #    "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.pc"
+    #  DESTINATION
+    #    ${PKGCONFIG_INSTALL_DIR}
+    # )
+    
+      
+    
+    # set(INSTALL_LIB_DIR "${CMAKE_INSTALL_PREFIX}/lib" CACHE PATH "Installation directory for libraries")
+    # set(INSTALL_INC_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE PATH "Installation directory for headers")
+    # set(INSTALL_MAN_DIR "${CMAKE_INSTALL_PREFIX}/share/man" CACHE PATH "Installation directory for manual pages")
+    # set(INSTALL_PKGCONFIG_DIR "${CMAKE_INSTALL_PREFIX}/share/pkgconfig" CACHE PATH "Installation directory for pkgconfig (.pc) files")
+      
+    # includedir=@CMAKE_INSTALL_FULL_INCLUDEDIR@
+    # Name: Catch2
+    # Description: A modern, C++-native, header-only, test framework for C++11
+    # URL: https://github.com/catchorg/Catch2
+    # Version: @Catch2_VERSION@
+    # Cflags: -I${includedir}
+    
+
+    # prefix=@CMAKE_INSTALL_PREFIX@
+    # exec_prefix=@CMAKE_INSTALL_PREFIX@
+    # libdir=@INSTALL_LIB_DIR@
+    # sharedlibdir=@INSTALL_LIB_DIR@
+    # includedir=@INSTALL_INC_DIR@
+    # 
+    # Name: zlib
+    # Description: zlib compression library
+    # Version: @VERSION@
+    # 
+    # Requires:
+    # Libs: -L${libdir} -L${sharedlibdir} -lz
+    # Cflags: -I${includedir}

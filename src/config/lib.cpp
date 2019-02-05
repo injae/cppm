@@ -18,6 +18,8 @@ namespace cppm
             lib.install = lib_table->get_as<bool>("type").value_or(true);
             auto source = lib_table->get_array_of<std::string>("source");
             if(source) for(const auto& src : *source) {lib.sources.push_back(src);} 
+            auto deps = lib_table->get_array_of<std::string>("dependencies");
+            if(deps) for(const auto& dep : *deps) {lib.deps.push_back(dep);} 
             list.emplace_back(std::move(lib));
         }
     }

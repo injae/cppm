@@ -1,7 +1,7 @@
 #ifndef __CPPM_CONFIG_DEPENDENCY_H__
 #define __CPPM_CONFIG_DEPENDENCY_H__
 
-#include <vector>
+#include <map>
 #include "config/base_config.h"
 
 namespace cppm
@@ -27,7 +27,7 @@ namespace cppm
         std::string gen_find_cppkg();
         std::string generate();
     public:
-        std::vector<Dependency> list;
+        std::map<std::string, Dependency> list;
     };
 }
 

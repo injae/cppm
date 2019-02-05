@@ -24,21 +24,20 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
 
 
 include(cmake/cppm_install.cmake)
-find_cppkg(Boost 1.58.0 COMPONENTS system filesystem MODULE Boost::filesystem PUBLIC HUNTER)
-find_cppkg(nlpo lastest  MODULE nlpo::nlpo PUBLIC )
-find_cppkg(cpptoml lastest  MODULE cpptoml PUBLIC )
-find_cppkg(fmt lastest  MODULE fmt::fmt PUBLIC )
+find_cppkg(Boost 1.58.0 COMPONENTS system filesystem HUNTER)
+find_cppkg(cpptoml lastest  )
+find_cppkg(fmt lastest  )
+find_cppkg(nlpo lastest  )
 
-
-
-
-cppm_target_install(cppm BINARY INSTALL
+cppm_target_define(cppm BINARY 
 SOURCES 
 	include/cppm_version.h
 	include/config/cmake.h
 	include/config/lib.h
 	include/config/dependency.h
+	include/config/base_target.h
 	include/config/path.h
+	include/config/cppm_tool.h
 	include/config/builder.h
 	include/config/bin.h
 	include/config/cppm_package.h
@@ -66,6 +65,7 @@ SOURCES
 	include/util/command.h
 	include/package/package.h
 	src/config/cmake.cpp
+	src/config/cppm_tool.cpp
 	src/config/package.cpp
 	src/config/hunter.cpp
 	src/config/bin.cpp
@@ -75,6 +75,7 @@ SOURCES
 	src/config/config.cpp
 	src/config/dependency.cpp
 	src/config/path.cpp
+	src/config/base_target.cpp
 	src/config/compiler.cpp
 	src/config/lib.cpp
 	src/option/add.cpp
@@ -93,4 +94,14 @@ SOURCES
 	src/package/package.cpp
 	src/package/repo.h
 )
+
+cppm_target_dependencies(cppm 
+PUBLIC	
+	Boost::filesystem
+	cpptoml
+	fmt::fmt
+	nlpo::nlpo
+)
+
+cppm_target_install(cppm)
 
