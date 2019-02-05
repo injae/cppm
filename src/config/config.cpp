@@ -1,5 +1,6 @@
 #include "config/config.h"
 #include "util/cmake.h"
+#include "config/cppm_tool.h"
 #include <fmt/format.h>
 
 namespace cppm
@@ -48,10 +49,13 @@ namespace cppm
              + "\n"
              + cmake.generate()
              + dependencies.gen_find_cppkg()
-             + "\n"
-             + libs.generate(*this)
-             + "\n"
-             + bins.generate(*this)
+             + tool::target_define(*this)
+             + tool::target_dependencies(*this)
+             + tool::target_install(*this)
+            //+ "\n"
+            //+ libs.generate(*this)
+            //+ "\n"
+            //+ bins.generate(*this)
              + "\n"
              ;
     }

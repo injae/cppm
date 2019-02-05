@@ -138,9 +138,9 @@ namespace cppm::option
         using namespace package;
         std::vector<Dependency> not_installed_dep;
 
-        for(auto dep : config_.dependencies.list) {
+        for(auto [name, dep] : config_.dependencies.list) {
             if(dep.hunter) { continue; }
-            if(!fs::exists("{0}/{1}/{2}/{1}.cmake.in"_format(config_.path.thirdparty,dep.name,dep.version))) {
+            if(!fs::exists("{0}/{1}/{2}/{1}.cmake.in"_format(config_.path.thirdparty,name,dep.version))) {
                 not_installed_dep.push_back(dep);
             }
         }

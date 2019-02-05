@@ -48,7 +48,6 @@ AppleClang does not support the C++ standard perfectly.
 Set GCC or Clang as the default compiler to compile on OSX.  
 Ex. #include<optional> is not available.   
 
-
 ## Features
 - [x] cmake dependencies auto installer (cppkg)
 - [x] generate build command (cppm build {options})

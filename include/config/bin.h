@@ -1,19 +1,16 @@
 #ifndef __CPPM_CONFIG_BIN_H__
 #define __CPPM_CONFIG_BIN_H__
 
+#include "config/base_target.h"
 #include "config/base_config.h"
+#include "config/dependency.h"
 #include <vector>
 
 namespace cppm 
 {
     class Config;
 
-    struct Bin 
-    {
-        std::string name;
-        bool install;
-        std::vector<std::string> sources;
-    };
+    class Bin : public base_target {};
 
     class Bins : public base_config
     {
