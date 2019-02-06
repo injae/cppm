@@ -13,6 +13,7 @@ function(cppm_load)
             message(FATAL_ERROR "git not found!")
         endif()
         message(STATUS "[cppm] Downloading cppm tool to ${CPPM_ROOT}/tool")
+        message("${GIT_EXECUTABLE} clone https://github.com/injae/cppm_tools.git tool --recursive")
         execute_process(
             COMMAND ${GIT_EXECUTABLE} clone https://github.com/injae/cppm_tools.git tool --recursive
             WORKING_DIRECTORY ${CPPM_ROOT}
