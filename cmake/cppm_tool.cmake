@@ -13,11 +13,35 @@ function(cppm_load)
             message(FATAL_ERROR "git not found!")
         endif()
         message(STATUS "[cppm] Downloading cppm tool to ${CPPM_ROOT}/tool")
-        execute_process(
-            COMMAND ${GIT_EXECUTABLE} clone https://github.com/injae/cppm_tools.git tool 
-            WORKING_DIRECTORY ${CPPM_ROOT}
-            OUTPUT_VARIABLE output
-            )
+        set(build_dir "${CPPM_ROOT}/install/cppm_tools")
+        set(install_dir "${CPPM_ROOT}/tool")
+
+        file(REMOVE_RECURSE "${build_dir}")
+        file(REMOVE_RECURSE "${build_dir}/CMakeLists.txt")
+        file(MAKE_DIRECTORY ${build_dir})
+        file(WRITE "${build_dir}/CMakeLists.txt"
+            "cmake_minimum_required(VERSION 3.2)\n"
+            "project(CPPM_TOOL_DOWNLOAD LANGUAGES NONE)\n"
+            "include(ExternalProject)\n"
+            "ExternalProject_Add(\n"
+            "    tool\n"
+            "    GIT_REPOSITORY https://github.com/injae/cppm_tools.git\n"
+            "    SOURCE_DIR \"${install_dir}\"\n"
+            "    CONFIGURE_COMMAND \"\"\n"
+            "    BUILD_COMMAND \"\"\n"
+            "    INSTALL_COMMAND \"\"\n"
+            ")\n"
+        )
+        execute_process(COMMAND ${CMAKE_COMMAND} .
+                        WORKING_DIRECTORY ${build_dir})
+        execute_process(COMMAND cmake  --build .
+                        WORKING_DIRECTORY ${build_dir})
+        
+       # execute_process(
+       #     COMMAND ${GIT_EXECUTABLE} clone https://github.com/injae/cppm_tools.git tool 
+       #     WORKING_DIRECTORY ${CPPM_ROOT}
+       #     OUTPUT_VARIABLE output
+       #     )
     endif()
     list(APPEND CMAKE_MODULE_PATH "${HOME}/.cppm/tool")
     include(download/git)
