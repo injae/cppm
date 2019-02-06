@@ -18,8 +18,8 @@ function(cppm_load)
             WORKING_DIRECTORY ${CPPM_ROOT}
             )
         execute_process(
-            COMMAND ls
-            WORKING_DIRECTORY ${CPPM_ROOT}
+            COMMAND ls 
+            WORKING_DIRECTORY ${CPPM_ROOT}/tool
         )
     endif()
     list(APPEND CMAKE_MODULE_PATH "${HOME}/.cppm/tool")
