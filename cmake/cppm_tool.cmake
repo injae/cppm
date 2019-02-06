@@ -13,12 +13,16 @@ function(cppm_load)
             message(FATAL_ERROR "git not found!")
         endif()
         message(STATUS "[cppm] Downloading cppm tool to ${CPPM_ROOT}/tool")
-        message("${GIT_EXECUTABLE} clone https://github.com/injae/cppm_tools.git tool --recursive")
         execute_process(
-            COMMAND ${GIT_EXECUTABLE} clone https://github.com/injae/cppm_tools.git tool --recursive
+            COMMAND ${GIT_EXECUTABLE} clone https://github.com/injae/cppm_tools.git tool 
             WORKING_DIRECTORY ${CPPM_ROOT}
             )
+        execute_process(
+            COMMAND ls
+            WORKING_DIRECTORY ${CPPM_ROOT}
+        )
     endif()
+    list(APPEND CMAKE_MODULE_PATH "${HOME}/.cppm/tool")
     include(download/git)
     git_clone(tool  URL https://github.com/injae/cppm_tools.git PATH ${CPPM_ROOT}             QUIET)
     git_clone(cppkg URL https://github.com/injae/cppkg.git      PATH ${CPPM_ROOT}/.cppm/repo/ QUIET)
