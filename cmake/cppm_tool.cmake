@@ -20,7 +20,9 @@ function(cppm_load)
         execute_process(
             COMMAND ls 
             WORKING_DIRECTORY ${CPPM_ROOT}/tool
+            OUTPUT_VARIABLE output
         )
+        message("-->${output}")
     endif()
     list(APPEND CMAKE_MODULE_PATH "${HOME}/.cppm/tool")
     include(download/git)
