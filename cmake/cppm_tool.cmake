@@ -16,6 +16,7 @@ function(cppm_load)
         execute_process(
             COMMAND ${GIT_EXECUTABLE} clone https://github.com/injae/cppm_tools.git tool 
             WORKING_DIRECTORY ${CPPM_ROOT}
+            OUTPUT_VARIABLE output
             )
         execute_process(
             COMMAND ls 
