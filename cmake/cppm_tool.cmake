@@ -1,7 +1,11 @@
+
 macro(cppm_setting)
   string(REPLACE "\\" "/" HOME "$ENV{HOME}")
+  set(CPPM_ROOT ${HOME}/.cppm)
   list(APPEND CMAKE_PREFIX_PATH "${HOME}/.cppm/local/lib/cmake")
   list(APPEND CMAKE_PREFIX_PATH "${HOME}/.cppm/local/lib/pkgconfig")
+  list(APPEND CMAKE_MODULE_PATH "${HOME}/.cppm/tool")
+  cppm_load()
   if(NOT ${NO_MESSAGE})
     message("Build Project")
     message(STATUS "[cppm] CMake Version: ${CMAKE_VERSION}")
@@ -174,7 +178,7 @@ macro(cppm_target_dependencies)
     message("   - ${deps}\n")
 endmacro()
 
-macro(cppm_target_install)
+function(cppm_target_install)
     cmake_parse_arguments(ARG "" "" "" ${ARGN})
     list(GET ARG_UNPARSED_ARGUMENTS 0 name)
     if(${${name}_target_type} MATCHES "BINARY")
@@ -208,7 +212,7 @@ macro(cppm_target_install)
         message(STATUS "Module : ${CMAKE_PROJECT_NAME}::${name}")
         #message(STATUS "cppm.toml: ${CMAKE_PROJECT_NAME} = {module=\"${CMAKE_PROJECT_NAME}::${name}\" version=\"${${CMAKE_PROJECT_NAME}_VERSION}\"}")
     endif()
-endmacro()
+endfunction()
 
 macro(download_package)
     set(options LOCAL GLOBAL)
@@ -278,3 +282,27 @@ macro(download_package)
         message(STATUS "[cppm] Find ${name} package")
     endif()
 endmacro()
+
+function(git_clone)
+endfunction()
+
+function(cppm_load)
+
+    if(NOT EXISTS ${CPPM_ROOT}/tool)
+        find_package(Git REQUIRED)
+        if(NOT GIT_FOUND)
+            message(FATAL_ERROR "git not found!")
+        endif()
+        message(STATUS "[cppm] Downloading cppm tool")
+        execute_process(
+            COMMAND ${GIT_EXECUTABLE} clone https://github.com/injae/cppm_tools.git tool --recursive
+            WORKING_DIRECTORY ${CPPM_ROOT}
+            )
+    endif()
+    include(download/git)
+    git_clone(tool
+        URL  https://github.com/injae/cppm_tools.git
+        PATH ${CPPM_ROOT}
+        QUIET
+    )
+endfunction()
