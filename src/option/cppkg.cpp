@@ -1,6 +1,7 @@
 #include "option/cppkg.h"
 #include "package/package.h"
 #include "option/cppkg_init.h"
+#include "util/filesystem.h"
 
 #include <fmt/format.h>
 
@@ -56,16 +57,17 @@ namespace cppm::option
     void Cppkg::_search() {
         using namespace fmt::literals;
         auto list = package::cppkg::list();
-        auto string_cut = [&](std::string& str) {
-            if(str.size() > 50) {
-                return str.substr(0,48) + "$";
+        auto str_cut = [](const std::string str, int size_) {
+            if(str.size() > size_) {
+                return str.substr(0,size_-1) + "$";
             }
             return str;
         };
-        fmt::print("{:<20}{:<20}{:<50}{:<70}\n", "Name", "Version","Description","Use");
-        fmt::print("{:=<20}{:=<20}{:=<50}{:=<70}\n", "=", "=","=","=");
+       
+        fmt::print("{:<20}{:<10}{:<13}{:<50}{:<70}\n", "Name", "Version", "Repository","Description","Use");
+        fmt::print("{:=<20}{:=<10}{:=<13}{:=<50}{:=<70}\n", "=", "=", "=","=","=");
         std::string arg;
-        if(!app_.args().empty()){ arg = app_.get_arg(); }
+        if(!app_.args().empty()) { arg = app_.get_arg(); }
         for(auto& [rname, repo] : list.repos) {
             for(auto& [pname, pkg] : repo.pkgs) {
                 for(auto& [vname, ver] : pkg.versions) {
@@ -79,8 +81,17 @@ namespace cppm::option
                                    ? " components=\"{0}\""_format(package.cmake.components) : "";
                     auto use = "{0}={{module=\"{1}\", version=\"{2}\"{3}}}"_format
                                 (package.name, package.cmake.name, package.version, component);
-                    fmt::print("{:<20}{:<20}{:<50}{:<70}\n", pname, std::string(vname), string_cut(package.description), use);
+                    fmt::print("{:<20}{:<10}{:<13}{:<50}{:<70}\n", str_cut(pname, 20), std::string(vname), rname, str_cut(package.description,50), use);
                 }
+            }
+        }
+        if(auto list = util::file_list(Hunter::package_path())) {
+            for(auto pkg : *list) {
+                auto name = pkg.path().filename().string();
+                if(!arg.empty()) { if(name.find(arg) == std::string::npos) { continue; } }
+
+                fmt::print("{:<20}{:<10}{:<13}{:<50}{:<70}\n"
+                           , str_cut(name, 20), "lastest" , "hunter", "", "https://docs.hunter.sh/en/latest/packages/pkg/{}.html#index-0"_format(name));
             }
         }
     }

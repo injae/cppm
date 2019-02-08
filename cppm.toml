@@ -13,7 +13,7 @@ msvc  = {option = "/std:c++17 /MP"}
 
 [[bin]]
 name   = "cppm"
-source = ["include/.*", "src/.*"]
+source = ["src/.*"]
 
 [dependencies]
 cpptoml  = {module = "cpptoml"}

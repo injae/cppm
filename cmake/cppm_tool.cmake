@@ -26,6 +26,7 @@ function(cppm_load)
             "ExternalProject_Add(\n"
             "    tool\n"
             "    GIT_REPOSITORY https://github.com/injae/cppm_tools.git\n"
+            "    UPDATE_COMMAND ${GIT_EXECUTABLE} pull"
             "    SOURCE_DIR \"${install_dir}\"\n"
             "    CONFIGURE_COMMAND \"\"\n"
             "    BUILD_COMMAND \"\"\n"
@@ -34,15 +35,10 @@ function(cppm_load)
         )
         execute_process(COMMAND ${CMAKE_COMMAND} .
                         WORKING_DIRECTORY ${build_dir})
-        execute_process(COMMAND cmake  --build .
+        execute_process(COMMAND ${CMAKE_COMMAND}  --build .
                         WORKING_DIRECTORY ${build_dir})
-        
-       # execute_process(
-       #     COMMAND ${GIT_EXECUTABLE} clone https://github.com/injae/cppm_tools.git tool 
-       #     WORKING_DIRECTORY ${CPPM_ROOT}
-       #     OUTPUT_VARIABLE output
-       #     )
     endif()
+
     list(APPEND CMAKE_MODULE_PATH "${HOME}/.cppm/tool")
     include(download/git)
     git_clone(tool  URL https://github.com/injae/cppm_tools.git PATH ${CPPM_ROOT}             QUIET)

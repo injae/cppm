@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.6)
 
 include(cmake/HunterGate.cmake)
 HunterGate(
-   URL "https://github.com/ruslo/hunter/archive/v0.23.89.tar.gz"
-   SHA1 "a370290a8b32987755a36d64807bf8c7f5b61730"
+   URL "https://github.com/ruslo/hunter/archive/v0.23.98.tar.gz"
+   SHA1 "bf539cb70375ac319e386ae2ec5b5a0c4923480a"
 )
 project(cppm LANGUAGES CXX VERSION 1.0.6)
 
@@ -31,39 +31,6 @@ find_cppkg(nlpo lastest  )
 
 cppm_target_define(cppm BINARY 
 SOURCES 
-	include/cppm_version.h
-	include/config/cmake.h
-	include/config/lib.h
-	include/config/dependency.h
-	include/config/base_target.h
-	include/config/path.h
-	include/config/cppm_tool.h
-	include/config/builder.h
-	include/config/bin.h
-	include/config/cppm_package.h
-	include/config/config.h
-	include/config/base_config.h
-	include/config/package.h
-	include/config/compiler.h
-	include/config/hunter.h
-	include/config/cppm_config.h
-	include/option/add.h
-	include/option/cppkg_init.h
-	include/option/build.h
-	include/option/cppkg.h
-	include/option/install.h
-	include/option/init.h
-	include/option/base_option.h
-	include/option/cppm_config.h
-	include/option/cppm.h
-	include/util/cmake.h
-	include/util/hash.hpp
-	include/util/algorithm.hpp
-	include/util/system.hpp
-	include/util/version.h
-	include/util/filesystem.h
-	include/util/command.h
-	include/package/package.h
 	src/config/cmake.cpp
 	src/config/cppm_tool.cpp
 	src/config/package.cpp

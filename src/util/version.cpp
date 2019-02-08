@@ -10,7 +10,16 @@ namespace cppm
 {
     Version::Version(std::string version) {
         if(version == "lastest") { lastest = true; return; }
-        std::sscanf(version.c_str(), "%d.%d.%d.%d", &major, &minor, &revision, &build);
+        std::sscanf(version.c_str(), "%d.%d.%d", &major, &minor, &revision);
+    }
+
+    Version Version::parse(std::string version_include_string) {
+        std::regex regex("(\\d+)\\.?(\\d+)\\.?(\\d+)");
+        std::smatch match;
+        if(std::regex_search(version_include_string,match,regex)) {
+            return {match.str()};
+        }
+        return {"0.0.0.0"};
     }
     
     bool Version::operator < (const Version& other) const {
@@ -21,8 +30,6 @@ namespace cppm
 		if(minor < other.minor)
 			return true;
 		if(revision < other.revision)
-			return true;
-		if(build < other.build)
 			return true;
 		return false; 
     }
@@ -36,8 +43,6 @@ namespace cppm
 			return true;
 		if(revision > other.revision)
 			return true;
-		if(build > other.build)
-			return true;
 		return false; 
     }
     
@@ -45,24 +50,23 @@ namespace cppm
         if(lastest && lastest == other.lastest) return true;
         return major    == other.major
 			&& minor    == other.minor
-			&& revision == other.revision
-			&& build    == other.build;    
+			&& revision == other.revision;
     }
     
     Version& Version::operator = (const std::string& version) {
         if(version == "lastest") { lastest = true; }
-        else std::sscanf(version.c_str(), "%d.%d.%d.%d", &major, &minor, &revision, &build);
+        else std::sscanf(version.c_str(), "%d.%d.%d", &major, &minor, &revision);
         return *this;
     }
     
     std::string Version::str() {
         if(lastest) return "lastest";
-        return "{0}.{1}.{2}.{3}"_format(major,minor,revision,build);
+        return "{0}.{1}.{2}"_format(major,minor,revision);
     }
 
     Version::operator std::string() const {
         if(lastest) return "lastest";
-        return "{0}.{1}.{2}.{3}"_format(major,minor,revision,build);
+        return "{0}.{1}.{2}"_format(major,minor,revision);
     }
 
     std::ostream& operator << (std::ostream& stream, const Version& ver) {
@@ -72,8 +76,6 @@ namespace cppm
         stream << ver.minor;
         stream << '.';
         stream << ver.revision;
-        stream << '.';
-        stream << ver.build;
         return stream; 
     }
 }

@@ -42,6 +42,7 @@ namespace cppm::tool
         for(auto target : list) {
             if(target->deps.empty()) {
                 for(auto& g_dep : config.dependencies.list) {
+                    if(target->name == g_dep.first) continue;
                     target->deps.push_back(g_dep.first);
                 }
             }

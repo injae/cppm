@@ -12,6 +12,7 @@ namespace cppm
     public:
         void parse(table_ptr table);
         std::string generate();
+        static std::string package_path();
     public:
         std::string url;
         std::string sha1;

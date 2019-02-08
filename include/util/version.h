@@ -3,6 +3,7 @@
 
 #include<string>
 #include<sstream>
+#include<regex>
 
 namespace cppm
 {
@@ -11,6 +12,7 @@ namespace cppm
     public:
         Version() {};
         Version(std::string version);
+        static Version parse(std::string version_include_string);
         bool operator< (const Version&  other) const;
         bool operator> (const Version&  other) const;
         bool operator== (const Version& other) const;
@@ -23,7 +25,6 @@ namespace cppm
         int major = 0;
         int minor = 0;
         int revision = 0;
-        int build = 0;
     };
 }
 
