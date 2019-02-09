@@ -37,6 +37,7 @@ function(cppm_load)
         #                WORKING_DIRECTORY ${build_dir})
         #execute_process(COMMAND ${CMAKE_COMMAND}  --build .
         #                WORKING_DIRECTORY ${build_dir})
+        make_directory("${CPPM_ROOT}")
         execute_process(
             COMMAND ${GIT_EXECUTABLE} clone https://github.com/injae/cppm_tools.git tool 
             WORKING_DIRECTORY ${CPPM_ROOT}
