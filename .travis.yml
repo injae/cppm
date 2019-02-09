@@ -43,5 +43,5 @@ before_install:
 
 script:
   - eval "${SUDO}" cmake -H. -Bbuild
-  - eval "${SUDO}" cmake --build . --target install;
+  - cd build && eval "${SUDO}" cmake --build . --target install;
 
