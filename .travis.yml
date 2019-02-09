@@ -42,6 +42,6 @@ before_install:
 #  - if ["TRAVIS_OS_NAME"=="osx"]; then brew install ccache; fi
 
 script:
-  - eval "${SUDO}" cmake -H. -Bbuild
+  - eval "${SUDO}" cmake --warn-uninitialized -Werror=dev -H. -Bbuild
   - cd build && eval "${SUDO}" cmake --build . --target install;
 
