@@ -44,9 +44,9 @@ function(cppm_load)
             OUTPUT_VARIABLE output
             ERROR_VARIABLE error
         )
-        message("${result}")
-        message("${output}")
-        message("${error}")
+        message("Result: ${result}")
+        message("OutPut: ${output}")
+        message("Error:  ${error}")
 
     endif()
 
