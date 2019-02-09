@@ -37,12 +37,23 @@ function(cppm_load)
                         WORKING_DIRECTORY ${build_dir})
         execute_process(COMMAND ${CMAKE_COMMAND}  --build .
                         WORKING_DIRECTORY ${build_dir})
+        #execute_process(
+        #    COMMAND ${GIT_EXECUTABLE} clone https://github.com/injae/cppm_tools.git tool 
+        #    WORKING_DIRECTORY ${CPPM_ROOT}
+        #    RESULT_VARIABLE result
+        #    OUTPUT_VARIABLE output
+        #    ERROR_VARIABLE error
+        #)
+        #message("${result}")
+        #message("${output}")
+        #message("${error}")
+
     endif()
 
     list(APPEND CMAKE_MODULE_PATH "${HOME}/.cppm/tool")
     include(download/git)
     git_clone(tool  URL https://github.com/injae/cppm_tools.git PATH ${CPPM_ROOT}             QUIET)
-    git_clone(cppkg URL https://github.com/injae/cppkg.git      PATH ${CPPM_ROOT}/.cppm/repo/ QUIET)
+    git_clone(cppkg URL https://github.com/injae/cppkg.git      PATH ${CPPM_ROOT}/repo  QUIET)
 endfunction()
 
 macro(cppm_setting)
