@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.6)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/")
 include(cmake/HunterGate.cmake)
 HunterGate(
    URL "https://github.com/ruslo/hunter/archive/v0.23.98.tar.gz"
@@ -16,12 +17,8 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang") 
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ")
 endif()
-include(cmake/cppm_tool.cmake)
-cppm_setting()
-# detect host processor
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
-
-
+include(cppm_tool)
+cppm_load()
 
 include(cmake/cppm_install.cmake)
 find_cppkg(Boost 1.58.0 COMPONENTS system filesystem HUNTER)

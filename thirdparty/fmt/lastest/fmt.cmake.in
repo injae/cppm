@@ -2,7 +2,16 @@ cmake_minimum_required(VERSION 3.6)
 project(fmt-lastest-install NONE)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
-download_package(fmt lastest GIT https://github.com/fmtlib/fmt.git   LOCAL)
+download_package(
+    fmt
+    lastest
+    GIT https://github.com/fmtlib/fmt.git LOCAL
+    LOCAL
+    CMAKE_ARGS
+        FMT_DOC=OFF
+        FMT_TEST=OFF
+        FMT_USE_CPP14=OFF
+)
 
 # Other Options:
 # - Linux Configures:
