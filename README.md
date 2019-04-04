@@ -22,6 +22,15 @@ Cppm [![gitbook][5]][6]
 > So cppm made the package of the [Hunter Package Manager](https://github.com/ruslo/hunter) available.   
 > If there is a library you want to add, please issue a pull request to the [Cppkg repository](https://github.com/injae/cppkg)  
 
+## Dependencies
+1. cmake (minimum 3.6)  
+2. [Hunter Package Manager](https://github.com/ruslo/hunter)  
+2. c++-17-compiler (g++7 or clang7 or visual studio 2017)
+3. boost
+4. nlpo
+5. cpptoml
+6. fmt
+
 ## Installation
 ### Ubuntu
 ```
@@ -34,6 +43,7 @@ sudo cmake --build . --target install
 ```
 ### Windows
 ```
+# need visual studio 
 git clone https://github.com/INJAE/cppm.git
 cd cppm
 cmake -H. -Bbuild
@@ -62,13 +72,5 @@ Ex. #include<optional> is not available.
 ## Document
 ### [GitBook](https://cppm.gitbook.io/project/)
 
-## Dependencies
-1. cmake (minimum 3.6)  
-2. [Hunter Package Manager](https://github.com/ruslo/hunter)  
-2. c++-17-compiler (g++7 or clang7)
-3. boost
-4. nlpo
-5. cpptoml
-6. fmt
 
 
