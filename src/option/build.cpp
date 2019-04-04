@@ -38,7 +38,6 @@ namespace cppm::option
             .call_back([&](){
                 clean = true;
                 cmd.cmake_option += " -G Ninja ";
-                app_.call_default();
             });
         app_.add_option("Generator")
             .abbr("G")
@@ -46,7 +45,6 @@ namespace cppm::option
             .args("{Generator}")
             .call_back([&](){
                 cmd.cmake_option += " -G {}"_format(app_.get_arg());
-                app_.call_default();
             });
         app_.add_option("make")
             .abbr("m")
@@ -54,39 +52,34 @@ namespace cppm::option
             .call_back([&](){
                 clean = true;
                 cmd.cmake_option += " -G \"Unix Makefiles\" ";
-                app_.call_default();
             });
         app_.add_option("gcc")
             .abbr("g")
             .desc("g++ use to compile ")
             .call_back([&](){
                 cmd.cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("g++");
-                app_.call_default();
             });
         app_.add_option("clang")
             .abbr("c")
             .desc("clang++ use to compile ")
             .call_back([&](){
                 cmd.cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("clang++");
-                app_.call_default();
             });
         app_.add_option("release")
             .abbr("r")
             .desc("compile release mode")
             .call_back([&](){
                 cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("RELEASE");
-                app_.call_default();
             });
         app_.add_option("debug")
             .abbr("d")
             .desc("compile debug mode")
             .call_back([&](){
                 cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("DEBUG");
-                app_.call_default();
             });
         app_.add_option("ntc")
             .desc("not change CMakeLists.txt test options")
-            .call_back([this]() { none_tc = true; app_.call_default();});
+            .call_back([this]() { none_tc = true; });
         app_.add_option("export")
             .desc("export cppkg")
             .call_back([&]() { config_load(); export_cppkg(); });
@@ -94,13 +87,11 @@ namespace cppm::option
             .desc("cmake target install ")
             .call_back([this]() {
                 config_load();
-                std::string cmd;
-                if(util::compiler::what() != "msvc"_format()) {cmd += "sudo ";}
-                cmd += "cmake --build {} --target install "_format(config_.path.build);
+                if(util::compiler::what() != "msvc"_format()) {cmd.after_option += "sudo ";}
+                cmd.after_option += "cmake --build {} --target install "_format(config_.path.build);
                 if(util::compiler::what() != "msvc"_format()) {
-                    cmd += "-- -j{}"_format(std::thread::hardware_concurrency());
+                    cmd.after_option += "-- -j{}"_format(std::thread::hardware_concurrency());
                 }
-                system(cmd.c_str());
             });
         app_.add_command()
             .desc("Build command")
@@ -129,8 +120,8 @@ namespace cppm::option
                     cmd.build_option += util::accumulate(app_.args(), " ");
                     app_.args().clear();
                 }
-                //fmt::print(cmd_->build(config).c_str());
                 system(cmd.build(config_).c_str());
+                system(cmd.after_option.c_str());
             });
     }
 

@@ -12,6 +12,7 @@ namespace cppm::option
         std::string build(Config& config);
         std::string cmake_option = "";
         std::string build_option = "";
+        std::string after_option = "";
     };
     
     class Build : public base_option
