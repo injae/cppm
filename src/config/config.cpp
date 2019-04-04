@@ -31,10 +31,11 @@ namespace cppm
     
     std::string Config::generate() {
         using namespace fmt::literals;
+
         return "cmake_minimum_required(VERSION {0})\n"_format(cmake.version)
              + "\n"
              + "list(APPEND CMAKE_MODULE_PATH \"${CMAKE_CURRENT_SOURCE_DIR}/cmake/\")\n"
-             + hunter.generate()
+             + dependencies.use_hunter(hunter)
              + "project({0} LANGUAGES CXX VERSION {1})\n"_format(package.name, package.version)
              + "\n"
              + compiler.generate()

@@ -1,4 +1,5 @@
 #include "config/dependency.h"
+#include <algorithm>
 #include <fmt/format.h>
 #include <iostream>
 
@@ -64,5 +65,12 @@ namespace cppm
            gen += "{0}={{{1}, version=\"{2}\", {3} lnk_type=\"{4}\" {5} {6}}}\n"_format(
                   name,module,dep.version,components,dep.link_type,hunter,no_module);}
         return gen;
+    }
+
+    std::string Dependencies::use_hunter(Hunter& hunter) {
+        auto result = std::find_if(list.begin(), list.end(),
+                                   [](auto h){ return h.second.hunter == true; });
+        if(result == list.begin()) { return hunter.generate(); }
+        else { return ""; }
     }
 }

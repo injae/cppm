@@ -3,6 +3,7 @@
 
 #include <map>
 #include "config/base_config.h"
+#include "config/hunter.h"
 
 namespace cppm
 {
@@ -25,6 +26,7 @@ namespace cppm
         void parse(table_ptr table);
         std::string gen_find_package();
         std::string gen_find_cppkg();
+        std::string use_hunter(Hunter& hunter);
         std::string generate();
     public:
         std::map<std::string, Dependency> list;
