@@ -8,8 +8,8 @@ using namespace fmt::literals;
 namespace cppm
 {
     void Hunter::parse(table_ptr table) {
-        auto d_url = "https://github.com/ruslo/hunter/archive/v0.23.98.tar.gz";
-        auto d_sha1 = "bf539cb70375ac319e386ae2ec5b5a0c4923480a";
+        auto d_url = "https://github.com/ruslo/hunter/archive/v0.23.149.tar.gz";
+        auto d_sha1 = "c9f170bd697ac6117e68137a2cffdeca679db67e";
         if(auto hunter = table->get_table("hunter")) {
             url = hunter->get_as<std::string>("url").value_or(d_url);
             sha1 = hunter->get_as<std::string>("sha1").value_or(d_sha1);
@@ -40,7 +40,7 @@ namespace cppm
 
     std::string Hunter::generate() {
         using namespace fmt::literals;
-        return "include(cmake/HunterGate.cmake)\n"
+        return "include(HunterGate)\n"
              + "HunterGate(\n"_format()
              + "   URL \"{}\"\n"_format(url)
              + "   SHA1 \"{}\"\n"_format(sha1)
