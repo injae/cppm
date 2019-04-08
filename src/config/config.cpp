@@ -36,10 +36,10 @@ namespace cppm
              + "\n"
              + "list(APPEND CMAKE_MODULE_PATH \"${CMAKE_CURRENT_SOURCE_DIR}/cmake/\")\n"
              + dependencies.use_hunter(hunter)
-             + "project({0} LANGUAGES CXX VERSION {1})\n"_format(package.name, package.version)
+             + "project({0} LANGUAGES C CXX VERSION {1})\n"_format(package.name, package.version)
              + "\n"
-             + compiler.generate()
              + "include(cppm_tool)\n"
+             + compiler.generate()
              + "cppm_load()\n"
              + "\n"
              + cmake.generate()

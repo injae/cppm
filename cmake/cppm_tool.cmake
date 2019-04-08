@@ -24,6 +24,12 @@ macro(cppm_load)
     cppm_setting()
 endmacro()
 
+macro(cppm_compiler_option)
+    cmake_parse_arguments(ARG "" "" "" ${ARGN})
+    include(cppm/compiler_option/1.0.7)
+    _cppm_compiler_option(${ARG_UNPARSED_ARGUMENTS})
+endmacro()
+
 macro(cppm_setting)
 #  _load_cppm_variable()
 #  cppm_load()
@@ -33,7 +39,7 @@ endmacro()
 
 function(find_cppkg)
     cmake_parse_arguments(ARG "" "" "" ${ARGN})
-    include(cppkg/find/1.0.7)
+    include(cppkg/find/1.0.5)
     _find_cppkg(${ARG_UNPARSED_ARGUMENTS})
 endfunction()
 
