@@ -1,16 +1,16 @@
-#include "option/build.h"
-#include "util/algorithm.hpp"
+#include <iostream>
+#include <thread>
 #include <memory>
 #include <fmt/format.h>
+
+#include "option/build.h"
+#include "util/algorithm.hpp"
 #include "util/command.h"
 #include "util/filesystem.h"
 #include "package/package.h"
 #include "util/system.hpp"
-#include <iostream>
-#include <thread>
 
 using namespace fmt::literals;
-
 namespace cppm::option
 {
     std::string CommandBuilder::build(Config& config)
@@ -114,7 +114,6 @@ namespace cppm::option
     void Build::dependency_check() {
         using namespace package;
         std::vector<Dependency> not_installed_dep;
-
         for(auto [name, dep] : config_.dependencies.list) {
             if(dep.hunter) { continue; }
             if(!fs::exists("{0}/{1}/{2}/{1}.cmake.in"_format(config_.path.thirdparty,name,dep.version))) {

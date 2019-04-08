@@ -6,19 +6,21 @@ HunterGate(
    URL "https://github.com/ruslo/hunter/archive/v0.23.149.tar.gz"
    SHA1 "c9f170bd697ac6117e68137a2cffdeca679db67e"
 )
-project(cppm LANGUAGES CXX VERSION 1.0.6)
+project(cppm LANGUAGES C CXX VERSION 1.0.6)
 
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pthread -fPIC -O0 -g -std=c++17") 
-elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")  
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pthread -fPIC -O0 -g -std=c++17") 
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC") 
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 /MP")
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang") 
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ")
-endif()
 include(cppm_tool)
+cppm_compiler_option(
+	DEBUG
+		CLANG "-Wall -pthread -fPIC -O0 -g -std=c++17"
+		GCC   "-Wall -pthread -fPIC -O0 -g -std=c++17"
+		MSVC  "/std:c++17 /MP"
+	RELEASE
+		CLANG "-pthread -fPIC -O0 -std=c++17"
+		GCC   "-pthread -fPIC -O0 -std=c++17"
+		MSVC  "/std:c++17 /MP"
+)
 cppm_load()
+
 
 
 include(cmake/cppm_install.cmake)

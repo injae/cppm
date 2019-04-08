@@ -6,10 +6,15 @@ description = "c++ cmake maker use to toml like Cargo"
 [cmake]
 include  = ["cmake/cppm_install.cmake"]
 
-[compiler] 
+[compiler.debug] 
 clang = {option = "-Wall -pthread -fPIC -O0 -g -std=c++17"}
 gcc   = {option = "-Wall -pthread -fPIC -O0 -g -std=c++17"}
 msvc  = {option = "/std:c++17 /MP"}
+[compiler.release] 
+clang = {option = "-pthread -fPIC -O0 -std=c++17"}
+gcc   = {option = "-pthread -fPIC -O0 -std=c++17"}
+msvc  = {option = "/std:c++17 /MP"}
+
 
 [[bin]]
 name   = "cppm"
