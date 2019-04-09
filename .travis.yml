@@ -13,7 +13,7 @@ matrix:
         - MATRIX_EVAL="C=clang CXX=clang++"
         - SUDO="sudo env \"PATH=$PATH\""
       addons:  { apt: { packages: ["libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-7-dev", "ccache"], sources: ["ubuntu-toolchain-r-test"] } }
-      cache: {apt: true, directories: ["$HOME/.hunter"]}
+      cache: {apt: true, ccache: true, directories: ["$HOME/.hunter"]}
 
     ## GCC 6
     #- env: COMPILER=g++-6
@@ -26,8 +26,7 @@ matrix:
         - MATRIX_EVAL="CXX=g++-7"
         - SUDO="sudo env \"PATH=$PATH\""
       addons: { apt: { packages: ["g++-7", "libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-7-dev", "ccache"], sources: ["ubuntu-toolchain-r-test"] } }
-      cache: {apt: true, directories: ["$HOME/.hunter"]}
-      #cache: {apt: true, ccache: true, directories: ["$HOME/.hunter"]}
+      cache: {apt: true, ccache: true, directories: ["$HOME/.hunter"]}
 
     #- os: osx
     #  env: SUDO=""
