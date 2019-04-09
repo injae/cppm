@@ -49,37 +49,38 @@ namespace cppm
     }
     std::string Compiler::generate() {
         using namespace fmt::literals;
-        std::string d_str = "";
+        std::string o_str = "";
         if(!debug_list.empty()) {
-            d_str = "\tDEBUG\n";
+            o_str = "\tDEBUG\n";
             if(debug_list.find("clang") != debug_list.end()) {
-                d_str += "\t\tCLANG \"{}\"\n"_format(debug_list["clang"].option);
+                o_str += "\t\tCLANG \"{}\"\n"_format(debug_list["clang"].option);
             }
             if(debug_list.find("gcc") != debug_list.end()) {
-                d_str += "\t\tGCC   \"{}\"\n"_format(debug_list["gcc"].option);
+                o_str += "\t\tGCC   \"{}\"\n"_format(debug_list["gcc"].option);
             }
             if(debug_list.find("msvc") != debug_list.end()) {
-                d_str += "\t\tMSVC  \"{}\"\n"_format(debug_list["msvc"].option);
+                o_str += "\t\tMSVC  \"{}\"\n"_format(debug_list["msvc"].option);
             }
         }
         std::string r_str = "";
         if(!release_list.empty()) {
-            r_str = "\tRELEASE\n";
+            o_str = "\tRELEASE\n";
             if(release_list.find("clang") != release_list.end()) {
-                r_str += "\t\tCLANG \"{}\"\n"_format(release_list["clang"].option);
+                o_str += "\t\tCLANG \"{}\"\n"_format(release_list["clang"].option);
             }
             if(release_list.find("gcc") != release_list.end()) {
-                r_str += "\t\tGCC   \"{}\"\n"_format(release_list["gcc"].option);
+                o_str += "\t\tGCC   \"{}\"\n"_format(release_list["gcc"].option);
             }
             if(release_list.find("msvc") != release_list.end()) {
-                r_str += "\t\tMSVC  \"{}\"\n"_format(release_list["msvc"].option);
+                o_str += "\t\tMSVC  \"{}\"\n"_format(release_list["msvc"].option);
             }
         }
+        if(release_list.empty() && debug_list.empty()) {
+            o_str += "\tDEFAULT\n";
+        }
 
-        return "cppm_compiler_option(\n"
-             + d_str
-             + r_str
-             +")\n";
+
+        return "cppm_compiler_option(\n" + o_str +")\n";
 
 
         //return "if(\"${CMAKE_BUILD_TYPE}\" STREQUAL \"Release\")\n"
