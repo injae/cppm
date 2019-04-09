@@ -8,26 +8,18 @@ HunterGate(
 )
 project(cppm LANGUAGES CXX VERSION 1.0.7)
 
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -Wall -pthread -fPIC -O0 -g -std=c++17") 
-elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")  
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -Wall -pthread -fPIC -O0 -g -std=c++17") 
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC") 
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /std:c++17 /MP")
-elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang") 
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} ")
-endif()
+set(CMAKE_CXX_STANDARD 17)
 include(cppm_tool)
 cppm_load()
 
-#cppm_compiler_option(
-#	DEBUG
-#		CLANG "-pthread -std=c++17"
-#		GCC   "-pthread -std=c++17"
-#	RELEASE
-#		CLANG "-pthread -std=c++17"
-#		GCC   "-pthread -std=c++17"
-#)
+cppm_compiler_option(
+	DEBUG
+		CLANG "-pthread -std=c++17"
+		GCC   "-pthread -std=c++17"
+	RELEASE
+		CLANG "-pthread -std=c++17"
+		GCC   "-pthread -std=c++17"
+)
 
 
 include(cppm_install)
