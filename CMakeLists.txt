@@ -11,16 +11,13 @@ project(cppm LANGUAGES C CXX VERSION 1.0.6)
 include(cppm_tool)
 cppm_compiler_option(
 	DEBUG
-		CLANG "-Wall -pthread -fPIC -O0 -g -std=c++17"
-		GCC   "-Wall -pthread -fPIC -O0 -g -std=c++17"
-		MSVC  "/std:c++17 /MP"
+		CLANG "-pthread -std=c++17"
+		GCC   "-pthread -std=c++17"
 	RELEASE
-		CLANG "-pthread -fPIC -O0 -std=c++17"
-		GCC   "-pthread -fPIC -O0 -std=c++17"
-		MSVC  "/std:c++17 /MP"
+		CLANG "-pthread -std=c++17"
+		GCC   "-pthread -std=c++17"
 )
 cppm_load()
-
 
 
 include(cmake/cppm_install.cmake)
