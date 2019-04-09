@@ -6,23 +6,21 @@ HunterGate(
    URL "https://github.com/ruslo/hunter/archive/v0.23.149.tar.gz"
    SHA1 "c9f170bd697ac6117e68137a2cffdeca679db67e"
 )
-project(cppm LANGUAGES CXX VERSION 1.0.7)
+project(cppm LANGUAGES C CXX VERSION 1.0.7)
 
-set(CMAKE_CXX_STANDARD 17)
 include(cppm_tool)
 cppm_load()
-
 cppm_compiler_option(
 	DEBUG
-		CLANG "-pthread -std=c++17"
-		GCC   "-pthread -std=c++17"
+		CLANG -pthread -std=c++17
+		GCC   -pthread -std=c++17
 	RELEASE
-		CLANG "-pthread -std=c++17"
-		GCC   "-pthread -std=c++17"
+		CLANG -pthread -std=c++17
+		GCC   -pthread -std=c++17
 )
 
 
-include(cppm_install)
+include(cmake/cppm_install.cmake)
 find_cppkg(Boost 1.58.0 COMPONENTS system filesystem HUNTER)
 find_cppkg(cpptoml lastest  )
 find_cppkg(fmt lastest  )
