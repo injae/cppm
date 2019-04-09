@@ -6,7 +6,7 @@ HunterGate(
    URL "https://github.com/ruslo/hunter/archive/v0.23.149.tar.gz"
    SHA1 "c9f170bd697ac6117e68137a2cffdeca679db67e"
 )
-project(cppm LANGUAGES C CXX VERSION 1.0.6)
+project(cppm LANGUAGES C CXX VERSION 1.0.7)
 
 include(cppm_tool)
 cppm_compiler_option(
