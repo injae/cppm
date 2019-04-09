@@ -31,8 +31,6 @@ macro(cppm_compiler_option)
 endmacro()
 
 macro(cppm_setting)
-#  _load_cppm_variable()
-#  cppm_load()
   include(cppm/setting/1.0.5)
   _cppm_setting()
 endmacro()
