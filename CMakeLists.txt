@@ -30,7 +30,7 @@ cppm_load()
 #)
 
 
-include(cmake/cppm_install.cmake)
+include(cppm_install)
 find_cppkg(Boost 1.58.0 COMPONENTS system filesystem HUNTER)
 find_cppkg(cpptoml lastest  )
 find_cppkg(fmt lastest  )
