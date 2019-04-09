@@ -39,8 +39,8 @@ namespace cppm
              + "project({0} LANGUAGES C CXX VERSION {1})\n"_format(package.name, package.version)
              + "\n"
              + "include(cppm_tool)\n"
-             + compiler.generate()
              + "cppm_load()\n"
+             + compiler.generate()
              + "\n"
              + cmake.generate()
              + dependencies.gen_find_cppkg()

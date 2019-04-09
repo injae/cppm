@@ -9,6 +9,7 @@ HunterGate(
 project(cppm LANGUAGES C CXX VERSION 1.0.7)
 
 include(cppm_tool)
+cppm_load()
 cppm_compiler_option(
 	DEBUG
 		CLANG "-pthread -std=c++17"
@@ -17,7 +18,6 @@ cppm_compiler_option(
 		CLANG "-pthread -std=c++17"
 		GCC   "-pthread -std=c++17"
 )
-cppm_load()
 
 
 include(cmake/cppm_install.cmake)
