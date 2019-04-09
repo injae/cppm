@@ -51,7 +51,7 @@ namespace cppm
         using namespace fmt::literals;
         std::string o_str = "";
         if(!debug_list.empty()) {
-            o_str = "\tDEBUG\n";
+            o_str += "\tDEBUG\n";
             if(debug_list.find("clang") != debug_list.end()) {
                 o_str += "\t\tCLANG \"{}\"\n"_format(debug_list["clang"].option);
             }
@@ -64,7 +64,7 @@ namespace cppm
         }
         std::string r_str = "";
         if(!release_list.empty()) {
-            o_str = "\tRELEASE\n";
+            o_str += "\tRELEASE\n";
             if(release_list.find("clang") != release_list.end()) {
                 o_str += "\t\tCLANG \"{}\"\n"_format(release_list["clang"].option);
             }
