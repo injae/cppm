@@ -13,7 +13,7 @@ namespace cppm
         std::string name;
         std::string version;
         std::string description;
-        std::string cpp_version;
+        std::string standard;
         std::string git_repo;
     };
 }

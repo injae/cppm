@@ -40,6 +40,7 @@ namespace cppm
              + "\n"
              + "include(cppm_tool)\n"
              + "cppm_load()\n"
+             + "cppm_cxx_standard({})\n"_format(package.standard)
              + compiler.generate()
              + "\n"
              + cmake.generate()

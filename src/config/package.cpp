@@ -12,6 +12,7 @@ namespace cppm
         }
         name         = *package->get_as<std::string>("name");
         version      = package->get_as<std::string>("version").value_or("0.0.1");
+        standard     = package->get_as<std::string>("standard").value_or("17");
         description  = package->get_as<std::string>("description").value_or("");
         git_repo     = package->get_as<std::string>("git").value_or("");
     }

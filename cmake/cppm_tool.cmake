@@ -24,6 +24,12 @@ macro(cppm_load)
     cppm_setting()
 endmacro()
 
+macro(cppm_cxx_standard)
+    cmake_parse_arguments(ARG "" "" "" ${ARGN})
+    include(cppm/cxx_standard/1.0.7)
+    _cppm_cxx_standard(${ARG_UNPARSED_ARGUMENTS})
+endmacro()
+
 macro(cppm_compiler_option)
     cmake_parse_arguments(ARG "" "" "" ${ARGN})
     include(cppm/compiler_option/1.0.7)
