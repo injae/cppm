@@ -53,13 +53,13 @@ namespace cppm
         if(!debug_list.empty()) {
             o_str += "\n\tDEBUG\n";
             if(debug_list.find("clang") != debug_list.end()) {
-                o_str += "\t\tCLANG {}\n"_format(debug_list["clang"].option);
+                o_str += "\t\tCLANG \"{}\"\n"_format(debug_list["clang"].option);
             }
             if(debug_list.find("gcc") != debug_list.end()) {
-                o_str += "\t\tGCC   {}\n"_format(debug_list["gcc"].option);
+                o_str += "\t\tGCC   \"{}\"\n"_format(debug_list["gcc"].option);
             }
             if(debug_list.find("msvc") != debug_list.end()) {
-                o_str += "\t\tMSVC  {}\n"_format(debug_list["msvc"].option);
+                o_str += "\t\tMSVC  \"{}\"\n"_format(debug_list["msvc"].option);
             }
         }
         std::string r_str = "";
@@ -67,13 +67,13 @@ namespace cppm
             if(debug_list.empty()) o_str += "\n";
             o_str += "\tRELEASE\n";
             if(release_list.find("clang") != release_list.end()) {
-                o_str += "\t\tCLANG {}\n"_format(release_list["clang"].option);
+                o_str += "\t\tCLANG \"{}\"\n"_format(release_list["clang"].option);
             }
             if(release_list.find("gcc") != release_list.end()) {
-                o_str += "\t\tGCC   {}\n"_format(release_list["gcc"].option);
+                o_str += "\t\tGCC   \"{}\"\n"_format(release_list["gcc"].option);
             }
             if(release_list.find("msvc") != release_list.end()) {
-                o_str += "\t\tMSVC  {}\n"_format(release_list["msvc"].option);
+                o_str += "\t\tMSVC  \"{}\"\n"_format(release_list["msvc"].option);
             }
         }
         if(release_list.empty() && debug_list.empty()) {

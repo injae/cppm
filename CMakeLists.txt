@@ -12,11 +12,11 @@ include(cppm_tool)
 cppm_load()
 cppm_compiler_option(
 	DEBUG
-		CLANG -pthread -std=c++17
-		GCC   -pthread -std=c++17
+		CLANG "-pthread -std=c++17"
+		GCC   "-pthread -std=c++17"
 	RELEASE
-		CLANG -pthread -std=c++17
-		GCC   -pthread -std=c++17
+		CLANG "-pthread -std=c++17"
+		GCC   "-pthread -std=c++17"
 )
 
 
