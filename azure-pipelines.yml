@@ -16,25 +16,17 @@ jobs:
         sudo apt -y update
         sudo apt install g++-9 ninja-build libc++-dev libc++abi-dev build-essential libstdc++-7-dev ccache -y
       displayName: dependency Install   
+    - script: mkdir build
     - task: CMake@1
       inputs:
-        workingDirectory: '../'
-        cmakeArgs: '-H. -Bbuild/Debug'
-    - task: CMake@1
-      inputs:
-        workingDirectory: 'build/Debug'
-        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug --build . --target install'
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug -H. -BDebug'
       displayName: "Build Debug Mode"
+    - script: cd build/Debug && cmake --build . --target install
     - task: CMake@1
       inputs:
-        workingDirectory: '../'
-        cmakeArgs: '-H. -Bbuild/Release'
-    - task: CMake@1
-      inputs:
-        workingDirectory: 'build/Release'
-        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE --build . --target install'
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE -H. -BRelease'
       displayName: "Build Release Mode"
-
+    - script: cd build/Debug && cmake --build . --target install
   - job: Windows_VS2017_x86
     pool:
       vmImage: 'vs2017-win2016'
