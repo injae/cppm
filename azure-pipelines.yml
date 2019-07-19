@@ -16,17 +16,22 @@ jobs:
         sudo apt -y update
         sudo apt install g++-9 ninja-build libc++-dev libc++abi-dev build-essential libstdc++-7-dev ccache -y
       displayName: dependency Install   
-    - script: |
-        mkdir build.debug
-        mkdir build.release     
     - task: CMake@1
       inputs:
-        workingDirectory: 'build.debug'
+        workingDirectory: '../'
+        cmakeArgs: '-H . -Bbuild/Debug'
+    - task: CMake@1
+      inputs:
+        workingDirectory: 'build/Debug'
         cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug --build . --target install'
       displayName: "Build Debug Mode"
     - task: CMake@1
       inputs:
-        workingDirectory: 'build.release'
+        workingDirectory: '../'
+        cmakeArgs: '-H . -Bbuild/Release'
+    - task: CMake@1
+      inputs:
+        workingDirectory: 'build/Release'
         cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE --build . --target install'
       displayName: "Build Release Mode"
 
