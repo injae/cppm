@@ -19,7 +19,7 @@ jobs:
     - task: CMake@1
       inputs:
         workingDirectory: '../'
-        cmakeArgs: '-H . -Bbuild/Debug'
+        cmakeArgs: '-H. -Bbuild/Debug'
     - task: CMake@1
       inputs:
         workingDirectory: 'build/Debug'
@@ -28,7 +28,7 @@ jobs:
     - task: CMake@1
       inputs:
         workingDirectory: '../'
-        cmakeArgs: '-H . -Bbuild/Release'
+        cmakeArgs: '-H. -Bbuild/Release'
     - task: CMake@1
       inputs:
         workingDirectory: 'build/Release'
