@@ -10,60 +10,60 @@ jobs:
   - job:  Ubuntu_1604
     pool:
       vmImage: 'Ubuntu 16.04'
-      steps:
-      - script: |
-         sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-         sudo apt -y update
-         sudo apt install g++-9 ninja-build libc++-dev libc++abi-dev build-essential libstdc++-7-dev ccache -y
-        displayName: dependency Install   
-      - script: |
-          mkdir build.debug
-          mkdir build.release     
-      - task: CMake@1
-        inputs:
-          workingDirectory: 'build.debug'
-          cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug --build . --target install'
-        displayName: "Build Debug Mode"
-      - task: CMake@1
-        inputs:
-          workingDirectory: 'build.release'
-          cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE --build . --target install'
-        displayName: "Build Release Mode"
+    steps:
+    - script: |
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+        sudo apt -y update
+        sudo apt install g++-9 ninja-build libc++-dev libc++abi-dev build-essential libstdc++-7-dev ccache -y
+      displayName: dependency Install   
+    - script: |
+        mkdir build.debug
+        mkdir build.release     
+    - task: CMake@1
+      inputs:
+        workingDirectory: 'build.debug'
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug --build . --target install'
+      displayName: "Build Debug Mode"
+    - task: CMake@1
+      inputs:
+        workingDirectory: 'build.release'
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE --build . --target install'
+      displayName: "Build Release Mode"
 
   - job: Windows_VS2017_x86
     pool:
       vmImage: 'vs2017-win2016'
-      steps:  
-      - script: |
-          mkdir build
-      - task: CMake@1
-        inputs:
-          workingDirectory: 'build'
-          cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug --build . --target install'
-        displayName: "Build Debug Mode"
-      - task: CMake@1
-        inputs:
-          workingDirectory: 'build'
-          cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE --build . --target install'
-        displayName: "Build Release Mode"
+    steps:  
+    - script: |
+        mkdir build
+    - task: CMake@1
+      inputs:
+        workingDirectory: 'build'
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug --build . --target install'
+      displayName: "Build Debug Mode"
+    - task: CMake@1
+      inputs:
+        workingDirectory: 'build'
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE --build . --target install'
+      displayName: "Build Release Mode"
 
   - job: MacOs
     pool:
       vmImage: 'macOS-10.14'
-      steps:
-      - script: |
-          brew install gcc ninja
-        displayName: dependency Install
-      - script: |
-          mkdir build.debug
-          mkdir build.release    
-      - task: CMake@1
-        inputs:
-          workingDirectory: 'build.debug'
-          cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug --build . --target install'
-        displayName: "Build Debug Mode"
-      - task: CMake@1
-        inputs:
-          workingDirectory: 'build.release'
-          cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE --build . --target install'
-        displayName: "Build Release Mode"
+    steps:
+    - script: |
+        brew install gcc ninja
+      displayName: dependency Install
+    - script: |
+        mkdir build.debug
+        mkdir build.release    
+    - task: CMake@1
+      inputs:
+        workingDirectory: 'build.debug'
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug --build . --target install'
+      displayName: "Build Debug Mode"
+    - task: CMake@1
+      inputs:
+        workingDirectory: 'build.release'
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE --build . --target install'
+      displayName: "Build Release Mode"
