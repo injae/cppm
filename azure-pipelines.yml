@@ -49,7 +49,7 @@ jobs:
 
   - job: MacOs
     pool:
-      vmImage: 'macOS-10.04'
+      vmImage: 'macOS-10.14'
       steps:
       - script: |
           brew install gcc ninja
