@@ -27,7 +27,7 @@ jobs:
     - task: CMake@1
       inputs:
         workingDirectory: build/Debug
-        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug --build . --target install'
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug --build .'
       displayName: "Build Debug Mode"
 
     - task: CMake@1
@@ -38,7 +38,7 @@ jobs:
     - task: CMake@1
       inputs:
         workingDirectory: build/Release
-        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE --build . --target install'
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE --build .'
       displayName: "Build Release Mode"
 
 
