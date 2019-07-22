@@ -15,7 +15,7 @@ jobs:
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
         sudo apt -y update
         sudo apt install g++-7 ninja-build libc++-dev libc++abi-dev build-essential libstdc++-7-dev ccache -y
-update-alternatives --install / usr / bin / g++ g++ /usr/bin/g++-7 100
+        update-alternatives --install / usr / bin / g++ g++ /usr/bin/g++-7 100
 
       displayName: dependency Install   
 
