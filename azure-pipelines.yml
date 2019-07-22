@@ -22,23 +22,23 @@ jobs:
     - task: CMake@1
       inputs:
         workingDirectory: $(Build.SourcesDirectory)
-        cmakeArgs: -H. -Bbuild/Debug
+        cmakeArgs: -G Ninja -DCMAKE_BUILD_TYPE=Debug -H. -Bbuild/Debug
       displayName: Initialize CMake Project
     - task: CMake@1
       inputs:
         workingDirectory: build/Debug
-        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug --build .'
+        cmakeArgs: ' --build .'
       displayName: "Build Debug Mode"
 
     - task: CMake@1
       inputs:
         workingDirectory: $(Build.SourcesDirectory)
-        cmakeArgs: -H. -Bbuild/Release
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE -H. -Bbuild/Release'
       displayName: Initialize CMake Project
     - task: CMake@1
       inputs:
         workingDirectory: build/Release
-        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE --build .'
+        cmakeArgs: ' --build .'
       displayName: "Build Release Mode"
 
 
