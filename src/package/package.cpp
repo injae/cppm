@@ -21,10 +21,11 @@ namespace cppm::package
             cmake.components = cmake_->get_as<std::string>("components").value_or("");
             cmake.find_lib   = cmake_->get_as<std::string>("findlib").value_or("");
 
-            auto download_   = package->get_table("download");
-            download.url     = download_->get_as<std::string>("url").value_or("");
-            download.git.url = download_->get_as<std::string>("git").value_or("");
-            download.git.tag = download_->get_as<std::string>("git_tag").value_or("");
+            if(auto download_    = package->get_table("download")) {
+                download.url     = download_->get_as<std::string>("url").value_or("");
+                download.git.url = download_->get_as<std::string>("git").value_or("");
+                download.git.tag = download_->get_as<std::string>("git_tag").value_or("");
+            }
             deps.parse(table);
         }
     }

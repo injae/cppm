@@ -39,6 +39,7 @@ namespace cppm::option
         app_.add_command("run")
             .desc("run binary file(run build/{project_name}) argument is binary argument")
             .args("{binary options}")
+            .is_show(false)
             .call_back([&](){ _run(); });
         app_.add_command("cppkg")
             .desc("cppkg option and commands")

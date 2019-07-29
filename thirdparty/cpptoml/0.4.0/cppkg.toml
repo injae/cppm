@@ -1,7 +1,7 @@
 [package]
 name = "cpptoml"
 # if you use git repo, package version is lastest
-version = "lastest"
+version = "0.4.0"
 description = "c++ toml parsing library"
 global=false
 # library name in cmake, cppm.toml use this value 
@@ -9,5 +9,6 @@ global=false
 #${library_name} = {module =${value}}
 cmake = {name = "cpptoml", findlib=""}
 # write download value git or url
-download = {git="https://github.com/skystrife/cpptoml.git"}
-#download = {url=""}
+#download = {git=""}
+download = {url="https://github.com/injae/cpptoml/archive/0.4.0.tar.gz"}
+[dependencies]

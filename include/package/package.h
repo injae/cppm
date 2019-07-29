@@ -44,16 +44,16 @@ namespace cppm::package
         bool global = false;
     };
 
-namespace cppkg
-{
-    void init(const std::string& name);
-    void init(Package& package);
-    Cppkg list();
-    void build(const std::string& name);
-    void regist(const std::string& name);
-    std::string search(const std::string& name, const std::string& version); //return to path
-    void install(Config& config, const std::string& path); //return to path
-}
+    namespace cppkg
+    {
+        void init(const std::string& name);
+        void init(Package& package);
+        Cppkg list();
+        void build(const std::string& name);
+        void regist(const std::string& name);
+        std::string search(const std::string& name, const std::string& version); //return to path
+        void install(Config& config, const std::string& path); //return to path
+    }
 }
 
 #endif

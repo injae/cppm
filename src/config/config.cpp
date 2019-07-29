@@ -34,12 +34,12 @@ namespace cppm
 
         return "cmake_minimum_required(VERSION {0})\n"_format(cmake.version)
              + "\n"
-             + "list(APPEND CMAKE_MODULE_PATH \"${CMAKE_CURRENT_SOURCE_DIR}/cmake/\")\n"
+             + "include(cmake/cppm_tool.cmake)\n"
+             + "cppm_project()\n"
              + dependencies.use_hunter(hunter)
-             + "project({0} LANGUAGES C CXX VERSION {1})\n"_format(package.name, package.version)
+             + "project({0} VERSION {1} LANGUAGES C CXX)\n"_format(package.name, package.version)
+             + "cppm_setting()\n"
              + "\n"
-             + "include(cppm_tool)\n"
-             + "cppm_load()\n"
              + "cppm_cxx_standard({})\n"_format(package.standard)
              + compiler.generate()
              + "\n"

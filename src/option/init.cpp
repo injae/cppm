@@ -95,11 +95,6 @@ namespace cppm::option
              + "   version = {}\n"_format(value("0.0.1"))
              + "   description = {}\n"_format(value(""))
              + "\n"
-             + "[compiler]\n"
-             + "   clang = {{option = {0}}}\n"_format(value("-std=c++14 -Wall "))
-             + "   gcc   = {{option = {0}}}\n"_format(value("-std=c++14 -Wall "))
-             + "   msvc  = {{option = {0}}}\n"_format(value("/std:c++14 /MP"))
-             + "\n"
              ;
     }
 }

@@ -8,18 +8,13 @@ description = "c++ cmake maker use to toml like Cargo"
 [cmake]
 include  = ["cmake/cppm_install.cmake"]
 
-[compiler] 
-clang = {option = "-pthread"}
-gcc   = {option = "-pthread"}
-
-
 [[bin]]
 name   = "cppm"
 source = ["src/.*"]
 
 [dependencies]
-cpptoml  = {module = "cpptoml"}
-fmt      = {module = "fmt::fmt"}
-nlpo     = {module = "nlpo::nlpo"}
+cpptoml  = {module = "cpptoml", version="0.4.0"}
+fmt      = {module = "fmt::fmt", version="5.3.0"}
+nlpo     = {module = "nlpo::nlpo", version="lastest"}
 Boost    = {module = "Boost::filesystem", version = "1.58.0", components="system filesystem", hunter=true}
-
+Catch2   = {module="Catch2::Catch2", version="2.9.1"}
