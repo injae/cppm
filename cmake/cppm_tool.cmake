@@ -63,7 +63,7 @@ endmacro()
 
 function(find_cppkg)
     cmake_parse_arguments(ARG "" "" "" ${ARGN})
-    include(cppkg/find/1.0.5)
+    include(cppkg/find/1.0.7)
     _find_cppkg(${ARG_UNPARSED_ARGUMENTS})
 endfunction()
 

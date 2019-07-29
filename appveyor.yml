@@ -9,8 +9,8 @@ image:
 #- Visual Studio 2015
 - Visual Studio 2017
 configuration:
-- Debug
 - Release
+- Debug
 platform:
 - x64
 environment:
@@ -33,7 +33,7 @@ init:
 - echo %generator%
 
 cache:
-  - '%HOME%\.cppm'
+#  - '%HOME%\.cppm'
   - '%HOME%\.hunter'
 
 build_script:
