@@ -34,7 +34,7 @@ init:
 
 cache:
 #  - '%HOME%\.cppm'
-  - '%HOME%\.hunter'
+#  - '%HOME%\.hunter'
 
 build_script:
     - cmake -H. -Bbuild -G %generator%
