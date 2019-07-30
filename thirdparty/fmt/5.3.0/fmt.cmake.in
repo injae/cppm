@@ -12,6 +12,7 @@ download_package(
         -DFMT_TEST=OFF
         -DFMT_FUZZ=OFF
         -DFMT_USE_CPP14=OFF
+        ${CMAKE_ARGS}
     )
 
 # Other Options:

@@ -10,7 +10,8 @@ download_package(
     CMAKE_ARGS
         -DCPPTOML_BUILD_EXAMPLES=OFF
         -DENABLE_LIBCXX=OFF
-    )
+        ${CMAKE_ARGS}
+)
 
 # Other Options:
 # - Linux Configures:
