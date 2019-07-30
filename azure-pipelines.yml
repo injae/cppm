@@ -101,7 +101,7 @@ jobs:
     - task: CMake@1
       inputs:
         workingDirectory: $(Build.SourcesDirectory)
-        cmakeArgs: -G Ninja -DCMAKE_BUILD_TYPE=Debug -H. -Bbuild/Debug
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ -H. -Bbuild/Debug'
       displayName: Initialize CMake Project
     - task: CMake@1
       inputs:
@@ -112,7 +112,7 @@ jobs:
     - task: CMake@1
       inputs:
         workingDirectory: $(Build.SourcesDirectory)
-        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE -H. -Bbuild/Release'
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_C_COMPILER=/usr/bin/gcc -DCMAKE_CXX_COMPILER=/usr/bin/g++ -H. -Bbuild/Release'
       displayName: Initialize CMake Project
     - task: CMake@1
       inputs:
