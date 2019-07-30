@@ -45,6 +45,8 @@ jobs:
     steps:
     - script: |
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+        sudo apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-7.0 main"
         sudo apt -y update
         sudo apt install clang++-7 ninja-build libc++-dev libc++abi-dev build-essential libstdc++-7-dev ccache -y
         sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-7 100
