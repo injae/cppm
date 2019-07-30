@@ -40,9 +40,9 @@ jobs:
         workingDirectory: build/Release
         cmakeArgs: ' --build .'
       displayName: "Build Release Mode"
-  - job:  Ubuntu_1604
+  - job:  Ubuntu_1604_Clang7
     pool:
-      vmImage: 'Ubuntu_16.04_Clang7'
+      vmImage: 'Ubuntu 16.04'
     steps:
     - script: |
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
