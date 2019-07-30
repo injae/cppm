@@ -10,6 +10,7 @@ download_package(
     CMAKE_ARGS
         FMT_DOC=OFF
         FMT_TEST=OFF
+        FMT_FUZZ=OFF
         FMT_USE_CPP14=OFF
     )
 

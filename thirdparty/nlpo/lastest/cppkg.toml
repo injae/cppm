@@ -2,12 +2,14 @@
 name = "nlpo"
 # if you use git repo, package version is lastest
 version = "lastest"
-description = "program option library"
+description = "c++ program option and command library"
 global=false
 # library name in cmake, cppm.toml use this value 
 # [dependencies]
 #${library_name} = {module =${value}}
-cmake = {name = "nlpo::nlpo", findlib=""}
+cmake = {name = "nlpo::nlpo ", findlib=""}
 # write download value git or url
 download = {git="https://github.com/injae/nlpo.git"}
 #download = {url=""}
+[dependencies]
+fmt={module="fmt::fmt", version="lastest",  lnk_type="private"  }

@@ -2,9 +2,13 @@ cmake_minimum_required(VERSION 3.6)
 project(nlpo-lastest-install NONE)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
+find_package(fmt  )
 download_package(nlpo lastest GIT https://github.com/injae/nlpo.git   LOCAL)
+
 # Other Options:
-# - Linux Configure:
-#    L_CONFIGURE, L_BUILD, L_INSTALL
-# - Windows Configure:
-#    W_CONFIGURE, W_BUILD, W_INSTALL
+# - Linux Configures:
+#    L_CONFIGURE {...}, L_BUILD {...}, L_INSTALL {...}
+# - Windows Configures:
+#    W_CONFIGURE {...}, W_BUILD {...}, W_INSTALL {...}
+# - Install Path Options:
+#    LOCAL(default) GLOBAL 

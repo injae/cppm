@@ -9,6 +9,7 @@ download_package(
     LOCAL
     CMAKE_ARGS
         CPPTOML_BUILD_EXAMPLES=OFF
+        ENABLE_LIBCXX=OFF
     )
 
 # Other Options:
