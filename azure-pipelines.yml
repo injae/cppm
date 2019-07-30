@@ -7,7 +7,7 @@ trigger:
 - master
 
 jobs:
-  - job:  Ubuntu_1604
+  - job:  Ubuntu_1604_GCC7
     pool:
       vmImage: 'Ubuntu 16.04'
     steps:
@@ -42,7 +42,7 @@ jobs:
       displayName: "Build Release Mode"
   - job:  Ubuntu_1604
     pool:
-      vmImage: 'Ubuntu 16.04'
+      vmImage: 'Ubuntu_16.04_Clang7'
     steps:
     - script: |
         sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
