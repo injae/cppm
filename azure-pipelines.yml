@@ -40,6 +40,39 @@ jobs:
         workingDirectory: build/Release
         cmakeArgs: ' --build .'
       displayName: "Build Release Mode"
+  - job:  Ubuntu_1604
+    pool:
+      vmImage: 'Ubuntu 16.04'
+    steps:
+    - script: |
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+        sudo apt -y update
+        sudo apt install clang++-7 ninja-build libc++-dev libc++abi-dev build-essential libstdc++-7-dev ccache -y
+        sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-7 100
+
+      displayName: dependency Install   
+
+    - task: CMake@1
+      inputs:
+        workingDirectory: $(Build.SourcesDirectory)
+        cmakeArgs: -G Ninja -DCMAKE_BUILD_TYPE=Debug -H. -Bbuild/Debug
+      displayName: Initialize CMake Project
+    - task: CMake@1
+      inputs:
+        workingDirectory: build/Debug
+        cmakeArgs: ' --build .'
+      displayName: "Build Debug Mode"
+
+    - task: CMake@1
+      inputs:
+        workingDirectory: $(Build.SourcesDirectory)
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE -H. -Bbuild/Release'
+      displayName: Initialize CMake Project
+    - task: CMake@1
+      inputs:
+        workingDirectory: build/Release
+        cmakeArgs: ' --build .'
+      displayName: "Build Release Mode"
 
 
   - job: Windows_VS2017_x86
