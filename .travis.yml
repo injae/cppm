@@ -15,7 +15,6 @@ matrix:
         - SUDO="sudo env \"PATH=$PATH\""
       addons:  { apt: { packages: ["libc++-7-dev", "libc++abi-7-dev", "libstdc++-7-dev" "build-essential" "ccache"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-7"] } }
       cache: {apt: true, ccache: true, directories: ["$HOME/.hunter"]}
-
     ## GCC 6
     #- env: COMPILER=g++-6
     #  addons: { apt: { packages: ["g++-6", "valgrind"], sources: ["ubuntu-toolchain-r-test"] } }
