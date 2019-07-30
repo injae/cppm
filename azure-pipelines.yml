@@ -16,7 +16,6 @@ jobs:
         sudo apt -y update
         sudo apt install g++-7 ninja-build libc++-dev libc++abi-dev build-essential libstdc++-7-dev ccache -y
         sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 100
-
       displayName: dependency Install   
 
     - task: CMake@1
@@ -27,20 +26,25 @@ jobs:
     - task: CMake@1
       inputs:
         workingDirectory: build/Debug
-        cmakeArgs: ' --build .'
+        cmakeArgs:  --build .
       displayName: "Build Debug Mode"
 
     - task: CMake@1
       inputs:
         workingDirectory: $(Build.SourcesDirectory)
-        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE -H. -Bbuild/Release'
+        cmakeArgs: -G Ninja -DCMAKE_BUILD_TYPE=RELEASE -H. -Bbuild/Release
       displayName: Initialize CMake Project
     - task: CMake@1
       inputs:
         workingDirectory: build/Release
         cmakeArgs: ' --build .'
+<<<<<<< HEAD
       displayName: "Build Release Mode"
   - job:  Ubuntu_1604_Clang7
+=======
+      displayName: Build Release Mode
+  - job:  Ubuntu_1604
+>>>>>>> azure pipeline
     pool:
       vmImage: 'Ubuntu 16.04'
     steps:
@@ -49,7 +53,6 @@ jobs:
         sudo apt -y update
         sudo apt install clang++-7 ninja-build libc++-dev libc++abi-dev build-essential libstdc++-7-dev ccache -y
         sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-7 100
-
       displayName: dependency Install   
 
     - task: CMake@1
@@ -84,12 +87,12 @@ jobs:
     - task: CMake@1
       inputs:
         workingDirectory: 'build'
-        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug --build . --target install'
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug --build .'
       displayName: "Build Debug Mode"
     - task: CMake@1
       inputs:
         workingDirectory: 'build'
-        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE --build . --target install'
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE --build .'
       displayName: "Build Release Mode"
 
   - job: MacOs
@@ -99,16 +102,24 @@ jobs:
     - script: |
         brew install gcc ninja
       displayName: dependency Install
-    - script: |
-        mkdir build.debug
-        mkdir build.release    
     - task: CMake@1
       inputs:
-        workingDirectory: 'build.debug'
-        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=Debug --build . --target install'
+        workingDirectory: $(Build.SourcesDirectory)
+        cmakeArgs: -G Ninja -DCMAKE_BUILD_TYPE=Debug -H. -Bbuild/Debug
+      displayName: Initialize CMake Project
+    - task: CMake@1
+      inputs:
+        workingDirectory: build/Debug
+        cmakeArgs: ' --build .'
       displayName: "Build Debug Mode"
+
     - task: CMake@1
       inputs:
-        workingDirectory: 'build.release'
-        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE --build . --target install'
+        workingDirectory: $(Build.SourcesDirectory)
+        cmakeArgs: '-G Ninja -DCMAKE_BUILD_TYPE=RELEASE -H. -Bbuild/Release'
+      displayName: Initialize CMake Project
+    - task: CMake@1
+      inputs:
+        workingDirectory: build/Release
+        cmakeArgs: ' --build .'
       displayName: "Build Release Mode"
