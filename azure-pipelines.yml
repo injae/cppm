@@ -38,13 +38,8 @@ jobs:
       inputs:
         workingDirectory: build/Release
         cmakeArgs: ' --build .'
-<<<<<<< HEAD
       displayName: "Build Release Mode"
   - job:  Ubuntu_1604_Clang7
-=======
-      displayName: Build Release Mode
-  - job:  Ubuntu_1604
->>>>>>> azure pipeline
     pool:
       vmImage: 'Ubuntu 16.04'
     steps:
@@ -76,7 +71,6 @@ jobs:
         workingDirectory: build/Release
         cmakeArgs: ' --build .'
       displayName: "Build Release Mode"
-
 
   - job: Windows_VS2017_x86
     pool:
