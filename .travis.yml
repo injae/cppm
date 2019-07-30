@@ -9,11 +9,12 @@ matrix:
     # Clang 7.0
     - os: linux
       dist: xenial
+      compiler: clang
       env:
         - MATRIX_EVAL="C=clang CXX=clang++"
         - SUDO="sudo env \"PATH=$PATH\""
       addons:  { apt: { packages: ["libc++-dev", "libc++abi-dev", "build-essential", "ccache"], sources: ["ubuntu-toolchain-r-test"] } }
-      cache: {apt: true, directories: ["$HOME/.hunter"]}
+      cache: {apt: true, ccache: true, directories: ["$HOME/.hunter"]}
 
     ## GCC 6
     #- env: COMPILER=g++-6
@@ -22,6 +23,7 @@ matrix:
     # GCC 7
     - os: linux
       dist: xenial
+      compiler: gcc
       env:
         - MATRIX_EVAL="CXX=g++-7"
         - SUDO="sudo env \"PATH=$PATH\""
