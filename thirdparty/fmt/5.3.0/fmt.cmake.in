@@ -8,10 +8,10 @@ download_package(
     URL https://github.com/fmtlib/fmt/archive/5.3.0.tar.gz
     LOCAL
     CMAKE_ARGS
-        FMT_DOC=OFF
-        FMT_TEST=OFF
-        FMT_FUZZ=OFF
-        FMT_USE_CPP14=OFF
+        -DFMT_DOC=OFF
+        -DFMT_TEST=OFF
+        -DFMT_FUZZ=OFF
+        -DFMT_USE_CPP14=OFF
     )
 
 # Other Options:

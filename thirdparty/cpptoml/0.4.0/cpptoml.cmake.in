@@ -8,8 +8,8 @@ download_package(
     URL https://github.com/injae/cpptoml/archive/0.4.0.tar.gz
     LOCAL
     CMAKE_ARGS
-        CPPTOML_BUILD_EXAMPLES=OFF
-        ENABLE_LIBCXX=OFF
+        -DCPPTOML_BUILD_EXAMPLES=OFF
+        -DENABLE_LIBCXX=OFF
     )
 
 # Other Options:
