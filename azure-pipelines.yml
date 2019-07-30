@@ -49,7 +49,8 @@ jobs:
         sudo apt-add-repository "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-7 main"
         sudo apt -y update
         sudo apt install clang++-7 ninja-build libc++-dev libc++abi-dev build-essential libstdc++-7-dev ccache -y
-        sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-7 100
+        sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-7 100
+        sudo update-alternatives --install /usr/bin/c c /usr/bin/clang-7 100
       displayName: dependency Install   
 
     - task: CMake@1
