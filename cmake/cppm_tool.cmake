@@ -61,11 +61,11 @@ macro(cppm_setting)
   _cppm_setting(${_ARG_UNPARSED_ARGUMENTS})
 endmacro()
 
-function(find_cppkg)
+macro(find_cppkg)
     cmake_parse_arguments(ARG "" "" "" ${ARGN})
     include(cppkg/find/1.0.7)
     _find_cppkg(${ARG_UNPARSED_ARGUMENTS})
-endfunction()
+endmacro()
 
 macro(cppm_target_define)
     cmake_parse_arguments(ARG "" "" "" ${ARGN})
