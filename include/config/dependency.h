@@ -17,6 +17,7 @@ namespace cppm
         std::string link_type;
         std::string version;
         std::string components;
+        std::string load_path;
         void insert(table_ptr table);
     };
 

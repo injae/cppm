@@ -89,7 +89,6 @@ namespace cppm::option
                     cmd.build_option += "-j{}"_format(std::thread::hardware_concurrency());
                 }
                 if(!none_tc) {
-                    dependency_check();
                     cmakelist_build();
                     fs::copy_file((std::string(std::getenv("HOME")))+"/.cppm/cmake/cppm_tool.cmake"
                                   ,config_.path.cmake +"/cppm_tool.cmake"
@@ -109,21 +108,6 @@ namespace cppm::option
                 system(cmd.build(config_).c_str());
                 system(cmd.after_option.c_str());
             });
-    }
-
-    void Build::dependency_check() {
-        using namespace package;
-        std::vector<Dependency> not_installed_dep;
-        for(auto [name, dep] : config_.dependencies.list) {
-            if(dep.hunter) { continue; }
-            if(!fs::exists("{0}/{1}/{2}/{1}.cmake.in"_format(config_.path.thirdparty,name,dep.version))) {
-                not_installed_dep.push_back(dep);
-            }
-        }
-        for(auto dep : not_installed_dep){
-            auto path = cppkg::search(dep.name, dep.version);
-            cppkg::install(config_,path);
-        }
     }
 
     void Build::cmakelist_build()

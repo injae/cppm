@@ -1,0 +1,11 @@
+[package]
+   name = "boost_filesystem_hunter"
+   version = "0.0.1"
+   description = ""
+
+[[bin]]
+   name = "boost_filesystem_hunter"
+   source = ["src/.*"]
+
+[dependencies]
+Boost = {module = "Boost::filesystem", version = "1.58.0", components="system filesystem", hunter=true}

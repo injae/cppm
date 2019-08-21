@@ -1,6 +1,5 @@
 #include <string>
 #include <iostream>
-
 #include "option/cppm.h"
 #include "util/algorithm.hpp"
 #include "option/build.h"

@@ -1,0 +1,11 @@
+[package]
+   name = "fmt_cppkg"
+   version = "0.0.1"
+   description = ""
+
+[[bin]]
+   name = "fmt_cppkg"
+   source = ["src/.*"]
+
+[dependencies]
+fmt = {module = "fmt::fmt", version="5.3.0"}
