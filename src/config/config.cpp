@@ -1,6 +1,8 @@
 #include "config/config.h"
 #include "util/cmake.h"
 #include "config/cppm_tool.h"
+#include "package/package.h"
+#include "util/filesystem.h"
 #include <fmt/format.h>
 
 namespace cppm
@@ -10,7 +12,33 @@ namespace cppm
         Config config;
         config.path = Path::make(path);
         config.parse(table);
+        config.dependency_check();
         return config; 
+    }
+
+    void Config::dependency_check() {
+        using namespace package;
+        using namespace fmt::literals;
+        std::vector<Dependency> not_installed_dep;
+        for(auto [name, dep] : dependencies.list) {
+            if(dep.hunter) { continue; }
+            if(!fs::exists("{0}/{1}/{2}/{1}.cmake.in"_format(path.thirdparty,name,dep.version))) {
+                not_installed_dep.push_back(dep);
+            }
+        }
+        for(auto dep : not_installed_dep){
+            auto path = cppkg::search(dep.name, dep.version);
+            cppkg::install(*this, path);
+        }
+        for(auto& [name, dep] : dependencies.list) {
+            if(dep.module == "" && !dep.hunter) {
+                auto table = cpptoml::parse_file("{0}/{1}/{2}/cppkg.toml"_format(path.thirdparty,name,dep.version));
+                package::Package pkg;
+                pkg.parse(table);
+                dep.module = pkg.cmake.name;
+                dep.components = pkg.cmake.components;
+            }
+        }
     }
 
     void Config::parse(table_ptr table) {
@@ -44,7 +72,7 @@ namespace cppm
              + compiler.generate()
              + "\n"
              + cmake.generate()
-             + dependencies.gen_find_cppkg()
+             + dependencies.generate()
              + tool::target_define(*this)
              + tool::target_dependencies(*this)
              + tool::target_install(*this)

@@ -2,7 +2,6 @@
 #include "util/filesystem.h"
 #include "util/algorithm.hpp"
 #include <iostream>
-
 namespace cppm::option {
     void base_option::config_load() {
         auto path = cppm::util::reverse_find_file(fs::current_path(), "cppm.toml");

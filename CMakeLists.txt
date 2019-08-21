@@ -16,6 +16,7 @@ cppm_compiler_option(DEFAULT)
 
 include(cmake/cppm_install.cmake)
 find_cppkg(Boost 1.58.0 COMPONENTS system filesystem HUNTER)
+find_cppkg(Catch2 2.9.1  )
 find_cppkg(cpptoml 0.4.0  )
 find_cppkg(fmt 5.3.0  )
 find_cppkg(nlpo lastest  )
@@ -25,6 +26,7 @@ SOURCES
 	src/util/filesystem.cpp
 	src/util/version.cpp
 	src/util/algorithm.cpp
+	src/util/.#filesystem.cpp
 	src/config/cmake.cpp
 	src/config/path.cpp
 	src/config/package.cpp
@@ -47,6 +49,7 @@ SOURCES
 	src/option/cppkg_init.cpp
 	src/option/base_option.cpp
 	src/option/cppm.cpp
+	src/option/.#cppm.cpp
 	src/option/init.cpp
 	src/option/install.cpp
 	src/package/package.cpp
@@ -57,9 +60,10 @@ SOURCES
 cppm_target_dependencies(cppm 
 PUBLIC	
 	Boost::filesystem
+	Catch2::Catch2
 	cpptoml
 	fmt::fmt
-	nlpo::nlpo
+	nlpo::nlpo 
 )
 
 cppm_target_install(cppm)

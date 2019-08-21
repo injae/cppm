@@ -1,0 +1,11 @@
+[package]
+   name = "opencv_hunter"
+   version = "0.0.1"
+   description = ""
+
+[[bin]]
+   name = "opencv_hunter"
+   source = ["src/.*"]
+
+[dependencies]
+    OpenCV = {module = "${OpenCV_LIBS}", hunter=true, lnk_type="private"}
