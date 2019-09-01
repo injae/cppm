@@ -48,6 +48,7 @@ namespace cppm
         builder.parse(table);
         bins.parse(table);
         libs.parse(table);
+        test.parse(table);
         compiler.parse(table);
         dependencies.parse(table);
         cppm_config.load();

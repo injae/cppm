@@ -26,7 +26,6 @@ SOURCES
 	src/util/filesystem.cpp
 	src/util/version.cpp
 	src/util/algorithm.cpp
-	src/util/.#filesystem.cpp
 	src/config/cmake.cpp
 	src/config/path.cpp
 	src/config/package.cpp
@@ -38,6 +37,7 @@ SOURCES
 	src/config/builder.cpp
 	src/config/hunter.cpp
 	src/config/cppm_tool.cpp
+	src/config/test.cpp
 	src/config/dependency.cpp
 	src/config/base_target.cpp
 	src/config/compiler.cpp
@@ -49,7 +49,6 @@ SOURCES
 	src/option/cppkg_init.cpp
 	src/option/base_option.cpp
 	src/option/cppm.cpp
-	src/option/.#cppm.cpp
 	src/option/init.cpp
 	src/option/install.cpp
 	src/package/package.cpp
