@@ -13,6 +13,8 @@ namespace cppm::option
         std::string cmake_option = "";
         std::string build_option = "";
         std::string after_option = "";
+        std::string target = "";
+        bool is_install = false;
     };
     
     class Build : public base_option

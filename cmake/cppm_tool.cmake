@@ -57,7 +57,7 @@ endmacro()
 
 macro(cppm_setting)
   cmake_parse_arguments(_ARG "" "" "" ${ARGN})
-  include(cppm/setting/1.0.7)
+  include(cppm/setting/1.0.8)
   _cppm_setting(${_ARG_UNPARSED_ARGUMENTS})
 endmacro()
 

@@ -15,16 +15,21 @@ namespace cppm::option
 {
     std::string CommandBuilder::build(Config& config)
     {
+        using namespace util;
         auto has_toolchains = [&config]() -> std::string {
            return config.cppm_config.package.toolchains() == "" ?
            "" : " -DCMAKE_TOOLCHAIN_FILE=\"{0}\""_format(config.cppm_config.package.toolchains());
         };
 
+        auto sudo = is_install && !strcmp(compiler::what(), "msvc")? "sudo" : "";
+        if(is_install) target = "install";
+        auto target_cmd = target != "" ? "--target " + target : "";
+
         return "  cd {0} "_format(config.path.build)
             +  "&& cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
             +  has_toolchains()
             +  " {0} {1}"_format(config.cmake.option, cmake_option) + " .. "
-            +  "&& cmake --build . -- {0}"_format(build_option);
+            +  "&& {0} cmake --build . {1} -- {2}"_format(sudo, target_cmd, build_option);
     }
     
     Build::Build() {
@@ -72,12 +77,14 @@ namespace cppm::option
         app_.add_command("install")
             .desc("cmake target install ")
             .call_back([this]() {
-                config_load();
-                if(util::compiler::what() != "msvc"_format()) {cmd.after_option += "sudo ";}
-                cmd.after_option += "cmake --build {} --target install "_format(config_.path.build);
-                if(util::compiler::what() != "msvc"_format()) {
-                    cmd.after_option += "-- -j{}"_format(std::thread::hardware_concurrency());
-                }
+                           //config_load();
+                cmd.is_install = true;
+                //if(util::compiler::what() != "msvc"_format()) {cmd.after_option += "sudo ";}
+                //cmd.after_option += "cmake --build {} --target install "_format(config_.path.build);
+                //if(util::compiler::what() != "msvc"_format()) {
+                //    cmd.after_option += "-- -j{}"_format(std::thread::hardware_concurrency());
+                //}
+                fmt::print("==========================================");
             });
         app_.add_command()
             .desc("Build command")
@@ -105,8 +112,10 @@ namespace cppm::option
                     cmd.build_option += util::accumulate(app_.args(), " ");
                     app_.args().clear();
                 }
-                system(cmd.build(config_).c_str());
-                system(cmd.after_option.c_str());
+                //system(cmd.build(config_).c_str());
+                //system(cmd.after_option.c_str());
+                util::system::exec(cmd.build(config_).c_str());
+                util::system::exec(cmd.after_option.c_str());
             });
     }
 
