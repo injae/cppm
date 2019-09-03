@@ -13,7 +13,7 @@
 #include "config/dependency.h"
 #include "config/cppm_config.h"
 #include "config/hunter.h"
-#include "config/test.h"
+//#include "config/test.h"
 
 namespace cppm
 {
@@ -30,7 +30,7 @@ namespace cppm
         Cmake        cmake;
         Bins         bins;
         Libs         libs;
-        Test         test;
+        //Test         test;
         Hunter       hunter;
         Package      package;
         Builder      builder;

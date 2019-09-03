@@ -51,6 +51,8 @@ namespace cppm::util::system
             return "C:/users/";
         }
     }
+    std::string exec(const char* cmd
+                    ,const std::function<void(std::string&)>& func = [](auto& str) { fmt::print(str);});
 }
 
 #if   defined(_MSC_VER)

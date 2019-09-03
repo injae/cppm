@@ -38,7 +38,7 @@ namespace cppm::tool
         std::vector<base_target*> list;
         for(auto& lib : config.libs.list) { list.emplace_back(&lib); }
         for(auto& bin : config.bins.list) { list.emplace_back(&bin); }
-        if(config.test.is_testable) { list.emplace_back(&config.test); }
+        //if(config.test.is_testable) { list.emplace_back(&config.test); }
 
         for(auto target : list) {
             if(target->deps.empty()) {
