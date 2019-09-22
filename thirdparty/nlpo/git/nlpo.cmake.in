@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.6)
-project(nlpo-lastest-install NONE)
+project(nlpo-git-install NONE)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
 find_package(fmt  )
 download_package(
     nlpo
-    lastest
+    git
     GIT https://github.com/injae/nlpo.git
     LOCAL
     CMAKE_ARGS ${CMAKE_ARGS})

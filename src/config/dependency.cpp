@@ -5,7 +5,7 @@
 #include <regex>
 #include <string>
 
-//(.*)+@(\^?)(\d(?:.\d){2,3}|lastest)+(?:\$(stable|nightly|(.*)+(?:\@(.*))))?
+//(.*)+@(\^?)(\d(?:.\d){2,3}|latest)+(?:\$(stable|nightly|(.*)+(?:\@(.*))))?
 
 using namespace fmt::literals;
 namespace cppm
@@ -23,7 +23,7 @@ namespace cppm
                 dependency.hunter      = dep->get_as<bool>("hunter").value_or(false);
                 if(!dep->get_as<std::string>("module") && dependency.hunter) std::cerr << "need module\n";
                 dependency.module      = *dep->get_as<std::string>("module");
-                dependency.version     = dep->get_as<std::string>("version").value_or("lastest");
+                dependency.version     = dep->get_as<std::string>("version").value_or("latest");
                 dependency.components  = dep->get_as<std::string>("components").value_or("");
                 dependency.load_path   = dep->get_as<std::string>("load-path").value_or("");
                 list[dependency.name] = dependency;
@@ -31,7 +31,7 @@ namespace cppm
             else {
             //else if(dep_table.second->is_value()){
                 auto dep_s = *deps->get_as<std::string>(dependency.name);
-                std::regex filter("(\\^?)(\\d{1,4}(?:\\.\\d{1,4}){2,3}|lastest)+(@(stable|nightly|(.*)(?:\\.)(.*)))?");
+                std::regex filter("(\\^?)(\\d{1,4}(?:\\.\\d{1,4}){2,3}|latest|git)+(@(stable|nightly|(.*)(?:\\.)(.*)))?");
                 std::smatch what;
                 if(!std::regex_match(dep_s, what, filter)) { fmt::print("wrong module argument: {}",dep_s); exit(1);}
                 dependency.none_module = false;
@@ -57,7 +57,7 @@ namespace cppm
                 gen += "add_subdirectory({})"_format(dep.load_path);
             }
             auto components = dep.components == "" ? "" : "components=\"{}\""_format(dep.components);
-            auto version = dep.version == "lastest" ? "" : dep.version; 
+            auto version = dep.version == "latest" ? "" : dep.version; 
             gen += "find_package({0} {1} {2})\n"_format(name, version, dep.components);
         }
         return gen;

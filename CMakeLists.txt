@@ -7,7 +7,7 @@ HunterGate(
    URL "https://github.com/ruslo/hunter/archive/v0.23.149.tar.gz"
    SHA1 "c9f170bd697ac6117e68137a2cffdeca679db67e"
 )
-project(cppm VERSION 1.0.7 LANGUAGES C CXX)
+project(cppm VERSION 1.0.8 LANGUAGES C CXX)
 cppm_setting()
 
 cppm_cxx_standard(17)
@@ -19,7 +19,7 @@ find_cppkg(Boost 1.58.0 COMPONENTS system filesystem HUNTER)
 find_cppkg(Catch2 2.9.1  )
 find_cppkg(cpptoml 0.4.0  )
 find_cppkg(fmt 5.3.0  )
-find_cppkg(nlpo lastest  )
+find_cppkg(nlpo git  )
 
 cppm_target_define(cppm BINARY 
 SOURCES 

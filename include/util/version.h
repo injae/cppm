@@ -11,7 +11,7 @@ namespace cppm
     {
     public:
         Version() {};
-        Version(std::string version);
+        Version(std::string version = "latest");
         static Version parse(std::string version_include_string);
         bool operator< (const Version&  other) const;
         bool operator> (const Version&  other) const;
@@ -21,7 +21,8 @@ namespace cppm
         operator std::string() const;
         friend std::ostream& operator << (std::ostream& stream, const Version& other);
 
-        bool lastest = false;
+        bool git = false;
+        bool latest = false;
         int major = 0;
         int minor = 0;
         int revision = 0;

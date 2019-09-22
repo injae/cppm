@@ -16,7 +16,7 @@ namespace cppm::option
             .abbr("g")
             .desc("add git repo")
             .args("{repo}")
-            .call_back([&](){ pkg.download.git.url = app_.get_arg(); pkg.version = "lastest";});
+            .call_back([&](){ pkg.download.git.url = app_.get_arg(); pkg.version = "git";});
         app_.add_option("global")
             .desc("not cppm local install")
             .call_back([&](){ pkg.global = true; });

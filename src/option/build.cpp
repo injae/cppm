@@ -28,8 +28,8 @@ namespace cppm::option
         return "  cd {0} "_format(config.path.build)
             +  "&& cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
             +  has_toolchains()
-            +  " {0} {1}"_format(config.cmake.option, cmake_option) + " .. "
-            +  "&& {0} cmake --build . {1} -- {2}"_format(sudo, target_cmd, build_option);
+            +  " {0} {1}"_format(config.cmake.option, cmake_option) + " .. 2>&1"
+            +  "&& {0} cmake --build . {1} -- {2} 2>&1"_format(sudo, target_cmd, build_option);
     }
     
     Build::Build() {
@@ -76,16 +76,7 @@ namespace cppm::option
             .call_back([&]() { config_load(); export_cppkg(); });
         app_.add_command("install")
             .desc("cmake target install ")
-            .call_back([this]() {
-                           //config_load();
-                cmd.is_install = true;
-                //if(util::compiler::what() != "msvc"_format()) {cmd.after_option += "sudo ";}
-                //cmd.after_option += "cmake --build {} --target install "_format(config_.path.build);
-                //if(util::compiler::what() != "msvc"_format()) {
-                //    cmd.after_option += "-- -j{}"_format(std::thread::hardware_concurrency());
-                //}
-                fmt::print("==========================================");
-            });
+            .call_back([this]() { cmd.is_install = true; });
         app_.add_command()
             .desc("Build command")
             .args("{cppm options} {builder options}")
@@ -114,8 +105,8 @@ namespace cppm::option
                 }
                 //system(cmd.build(config_).c_str());
                 //system(cmd.after_option.c_str());
-                util::system::exec(cmd.build(config_).c_str());
-                util::system::exec(cmd.after_option.c_str());
+                util::system::exec(cmd.build(config_).c_str(), [](auto& str){ fmt::print(str); });
+                util::system::exec(cmd.after_option.c_str(), [](auto& str){ fmt::print(str); });
             });
     }
 
@@ -136,8 +127,7 @@ namespace cppm::option
         }
         pkg.description = config_.package.description;
         pkg.download.git.url = config_.package.git_repo;
-        if(pkg.download.git.url == "") {fmt::print(stderr, "need git_repo"); exit(1);}
-        pkg.version = "lastest";
+        if(pkg.download.git.url == "") { fmt::print(stderr, "need git_repo"); exit(1); }
         pkg.deps = config_.dependencies;
         pkg.global = false;
         package::cppkg::init(pkg);
