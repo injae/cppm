@@ -60,7 +60,6 @@ macro(cppm_cxx_standard)
     _cppm_cxx_standard(${_ARG_UNPARSED_ARGUMENTS})
 endmacro()
 
-
 macro(cppm_compiler_option)
     include(${CPPM_VERSION}/cppm/compiler_option)
     _cppm_compiler_option(${ARGN})

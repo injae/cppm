@@ -97,4 +97,8 @@ namespace cppm::util
         else if (fs::is_regular_file(src)) {fs::copy(src, dst);} 
         else {throw std::runtime_error(dst.generic_string() + " not dir or file");}
     }
+
+    void over_write_copy_file(const std::string& src, const std::string& des) {
+        fs::copy_file(src, des, fs::copy_option::overwrite_if_exists);
+    }
 }
