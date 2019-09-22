@@ -18,7 +18,7 @@ include(cmake/cppm_install.cmake)
 find_cppkg(Boost 1.58.0 COMPONENTS system filesystem HUNTER)
 find_cppkg(Catch2 2.9.1  )
 find_cppkg(cpptoml 0.4.0  )
-find_cppkg(fmt 5.3.0  )
+find_cppkg(fmt 6.0.0  )
 find_cppkg(nlpo git  )
 
 cppm_target_define(cppm BINARY 

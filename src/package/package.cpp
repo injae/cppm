@@ -70,7 +70,7 @@ namespace cppkg {
 
     void init(Package& package) {
         using namespace fmt::literals;
-        auto value = [](const std::string& str) { return "\""+ str +"\""; };
+        auto value = [](const std::string& str) { return "\"{}\""_format(str); };
         auto is_default = [](std::string str) { return str != "" ? "" : "#"; };
         if(fs::exists(package.name + ".toml")) {
             fmt::print(stderr, "existed {0}", package.name);
@@ -79,7 +79,7 @@ namespace cppkg {
         util::create("{0}.toml"_format(package.name));
         util::write( "{0}.toml"_format(package.name)
                    , "[package]\n" + "name = {0}\n"_format(value(package.name))
-                   + "# if you use git repo, package version is latest\n"
+                   + "# if you use git repo, package version is git\n"
                    + "version = {0}\n"_format(value(package.version))
                    + "description = {0}\n"_format(value(package.description))
                    + "global={0}\n"_format(package.global ? "true" : "false")
@@ -143,6 +143,7 @@ namespace cppkg {
                 auto versions = *util::file_list("{0}/{1}/{2}"_format(root_path,rname,pname));
                 for(auto& ver : versions) {
                     auto vname = ver.path().filename().string();
+                    if(vname == "lastest") continue; //legacy version check
                     cppkg.repos[rname].pkgs[pname].versions[vname] = ver.path().string();
                 }
             }
@@ -202,15 +203,8 @@ namespace cppkg {
                     ,"{0}/Modules/{1}"_format(config.path.cmake,package.cmake.find_lib));
         }
         util::recursive_copy(path,"{0}/{1}/{2}"_format(
-                             config.path.thirdparty,package.name,package.version));
-        fmt::print("Install Cppkg {0}/{1}\n",package.name,package.version);
-        //fmt::print("add this in cppm.toml\n");
-        //fmt::print("[dependencies]\n");
-        //fmt::print("{0}={{module={1}, version={2}, components={3}}}\n"
-        //                                       ,package.name
-        //                                       ,value(package.cmake.name)
-        //                                       ,value(package.version)
-        //                                       ,value(package.cmake.components));
+                             config.path.thirdparty, package.name, package.version));
+        fmt::print("Install Cppkg {0}/{1}\n",package.name, package.version);
     }
 }
 }

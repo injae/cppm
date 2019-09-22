@@ -1,13 +1,8 @@
 cmake_minimum_required(VERSION 3.6)
-project(nlpo-git-install NONE)
+project(fmt-6.0.0-install C CXX)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
-download_package(
-    nlpo
-    git
-    GIT https://github.com/injae/nlpo.git
-    LOCAL
-    CMAKE_ARGS ${CMAKE_ARGS})
+download_package(fmt 6.0.0   URL https://github.com/fmtlib/fmt/releases/download/6.0.0/fmt-6.0.0.zip LOCAL)
 
 # Other Options:
 # - Linux Configures:

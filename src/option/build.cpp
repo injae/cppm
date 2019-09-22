@@ -2,6 +2,7 @@
 #include <thread>
 #include <memory>
 #include <fmt/format.h>
+#include <string>
 
 #include "option/build.h"
 #include "util/algorithm.hpp"
@@ -11,18 +12,20 @@
 #include "util/system.hpp"
 
 using namespace fmt::literals;
+using namespace std::literals;
 namespace cppm::option
 {
     std::string CommandBuilder::build(Config& config)
     {
         using namespace util;
-        auto has_toolchains = [&config]() -> std::string {
+        auto has_toolchains = [&config](){
            return config.cppm_config.package.toolchains() == "" ?
-           "" : " -DCMAKE_TOOLCHAIN_FILE=\"{0}\""_format(config.cppm_config.package.toolchains());
+           ""s : " -DCMAKE_TOOLCHAIN_FILE=\"{0}\""_format(config.cppm_config.package.toolchains());
         };
 
-        auto sudo = is_install && !strcmp(compiler::what(), "msvc")? "sudo" : "";
-        if(is_install) target = "install";
+        build_option += compiler::what() != "msvc"s ? "-j{}"_format(std::thread::hardware_concurrency()) : "";
+        auto sudo = is_install && strcmp(compiler::what(), "msvc") != 0 ? "sudo" : "";
+        target = is_install ? "install" : "";
         auto target_cmd = target != "" ? "--target " + target : "";
 
         return "  cd {0} "_format(config.path.build)
@@ -33,39 +36,24 @@ namespace cppm::option
     }
     
     Build::Build() {
-        app_.add_option("Generator")
-            .abbr("G")
+        app_.add_option("Generator").abbr("G").args("{Generator}")
             .desc("cmake -G option")
-            .args("{Generator}")
             .call_back([&](){ cmd.cmake_option += " -G {}"_format(app_.get_arg()); });
-        app_.add_option("ninja")
-            .abbr("n")
-            .desc("ninja use to build this option remove build directory")
-            .call_back([&](){
-                clean = true;
-                cmd.cmake_option += " -G Ninja ";
-            });
-        app_.add_option("make")
-            .abbr("m")
+        app_.add_option("ninja").abbr("n").desc("ninja use to build this option remove build directory")
+            .call_back([&](){ clean = true; cmd.cmake_option += " -G Ninja "; });
+        app_.add_option("make").abbr("m")
             .desc("Unix make use to build this option remove build directory")
-            .call_back([&](){
-                clean = true;
-                cmd.cmake_option += " -G \"Unix Makefiles\" ";
-            });
-        app_.add_option("gcc")
-            .abbr("g")
+            .call_back([&](){ clean = true; cmd.cmake_option += " -G \"Unix Makefiles\" "; });
+        app_.add_option("gcc").abbr("g")
             .desc("g++ use to compile ")
             .call_back([&](){ cmd.cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("g++"); });
-        app_.add_option("clang")
-            .abbr("c")
+        app_.add_option("clang").abbr("c")
             .desc("clang++ use to compile ")
             .call_back([&](){ cmd.cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("clang++"); });
-        app_.add_option("release")
-            .abbr("r")
+        app_.add_option("release").abbr("r")
             .desc("compile release mode")
             .call_back([&](){ cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("RELEASE"); });
-        app_.add_option("debug")
-            .abbr("d")
+        app_.add_option("debug").abbr("d")
             .desc("compile debug mode")
             .call_back([&](){ cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("DEBUG"); });
         app_.add_option("ntc")
@@ -77,23 +65,18 @@ namespace cppm::option
         app_.add_command("install")
             .desc("cmake target install ")
             .call_back([this]() { cmd.is_install = true; });
-        app_.add_command()
+        app_.add_command().args("{cppm options} {builder options}")
             .desc("Build command")
-            .args("{cppm options} {builder options}")
             .call_back([&](){
                 config_load();
                 fs::create_directories(config_.path.build);
-                if(util::compiler::what() != "msvc"_format()) {
-                    cmd.build_option += "-j{}"_format(std::thread::hardware_concurrency());
-                }
                 if(!none_tc) {
                     cmakelist_build();
-                    fs::copy_file((std::string(std::getenv("HOME")))+"/.cppm/cmake/cppm_tool.cmake"
-                                  ,config_.path.cmake +"/cppm_tool.cmake"
-                                  ,fs::copy_option::overwrite_if_exists);
-                    fs::copy_file((std::string(std::getenv("HOME")))+"/.cppm/cmake/HunterGate.cmake"
-                                  ,config_.path.cmake +"/HunterGate.cmake"
-                                  ,fs::copy_option::overwrite_if_exists);
+                    auto home_env = std::string(std::getenv("HOME"));
+                    util::over_write_copy_file("{0}/.cppm/cmake/cppm_tool.cmake"_format(home_env)
+                                              ,"{0}/cppm_tool.cmake"_format(config_.path.cmake));
+                    util::over_write_copy_file("{0}/.cppm/cmake/HunterGate.cmake"_format(home_env)
+                                              ,"{0}/HunterGate.cmake"_format(config_.path.cmake));
                 }
                 if(clean) {
                     fs::remove_all(config_.path.build);
@@ -103,16 +86,15 @@ namespace cppm::option
                     cmd.build_option += util::accumulate(app_.args(), " ");
                     app_.args().clear();
                 }
-                //system(cmd.build(config_).c_str());
-                //system(cmd.after_option.c_str());
                 util::system::exec(cmd.build(config_).c_str(), [](auto& str){ fmt::print(str); });
-                util::system::exec(cmd.after_option.c_str(), [](auto& str){ fmt::print(str); });
+                util::system::exec(cmd.after_option.c_str(),   [](auto& str){ fmt::print(str); });
             });
     }
 
     void Build::cmakelist_build()
     {
-        std::ofstream CmakeLists(config_.path.root + "/CMakeLists.txt"); CmakeLists.is_open();
+        std::ofstream CmakeLists("{0}/CMakeLists.txt"_format(config_.path.root));
+        CmakeLists.is_open();
         CmakeLists << config_.generate();
         CmakeLists.close();
     }
@@ -121,9 +103,7 @@ namespace cppm::option
         package::Package pkg;
         pkg.name = config_.package.name;
         for(auto& lib : config_.libs.list) {
-            if(lib.install){
-                pkg.cmake.name += "{0}::{1} "_format(config_.package.name,lib.name);
-            }
+            pkg.cmake.name += lib.install ? "{0}::{1} "_format(config_.package.name,lib.name) : "";
         }
         pkg.description = config_.package.description;
         pkg.download.git.url = config_.package.git_repo;

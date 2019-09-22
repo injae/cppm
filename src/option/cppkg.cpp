@@ -10,28 +10,23 @@ using namespace fmt::literals;
 namespace cppm::option
 {
     Cppkg::Cppkg() {
-        app_.add_option("help")
-            .abbr("h")
+        app_.add_option("help").abbr("h")
             .desc("show cppm command and options")
             .call_back([&](){ app_.show_help(); });
-        app_.add_command("init")
+        app_.add_command("init").args("{option} {name}")
             .desc("init cppkg")
-            .args("{option} {name}")
             .call_back([&](){ CppkgInit().app().parse(app_); });
-        app_.add_command("build")
+        app_.add_command("build").args("{cppkg name}")
             .desc("build cppm package file")
-            .args("{cppkg name}")
             .call_back([&](){ _build(); });
         app_.add_command("update")
             .desc("update cppkg repo")
             .call_back([&](){ _update(); });
-        app_.add_command("search")
+        app_.add_command("search").args("{name}")
             .desc("search cppkg repo, default is show all")
-            .args("{name}")
             .call_back([&](){ _search(); });
-        app_.add_command("push")
+        app_.add_command("push").args("{name}")
             .desc("push cppkg in local repo")
-            .args("{name}")
             .call_back([&](){ _push(); });
     }
 
@@ -58,10 +53,7 @@ namespace cppm::option
         using namespace fmt::literals;
         auto list = package::cppkg::list();
         auto str_cut = [](const std::string str, size_t size_) {
-            if(str.size() > size_) {
-                return str.substr(0,size_-1) + "$";
-            }
-            return str;
+            return str.size() > size_ ? str.substr(0,size_-1) + "$" : str;
         };
        
         fmt::print("{:<20}{:<10}{:<13}{:<50}{:<70}\n", "Name", "Version", "Repository","Description","Use");
@@ -75,13 +67,15 @@ namespace cppm::option
                     package.parse(cpptoml::parse_file("{0}/{1}"_format(ver,"cppkg.toml")));
                     if(!arg.empty()) {
                         if(   pname.find(arg) == std::string::npos
-                           && package.description.find(arg) == std::string::npos)  {break;}
+                           && package.description.find(arg) == std::string::npos) { break; }
                     }
                     auto component = package.cmake.components != ""
                                    ? " components=\"{0}\""_format(package.cmake.components) : "";
                     auto use = "{0}={{module=\"{1}\", version=\"{2}\"{3}}}"_format
                                 (package.name, package.cmake.name, package.version, component);
-                    fmt::print("{:<20}{:<10}{:<13}{:<50}{:<70}\n", str_cut(pname, 20), std::string(vname), rname, str_cut(package.description,50), use);
+                    fmt::print("{:<20}{:<10}{:<13}{:<50}{:<70}\n"
+                               , str_cut(pname, 20), std::string(vname), rname
+                               , str_cut(package.description, 50), use);
                 }
             }
         }
