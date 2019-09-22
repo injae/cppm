@@ -37,7 +37,7 @@ namespace cppm::package
     public:
         std::string name;
         std::string description;
-        std::string version;
+        std::string version = "latest";
         Dependencies deps;
         download_ download;
         cmake_ cmake;
@@ -51,8 +51,8 @@ namespace cppm::package
         Cppkg list();
         void build(const std::string& name);
         void regist(const std::string& name);
-        std::string search(const std::string& name, const std::string& version); //return to path
-        void install(Config& config, const std::string& path); //return to path
+        std::string search(const std::string& name, const std::string& version); 
+        void install(Config& config, const std::string& path);
     }
 }
 

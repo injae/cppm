@@ -1,6 +1,6 @@
 [package]
 name    = "cppm"
-version = "1.0.7"
+version = "1.0.8"
 description = "c++ cmake maker use to toml like Cargo"
 
 [cmake]
@@ -16,6 +16,6 @@ source = ["test/.*"]
 [dependencies]
 cpptoml  = "0.4.0"
 fmt      = "5.3.0"
-nlpo     = "lastest"
+nlpo     = "git"
 Catch2   = "2.9.1"
 Boost    = {module = "Boost::filesystem", version = "1.58.0", components="system filesystem", hunter=true}

@@ -63,13 +63,13 @@ endmacro()
 
 macro(find_cppkg)
     cmake_parse_arguments(ARG "" "" "" ${ARGN})
-    include(cppkg/find/1.0.7)
+    include(cppkg/find/1.0.8)
     _find_cppkg(${ARG_UNPARSED_ARGUMENTS})
 endmacro()
 
 macro(cppm_target_define)
     cmake_parse_arguments(ARG "" "" "" ${ARGN})
-    include(cppm/target/define/1.0.5)
+    include(cppm/target/define/1.0.8)
     _cppm_target_define(${ARG_UNPARSED_ARGUMENTS})
 endmacro()
 
@@ -87,6 +87,6 @@ endmacro()
 
 macro(download_package)
     cmake_parse_arguments(ARG "" "" "" ${ARGN})
-    include(cppkg/download/1.0.7)
+    include(cppkg/download/1.0.8)
     _download_package(${ARG_UNPARSED_ARGUMENTS})
 endmacro()

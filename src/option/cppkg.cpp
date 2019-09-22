@@ -57,7 +57,7 @@ namespace cppm::option
     void Cppkg::_search() {
         using namespace fmt::literals;
         auto list = package::cppkg::list();
-        auto str_cut = [](const std::string str, int size_) {
+        auto str_cut = [](const std::string str, size_t size_) {
             if(str.size() > size_) {
                 return str.substr(0,size_-1) + "$";
             }
@@ -91,7 +91,7 @@ namespace cppm::option
                 if(!arg.empty()) { if(name.find(arg) == std::string::npos) { continue; } }
 
                 fmt::print("{:<20}{:<10}{:<13}{:<50}{:<70}\n"
-                           , str_cut(name, 20), "lastest" , "hunter", "", "https://docs.hunter.sh/en/latest/packages/pkg/{}.html#index-0"_format(name));
+                           , str_cut(name, 20), "latest" , "hunter", "", "https://docs.hunter.sh/en/latest/packages/pkg/{}.html#index-0"_format(name));
             }
         }
     }

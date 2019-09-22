@@ -2,9 +2,12 @@
 #include "config/dependency.h"
 #include "util/filesystem.h"
 #include "util/algorithm.hpp"
+#include "util/version.h"
 #include <fmt/format.h>
 #include <map>
 #include <iostream>
+#include <algorithm>
+
 
 namespace cppm::package
 {
@@ -62,7 +65,6 @@ namespace cppkg {
         using namespace fmt::literals;
         Package package;
         package.name = name;
-        package.version = "lastest";
         init(package);
     }
 
@@ -77,7 +79,7 @@ namespace cppkg {
         util::create("{0}.toml"_format(package.name));
         util::write( "{0}.toml"_format(package.name)
                    , "[package]\n" + "name = {0}\n"_format(value(package.name))
-                   + "# if you use git repo, package version is lastest\n"
+                   + "# if you use git repo, package version is latest\n"
                    + "version = {0}\n"_format(value(package.version))
                    + "description = {0}\n"_format(value(package.description))
                    + "global={0}\n"_format(package.global ? "true" : "false")
@@ -157,9 +159,24 @@ namespace cppkg {
         std::map<std::string,std::string> find_repos;
         for(auto& repo : *repos){
             auto repo_name = repo.path().filename().string();
-            auto target = "{0}/{1}/{2}/{3}"_format(cppkg_path,repo_name,name,version);
-            if(fs::exists(target)) {
-                find_repos[repo_name] = target;
+            if(version == "latest") {
+                auto versions = util::file_list("{0}/{1}/{2}"_format(cppkg_path,repo_name,name));
+                if(!versions) continue;
+                std::sort(versions->begin(),versions->end()
+                         ,[](auto a, auto b){
+                              auto av = Version(a.path().filename().string());
+                              auto bv = Version(b.path().filename().string());
+                              fmt::print(av.str());
+                              fmt::print(bv.str());
+                              return av > bv;
+                          });
+                find_repos[repo_name] = versions->begin()->path().string();
+            }
+            else {
+                auto target = "{0}/{1}/{2}/{3}"_format(cppkg_path,repo_name,name,version);
+                if(fs::exists(target)) {
+                    find_repos[repo_name] = target;
+                }
             }
         }
         if(find_repos.empty()) {
@@ -173,9 +190,8 @@ namespace cppkg {
 
     void install(Config& config, const std::string& path) {
         using namespace fmt::literals;
-        //auto value = [](auto str){ return "\"{0}\""_format(str);};
         Package package;
-        package.parse(cpptoml::parse_file("{0}{1}/{2}"_format(path,package.version,"cppkg.toml")));
+        package.parse(cpptoml::parse_file("{0}/{1}"_format(path,"cppkg.toml")));
         fmt::print("{0}\n",package.cmake.find_lib);
         if(package.cmake.find_lib != "") {
             fmt::print("Install {0} to {1}/Modules/\n",package.cmake.find_lib,config.path.cmake);
@@ -185,8 +201,6 @@ namespace cppkg {
             fs::copy("{0}/{1}"_format(path,package.cmake.find_lib)
                     ,"{0}/Modules/{1}"_format(config.path.cmake,package.cmake.find_lib));
         }
-        //fs::copy("{0}/{1}.cmake.in"_format(path,package.name)
-        //        ,"{0}/{1}.cmake.in"_format(config.path.thirdparty,package.name));
         util::recursive_copy(path,"{0}/{1}/{2}"_format(
                              config.path.thirdparty,package.name,package.version));
         fmt::print("Install Cppkg {0}/{1}\n",package.name,package.version);
