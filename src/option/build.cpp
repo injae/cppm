@@ -23,7 +23,7 @@ namespace cppm::option
            ""s : " -DCMAKE_TOOLCHAIN_FILE=\"{0}\""_format(config.cppm_config.package.toolchains());
         };
 
-        build_option += compiler::what() != "msvc"s ? "-j{}"_format(std::thread::hardware_concurrency()) : "";
+        build_option += (compiler::what() != "msvc"s) ? "-j{}"_format(std::thread::hardware_concurrency()) : "";
         auto sudo = is_install && strcmp(compiler::what(), "msvc") != 0 ? "sudo" : "";
         target = is_install ? "install" : "";
         auto target_cmd = target != "" ? "--target " + target : "";
@@ -62,6 +62,11 @@ namespace cppm::option
         app_.add_option("export")
             .desc("export cppkg")
             .call_back([&]() { config_load(); export_cppkg(); });
+        app_.add_option("local")
+            .desc("install local")
+            .call_back([&]() {
+                cmd.cmake_option += "-DCMAKE_INSTALL_PREFIX={}/.cppm/local"_format(std::getenv("HOME"));
+            });
         app_.add_command("install")
             .desc("cmake target install ")
             .call_back([this]() { cmd.is_install = true; });
