@@ -2,7 +2,18 @@ cmake_minimum_required(VERSION 3.6)
 project(fmt-6.0.0-install C CXX)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
-download_package(fmt 6.0.0   URL https://github.com/fmtlib/fmt/releases/download/6.0.0/fmt-6.0.0.zip LOCAL)
+download_package(fmt
+    6.0.0
+    URL
+    https://github.com/fmtlib/fmt/releases/download/6.0.0/fmt-6.0.0.zip
+    LOCAL
+    CMAKE_ARGS
+        -DFMT_DOC=OFF
+        -DFMT_TEST=OFF
+        -DFMT_FUZZ=OFF
+        -DFMT_USE_CPP14=OFF
+        ${CMAKE_ARGS}
+    )
 
 # Other Options:
 # - Linux Configures:
