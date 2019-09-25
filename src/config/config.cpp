@@ -2,6 +2,7 @@
 #include "util/cmake.h"
 #include "config/cppm_tool.h"
 #include "package/package.h"
+#include "util/version.h"
 #include "util/filesystem.h"
 #include <fmt/format.h>
 
@@ -20,9 +21,21 @@ namespace cppm
         using namespace package;
         using namespace fmt::literals;
         std::vector<Dependency> not_installed_dep;
+        fs::create_directories(path.thirdparty);
         for(auto [name, dep] : dependencies.list) {
             if(dep.hunter) { continue; }
-            if(!fs::exists("{0}/{1}/{2}/{1}.cmake.in"_format(path.thirdparty,name,dep.version))) {
+            std::string tpath = "";
+            if(!fs::exists("{0}/{1}"_format(path.thirdparty,name))){
+                not_installed_dep.push_back(dep);
+                continue;
+            }
+            if(dep.version == "latest") {
+                auto vpath = Version::get_latest_version_folder("{0}/{1}"_format(path.thirdparty,name));
+                if(!vpath) { fmt::print(stderr, "can't find {}/{}",name, dep.version); exit(1); }
+                tpath = *vpath;
+            }
+            else { tpath = "{0}/{1}/{2}"_format(path.thirdparty,name,dep.version); }
+            if(!fs::exists("{0}/{1}.cmake.in"_format(tpath,name))) {
                 not_installed_dep.push_back(dep);
             }
         }
@@ -32,7 +45,17 @@ namespace cppm
         }
         for(auto& [name, dep] : dependencies.list) {
             if(dep.module == "" && !dep.hunter) {
-                auto table = cpptoml::parse_file("{0}/{1}/{2}/cppkg.toml"_format(path.thirdparty,name,dep.version));
+                std::string tpath = "";
+                if(dep.version == "latest") {
+                    auto vpath = Version::get_latest_version_folder("{0}/{1}"_format(path.thirdparty,name));
+                    if(!vpath) { fmt::print(stderr, "can't find {}/{}",name, dep.version); exit(1); }
+                    tpath = *vpath;
+                }
+                else {
+                    tpath = "{0}/{1}/{2}"_format(path.thirdparty,name,dep.version);
+                    if(!fs::exists(tpath)) { fmt::print(stderr, "can't find {}/{}",name, dep.version); exit(1); }
+                }
+                auto table = cpptoml::parse_file("{}/cppkg.toml"_format(tpath));
                 package::Package pkg;
                 pkg.parse(table);
                 dep.module = pkg.cmake.name;

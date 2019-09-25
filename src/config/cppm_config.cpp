@@ -6,8 +6,7 @@
 namespace cppm
 {
     CppmConfig CppmConfig::load() {
-        root_path = tool::cppm_root();
-        util::create(root_path);
+        util::create(tool::cppm_root());
         util::create(root_path + "cmake/");
         util::create(root_path + "local/");
         util::create(root_path + "repo/");

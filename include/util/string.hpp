@@ -5,7 +5,7 @@
 
 namespace cppm::util::str {
     inline std::string quot(const std::string& str) { return "\""+str+"\""; }
-    std::string operator"" _quot(const char* str, std::size_t len) {  return quot({str, len}); }
+    inline std::string operator"" _quot(const char* str, std::size_t len) {  return quot({str, len}); }
 }
 
 

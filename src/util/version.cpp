@@ -1,7 +1,8 @@
 #include"util/version.h"
-#include<cstdio>
-#include<iostream>
+#include "util/filesystem.h"
 
+#include <cstdio>
+#include <iostream>
 #include <fmt/format.h>
 
 using namespace fmt::literals;
@@ -80,5 +81,17 @@ namespace cppm
         return (stream << ver.major << '.'
                        << ver.minor << '.'
                        << ver.revision);
+    }
+
+    std::optional<std::string> Version::get_latest_version_folder(const std::string& path) {
+            auto versions = util::file_list(path);
+            if(!versions) return std::nullopt;
+            std::sort(versions->begin(),versions->end()
+                        ,[](auto a, auto b){
+                            auto av = Version(a.path().filename().string());
+                            auto bv = Version(b.path().filename().string());
+                            return av > bv;
+                        });
+             return versions->begin()->path().string();
     }
 }

@@ -3,11 +3,13 @@
 #include "option/cppkg.h"
 #include "config/path.h"
 #include "config/cppm_tool.h"
+#include "util/string.hpp"
 #include <iostream>
 #include <cstdlib>
 #include <fmt/format.h>
 
 using namespace fmt::literals;
+using namespace cppm::util::str;
 
 namespace cppm::option
 {
@@ -30,12 +32,11 @@ namespace cppm::option
 
     void Init::make_bin() {
         auto name = app_.args().front();
-        auto value = [&](const std::string& str){ return "\"{}\""_format(str);};
         auto gen = make_project();
 
         gen += "[[bin]]\n"
-            +  "   name = {}\n"_format(value(name))
-            +  "   source = [{}]\n"_format(value("src/.*"))
+            +  "   name = {}\n"_format(quot(name))
+            +  "   source = [{}]\n"_format("src/.*"_quot)
             ;
 
         auto project = Path::make((fs::current_path()/name).string());
@@ -52,13 +53,12 @@ namespace cppm::option
 
     void Init::make_lib() {
         auto name = app_.args().front();
-        auto value = [&](const std::string& str){ return "\"{}\""_format(str);};
         auto gen = make_project();
 
         gen += "[[lib]]\n"
-            +  "   name = {}\n"_format(value(name))
-            +  "   type = {}\n"_format(value("shared"))
-            +  "   source = [{}]\n"_format(value("src/.*"))
+            +  "   name = {}\n"_format(quot(name))
+            +  "   type = {}\n"_format("shared"_quot)
+            +  "   source = [{}]\n"_format("src/.*"_quot)
             ;
 
         auto project = Path::make((fs::current_path()/name).string());
@@ -90,11 +90,10 @@ namespace cppm::option
         auto cppm_path = tool::cppm_root();
         fs::copy(cppm_path + "cmake/cppm_tool.cmake", project.cmake+"/cppm_tool.cmake");
 
-        auto value = [&](const std::string& str){ return "\"{}\""_format(str);};
         return "[package]\n"
-             + "   name = {}\n"_format(value(project_name))
-             + "   version = {}\n"_format(value("0.0.1"))
-             + "   description = {}\n"_format(value(""))
+             + "   name = {}\n"_format(quot(project_name))
+             + "   version = {}\n"_format("0.0.1"_quot)
+             + "   description = {}\n"_format(""_quot)
              + "\n"
              ;
     }

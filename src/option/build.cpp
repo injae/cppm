@@ -31,7 +31,8 @@ namespace cppm::option
         return "  cd {0} "_format(config.path.build)
             +  "&& cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
             +  has_toolchains()
-            +  " {0} {1}"_format(config.cmake.option, cmake_option) + " .. 2>&1"
+            +  " {0} {1}"_format(config.cmake.option, cmake_option) + " .. 2>&1 "
+            +  "&&  cd {0} "_format(config.path.build)
             +  "&& {0} cmake --build . {1} -- {2} 2>&1"_format(sudo, target_cmd, build_option);
     }
     
@@ -91,8 +92,14 @@ namespace cppm::option
                     cmd.build_option += util::accumulate(app_.args(), " ");
                     app_.args().clear();
                 }
-                util::system::exec(cmd.build(config_).c_str(), [](auto& str){ fmt::print(str); });
-                util::system::exec(cmd.after_option.c_str(),   [](auto& str){ fmt::print(str); });
+                auto cmd1 = cmd.build(config_);
+                auto cmd2 = cmd.after_option;
+                fmt::print(cmd1);
+                fmt::print(cmd2);
+                system(cmd1.c_str());
+                system(cmd2.c_str());
+                //util::system::exec(cmd.build(config_).c_str(), [](auto& str){ fmt::print(str); });
+                //util::system::exec(cmd.after_option.c_str(),   [](auto& str){ fmt::print(str); });
             });
     }
 
