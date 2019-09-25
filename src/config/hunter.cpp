@@ -8,8 +8,8 @@ using namespace fmt::literals;
 namespace cppm
 {
     void Hunter::parse(table_ptr table) {
-        auto d_url = "https://github.com/ruslo/hunter/archive/v0.23.149.tar.gz";
-        auto d_sha1 = "c9f170bd697ac6117e68137a2cffdeca679db67e";
+        auto d_url = "https://github.com/ruslo/hunter/archive/v0.23.214.tar.gz";
+        auto d_sha1 = "e14bc153a7f16d6a5eeec845fb0283c8fad8c358";
         if(auto hunter = table->get_table("hunter")) {
             url = hunter->get_as<std::string>("url").value_or(d_url);
             sha1 = hunter->get_as<std::string>("sha1").value_or(d_sha1);
