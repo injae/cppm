@@ -163,19 +163,14 @@ namespace cppkg {
         for(auto& repo : *repos){
             auto repo_name = repo.path().filename().string();
             if(version == "latest") {
-                auto versions = util::file_list("{0}/{1}/{2}"_format(cppkg_path,repo_name,name));
-                if(!versions) continue;
-                std::sort(versions->begin(),versions->end()
-                         ,[](auto a, auto b){
-                              auto av = Version(a.path().filename().string());
-                              auto bv = Version(b.path().filename().string());
-                              return av > bv;
-                          });
-                find_repos[repo_name] = versions->begin()->path().string();
+                auto target = "{0}/{1}/{2}"_format(cppkg_path,repo_name,name);
+                if(!fs::exists(target)) { continue; }
+                if(auto latest = Version::get_latest_version_folder(target)) {
+                    find_repos[repo_name] = *latest;
+                }
             }
             else {
                 auto target = "{0}/{1}/{2}/{3}"_format(cppkg_path, repo_name, name, version);
-                fmt::print(target);
                 if(fs::exists(target)) { find_repos[repo_name] = target; }
             }
         }

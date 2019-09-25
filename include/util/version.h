@@ -1,9 +1,11 @@
 #ifndef __CPPM_VERSION_H__
 #define __CPPM_VERSION_H__
 
-#include<string>
-#include<sstream>
-#include<regex>
+#include <string>
+#include <sstream>
+#include <regex>
+#include <optional>
+
 
 namespace cppm
 {
@@ -20,6 +22,7 @@ namespace cppm
         std::string str();
         operator std::string() const;
         friend std::ostream& operator << (std::ostream& stream, const Version& other);
+        static std::optional<std::string> get_latest_version_folder(const std::string& path);
 
         bool git = false;
         bool latest = false;

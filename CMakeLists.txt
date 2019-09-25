@@ -4,8 +4,8 @@ include(cmake/cppm_tool.cmake)
 cppm_project()
 include(HunterGate)
 HunterGate(
-   URL "https://github.com/ruslo/hunter/archive/v0.23.149.tar.gz"
-   SHA1 "c9f170bd697ac6117e68137a2cffdeca679db67e"
+   URL "https://github.com/ruslo/hunter/archive/v0.23.214.tar.gz"
+   SHA1 "e14bc153a7f16d6a5eeec845fb0283c8fad8c358"
 )
 project(cppm VERSION 1.0.8 LANGUAGES C CXX)
 cppm_setting()
@@ -38,9 +38,11 @@ SOURCES
 	src/config/path.cpp
 	src/config/builder.cpp
 	src/config/cppm_package.cpp
+	src/config.toml
 	src/option/install.cpp
 	src/option/cppm_config.cpp
 	src/option/init.cpp
+	src/option/config.toml
 	src/option/cppm.cpp
 	src/option/cppkg_install.cpp
 	src/option/build.cpp
@@ -81,7 +83,6 @@ SOURCES
 	include/option/cppm_config.h
 	include/option/base_option.h
 	include/option/build.h
-	include/util/.#system.hpp
 	include/util/algorithm.hpp
 	include/util/hash.hpp
 	include/util/string.hpp
