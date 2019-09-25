@@ -22,7 +22,6 @@ namespace cppm::option
     public:
         Build();
     private:
-        void cmakelist_build();
         void export_cppkg();
         CommandBuilder cmd;
         bool none_tc = false;

@@ -5,6 +5,7 @@
 #include <string>
 
 #include "option/build.h"
+#include "config/cppm_tool.h"
 #include "util/algorithm.hpp"
 #include "util/command.h"
 #include "util/filesystem.h"
@@ -22,7 +23,6 @@ namespace cppm::option
            return config.cppm_config.package.toolchains() == "" ?
            ""s : " -DCMAKE_TOOLCHAIN_FILE=\"{0}\""_format(config.cppm_config.package.toolchains());
         };
-
         build_option += (compiler::what() != "msvc"s) ? "-j{}"_format(std::thread::hardware_concurrency()) : "";
         auto sudo = is_install && strcmp(compiler::what(), "msvc") != 0 ? "sudo" : "";
         target = is_install ? "install" : "";
@@ -65,7 +65,7 @@ namespace cppm::option
         app_.add_option("local")
             .desc("install local")
             .call_back([&]() {
-                cmd.cmake_option += "-DCMAKE_INSTALL_PREFIX={}/.cppm/local"_format(std::getenv("HOME"));
+                cmd.cmake_option += "-DCMAKE_INSTALL_PREFIX={}local"_format(tool::cppm_root());
             });
         app_.add_command("install")
             .desc("cmake target install ")
@@ -76,11 +76,11 @@ namespace cppm::option
                 config_load();
                 fs::create_directories(config_.path.build);
                 if(!none_tc) {
-                    cmakelist_build();
-                    auto home_env = std::string(std::getenv("HOME"));
-                    util::over_write_copy_file("{0}/.cppm/cmake/cppm_tool.cmake"_format(home_env)
+                    util::write_file("{0}/CMakeLists.txt"_format(config_.path.root), config_.generate());
+                    auto cppm_root = tool::cppm_root(); 
+                    util::over_write_copy_file("{0}cmake/cppm_tool.cmake"_format(cppm_root)
                                               ,"{0}/cppm_tool.cmake"_format(config_.path.cmake));
-                    util::over_write_copy_file("{0}/.cppm/cmake/HunterGate.cmake"_format(home_env)
+                    util::over_write_copy_file("{0}cmake/HunterGate.cmake"_format(cppm_root)
                                               ,"{0}/HunterGate.cmake"_format(config_.path.cmake));
                 }
                 if(clean) {
@@ -94,14 +94,6 @@ namespace cppm::option
                 util::system::exec(cmd.build(config_).c_str(), [](auto& str){ fmt::print(str); });
                 util::system::exec(cmd.after_option.c_str(),   [](auto& str){ fmt::print(str); });
             });
-    }
-
-    void Build::cmakelist_build()
-    {
-        std::ofstream CmakeLists("{0}/CMakeLists.txt"_format(config_.path.root));
-        CmakeLists.is_open();
-        CmakeLists << config_.generate();
-        CmakeLists.close();
     }
 
     void Build::export_cppkg() {

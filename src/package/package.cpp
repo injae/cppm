@@ -1,5 +1,6 @@
 #include "package/package.h"
 #include "config/dependency.h"
+#include "config/cppm_tool.h"
 #include "util/filesystem.h"
 #include "util/algorithm.hpp"
 #include "util/version.h"
@@ -78,7 +79,8 @@ namespace cppkg {
         }
         util::create("{0}.toml"_format(package.name));
         util::write( "{0}.toml"_format(package.name)
-                   , "[package]\n" + "name = {0}\n"_format(value(package.name))
+                   , "[package]\n"
+                   + "name = {0}\n"_format(value(package.name))
                    + "# if you use git repo, package version is git\n"
                    + "version = {0}\n"_format(value(package.version))
                    + "description = {0}\n"_format(value(package.description))
@@ -121,7 +123,7 @@ namespace cppkg {
         using namespace fmt::literals;
         Package package;
         package.parse(cpptoml::parse_file("{0}/cppkg.toml"_format(name)));
-        auto local_path = "{0}/.cppm/repo/local"_format(getenv("HOME"));
+        auto local_path = "{0}repo/local"_format(tool::cppm_root());
         auto pack_path = "{0}/{1}/{2}"_format(local_path,package.name,package.version);
         if(!fs::exists(local_path)) fs::create_directories(pack_path);
         if(fs::exists(pack_path)) fs::remove_all(pack_path);
@@ -131,7 +133,7 @@ namespace cppkg {
 
     Cppkg list() {
         using namespace fmt::literals;
-        auto root_path = "{0}/.cppm/repo"_format(getenv("HOME"));
+        auto root_path = "{0}repo"_format(tool::cppm_root());
         Cppkg cppkg;
         auto repos = *util::file_list(root_path);
         for(auto repo : repos) {
@@ -153,7 +155,7 @@ namespace cppkg {
 
     std::string search(const std::string& name, const std::string& version) {
         using namespace fmt::literals;
-        auto cppkg_path = "{0}/.cppm/repo"_format(getenv("HOME"));
+        auto cppkg_path = "{0}repo"_format(tool::cppm_root());
         auto repos = util::file_list(cppkg_path);
         if(!repos) { fmt::print(stderr, "can't find cppkg repos"); exit(1);}
 
@@ -167,17 +169,14 @@ namespace cppkg {
                          ,[](auto a, auto b){
                               auto av = Version(a.path().filename().string());
                               auto bv = Version(b.path().filename().string());
-                              fmt::print(av.str());
-                              fmt::print(bv.str());
                               return av > bv;
                           });
                 find_repos[repo_name] = versions->begin()->path().string();
             }
             else {
-                auto target = "{0}/{1}/{2}/{3}"_format(cppkg_path,repo_name,name,version);
-                if(fs::exists(target)) {
-                    find_repos[repo_name] = target;
-                }
+                auto target = "{0}/{1}/{2}/{3}"_format(cppkg_path, repo_name, name, version);
+                fmt::print(target);
+                if(fs::exists(target)) { find_repos[repo_name] = target; }
             }
         }
         if(find_repos.empty()) {

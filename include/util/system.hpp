@@ -2,6 +2,8 @@
 #define __CPPM_UTIL_SYSTEM_HPP__
 
 #include "util/hash.hpp"
+#include <fmt/format.h>
+
 
 namespace cppm::util::system
 {

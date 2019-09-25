@@ -4,7 +4,7 @@
 #include <fmt/format.h>
 #include <string>
 
-namespace  cppm::util
+namespace cppm::util
 {
     using namespace fmt::literals;
     class Command

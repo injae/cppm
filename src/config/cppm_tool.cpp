@@ -9,6 +9,7 @@ using namespace fmt::literals;
 
 namespace cppm::tool
 {
+    std::string cppm_root() { return "{}/.cppm/"_format(std::getenv("HOME")); }
     std::string target_define(Config& config) {
         std::string gen;
         for(auto& lib : config.libs.list) {

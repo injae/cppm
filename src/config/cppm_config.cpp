@@ -1,12 +1,12 @@
 #include "config/cppm_config.h"
+#include "config/cppm_tool.h"
 #include "util/filesystem.h"
 #include <iostream>
 
 namespace cppm
 {
     CppmConfig CppmConfig::load() {
-        auto home = std::string(std::getenv("HOME"));
-        root_path = home + "/.cppm/";
+        root_path = tool::cppm_root();
         util::create(root_path);
         util::create(root_path + "cmake/");
         util::create(root_path + "local/");
