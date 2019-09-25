@@ -3,6 +3,7 @@
 #include "util/version.h"
 #include "util/filesystem.h"
 #include "util/algorithm.hpp"
+#include "config/cppm_tool.h"
 #include <iostream>
 
 namespace cppm
@@ -15,16 +16,14 @@ namespace cppm
         }
     }
     std::string CppmPackage::config_path() {
-        auto home = std::string(std::getenv("HOME"));
-        return home +"/.cppm/config.toml";
+        return  tool::cppm_root() + "config.toml";
     }
     std::string CppmPackage::toolchains() {
         return util::accumulate(tool_chains, ",").erase(0,1);
     }
 
     void CppmPackage::add_toolchain(const std::string& toolchain) {
-        auto home = std::string(std::getenv("HOME"));
-        auto config_path = home +"/.cppm/config.toml";
+        auto config_path = tool::cppm_root() + "config.toml";
         util::create(config_path);
         auto table = cpptoml::parse_file(config_path);
         auto config = table->get_table("config");
@@ -39,8 +38,7 @@ namespace cppm
         file.close();
     }
     void CppmPackage::add_cppm_path(const std::string& path) {
-        auto home = std::string(std::getenv("HOME"));
-        auto config_path = home +"/.cppm/config.toml";
+        auto config_path = tool::cppm_root() +"config.toml";
         util::create(config_path);
         auto table = cpptoml::parse_file(config_path);
         auto config = table->get_table("config");

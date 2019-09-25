@@ -78,6 +78,13 @@ namespace cppm::util
         std::fstream(path, std::ios::out).close();
     }
 
+    void write_file(const std::string& path, const std::string& data) {
+         std::ofstream file(path);
+         file.is_open();
+         file << data;
+         file.close();
+    }
+
     std::string current_dir() {
         char buff[FILENAME_MAX];
         GetCurrentDir( buff, FILENAME_MAX );

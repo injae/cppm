@@ -2,6 +2,7 @@
 #include "util/filesystem.h"
 #include "option/cppkg.h"
 #include "config/path.h"
+#include "config/cppm_tool.h"
 #include <iostream>
 #include <cstdlib>
 #include <fmt/format.h>
@@ -86,7 +87,7 @@ namespace cppm::option
         fs::create_directory(project.cmake);
         fs::create_directory(project.cmake + "/Modules");
 
-        auto cppm_path = std::string(std::getenv("HOME")) + "/.cppm/";
+        auto cppm_path = tool::cppm_root();
         fs::copy(cppm_path + "cmake/cppm_tool.cmake", project.cmake+"/cppm_tool.cmake");
 
         auto value = [&](const std::string& str){ return "\"{}\""_format(str);};

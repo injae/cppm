@@ -1,7 +1,9 @@
 #include "option/cppkg.h"
+#include "config/cppm_tool.h"
 #include "package/package.h"
 #include "option/cppkg_init.h"
 #include "util/filesystem.h"
+#include "option/cppkg_install.h"
 
 #include <fmt/format.h>
 
@@ -28,11 +30,15 @@ namespace cppm::option
         app_.add_command("push").args("{name}")
             .desc("push cppkg in local repo")
             .call_back([&](){ _push(); });
+        app_.add_command("install").args("{name}")
+            .desc("install cppkg package")
+            .call_back([&](){ CppkgInstall().app().parse(app_); });
     }
+
 
     void Cppkg::_update() {
         using namespace fmt::literals;
-        auto cppkg_path = "{0}/.cppm/repo/cppkg"_format(getenv("HOME"));
+        auto cppkg_path = "{0}repo/cppkg"_format(tool::cppm_root());
         auto command = "cd {0} && git pull"_format(cppkg_path);
         system(command.c_str());
     }

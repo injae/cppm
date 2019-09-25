@@ -5,8 +5,6 @@
 #include <regex>
 #include <string>
 
-//(.*)+@(\^?)(\d(?:.\d){2,3}|latest)+(?:\$(stable|nightly|(.*)+(?:\@(.*))))?
-
 using namespace fmt::literals;
 namespace cppm
 {
