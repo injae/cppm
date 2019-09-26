@@ -15,6 +15,7 @@ namespace cppm
         bool none_module;
         bool hunter;
         std::string link_type;
+        std::string type;
         std::string version;
         std::string components;
         std::string load_path;
