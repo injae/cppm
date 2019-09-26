@@ -17,5 +17,4 @@ source = ["test/.*"]
 cpptoml  = "0.4.0"
 fmt      = "6.0.0"
 nlpo     = "git"
-Catch2   = "2.9.1"
-Boost    = {module = "Boost::filesystem", version = "1.58.0", components="system filesystem", hunter=true}
+Boost    = {module = "Boost::filesystem", components="system filesystem", hunter=true}
