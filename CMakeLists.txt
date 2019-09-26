@@ -38,11 +38,9 @@ SOURCES
 	src/config/path.cpp
 	src/config/builder.cpp
 	src/config/cppm_package.cpp
-	src/config.toml
 	src/option/install.cpp
 	src/option/cppm_config.cpp
 	src/option/init.cpp
-	src/option/config.toml
 	src/option/cppm.cpp
 	src/option/cppkg_install.cpp
 	src/option/build.cpp
