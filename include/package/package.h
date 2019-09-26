@@ -38,6 +38,7 @@ namespace cppm::package
         std::string name;
         std::string description;
         std::string version = "latest";
+        std::string type = "lib";
         Dependencies deps;
         download_ download;
         cmake_ cmake;

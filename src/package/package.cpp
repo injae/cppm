@@ -16,6 +16,7 @@ namespace cppm::package
         if(auto package = table->get_table("package")) {
             name    = package->get_as<std::string>("name").value_or("");
             version = package->get_as<std::string>("version").value_or("");
+            type    = package->get_as<std::string>("type").value_or("lib");
             description = package->get_as<std::string>("description").value_or("");
             global  = package->get_as<bool>("global").value_or(false);
 
