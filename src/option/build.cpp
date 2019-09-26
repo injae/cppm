@@ -94,8 +94,8 @@ namespace cppm::option
                 }
                 auto cmd1 = cmd.build(config_);
                 auto cmd2 = cmd.after_option;
-                fmt::print(cmd1);
-                fmt::print(cmd2);
+                //fmt::print(cmd1);
+                //fmt::print(cmd2);
                 system(cmd1.c_str());
                 system(cmd2.c_str());
                 //util::system::exec(cmd.build(config_).c_str(), [](auto& str){ fmt::print(str); });
