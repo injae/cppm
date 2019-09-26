@@ -51,6 +51,7 @@ namespace cppm::tool
             std::vector<std::string> pub_deps, pri_deps, int_deps;
             for(const auto& dep : target->deps) {
                 auto g_dep = config.dependencies.list[dep];
+                //if(g_dep.type == "bin") continue;
                      if(g_dep.link_type == "public")    pub_deps.push_back(g_dep.module);
                 else if(g_dep.link_type == "private")   pri_deps.push_back(g_dep.module);
                 else if(g_dep.link_type == "interface") int_deps.push_back(g_dep.module);
