@@ -3,8 +3,9 @@
 #include "package/package.h"
 #include "option/cppkg_init.h"
 #include "util/filesystem.h"
-#include "option/cppkg_install.h"
 #include "util/string.hpp"
+#include "option/cppkg_install.h"
+#include "option/cppkg_search.h"
 
 #include <fmt/format.h>
 
@@ -27,8 +28,8 @@ namespace cppm::option
             .desc("update cppkg repo")
             .call_back([&](){ _update(); });
         app_.add_command("search").args("{name}")
-            .desc("search cppkg repo, default is show all")
-            .call_back([&](){ _search(); });
+            .desc("search cppkg repo, default is only cppkg")
+            .call_back([&](){ CppkgSearch().app().parse(app_); });
         app_.add_command("push").args("{name}")
             .desc("push cppkg in local repo")
             .call_back([&](){ _push(); });
@@ -57,50 +58,4 @@ namespace cppm::option
         package::cppkg::regist(app_.get_arg());
     }
 
-    void Cppkg::_search() {
-        using namespace fmt::literals;
-        auto list = package::cppkg::list();
-        auto str_cut = [](const std::string str, size_t size_) {
-            return str.size() > size_ ? str.substr(0,size_-1) + "$" : str;
-        };
-       
-        fmt::print("{:<20}{:<10}{:<13}{:<50}{:<70}\n", "Name", "Version", "Repository","Description","Use");
-        fmt::print("{:=<20}{:=<10}{:=<13}{:=<50}{:=<70}\n", "=", "=", "=","=","=");
-        std::string arg;
-        if(!app_.args().empty()) { arg = app_.get_arg(); }
-        for(auto& [rname, repo] : list.repos) {
-            for(auto& [pname, pkg] : repo.pkgs) {
-                for(auto& [vname, ver] : pkg.versions) {
-                    package::Package package;
-                    package.parse(cpptoml::parse_file("{0}/{1}"_format(ver,"cppkg.toml")));
-                    if(!arg.empty()) {
-                        if(   pname.find(arg) == std::string::npos
-                           && package.description.find(arg) == std::string::npos) { break; }
-                    }
-                    auto component = package.cmake.components != ""
-                                   ? " components=\"{0}\""_format(package.cmake.components) : "";
-                    std::string use = "";
-                    if(rname == "cppkg" && component == "") {
-                        use = "{0}={1}"_format(package.name, quot(package.version));
-                    }
-                    else {
-                        use = "{0}={{module=\"{1}\", version=\"{2}\"{3}}}"_format
-                                    (package.name, package.cmake.name, package.version, component);
-                    }
-                    fmt::print("{:<20}{:<10}{:<13}{:<50}{:<70}\n"
-                               , str_cut(pname, 20), std::string(vname), rname
-                               , str_cut(package.description, 50), use);
-                }
-            }
-        }
-        if(auto list = util::file_list(Hunter::package_path())) {
-            for(auto pkg : *list) {
-                auto name = pkg.path().filename().string();
-                if(!arg.empty()) { if(name.find(arg) == std::string::npos) { continue; } }
-
-                fmt::print("{:<20}{:<10}{:<13}{:<50}{:<70}\n"
-                           , str_cut(name, 20), "latest" , "hunter", "", "https://docs.hunter.sh/en/latest/packages/pkg/{}.html#index-0"_format(name));
-            }
-        }
-    }
 }

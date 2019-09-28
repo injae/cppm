@@ -46,6 +46,7 @@ SOURCES
 	src/option/cppkg.cpp
 	src/option/add.cpp
 	src/option/cppkg_init.cpp
+	src/option/cppkg_search.cpp
 	src/option/base_option.cpp
 	src/util/system.cpp
 	src/util/algorithm.cpp
@@ -80,6 +81,7 @@ SOURCES
 	include/option/cppm_config.h
 	include/option/base_option.h
 	include/option/build.h
+	include/option/cppkg_search.h
 	include/util/algorithm.hpp
 	include/util/hash.hpp
 	include/util/string.hpp

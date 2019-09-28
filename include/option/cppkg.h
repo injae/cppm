@@ -11,7 +11,6 @@ namespace cppm::option
     public:
         Cppkg();
     private:
-        void _search();
         void _update();
         void _build();
         void _push();
