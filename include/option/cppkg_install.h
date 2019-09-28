@@ -1,5 +1,5 @@
-#ifndef __CPPM_OPSTION_CPPKG_INSTALL_H__
-#define __CPPM_OPSTION_CPPKG_INSTALL_H__
+#ifndef __CPPM_OPTION_CPPKG_INSTALL_H__
+#define __CPPM_OPTION_CPPKG_INSTALL_H__
 
 #include "option/base_option.h"
 
