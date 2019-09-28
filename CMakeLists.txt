@@ -67,7 +67,6 @@ SOURCES
 	include/config/base_target.h
 	include/config/cppm_config.h
 	include/config/path.h
-	include/config/.#dependency.h
 	include/config/lib.h
 	include/config/cppm_tool.h
 	include/cppm_version.h
