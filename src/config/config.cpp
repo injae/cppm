@@ -25,6 +25,13 @@ namespace cppm
         for(auto [name, dep] : dependencies.list) {
             if(dep.hunter) { continue; }
             std::string tpath = "";
+            if(dep.load_path != "") {
+                if(!fs::exists("{}/{}"_format(path.root, dep.load_path))) {
+                    fmt::print(stderr, "can't find load-path library, {}", dep.load_path);
+                    exit(1);
+                }
+                continue;
+            }
             if(!fs::exists("{0}/{1}"_format(path.thirdparty,name))){
                 not_installed_dep.push_back(dep);
                 continue;
@@ -59,6 +66,7 @@ namespace cppm
                 package::Package pkg;
                 pkg.parse(table);
                 dep.module = pkg.cmake.name;
+                dep.version = pkg.version;
                 dep.components = pkg.cmake.components;
             }
         }
