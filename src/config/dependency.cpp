@@ -19,7 +19,9 @@ namespace cppm
                 dependency.link_type   = dep->get_as<std::string>("lnk_type").value_or("public");
                 dependency.none_module = dep->get_as<bool>("no_module").value_or(false);
                 dependency.hunter      = dep->get_as<bool>("hunter").value_or(false);
-                if(!dep->get_as<std::string>("module") && dependency.hunter) std::cerr << "need module\n";
+                if(!dep->get_as<std::string>("module") && dependency.hunter) {
+                    std::cerr << "need module\n"; exit(1);
+                }
                 dependency.module      = *dep->get_as<std::string>("module");
                 dependency.version     = dep->get_as<std::string>("version").value_or("latest");
                 dependency.components  = dep->get_as<std::string>("components").value_or("");
@@ -68,9 +70,9 @@ namespace cppm
                 gen += "add_subdirectory({})\n"_format(dep.load_path);
                 continue;
             }
-            auto components = dep.components =="" ? "" : "COMPONENTS " + dep.components;
-            auto hunter = dep.hunter ? "HUNTER" : "";
-            gen += "find_cppkg({0} {1} {2} {3})\n"_format(name,dep.version,components, hunter);
+            auto components = dep.components =="" ? "" : " COMPONENTS " + dep.components;
+            auto hunter = dep.hunter ? " HUNTER" : "";
+            gen += "find_cppkg({0} {1}{2}{3})\n"_format(name,dep.version,components, hunter);
         }
         return gen;
     }

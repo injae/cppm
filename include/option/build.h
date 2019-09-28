@@ -15,6 +15,7 @@ namespace cppm::option
         std::string after_option = "";
         std::string target = "";
         bool is_install = false;
+        bool is_install_local = true;
     };
     
     class Build : public base_option

@@ -16,9 +16,9 @@ cppm_compiler_option(DEFAULT)
 
 include(cmake/cppm_install.cmake)
 find_cppkg(Boost latest COMPONENTS system filesystem HUNTER)
-find_cppkg(cpptoml 0.4.0  )
-find_cppkg(fmt 6.0.0  )
-find_cppkg(nlpo git  )
+find_cppkg(cpptoml 0.4.0)
+find_cppkg(fmt 6.0.0)
+find_cppkg(nlpo git)
 
 cppm_target_define(cppm BINARY 
 SOURCES 
@@ -67,6 +67,7 @@ SOURCES
 	include/config/base_target.h
 	include/config/cppm_config.h
 	include/config/path.h
+	include/config/.#dependency.h
 	include/config/lib.h
 	include/config/cppm_tool.h
 	include/cppm_version.h

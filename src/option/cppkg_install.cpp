@@ -36,6 +36,8 @@ namespace cppm::option
 
                 auto build = Build();
                 build.start_from(path);
+                std::vector<std::string> args = {"--local", "--relase"};
+                build.app().args().insert(build.app().args().end(),args.begin(), args.end());
                 build.app().parse(app_);
             });
     }
