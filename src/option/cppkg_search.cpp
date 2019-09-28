@@ -3,7 +3,6 @@
 #include "util/filesystem.h"
 #include <fmt/format.h>
 
-
 using namespace fmt::literals;
 using namespace cppm::util::str;
 

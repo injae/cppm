@@ -31,12 +31,12 @@ namespace cppm::option
                 fs::create_directories(path + "/src");
                 inst_proj += "{} = {}\n"_format(name, quot(version));
                 util::write_file(path + "/cppm.toml" , inst_proj);
-                auto main = "\nint main(int argc, char* argv[]) {\n\n     return 0; \n}";
-                util::write_file(path + "/src/main.cpp" , main);
+                //auto main = "\nint main(int argc, char* argv[]) {\n\n     return 0; \n}";
+                //util::write_file(path + "/src/main.cpp" , main);
 
                 auto build = Build();
                 build.start_from(path);
-                std::vector<std::string> args = {"--local", "--relase"};
+                std::vector<std::string> args = {"--local", "--release"};
                 build.app().args().insert(build.app().args().end(),args.begin(), args.end());
                 build.app().parse(app_);
             });
@@ -45,7 +45,7 @@ namespace cppm::option
     std::string CppkgInstall::_base_cppm_project() {
         std::string gen
             = "[package]\n name={}\n version={}\n"_format("installer"_quot, "0.0.0"_quot)
-            + "[[bin]]\n name = {}\n source = [{}]\n"_format("installer"_quot, "src/.*"_quot)
+            //+ "[[bin]]\n name = {}\n source = [{}]\n"_format("installer"_quot, "src/.*"_quot)
             + "[dependencies]\n";
         return gen;
     }        
