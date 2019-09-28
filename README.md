@@ -1,3 +1,6 @@
+
+Cppm [![gitbook][5]][6]
+========
 |Linux|Windows|
 |:----|:------|
 [![Linux build status][1]][2] | [![Windows build status][3]][4] | 
@@ -9,8 +12,7 @@
 [5]: https://aleen42.github.io/badges/src/gitbook_2.svg
 [6]: https://cppm.gitbook.io/project/
 
-Cppm [![gitbook][5]][6]
-========
+![](cppm_demo.gif)
 > Cppm is a cross platform C++ project manager like Rust's Cargo.   
 > Cmake is as difficult to use as package manager in other languages.   
 > So, like other package managers, to manage the C++ project,   

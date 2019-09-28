@@ -4,10 +4,12 @@
 #include "option/cppkg_init.h"
 #include "util/filesystem.h"
 #include "option/cppkg_install.h"
+#include "util/string.hpp"
 
 #include <fmt/format.h>
 
 using namespace fmt::literals;
+using namespace cppm::util::str;
 
 namespace cppm::option
 {
@@ -77,8 +79,14 @@ namespace cppm::option
                     }
                     auto component = package.cmake.components != ""
                                    ? " components=\"{0}\""_format(package.cmake.components) : "";
-                    auto use = "{0}={{module=\"{1}\", version=\"{2}\"{3}}}"_format
-                                (package.name, package.cmake.name, package.version, component);
+                    std::string use = "";
+                    if(rname == "cppkg" && component == "") {
+                        use = "{0}={1}"_format(package.name, quot(package.version));
+                    }
+                    else {
+                        use = "{0}={{module=\"{1}\", version=\"{2}\"{3}}}"_format
+                                    (package.name, package.cmake.name, package.version, component);
+                    }
                     fmt::print("{:<20}{:<10}{:<13}{:<50}{:<70}\n"
                                , str_cut(pname, 20), std::string(vname), rname
                                , str_cut(package.description, 50), use);

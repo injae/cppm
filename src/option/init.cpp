@@ -46,7 +46,7 @@ namespace cppm::option
         file.close();
 
         file.open(project.source + "/main.cpp", std::ios::out);
-        file << "\nint main(int argc, char* argv[]) {\n\n     return 0; \n}";
+        file << "#include <iostream>\nint main(int argc, char* argv[]) {\n    std::cout<<\"hello world\"<<std::endl;\n    return 0; \n}";
         file.close();
         app_.args().pop_front();
     } 
