@@ -31,7 +31,7 @@ namespace cppm::option
     }
 
     void Init::make_bin() {
-        auto name = app_.get_arg();
+        auto name = app_.args().front();
         auto gen = make_project();
 
         gen += "[[bin]]\n"
@@ -48,10 +48,11 @@ namespace cppm::option
         file.open(project.source + "/main.cpp", std::ios::out);
         file << "#include <iostream>\nint main(int argc, char* argv[]) {\n    std::cout<<\"hello world\"<<std::endl;\n    return 0; \n}";
         file.close();
+        app_.args().pop_front();
     } 
 
     void Init::make_lib() {
-        auto name = app_.get_arg();
+        auto name = app_.args().front();
         auto gen = make_project();
 
         gen += "[[lib]]\n"
@@ -67,6 +68,7 @@ namespace cppm::option
         file.close();
 
         fs::create_directory(project.include + "/" + name);
+        app_.args().pop_front();
     }
 
     std::string Init::make_project() {
