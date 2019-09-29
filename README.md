@@ -43,10 +43,12 @@ cmake -H. -Bbuild
 cd build
 cmake --build . 
 ./cppm build install
+# Adding to cppm path
+export PATH="$HOME/.cppm/local/bin:$PATH"
+```
 ### Windows
 ```
 # need visual studio 
-```
 git clone https://github.com/INJAE/cppm.git
 cd cppm
 cmake -H. -Bbuild
