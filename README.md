@@ -39,20 +39,22 @@ Cppm [![gitbook][5]][6]
 sudo apt-get install build-essential
 git clone https://github.com/INJAE/cppm.git
 cd cppm
-sudo cmake -H. -Bbuild
+cmake -H. -Bbuild
 cd build
-sudo cmake --build . --target install
-```
+cmake --build . 
+./cppm build install
 ### Windows
 ```
 # need visual studio 
+```
 git clone https://github.com/INJAE/cppm.git
 cd cppm
 cmake -H. -Bbuild
 cd build
-cmake --build . --target install
+cmake --build . 
+./cppm build install
 # Adding to Window Path
-setx /M path=%path%;C:\Program Files (x86)\cppm\bin
+setx /M path=%path%;%homepath%\.cppm\local\bin
 ```
 ## OSX
 AppleClang is not supported.  
