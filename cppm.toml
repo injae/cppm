@@ -11,8 +11,8 @@ include  = ["cmake/cppm_install.cmake"]
 name   = "cppm"
 source = ["src/.*", "include/.*"]
 
-[test]
-source = ["test/.*"]
+#[test]
+#source = ["test/.*"]
 
 [dependencies]
 cpptoml  = "0.4.0"

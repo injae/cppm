@@ -57,16 +57,8 @@ namespace cppm::option
         using namespace fmt::literals;
         CppmPackage config;
         config.parse(cpptoml::parse_file(CppmPackage::config_path()));
-        if(config.cppm_path.empty()) {
-            fmt::print("this commmand need to cppm path\n");
-            fmt::print("cppm_path: "); 
-            std::string path;
-            std::cin >> path;
-            CppmPackage::add_cppm_path(path);
-            system("cd {} && git pull && cppm build install"_format(path).c_str());
-            return;
-        }
-        system("cd {} && git pull && cppm build install"_format(config.cppm_path).c_str());
+
+        system("cppm cppkg install cppm");
     }
 
     void Cppm::run(int argc, char **argv) {
