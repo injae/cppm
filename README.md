@@ -39,7 +39,7 @@ Cppm [![gitbook][5]][6]
 sudo apt-get install build-essential
 git clone https://github.com/INJAE/cppm.git
 cd cppm
-cmake -H. -Bbuild
+cmake -Bbuild
 cd build
 cmake --build . 
 ./cppm build install
@@ -51,7 +51,7 @@ export PATH="$HOME/.cppm/local/bin:$PATH"
 # need visual studio 
 git clone https://github.com/INJAE/cppm.git
 cd cppm
-cmake -H. -Bbuild
+cmake -Bbuild
 cd build
 cmake --build . 
 ./cppm build install
