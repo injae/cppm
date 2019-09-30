@@ -32,9 +32,9 @@ namespace cppm::option
         return "  cd {0} "_format(config.path.build)
             +  "&& cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
             +  has_toolchains()
-            +  " {0} {1}"_format(config.cmake.option, cmake_option) + " .. 2>&1 "
+            +  " {0} {1}"_format(config.cmake.option, cmake_option) + " .. "
             +  "&&  cd {0} "_format(config.path.build)
-            +  "&& {0} cmake --build . {1} -- {2} 2>&1"_format(sudo, target_cmd, build_option);
+            +  "&& {0} cmake --build . {1} -- {2} "_format(sudo, target_cmd, build_option);
     }
     
     Build::Build() {
