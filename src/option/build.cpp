@@ -24,7 +24,7 @@ namespace cppm::option
            ""s : " -DCMAKE_TOOLCHAIN_FILE=\"{0}\""_format(config.cppm_config.package.toolchains());
         };
         build_option += (compiler::what() != "msvc"s) ? "-j{}"_format(std::thread::hardware_concurrency()) : "";
-        auto sudo = !is_install_local && is_install && strcmp(compiler::what(), "msvc") != 0 ? "sudo" : "";
+        auto sudo = !is_install_local && is_install && strcmp(system::what(), "windows") != 0 ? "sudo" : "";
         cmake_option += is_install_local ? "-DCMAKE_INSTALL_PREFIX={}local"_format(tool::cppm_root()) : "";
         target = is_install ? "install" : "";
         auto target_cmd = target != "" ? "--target " + target : "";
