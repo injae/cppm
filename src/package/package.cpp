@@ -136,18 +136,21 @@ namespace cppkg {
         using namespace fmt::literals;
         auto root_path = "{0}repo"_format(tool::cppm_root());
         Cppkg cppkg;
-        auto repos = *util::file_list(root_path);
-        for(auto repo : repos) {
-            auto rname = repo.path().filename().string();
-            auto pkgs = *util::file_list("{0}/{1}"_format(root_path,rname));
-            for(auto& pkg : pkgs) {
-                auto pname = pkg.path().filename().string();
-                if(pname == ".git" || pname == "README.md" || pname == "_cppm_test") continue;
-                auto versions = *util::file_list("{0}/{1}/{2}"_format(root_path,rname,pname));
-                for(auto& ver : versions) {
-                    auto vname = ver.path().filename().string();
-                    if(vname == "lastest") continue; //legacy version check
-                    cppkg.repos[rname].pkgs[pname].versions[vname] = ver.path().string();
+        if(auto repos = util::file_list(root_path)) {
+            for(auto repo : *repos) {
+                auto rname = repo.path().filename().string();
+                if(auto pkgs = util::file_list("{0}/{1}"_format(root_path,rname))) {
+                    for(auto& pkg : *pkgs) {
+                        auto pname = pkg.path().filename().string();
+                        if(pname == ".git" || pname == "README.md" || pname == "_cppm_test") continue;
+                        if(auto versions = util::file_list("{0}/{1}/{2}"_format(root_path,rname,pname))) {
+                            for(auto& ver : *versions) {
+                                auto vname = ver.path().filename().string();
+                                if(vname == "lastest") continue; //legacy version check
+                                cppkg.repos[rname].pkgs[pname].versions[vname] = ver.path().string();
+                            }
+                        }
+                    }
                 }
             }
         }
