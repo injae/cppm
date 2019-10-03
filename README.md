@@ -56,8 +56,7 @@ cd build
 cmake --build . 
 cd build/Debug
 ./cppm build install
-# Adding to Window Path in CMD
-setx /M PATH "%path%;\.cppm\local\bin"
+# Add System Path \.cppm\local\bin
 ```
 ## OSX
 AppleClang is not supported.  
