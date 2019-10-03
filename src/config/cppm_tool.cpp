@@ -4,12 +4,19 @@
 #include <fmt/format.h>
 #include "util/algorithm.hpp"
 #include "util/filesystem.h"
+#include "util/system.hpp"
+#include <string.h>
 
 using namespace fmt::literals;
+using namespace std::literals;
 
 namespace cppm::tool
 {
-    std::string cppm_root() { return "{}/.cppm/"_format(std::getenv("HOME")); }
+    std::string cppm_root() {
+        return (util::system::what() == "windows"s)
+            ? "/.cppm/" : "{}/.cppm/"_format(std::getenv("HOME"));
+    }
+
     std::string target_define(Config& config) {
         std::string gen;
         for(auto& lib : config.libs.list) {
