@@ -42,7 +42,7 @@ cd cppm
 cmake -Bbuild
 cd build
 cmake --build . 
-./cppm build install
+./cppm cppkg install cppm
 # Adding to cppm path
 export PATH="$HOME/.cppm/local/bin:$PATH"
 ```
@@ -55,7 +55,7 @@ cmake -Bbuild
 cd build
 cmake --build . 
 cd build/Debug
-./cppm build install
+./cppm cppkg install cppm
 # Add System Path \.cppm\local\bin
 ```
 ## OSX
