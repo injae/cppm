@@ -2,6 +2,7 @@
 #include "util/filesystem.h"
 #include <fmt/format.h>
 #include <util/version.h>
+#include "util/system.hpp"
 
 using namespace fmt::literals;
 
@@ -22,7 +23,7 @@ namespace cppm
 
     std::string Hunter::package_path() {
         Version version("0.0.0");
-        auto hunter_root = "{0}/.hunter/_Base/Download/Hunter/"_format(std::getenv("HOME"));
+        auto hunter_root = "{0}.hunter/_Base/Download/Hunter/"_format(util::system::home_path());
         if(auto list = util::file_list(hunter_root)) {
             for(auto& file : *list) {
                 auto other = Version::parse(file.path().filename().string());

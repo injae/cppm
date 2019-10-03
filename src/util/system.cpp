@@ -8,6 +8,10 @@
 #include <string>
 #include <fmt/format.h>
 #include "util/system.hpp"
+#include <fmt/format.h>
+
+using namespace std::literals;
+using namespace fmt::literals;
 
 namespace cppm::util::system
 {
@@ -29,5 +33,10 @@ namespace cppm::util::system
             func(result);
         }
         return result;
+    }
+
+    std::string home_path() {
+        return (util::system::what() == "windows"s)
+            ? "/" : "{}/"_format(std::getenv("HOME"));
     }
 }

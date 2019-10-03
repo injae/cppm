@@ -13,8 +13,7 @@ using namespace std::literals;
 namespace cppm::tool
 {
     std::string cppm_root() {
-        return (util::system::what() == "windows"s)
-            ? "/.cppm/" : "{}/.cppm/"_format(std::getenv("HOME"));
+        return "{}.cppm/"_format(util::system::home_path());
     }
 
     std::string target_define(Config& config) {
