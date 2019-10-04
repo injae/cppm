@@ -15,7 +15,7 @@ namespace cppm::util
 {
     auto file_list(const fs::path& path) -> std::optional<std::vector<fs::directory_entry>> {
         std::vector<fs::directory_entry> list;
-        std::copy(fs::directory_iterator(path), fs::directory_iterator(), std::back_inserter(list));
+        std::copy(fs::directory_iterator(path.generic_path()), fs::directory_iterator(), std::back_inserter(list));
         return list;    
     }
  

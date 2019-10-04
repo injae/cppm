@@ -1,4 +1,4 @@
-#include"util/version.h"
+#include "util/version.h"
 #include "util/filesystem.h"
 
 #include <cstdio>
@@ -15,45 +15,33 @@ namespace cppm
         std::sscanf(version.c_str(), "%d.%d.%d", &major, &minor, &revision);
     }
 
+    int _change_compare_int(const Version& version) {
+        if(version.latest)   return 999999999;
+        else if(version.git) return 1;
+        else                 return 10000 * version.major + 1000 * version.minor + version.revision + 10;
+    }
+
     Version Version::parse(std::string version_include_string) {
+        if(version_include_string == "latest") return {"latest"};
+        if(version_include_string == "git")    return {"git"}; 
         std::regex regex("(\\d+)\\.?(\\d+)\\.?(\\d+)");
         std::smatch match;
         if(std::regex_search(version_include_string,match,regex)) {
-            return {match.str()};
+            return { match.str()} ;
         }
         return {"0.0.0.0"};
     }
     
     bool Version::operator < (const Version& other) const {
-        if(latest && latest == other.latest) return false;
-        if(!latest && other.latest) return true;
-        if(git && git == other.git) return false;
-        if(!git && other.git)   return false;
-        if(major < other.major) return true;
-		if(minor < other.minor) return true;
-		if(revision < other.revision) return true;
-		return false; 
+        return _change_compare_int(*this) < _change_compare_int(other);
     }
     
     bool Version::operator > (const Version& other) const {
-        if(other.latest && latest == other.latest) return false;
-        if(latest && !other.latest)                return true;
-
-        if(git && git == other.git) return false;
-        if(git && !other.git)       return true;
-
-        if(major > other.major)       return true;
-		if(minor > other.minor)       return true;
-		if(revision > other.revision) return true;
-		return false; 
+        return _change_compare_int(*this) > _change_compare_int(other);
     }
     
     bool Version::operator == (const Version& other) const {
-        if(latest && latest == other.latest) return true;
-        if(git && git == other.git)          return true;
-        return major    == other.major
-			&& minor    == other.minor
-			&& revision == other.revision;
+        return _change_compare_int(*this) == _change_compare_int(other);
     }
     
     Version& Version::operator = (const std::string& version) {

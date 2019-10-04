@@ -28,6 +28,20 @@ namespace cppm::util
     {
         std::string erase(const std::string& target_str, const std::string& erase_str);
     }
+
+    // -------------------------------------------------------------------
+    // --- Reversed iterable
+    template <typename T>
+    struct reversion_wrapper { T& iterable; };
+
+    template <typename T>
+    auto begin (reversion_wrapper<T> w) { return rbegin(w.iterable); }
+
+    template <typename T>
+    auto end (reversion_wrapper<T> w) { return rend(w.iterable); }
+
+    template <typename T>
+    reversion_wrapper<T> reverse (T&& iterable) { return { iterable }; }
 }
 
 

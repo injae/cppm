@@ -1,6 +1,7 @@
 #include "option/cppkg_search.h"
 #include "util/string.hpp"
 #include "util/filesystem.h"
+#include "util/algorithm.hpp"
 #include <fmt/format.h>
 
 using namespace fmt::literals;
@@ -28,7 +29,7 @@ namespace cppm::option
                 for(auto& [rname, repo] : list.repos) {
                     if(!is_all && repo_name != rname) continue;
                     for(auto& [pname, pkg] : repo.pkgs) {
-                        for(auto& [vname, ver] : pkg.versions) {
+                        for(auto& [vname, ver] : util::reverse(pkg.versions)) {
                             package::Package package;
                             package.parse(cpptoml::parse_file("{0}/{1}"_format(ver,"cppkg.toml")));
                             if(name != ""&&!has_str(pname, name)&&!has_str(package.description, name)) break; 

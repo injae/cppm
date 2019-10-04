@@ -138,16 +138,16 @@ namespace cppkg {
         Cppkg cppkg;
         if(auto repos = util::file_list(root_path)) {
             for(auto repo : *repos) {
-                auto rname = repo.path().filename().string();
+                auto rname = repo.path().filename().generic_string();
                 if(auto pkgs = util::file_list("{0}/{1}"_format(root_path,rname))) {
                     for(auto& pkg : *pkgs) {
-                        auto pname = pkg.path().filename().string();
+                        auto pname = pkg.path().filename().generic_string();
                         if(pname == ".git" || pname == "README.md" || pname == "_cppm_test") continue;
                         if(auto versions = util::file_list("{0}/{1}/{2}"_format(root_path,rname,pname))) {
                             for(auto& ver : *versions) {
-                                auto vname = ver.path().filename().string();
+                                auto vname = ver.path().filename().generic_string();
                                 if(vname == "lastest") continue; //legacy version check
-                                cppkg.repos[rname].pkgs[pname].versions[vname] = ver.path().string();
+                                cppkg.repos[rname].pkgs[pname].versions[vname] = "{0}/{1}/{2}/{3}"_format(root_path, rname, pname, vname);
                             }
                         }
                     }
