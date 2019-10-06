@@ -16,7 +16,7 @@ namespace cppm::option
             .call_back([&](){ is_all = true; });
         app_.add_option("repo").abbr("r").args("{repo name}")
             .desc("show {repo_name}'s packages")
-            .call_back([&](){ repo_name = app_.get_arg(); });
+            .call_back([&](){ repo_name = app_.get_arg(); show_one = true; });
         app_.add_command().args("{packag name}")
             .call_back([&](){
                 auto name = !app_.args().empty() ? app_.get_arg() : "";
@@ -27,7 +27,9 @@ namespace cppm::option
                            , "=", "=", "=","=","=");
                 auto list = package::cppkg::list();
                 for(auto& [rname, repo] : list.repos) {
-                    if(!is_all && repo_name != rname) continue;
+                    if(!is_all && show_one && repo_name == rname) continue;
+                    else if(!is_all && !show_one && rname == "hunter") continue;
+
                     for(auto& [pname, pkg] : repo.pkgs) {
                         for(auto& [vname, ver] : util::reverse(pkg.versions)) {
                             package::Package package;

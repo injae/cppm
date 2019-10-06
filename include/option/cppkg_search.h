@@ -15,7 +15,8 @@ namespace cppm::option
         void _show_all();
         std::string _make_use_column(const package::Package& pkg, const std::string& repo);
         bool is_all = false;
-        std::string repo_name = "cppkg";
+        bool show_one = false;
+        std::string repo_name;
     };
 }
 

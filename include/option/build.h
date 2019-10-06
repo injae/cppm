@@ -26,6 +26,7 @@ namespace cppm::option
         void export_cppkg();
         CommandBuilder cmd;
         bool none_tc = false;
+        bool only_tc = false;
         bool clean = false;
     };
 }
