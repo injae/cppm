@@ -54,7 +54,7 @@ cd cppm
 cmake -Bbuild
 cd build
 cmake --build . 
-cd build/Debug
+cd Debug
 ./cppm cppkg install cppm
 # Add System Path \.cppm\local\bin
 ```
