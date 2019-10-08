@@ -27,7 +27,7 @@ Cppm [![gitbook][5]][6]
 ## Dependencies
 1. cmake (minimum 3.6)  
 2. [Hunter Package Manager](https://github.com/ruslo/hunter)  
-2. c++-17-compiler (g++7 or clang7 or visual studio 2017)
+2. c++-17-compiler (g++8 or clang7 or visual studio 2017)
 3. boost
 4. nlpo
 5. cpptoml
