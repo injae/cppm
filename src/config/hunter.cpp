@@ -14,10 +14,12 @@ namespace cppm
         if(auto hunter = table->get_table("hunter")) {
             url = hunter->get_as<std::string>("url").value_or(d_url);
             sha1 = hunter->get_as<std::string>("sha1").value_or(d_sha1);
+            use_hunter = hunter->get_as<bool>("use").value_or(false);
         }
         else {
             url = d_url;
             sha1 = d_sha1;
+            use_hunter = false;
         }
     }
 

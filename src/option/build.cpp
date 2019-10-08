@@ -2,6 +2,7 @@
 #include <thread>
 #include <memory>
 #include <fmt/format.h>
+#include <md5/md5.h>
 #include <string>
 
 #include "option/build.h"
@@ -29,8 +30,7 @@ namespace cppm::option
 
         build_option += (compiler::what() != "msvc"s) ? " -j{} "_format(std::thread::hardware_concurrency()) : "";
         auto sudo = !is_install_local && is_install && strcmp(system::what(), "windows") != 0 ? "sudo" : "";
-        cmake_option += !has_cache && is_install_local
-                      ? "-DCMAKE_INSTALL_PREFIX={}local"_format(tool::cppm_root()) : "";
+        cmake_option +=  is_install_local ? " -DCMAKE_INSTALL_PREFIX={}local "_format(tool::cppm_root()) : "";
         target = is_install ? "install" : "";
         auto target_cmd = target != "" ? "--target " + target : "";
         std::string gen = "";
@@ -90,13 +90,17 @@ namespace cppm::option
                 config_load();
                 fs::create_directories(config_.path.build);
                 if(!none_tc) {
-                    util::write_file("{0}/CMakeLists.txt"_format(config_.path.root), config_.generate());
+                    auto tranc_cmake = config_.generate();
+                    if(util::file_hash("{0}/CMakeLists.txt"_format(config_.path.root)) != hash::md5(tranc_cmake)) {
+                        fmt::print("CMakeLists.txt Changed\n");
+                        util::write_file("{0}/CMakeLists.txt"_format(config_.path.root), tranc_cmake);
+                    }
                     auto cppm_root = tool::cppm_root(); 
                     util::over_write_copy_file("{0}cmake/cppm_tool.cmake"_format(cppm_root)
                                               ,"{0}/cppm_tool.cmake"_format(config_.path.cmake));
                     util::over_write_copy_file("{0}cmake/HunterGate.cmake"_format(cppm_root)
                                               ,"{0}/HunterGate.cmake"_format(config_.path.cmake));
-                    if(only_tc) { fmt::print("CMakeLists changed"); exit(1); }
+                    if(only_tc) { exit(1); }
                 }
                 if(clean) {
                     fs::remove_all(config_.path.build);

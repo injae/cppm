@@ -16,6 +16,7 @@ namespace cppm
     public:
         std::string url;
         std::string sha1;
+        bool use_hunter;
     };
 }
 

@@ -79,7 +79,7 @@ namespace cppm
 
     std::string Dependencies::use_hunter(Hunter& hunter) {
         auto result = std::find_if(list.begin(), list.end(), [](auto h){ return h.second.hunter == true; });
-        if(result != list.end()) { return hunter.generate(); }
+        if(result != list.end() || hunter.use_hunter) { return hunter.generate(); }
         else { return ""; }
     }
 }

@@ -14,7 +14,7 @@ namespace cppm
         for(const auto& lib_table : *table_array) {
             Lib lib;
             lib.name = *lib_table->get_as<std::string>("name");
-            lib.type = *lib_table->get_as<std::string>("type");
+            lib.type = lib_table->get_as<std::string>("type").value_or("static");
             lib.install = lib_table->get_as<bool>("install").value_or(true);
             auto source = lib_table->get_array_of<std::string>("source");
             if(source) for(const auto& src : *source) {lib.sources.push_back(src);} 
