@@ -15,9 +15,9 @@ cppm_compiler_option(DEFAULT)
 
 
 include(cmake/cppm_install.cmake)
-find_cppkg(Boost latest COMPONENTS system filesystem HUNTER)
 find_cppkg(cpptoml 0.4.0)
 find_cppkg(fmt 6.0.0)
+find_cppkg(md5 git)
 find_cppkg(nlpo git)
 
 cppm_target_define(cppm BINARY 
@@ -97,9 +97,9 @@ SOURCES
 
 cppm_target_dependencies(cppm 
 PUBLIC	
-	Boost::filesystem
 	cpptoml
 	fmt::fmt
+	md5::md5 
 	nlpo::nlpo 
 )
 

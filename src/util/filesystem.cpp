@@ -1,6 +1,7 @@
 #include "util/filesystem.h"
 #include "util/algorithm.hpp"
 #include <fmt/format.h>
+#include <md5/md5.h>
 #include <iostream>
 
 #ifdef _WIN32
@@ -14,8 +15,8 @@
 namespace cppm::util
 {
     auto file_list(const fs::path& path) -> std::optional<std::vector<fs::directory_entry>> {
-        std::vector<fs::directory_entry> list;
-        std::copy(fs::directory_iterator(path.generic_path()), fs::directory_iterator(), std::back_inserter(list));
+        fs::directory_iterator b(path), e;
+        std::vector<fs::directory_entry> list{b, e};
         return list;    
     }
  
@@ -26,7 +27,7 @@ namespace cppm::util
         fs::directory_iterator end_itr;
         for(auto it : files) {
             std::smatch what;
-            auto file = str::erase(it.path().generic_string(), path_.generic_path().string() + "/");
+            auto file = str::erase(it.path().generic_string(), path_.generic_string() + "/");
             if(!std::regex_match(file, what, filter)) continue;
             if(!is_full_path) {
                 matching_files.push_back(file);
@@ -106,6 +107,20 @@ namespace cppm::util
     }
 
     void over_write_copy_file(const std::string& src, const std::string& des) {
-        fs::copy_file(src, des, fs::copy_option::overwrite_if_exists);
+        if(file_hash(src) != file_hash(des)) {
+            //   fs::copy_file(src, des, fs::copy_option::overwrite_if_exists);
+            fs::copy_file(src, des, fs::copy_options::overwrite_existing);
+        }
+    }
+
+    std::string read_file_all(const std::string& name) {
+        std::ifstream ifs(name);
+        auto content = std::string(std::istreambuf_iterator<char>(ifs), std::istreambuf_iterator<char>());
+        ifs.close();
+        return content;
+    }
+
+    std::string file_hash(const std::string& name) {
+        return hash::md5(read_file_all(name));
     }
 }

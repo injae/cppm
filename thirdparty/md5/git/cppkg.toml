@@ -1,0 +1,13 @@
+[package]
+name = "md5"
+# if you use git repo, package version is git
+version = "git"
+description = "simple c++ md5 hash library"
+global=false
+# library name in cmake, cppm.toml use this value 
+# [dependencies]
+#${library_name} = {module =${value}}
+cmake = {name = "md5::md5 ", findlib=""}
+# write download value git or url
+download = {git="https://github.com/injae/md5"}
+#download = {url=""}

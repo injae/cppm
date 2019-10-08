@@ -6,8 +6,10 @@
 #include <fstream>
 #include <string>
 
-#include <boost/filesystem.hpp>
-namespace fs = boost::filesystem;
+//#include <boost/filesystem.hpp>
+#include <filesystem>
+namespace fs = std::filesystem;
+//namespace fs = boost::filesystem;
 
 
 namespace cppm::util
@@ -27,5 +29,7 @@ namespace cppm::util
         file.close();
     }
     std::string current_dir();
+    std::string read_file_all(const std::string& name);
+    std::string file_hash(const std::string& name);
 }
 #endif

@@ -4,6 +4,9 @@ version = "1.0.8"
 description = "c++ cmake maker use to toml like Cargo"
 git = "https://github.com/injae/cppm.git"
 
+[hunter]
+use = true
+
 [cmake]
 include  = ["cmake/cppm_install.cmake"]
 
@@ -18,4 +21,5 @@ source = ["src/.*", "include/.*"]
 cpptoml  = "0.4.0"
 fmt      = "6.0.0"
 nlpo     = "git"
-Boost    = {module = "Boost::filesystem", components="system filesystem", hunter=true}
+#Boost    = {module = "Boost::filesystem", components="system filesystem", hunter=true}
+md5      = "git"
