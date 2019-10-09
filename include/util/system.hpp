@@ -3,6 +3,7 @@
 
 #include "util/hash.hpp"
 #include <fmt/format.h>
+#include <functional>
 
 
 namespace cppm::util::system
@@ -56,8 +57,7 @@ namespace cppm::util::system
 
     std::string home_path();
 
-    std::string exec(const char* cmd
-                    ,const std::function<void(std::string&)>& func = [](auto& str) { fmt::print(str);});
+    std::string exec(const char* cmd ,const std::function<void(std::string&)>& func = [](auto& str) { fmt::print(str);});
 }
 
 #if   defined(_MSC_VER)

@@ -11,9 +11,9 @@ matrix:
       dist: xenial
       compiler: clang
       env:
-        - MATRIX_EVAL="CXX=clang++"
+        - MATRIX_EVAL="CXX=clang++-8"
         - SUDO="sudo env \"PATH=$PATH\""
-      addons:  { apt: { packages: ["clang", "libc++-dev", "libc++abi-7-dev", "libstdc++-7-dev", "build-essential", "ccache"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-trusty-7"] } }
+      addons:  { apt: { packages: ["clang", "libc++-dev", "libc++abi-8-dev", "libstdc++-8-dev", "build-essential", "ccache"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-xenial-8"] } }
       cache: {apt: true, ccache: true, directories: ["$HOME/.hunter"]}
     ## GCC 6
     #- env: COMPILER=g++-6
@@ -24,9 +24,9 @@ matrix:
       dist: xenial
       compiler: gcc
       env:
-        - MATRIX_EVAL="CXX=g++-7"
+        - MATRIX_EVAL="CXX=g++-8"
         - SUDO="sudo env \"PATH=$PATH\""
-      addons: { apt: { packages: ["g++-7", "libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-7-dev", "ccache"], sources: ["ubuntu-toolchain-r-test"] } }
+      addons: { apt: { packages: ["g++-8", "libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-8-dev", "ccache"], sources: ["ubuntu-toolchain-r-test"] } }
       cache: {apt: true, ccache: true, directories: ["$HOME/.hunter", "$HOME/.cppm"]}
 
     #- os: osx

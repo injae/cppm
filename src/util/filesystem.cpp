@@ -39,14 +39,14 @@ namespace cppm::util
     auto recursive_file_list(const fs::path& path) -> std::optional<std::vector<fs::directory_entry>> {
         std::vector<fs::directory_entry> list;
         fs::directory_iterator end_itr;
-        for( fs::directory_iterator it(path); it != end_itr; ++it) {
-           if(is_directory(it->status())) {
-               auto file_list  = recursive_file_list(it->path());
+        for(auto&& it : fs::directory_iterator(path)) {
+           if(is_directory(it.status())) {
+               auto file_list  = recursive_file_list(it.path());
                if(!file_list) return list;
                insert(list, *file_list);
                continue;
            }
-           list.push_back(*it);
+           list.emplace_back(it);
         }
         return list;
     }
@@ -108,7 +108,6 @@ namespace cppm::util
 
     void over_write_copy_file(const std::string& src, const std::string& des) {
         if(file_hash(src) != file_hash(des)) {
-            //   fs::copy_file(src, des, fs::copy_option::overwrite_if_exists);
             fs::copy_file(src, des, fs::copy_options::overwrite_existing);
         }
     }
