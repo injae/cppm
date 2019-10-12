@@ -1,5 +1,5 @@
 string(REPLACE "\\" "/" HOME "$ENV{HOME}")
-set(CPPM_VERSION "1.0.8")
+set(CPPM_VERSION "1.0.9")
 set(CPPM_ROOT   ${HOME}/.cppm)
 set(CPPM_TOOL   ${CPPM_ROOT}/tool)
 set(CPPM_MODULE ${CPPM_ROOT}/cmake)
@@ -14,37 +14,25 @@ macro(cppm_load)
     list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/")
     list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
 
-    if(NOT EXISTS ${CPPM_CORE})
-        find_package(Git REQUIRED)
-        if(NOT GIT_FOUND)
-            message(FATAL_ERROR "git not found!")
-        endif()
-        #message(STATUS "[cppm] Downloading cppm tool to ${CPPM_ROOT}/tool")
+    if(NOT EXISTS ${CPPM_ROOT})
         make_directory("${CPPM_ROOT}")
+    endif()
+    if(NOT EXISTS ${CPPM_CORE})
         make_directory("${CPPM_CORE}")
-        execute_process(
-            COMMAND ${GIT_EXECUTABLE} clone https://github.com/injae/cmake_git_tool.git git
-            WORKING_DIRECTORY ${CPPM_MODULE}
-        )
-
-        execute_process(
-            COMMAND ${GIT_EXECUTABLE} clone -b ${CPPM_VERSION} --single-branch https://github.com/injae/cppm_tools.git ${CPPM_VERSION}
-            WORKING_DIRECTORY ${CPPM_CORE}
-        )
     endif()
 
-    include(git/git)
-    git_clone(git
-        URL https://github.com/injae/cmake_git_tool.git
-        PATH ${CPPM_MODULE} QUIET
+    include(FetchContent)
+    FetchContent_Populate(cmake-tools-${CPPM_VERSION}
+        GIT_REPOSITORY https://github.com/injae/cppm_tools.git
+        GIT_TAG        ${CPPM_VERSION}
+        SOURCE_DIR     ${CPPM_CORE}/${CPPM_VERSION}
+        QUIET
     )
-    git_clone(${CPPM_VERSION}
-        URL https://github.com/injae/cppm_tools.git
-        PATH ${CPPM_CORE}
-        BRANCH ${CPPM_VERSION} QUIET)
-    git_clone(cppkg
-        URL https://github.com/injae/cppkg.git
-        PATH ${CPPM_ROOT}/repo QUIET)
+    FetchContent_Populate(${CPPM_VERSION}
+        GIT_REPOSITORY https://github.com/injae/cppkg.git
+        SOURCE_DIR     ${CPPM_ROOT}/repo
+        QUIET
+    )
 endmacro()
 
 macro(cppm_project)
