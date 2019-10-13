@@ -1,25 +1,13 @@
 string(REPLACE "\\" "/" HOME "$ENV{HOME}")
 set(CPPM_VERSION "1.0.9")
 set(CPPM_ROOT   ${HOME}/.cppm)
-set(CPPM_TOOL   ${CPPM_ROOT}/tool)
-set(CPPM_MODULE ${CPPM_ROOT}/cmake)
-set(CPPM_CORE   ${CPPM_MODULE}/core)
-list(APPEND CMAKE_MODULE_PATH "${CPPM_ROOT}")
-list(APPEND CMAKE_MODULE_PATH "${CPPM_TOOL}")
-list(APPEND CMAKE_MODULE_PATH "${CPPM_MODULE}")
+set(CPPM_CORE   ${CPPM_ROOT}/cmake/core)
 list(APPEND CMAKE_MODULE_PATH "${CPPM_CORE}")
 
-macro(cppm_load)
+macro(cppm_project)
     cmake_parse_arguments(_ARG "NIGHTLY" "" "" ${ARGN})
     list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/")
     list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
-
-    if(NOT EXISTS ${CPPM_ROOT})
-        make_directory("${CPPM_ROOT}")
-    endif()
-    if(NOT EXISTS ${CPPM_CORE})
-        make_directory("${CPPM_CORE}")
-    endif()
 
     include(FetchContent)
     FetchContent_Populate(cmake-tools-${CPPM_VERSION}
@@ -33,11 +21,8 @@ macro(cppm_load)
         SOURCE_DIR     ${CPPM_ROOT}/repo
         QUIET
     )
-endmacro()
+    include(${CPPM_VERSION}/core_load)
 
-macro(cppm_project)
-    cmake_parse_arguments(_ARG "" "" "" ${ARGN})
-    cppm_load()
     include(${CPPM_VERSION}/cppm/cppm_project)
     _cppm_project(${_ARG_UNPARSED_ARGUMENTS})
 endmacro()
