@@ -7,7 +7,7 @@ namespace cppm
     {
         auto cmake = table->get_table("cmake");
         if(!cmake) cmake = cpptoml::make_table();
-        version    = cmake->get_as<std::string>("version" ).value_or("3.15");
+        version    = cmake->get_as<std::string>("version" ).value_or("3.12");
         option     = cmake->get_as<std::string>("option"  ).value_or("");
         builder    = cmake->get_as<std::string>("builder" ).value_or("make");
         compiler   = cmake->get_as<std::string>("compiler").value_or("none");
