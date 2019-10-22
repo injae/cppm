@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.6)
 
 include(cmake/cppm_tool.cmake)
 cppm_project()
@@ -15,10 +15,11 @@ cppm_compiler_option(DEFAULT)
 
 
 include(cmake/cppm_install.cmake)
-find_cppkg(cpptoml 0.4.0)
+find_cppkg(cpptoml git)
 find_cppkg(fmt 6.0.0)
 find_cppkg(md5 git)
 find_cppkg(nlpo git)
+find_cppkg(range-v3 0.9.0)
 
 cppm_target_define(cppm BINARY 
 SOURCES 
@@ -97,10 +98,11 @@ SOURCES
 
 cppm_target_dependencies(cppm 
 PUBLIC	
-	cpptoml
+	cpptoml::cpptoml 
 	fmt::fmt
 	md5::md5 
 	nlpo::nlpo 
+	range-v3
 )
 
 cppm_target_install(cppm)

@@ -8,7 +8,4 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/cmake/HunterGate.cmake     DESTINATION ${c
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/version.h.in"
                "${CMAKE_CURRENT_SOURCE_DIR}/include/cppm_version.h")
 
-include(git/git)
-git_clone(cppkg
-    URL https://github.com/injae/cppkg.git
-    PATH ${CPPM_ROOT}/repo QUIET)
+include(cppkg/updater)

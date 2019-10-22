@@ -62,10 +62,10 @@ namespace cppm::option
             .call_back([&](){ cmd.cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("clang++"); });
         app_.add_option("release").abbr("r")
             .desc("compile release mode")
-            .call_back([&](){ cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("RELEASE"); });
+            .call_back([&](){ cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("Release"); });
         app_.add_option("debug").abbr("d")
             .desc("compile debug mode")
-            .call_back([&](){ cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("DEBUG"); });
+            .call_back([&](){ cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("Debug"); });
         app_.add_option("ntc")
             .desc("not change CMakeLists.txt test options")
             .call_back([this]() { none_tc = true; });
@@ -98,8 +98,6 @@ namespace cppm::option
                     auto cppm_root = tool::cppm_root(); 
                     util::over_write_copy_file("{0}cmake/cppm_tool.cmake"_format(cppm_root)
                                               ,"{0}/cppm_tool.cmake"_format(config_.path.cmake));
-                    util::over_write_copy_file("{0}cmake/HunterGate.cmake"_format(cppm_root)
-                                              ,"{0}/HunterGate.cmake"_format(config_.path.cmake));
                     if(only_tc) { exit(1); }
                 }
                 if(clean) {

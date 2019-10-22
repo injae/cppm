@@ -1,17 +1,8 @@
 cmake_minimum_required(VERSION 3.6)
-project(cpptoml-0.4.0-install C CXX)
+project(cpptoml-git-install NONE)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
-download_package(
-    cpptoml
-    0.4.0
-    URL https://github.com/injae/cpptoml/archive/0.4.0.tar.gz
-    LOCAL
-    CMAKE_ARGS
-        -DCPPTOML_BUILD_EXAMPLES=OFF
-        -DENABLE_LIBCXX=OFF
-        ${CMAKE_ARGS}
-    )
+download_package(cpptoml git GIT https://github.com/injae/cpptoml.git LOCAL CMAKE_ARGS ${CMAKE_ARGS})
 
 # Other Options:
 # - Linux Configures:

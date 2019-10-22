@@ -96,7 +96,7 @@ namespace cppm
              + "\n"
              + "include(cmake/cppm_tool.cmake)\n"
              + "cppm_project()\n"
-             + dependencies.use_hunter(hunter)
+             + dependencies.use_hunter(*this)
              + "project({0} VERSION {1} LANGUAGES C CXX)\n"_format(package.name, package.version)
              + "cppm_setting()\n"
              + "\n"

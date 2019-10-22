@@ -3,10 +3,11 @@
 
 #include <map>
 #include "config/base_config.h"
-#include "config/hunter.h"
 
 namespace cppm
 {
+
+    class Config;
     struct Dependency
     {
         using table_ptr = std::shared_ptr<cpptoml::table>;
@@ -28,7 +29,7 @@ namespace cppm
         void parse(table_ptr table);
         std::string gen_find_package();
         std::string gen_find_cppkg();
-        std::string use_hunter(Hunter& hunter);
+        std::string use_hunter(Config& config);
         std::string generate();
     public:
         std::map<std::string, Dependency> list;

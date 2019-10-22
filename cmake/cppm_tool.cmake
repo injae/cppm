@@ -5,7 +5,7 @@ set(CPPM_CORE   ${CPPM_ROOT}/cmake/core)
 
 include(FetchContent)
 if(NOT IS_CPPM_LOADED)
-    FetchContent_Populate(cmake-tools-${CPPM_VERSION}
+    FetchContent_Populate(cppm-tools-${CPPM_VERSION}
         GIT_REPOSITORY https://github.com/injae/cppm_tools.git
         GIT_TAG        ${CPPM_VERSION}
         SOURCE_DIR     ${CPPM_CORE}/${CPPM_VERSION}

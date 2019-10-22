@@ -4,6 +4,9 @@
 #include <iostream>
 #include <regex>
 #include <string>
+#include "config/cppm_tool.h"
+#include "util/filesystem.h"
+#include "config/config.h"
 
 using namespace fmt::literals;
 namespace cppm
@@ -77,9 +80,14 @@ namespace cppm
         return gen;
     }
 
-    std::string Dependencies::use_hunter(Hunter& hunter) {
+    std::string Dependencies::use_hunter(Config& config) {
         auto result = std::find_if(list.begin(), list.end(), [](auto h){ return h.second.hunter == true; });
-        if(result != list.end() || hunter.use_hunter) { return hunter.generate(); }
+        if(result != list.end()) { config.hunter.use_hunter = true; }
+        if(config.hunter.use_hunter) {
+            util::over_write_copy_file("{0}cmake/HunterGate.cmake"_format(tool::cppm_root())
+                                      ,"{0}/HunterGate.cmake"_format(config.path.cmake));
+            return config.hunter.generate();
+        }
         else { return ""; }
     }
 }
