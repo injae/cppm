@@ -1,5 +1,6 @@
 string(REPLACE "\\" "/" HOME "$ENV{HOME}")
 set(CPPM_VERSION "1.0.9")
+
 set(CPPM_ROOT   ${HOME}/.cppm)
 set(CPPM_CORE   ${CPPM_ROOT}/cmake/core)
 
