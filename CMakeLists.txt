@@ -22,76 +22,76 @@ find_cppkg(nlpo git)
 
 cppm_target_define(cppm BINARY 
 SOURCES 
-	src/config/base_target.cpp
-	src/config/cmake.cpp
-	src/config/compiler.cpp
+	src/util/version.cpp
+	src/util/filesystem.cpp
+	src/util/algorithm.cpp
+	src/util/system.cpp
 	src/config/cppm_config.cpp
-	src/config/lib.cpp
-	src/config/dependency.cpp
-	src/config/config.cpp
-	src/config/hunter.cpp
+	src/config/compiler.cpp
+	src/config/base_target.cpp
 	src/config/test.cpp
 	src/config/bin.cpp
-	src/config/cppm_tool.cpp
-	src/config/package.cpp
-	src/config/path.cpp
+	src/config/lib.cpp
+	src/config/cmake.cpp
 	src/config/builder.cpp
 	src/config/cppm_package.cpp
-	src/option/install.cpp
-	src/option/cppm_config.cpp
-	src/option/init.cpp
-	src/option/cppm.cpp
+	src/config/hunter.cpp
+	src/config/dependency.cpp
+	src/config/config.cpp
+	src/config/cppm_tool.cpp
+	src/config/path.cpp
+	src/config/package.cpp
 	src/option/cppkg_install.cpp
-	src/option/build.cpp
-	src/option/cppkg.cpp
-	src/option/add.cpp
-	src/option/cppkg_init.cpp
+	src/option/cppm.cpp
 	src/option/cppkg_search.cpp
 	src/option/base_option.cpp
-	src/util/system.cpp
-	src/util/algorithm.cpp
-	src/util/filesystem.cpp
-	src/util/version.cpp
-	src/package/package.cpp
+	src/option/cppm_config.cpp
+	src/option/cppkg_init.cpp
+	src/option/cppkg.cpp
+	src/option/init.cpp
+	src/option/add.cpp
+	src/option/build.cpp
+	src/option/install.cpp
 	src/main.cpp
-	include/config/base_config.h
-	include/config/package.h
-	include/config/config.h
-	include/config/hunter.h
-	include/config/builder.h
-	include/config/dependency.h
+	src/package/package.cpp
+	include/util/filesystem.h
+	include/util/hash.hpp
+	include/util/version.h
+	include/util/algorithm.hpp
+	include/util/system.hpp
+	include/util/string.hpp
+	include/util/cmake.h
+	include/util/command.h
 	include/config/compiler.h
-	include/config/bin.h
+	include/config/dependency.h
+	include/config/config.h
+	include/config/path.h
+	include/config/cppm_config.h
+	include/config/base_target.h
 	include/config/cppm_package.h
 	include/config/test.h
-	include/config/cmake.h
-	include/config/base_target.h
-	include/config/cppm_config.h
-	include/config/path.h
+	include/config/hunter.h
+	include/config/package.h
 	include/config/lib.h
 	include/config/cppm_tool.h
-	include/cppm_version.h
-	include/option/install.h
-	include/option/cppkg.h
-	include/option/cppkg_install.h
+	include/config/cmake.h
+	include/config/builder.h
+	include/config/base_config.h
+	include/config/bin.h
 	include/option/cppkg_init.h
-	include/option/cppm.h
-	include/option/init.h
-	include/option/add.h
-	include/option/cppm_config.h
-	include/option/base_option.h
+	include/option/install.h
 	include/option/build.h
+	include/option/cppm_config.h
+	include/option/cppkg_install.h
+	include/option/add.h
 	include/option/cppkg_search.h
-	include/util/algorithm.hpp
-	include/util/hash.hpp
-	include/util/string.hpp
-	include/util/command.h
-	include/util/filesystem.h
-	include/util/cmake.h
-	include/util/system.hpp
-	include/util/version.h
+	include/option/base_option.h
+	include/option/cppm.h
+	include/option/cppkg.h
+	include/option/init.h
 	include/package/package.h
 	include/package/repo.h
+	include/cppm_version.h
 )
 
 
