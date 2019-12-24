@@ -4,6 +4,8 @@ version = "1.0.9"
 description = "c++ cmake maker use to toml like Cargo"
 git = "https://github.com/injae/cppm.git"
 
+[compiler.debug]
+
 [hunter]
 use = true
 

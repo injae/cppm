@@ -13,8 +13,7 @@ namespace cppm
                 compiler_t.version = compiler->get_as<std::string>("version").value_or("");
             }
             else {
-                auto compiler = p_table->get_as<std::string>(compiler_t.name);
-                compiler_t.option  = compiler->get_as<std::string>("option").value_or("");
+                compiler_t.option = p_table->get_as<std::string>(compiler_t.name).value_or("");
                 compiler_t.version = "";
             }
             return compiler_t;
@@ -27,7 +26,7 @@ namespace cppm
                     for(auto& debug_compiler : *debug_table){
                         auto c_name = debug_compiler.first;
                         auto is_table = debug_compiler.second->is_table();
-                        debug_list[c_name] = add_option(debug_table,c_name, is_table);
+                        debug_list[c_name] = add_option(debug_compiler.second,c_name, is_table);
                     }
                 }
             }
@@ -36,7 +35,7 @@ namespace cppm
                     for(auto& release_compiler : *release_table){
                         auto c_name = release_compiler.first;
                         auto is_table = release_compiler.second->is_table();
-                        release_list[c_name] = add_option(release_table,c_name, is_table);
+                        release_list[c_name] = add_option(release_compiler.second,c_name, is_table);
                     }
                 }
             }
