@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.12)
 
 include(cmake/cppm_tool.cmake)
 cppm_project()
@@ -63,6 +63,7 @@ SOURCES
 	include/util/string.hpp
 	include/util/cmake.h
 	include/util/command.h
+	include/util/;
 	include/config/compiler.h
 	include/config/dependency.h
 	include/config/config.h

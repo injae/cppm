@@ -1,6 +1,8 @@
 #include "config/package.h"
 #include <iostream>
+#include <string>
 #include <fmt/format.h>
+
 
 namespace cppm
 {
@@ -16,5 +18,4 @@ namespace cppm
         description  = package->get_as<std::string>("description").value_or("");
         git_repo     = package->get_as<std::string>("git").value_or("");
     }
-
 }

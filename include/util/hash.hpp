@@ -10,7 +10,7 @@ namespace cppm::util
         return ((s<<7) + ~(s>>3)) + ~m;
     }
      
-    constexpr uint64_t hash(const char * m) {
+    constexpr uint64_t hash(const char* m) {
         return (*m) ? mix(*m,hash(m+1)) : 0;
     }
     

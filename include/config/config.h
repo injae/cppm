@@ -22,7 +22,7 @@ namespace cppm
     public:
         static Config load(const std::string& path);
         void dependency_check();
-        void parse(table_ptr table);
+        void parse(table_ptr table) override;
         std::string generate();
         static void write(table_ptr table);
     public:
