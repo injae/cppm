@@ -63,7 +63,6 @@ SOURCES
 	include/util/string.hpp
 	include/util/cmake.h
 	include/util/command.h
-	include/util/;
 	include/config/compiler.h
 	include/config/dependency.h
 	include/config/config.h
