@@ -8,9 +8,6 @@ using namespace fmt::literals;
 namespace cppm::option
 {
     CppkgInit::CppkgInit() {
-        app_.add_option("help").abbr("h")
-            .desc("show cppm command and options")
-            .call_back([&](){ app_.show_help(); });
         app_.add_option("git").abbr("g").args("{repo}")
             .desc("add git repo")
             .call_back([&](){ pkg.download.git.url = app_.get_arg(); pkg.version = "git";});

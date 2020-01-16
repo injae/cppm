@@ -15,34 +15,25 @@
 namespace cppm::option
 {
     Cppm::Cppm() {
-        app_.add_option("help")
-            .abbr("h")
-            .desc("show cppm commands and options")
-            .call_back([&](){ app_.show_help(); });
-        app_.add_option("version")
-            .abbr("v")
+        app_.name("cppm");
+        app_.add_option("version").abbr("v")
             .desc("show cppm version")
             .call_back([&](){ fmt::print("cppm version {}\n", CPPM_VERSION);});
-        app_.add_command("config")
-            .desc("cppm config setting")
-            .call_back([&](){ CppmConfig().app().parse(app_); });
-        app_.add_command("init")
-            .desc("make c++ project")
-            .call_back([&](){ Init().app().parse(app_); });
+        app_.add_command<CppmConfig>("config")
+            .desc("cppm config setting");
+        app_.add_command<Init>("init")
+            .desc("make c++ project");
         app_.add_command("update")
             .desc("update cppm version")
             .call_back([&](){ _update(); });
-        app_.add_command("build")
-            .desc("make CmakeLists.txt and project build")
-            .call_back([&](){ Build().app().parse(app_); });
+        app_.add_command<Build>("build")
+            .desc("make CmakeLists.txt and project build");
         app_.add_command("run")
             .desc("run binary file(run build/{project_name}) argument is binary argument")
             .args("{binary options}")
             .is_show(false)
             .call_back([&](){ _run(); });
-        app_.add_command("cppkg")
-            .desc("cppkg option and commands")
-            .call_back([&](){ Cppkg().app().parse(app_); });
+        app_.add_command<Cppkg>("cppkg").desc("cppkg option and commands");
     } 
 
     void Cppm::_run() {
