@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <string>
+#include "config/compiler.h"
+#include "config/dependency.h"
 
 namespace cppm
 {
@@ -12,9 +14,13 @@ namespace cppm
     {
     public:
         std::string name;
+        std::string type;
         bool install;
+        std::string source;
         std::vector<std::string> sources;
         std::vector<std::string> deps;
+        std::optional<Compiler> compiler = std::nullopt;
+        std::optional<Dependencies> dependencies = std::nullopt;
         std::vector<std::string> get_sources(Config& config);
     };
 }

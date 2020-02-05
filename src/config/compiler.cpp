@@ -8,12 +8,12 @@ namespace cppm
             CompilerType compiler_t;
             compiler_t.name = name;
             if(is_table) {
-                auto compiler = p_table->get_table(compiler_t.name);
-                compiler_t.option  = compiler->get_as<std::string>("option").value_or("");
-                compiler_t.version = compiler->get_as<std::string>("version").value_or("");
+                auto compiler = toml::get_table(p_table, compiler_t.name);
+                compiler_t.option  = toml::get(compiler, "option", "");
+                compiler_t.version = toml::get(compiler, "version", "");
             }
             else {
-                compiler_t.option = p_table->get_as<std::string>(compiler_t.name).value_or("");
+                compiler_t.option = toml::get(p_table, compiler_t.name, "");
                 compiler_t.version = "";
             }
             return compiler_t;

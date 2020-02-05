@@ -18,31 +18,27 @@ namespace cppm
             Dependency dependency; 
             dependency.name = dep_table.first;
             if(dep_table.second->is_table()) {
-                auto dep = deps->get_table(dependency.name);
-                dependency.link_type   = dep->get_as<std::string>("lnk_type").value_or("public");
-                dependency.none_module = dep->get_as<bool>("no_module").value_or(false);
-                dependency.hunter      = dep->get_as<bool>("hunter").value_or(false);
-                if(!dep->get_as<std::string>("module") && dependency.hunter) {
-                    std::cerr << "need module\n"; exit(1);
-                }
-                dependency.module      = *dep->get_as<std::string>("module");
-                dependency.version     = dep->get_as<std::string>("version").value_or("latest");
-                dependency.components  = dep->get_as<std::string>("components").value_or("");
-                dependency.load_path   = dep->get_as<std::string>("load-path").value_or("");
+                auto dep = util::panic(toml::get_table(deps, dependency.name), "can't find {}"_format(dependency.name));
+                dependency.link_type   = toml::get(dep, "lnk_type" , "public");
+                dependency.none_module = toml::get(dep, "no_module", false);
+                dependency.hunter      = toml::get(dep, "hunter"   , false);
+                dependency.type        = toml::get(dep, "type"   , "lib");
+                dependency.module      = dependency.hunter ? toml::panic(dep, "module") : toml::get(dep, "module", "");
+                dependency.version     = toml::get(dep, "version"   , "latest");
+                dependency.components  = toml::get(dep, "components", "");
+                dependency.load_path   = toml::get(dep, "load-path", "");
                 list[dependency.name] = dependency;
             }
             else {
             //else if(dep_table.second->is_value()){
-                auto dep_s = *deps->get_as<std::string>(dependency.name);
+                auto dep_s = toml::panic(deps, dependency.name);
                 std::regex filter("(\\^?)(\\d{1,4}(?:\\.\\d{1,4}){2,3}|latest|git)+(@(stable|nightly|(.*)(?:\\.)(.*)))?");
                 std::smatch what;
                 if(!std::regex_match(dep_s, what, filter)) { fmt::print("wrong module argument: {}",dep_s); exit(1);}
                 dependency.none_module = false;
                 dependency.hunter = (what[4] == "hunter") ? true : false;
                 if(dependency.hunter) { dependency.module  = what[5]; }
-                else if(what[4] == "stable" ||  what[4] == "nightly"){
-                    
-                }
+                else if(what[4] == "stable" ||  what[4] == "nightly"){ /* need to make */ }
                 if(what[1] == "^") { } // version manager
                 dependency.version = what[2];
                 dependency.link_type = "public";

@@ -4,22 +4,23 @@
 #include "package/package.h"
 #include "util/version.h"
 #include "util/filesystem.h"
-#include <fmt/format.h>
+#include <iostream>
 
 namespace cppm
 {
     Config Config::load(const std::string &path) {
         auto table = cpptoml::parse_file(path+"/cppm.toml");
+        auto lock = cpptoml::make_table();
         Config config;
         config.path = Path::make(path);
         config.parse(table);
+        //config.build_lock(table, lock);
         config.dependency_check();
         return config; 
     }
 
     void Config::dependency_check() {
         using namespace package;
-        using namespace fmt::literals;
         std::vector<Dependency> not_installed_dep;
         fs::create_directories(path.thirdparty);
         for(auto [name, dep] : dependencies.list) {
@@ -51,7 +52,7 @@ namespace cppm
             cppkg::install(*this, path);
         }
         for(auto& [name, dep] : dependencies.list) {
-            if(dep.module == "" && !dep.hunter) {
+            if(dep.module == "" && !dep.hunter && dep.type == "lib") {
                 std::string tpath = "";
                 if(dep.version == "latest") {
                     auto vpath = Version::get_latest_version_folder("{0}/{1}"_format(path.thirdparty,name));
@@ -77,12 +78,29 @@ namespace cppm
         cmake.parse(table);
         hunter.parse(table);
         builder.parse(table);
+        workspace.parse(table);
         bins.parse(table);
         libs.parse(table);
         //test.parse(table);
         compiler.parse(table);
         dependencies.parse(table);
+        std::cout << (*table) << std::endl;
         cppm_config.load();
+    }
+
+    void Config::build_lock(table_ptr table, table_ptr lock) {
+        lock->insert("target", cpptoml::make_inner_table("default.platform.default"s));
+
+        package.build_lock(table, lock);
+        cmake.build_lock(table, lock);
+        hunter.build_lock(table, lock);
+        bins.build_lock(table, lock);
+        bins.build_lock(table, lock);
+        
+
+        std::fstream file("{}/cppm.lock"_format(path.root), std::ios::out);
+        file << (*lock);
+        file.close();
     }
 
     void Config::write(table_ptr table) {

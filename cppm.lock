@@ -1,0 +1,19 @@
+[hunter]
+	use = 0
+	sha1 = "e14bc153a7f16d6a5eeec845fb0283c8fad8c358"
+	url = "https://github.com/ruslo/hunter/archive/v0.23.214.tar.gz"
+[package]
+	version = "1.0.9"
+	git_repo = "https://github.com/injae/cppm.git"
+	description = "c++ cmake maker use to toml like Cargo"
+	name = "cppm"
+[cmake]
+	builder = "make"
+	option = ""
+	compiler = "none"
+	version = "3.12"
+[target]
+	[target.default]
+		[target.default.platform]
+			[target.default.platform.default]
+				standard = "17"

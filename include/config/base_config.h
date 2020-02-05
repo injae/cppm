@@ -4,15 +4,22 @@
 #include <cpptoml.h>
 #include <memory.h>
 #include <string>
+#include <fmt/format.h>
+
+#include "util/optional.hpp"
 
 namespace cppm
 {
+    using namespace std::literals;
+    using namespace fmt::literals;
+    using table_ptr = std::shared_ptr<cpptoml::table>;
     class base_config
     {
     protected:
-        using table_ptr = std::shared_ptr<cpptoml::table>;
     public:
         virtual void parse(table_ptr table) = 0;
+        virtual void build_lock(table_ptr table, table_ptr lock) {};
+        virtual ~base_config() {};
     };
 }
 

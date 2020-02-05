@@ -9,6 +9,7 @@ namespace cppm
     {
     public:
         void parse(table_ptr table) override;
+        void build_lock(table_ptr table, table_ptr lock) override;
     public:
         std::string name;
         std::string version;

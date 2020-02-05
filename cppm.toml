@@ -4,8 +4,6 @@ version = "1.0.9"
 description = "c++ cmake maker use to toml like Cargo"
 git = "https://github.com/injae/cppm.git"
 
-[hunter]
-use = true
 
 [cmake]
 include  = ["cmake/cppm_install.cmake"]
@@ -13,6 +11,7 @@ include  = ["cmake/cppm_install.cmake"]
 [[bin]]
 name   = "cppm"
 source = ["src/.*", "include/.*"]
+
 
 #[test]
 #source = ["test/.*"]
@@ -22,4 +21,7 @@ cpptoml  = "git"
 fmt      = "6.0.0"
 nlpo     = "git"
 md5      = "git"
+hashpp   = "git"
 range-v3 = "0.9.0"
+
+

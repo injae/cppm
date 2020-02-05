@@ -128,7 +128,7 @@ namespace cppm::option
         pkg.description = config_.package.description;
         pkg.download.git.url = config_.package.git_repo;
         pkg.version = "git";
-        if(pkg.download.git.url == "") { fmt::print(stderr, "need git_repo"); exit(1); }
+        if(pkg.download.git.url == "") { fmt::print(stderr, "need config setting\n[package]\n    git = {{repo}}\n"); exit(1); }
         pkg.deps = config_.dependencies;
         pkg.global = false;
         package::cppkg::init(pkg);
