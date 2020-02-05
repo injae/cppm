@@ -84,7 +84,7 @@ namespace cppm
         //test.parse(table);
         compiler.parse(table);
         dependencies.parse(table);
-        std::cout << (*table) << std::endl;
+        //std::cout << (*table) << std::endl;
         cppm_config.load();
     }
 

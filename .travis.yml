@@ -14,7 +14,7 @@ matrix:
         - MATRIX_EVAL="CXX=clang++-8"
         - SUDO="sudo env \"PATH=$PATH\""
       addons:  { apt: { packages: ["clang-8", "libc++-dev", "libc++abi-8-dev", "libstdc++-8-dev", "build-essential", "ccache"], sources: ["ubuntu-toolchain-r-test", "llvm-toolchain-xenial-8"] } }
-      cache: {apt: true, ccache: true, directories: ["$HOME/.hunter", "$HOME/.cppm/src", "$HOME/.cppm/cache"]}
+      cache: {apt: true, ccache: true, directories: ["$HOME/.hunter", "$HOME/.cppm/src"]}
     ## GCC 6
     #- env: COMPILER=g++-6
     #  addons: { apt: { packages: ["g++-6", "valgrind"], sources: ["ubuntu-toolchain-r-test"] } }
@@ -27,7 +27,7 @@ matrix:
         - MATRIX_EVAL="CXX=g++-8"
         - SUDO="sudo env \"PATH=$PATH\""
       addons: { apt: { packages: ["g++-8", "libc++-dev", "libc++abi-dev", "build-essential", "libstdc++-8-dev", "ccache"], sources: ["ubuntu-toolchain-r-test"] } }
-      cache: {apt: true, ccache: true, directories: ["$HOME/.hunter", "$HOME/.cppm/src", "$HOME/.cppm/cache"]}
+      cache: {apt: true, ccache: true, directories: ["$HOME/.hunter", "$HOME/.cppm/src"]}
 
     #- os: osx
     #  env: SUDO=""
