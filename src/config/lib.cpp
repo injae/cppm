@@ -2,7 +2,7 @@
 #include "util/filesystem.h"
 #include "util/algorithm.hpp"
 #include "config/config.h"
-#include "util/cmake.h"
+#include "cmake/cmake.h"
 #include <string>
 #include <fmt/format.h>
 
@@ -13,8 +13,8 @@ namespace cppm
         if(!table_array) return;
         toml::get_table_array(table, "lib", [&](auto tb) {
              Lib lib;
-             lib.name = toml::panic(tb, "name");
-             lib.type = toml::get(tb, "type", "static");
+             lib.name    = toml::panic(tb, "name");
+             lib.type    = toml::get(tb, "type", "static");
              lib.install = toml::get(tb, "install", true);
              toml::get_array(tb, "source", lib.sources);
              toml::get_array(tb, "dependencies", lib.deps);
@@ -24,7 +24,6 @@ namespace cppm
 
     std::string Libs::generate(Config& config) {
         using namespace fmt::literals;
-        using namespace util::cmake;
         auto lib_type = [&](std::string type) -> std::string {
                  if(type == "shared")           return "SHARED";
            else  if(type == "static")           return "STATIC";

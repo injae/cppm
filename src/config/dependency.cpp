@@ -30,14 +30,16 @@ namespace cppm
                 list[dependency.name] = dependency;
             }
             else {
-            //else if(dep_table.second->is_value()){
                 auto dep_s = toml::panic(deps, dependency.name);
                 std::regex filter("(\\^?)(\\d{1,4}(?:\\.\\d{1,4}){2,3}|latest|git)+(@(stable|nightly|(.*)(?:\\.)(.*)))?");
                 std::smatch what;
                 if(!std::regex_match(dep_s, what, filter)) { fmt::print("wrong module argument: {}",dep_s); exit(1);}
                 dependency.none_module = false;
                 dependency.hunter = (what[4] == "hunter") ? true : false;
-                if(dependency.hunter) { dependency.module  = what[5]; }
+                if(dependency.hunter) {
+                    dependency.module  = what[5];
+                    dependency.type    = "lib";
+                }
                 else if(what[4] == "stable" ||  what[4] == "nightly"){ /* need to make */ }
                 if(what[1] == "^") { } // version manager
                 dependency.version = what[2];

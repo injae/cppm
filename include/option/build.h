@@ -3,6 +3,7 @@
 
 #include "option/base_option.h"
 #include "config/config.h"
+#include "cmake/cmake.h"
 #include <string>
 
 namespace cppm::option
@@ -25,6 +26,7 @@ namespace cppm::option
     private:
         void export_cppkg();
         CommandBuilder cmd;
+        cmake::Cmake cmake_;
         bool none_tc = false;
         bool only_tc = false;
         bool clean = false;

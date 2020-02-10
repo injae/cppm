@@ -14,6 +14,9 @@
 
 namespace cppm::util
 {
+    inline void panic(bool opt, const std::string& message) { if(!opt) { fmt::print(stderr, "{}", message);  exit(1); } }
+    
+
     template<typename T>
     T panic(std::optional<T> opt, const std::string& message) {
         if(!opt) { fmt::print(stderr, "{}", message);  exit(1); }

@@ -1,5 +1,5 @@
 #include "config/config.h"
-#include "util/cmake.h"
+#include "cmake/cmake.h"
 #include "config/cppm_tool.h"
 #include "package/package.h"
 #include "util/version.h"
@@ -26,7 +26,7 @@ namespace cppm
         for(auto [name, dep] : dependencies.list) {
             if(dep.hunter) { continue; }
             std::string tpath = "";
-            if(dep.load_path != "") {
+            if(dep.load_path.empty()) {
                 if(!fs::exists("{}/{}"_format(path.root, dep.load_path))) {
                     fmt::print(stderr, "can't find load-path library, {}", dep.load_path);
                     exit(1);
@@ -52,7 +52,7 @@ namespace cppm
             cppkg::install(*this, path);
         }
         for(auto& [name, dep] : dependencies.list) {
-            if(dep.module == "" && !dep.hunter && dep.type == "lib") {
+            if(dep.module == "" && !dep.hunter) {
                 std::string tpath = "";
                 if(dep.version == "latest") {
                     auto vpath = Version::get_latest_version_folder("{0}/{1}"_format(path.thirdparty,name));
@@ -66,8 +66,9 @@ namespace cppm
                 auto table = cpptoml::parse_file("{}/cppkg.toml"_format(tpath));
                 package::Package pkg;
                 pkg.parse(table);
-                dep.module = pkg.cmake.name;
-                dep.version = pkg.version;
+                dep.module     = pkg.cmake.name;
+                dep.type       = pkg.type;
+                dep.version    = pkg.version;
                 dep.components = pkg.cmake.components;
             }
         }

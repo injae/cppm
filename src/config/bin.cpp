@@ -3,7 +3,7 @@
 #include "util/algorithm.hpp"
 #include "config/config.h"
 #include <string>
-#include "util/cmake.h"
+#include "cmake/cmake.h"
 #include <fmt/format.h>
 
 using namespace fmt::literals;
@@ -22,7 +22,7 @@ namespace cppm
     }
 
     std::string Bins::generate(Config& config) {
-        using namespace util::cmake;
+        using namespace cmake;
 
         std::string gen;
         for(const auto& bin : list) {

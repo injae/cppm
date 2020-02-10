@@ -50,8 +50,7 @@ namespace cppm::tool
         for(auto target : list) {
             if(target->deps.empty()) {
                 for(auto& g_dep : config.dependencies.list) {
-                    if(target->name == g_dep.first) continue;
-                    target->deps.push_back(g_dep.first);
+                    if(g_dep.second.type == "lib") target->deps.push_back(g_dep.first);
                 }
             }
             std::vector<std::string> pub_deps, pri_deps, int_deps;

@@ -19,8 +19,8 @@ find_cppkg(range-v3 0.9.0)
 
 cppm_target_define(cppm BINARY 
 SOURCES 
+	src/cmake/cmake.cpp
 	src/util/version.cpp
-	src/util/option.hpp
 	src/util/filesystem.cpp
 	src/util/algorithm.cpp
 	src/util/system.cpp
@@ -53,6 +53,7 @@ SOURCES
 	src/option/install.cpp
 	src/main.cpp
 	src/package/package.cpp
+	include/cmake/cmake.h
 	include/util/filesystem.h
 	include/util/hash.hpp
 	include/util/version.h
@@ -60,7 +61,6 @@ SOURCES
 	include/util/system.hpp
 	include/util/optional.hpp
 	include/util/string.hpp
-	include/util/cmake.h
 	include/util/command.h
 	include/config/compiler.h
 	include/config/dependency.h

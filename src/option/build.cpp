@@ -13,6 +13,7 @@
 #include "package/package.h"
 #include "util/system.hpp"
 #include "util/string.hpp"
+#include "cmake/cmake.h"
 
 using namespace fmt::literals;
 using namespace std::literals;
@@ -44,13 +45,15 @@ namespace cppm::option
             +  "&& {0} cmake --build . {1} -- {2} "_format(sudo, target_cmd, build_option);
     }
     
-    Build::Build() {
+    Build::Build()  {
         app_.add_option("Generator").abbr("G").args("{Generator}")
             .desc("cmake -G option")
             .call_back([&](){ cmd.cmake_option += " -G {}"_format(app_.get_arg()); });
         app_.add_option("ninja").abbr("n")
             .desc("ninja use to build this option remove build directory")
-            .call_back([&](){ clean = true; cmd.cmake_option += " -G Ninja "; });
+            .call_back([&](){ clean=true; cmd.cmake_option += " -G Ninja ";
+                    cmake_.generator("Ninja");
+                       });
         app_.add_option("make").abbr("m")
             .desc("Unix make use to build this option remove build directory")
             .call_back([&](){ clean = true; cmd.cmake_option += " -G {} "_format("Unix Makefiles"_quot); });
@@ -59,7 +62,9 @@ namespace cppm::option
             .call_back([&](){ cmd.cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("g++"); });
         app_.add_option("clang").abbr("c")
             .desc("clang++ use to compile ")
-            .call_back([&](){ cmd.cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("clang++"); });
+            .call_back([&](){ cmd.cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("clang++");
+                    cmake_.define("CMAKE_CXX_COMPILER", "clang++");
+                       });
         app_.add_option("release").abbr("r")
             .desc("compile release mode")
             .call_back([&](){ cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("Release"); });
@@ -101,8 +106,9 @@ namespace cppm::option
                     if(only_tc) { exit(1); }
                 }
                 if(clean) {
-                    fs::remove_all(config_.path.build);
-                    fs::create_directory(config_.path.build);
+                    fs::remove(config_.path.build + "/CMakeCache.txt")
+                        //fs::remove_all(config_.path.build);
+                        //fs::create_directory(config_.path.build);
                 }
                 if(!app_.args().empty()) {
                     cmd.build_option += util::accumulate(app_.args(), " ");
@@ -112,6 +118,7 @@ namespace cppm::option
                 auto cmd2 = cmd.after_option;
                 // fmt::print(cmd1);
                 // fmt::print(cmd2);
+                cmake_.build(config_.path.root);
                 system(cmd1.c_str());
                 if(cmd2 != "") system(cmd2.c_str());
                 //util::system::exec(cmd.build(config_).c_str(), [](auto& str){ fmt::print(str); });
