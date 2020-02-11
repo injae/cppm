@@ -20,75 +20,52 @@ using namespace std::literals;
 using namespace cppm::util::str;
 namespace cppm::option
 {
-    std::string CommandBuilder::build(Config& config)
-    {
-        using namespace util;
-        auto has_toolchains = [&config](){
-           return config.cppm_config.package.toolchains() == "" ?
-           ""s : " -DCMAKE_TOOLCHAIN_FILE=\"{0}\""_format(config.cppm_config.package.toolchains());
-        };
-        auto has_cache = fs::exists(config.path.build + "/CMakeCache.txt");
-
-        build_option += (compiler::what() != "msvc"s) ? " -j{} "_format(std::thread::hardware_concurrency()) : "";
-        auto sudo = !is_install_local && is_install && strcmp(system::what(), "windows") != 0 ? "sudo" : "";
-        cmake_option +=  is_install_local ? " -DCMAKE_INSTALL_PREFIX={}local "_format(tool::cppm_root()) : "";
-        target = is_install ? "install" : "";
-        auto target_cmd = target != "" ? "--target " + target : "";
-        std::string gen = "";
-        if(!has_cache || has_toolchains() != "" || config.cmake.option != "" || cmake_option != "") {
-            gen += "cd {} &&"_format(config.path.root);
-            gen += "cmake -Bbuild {0} {1} {2} &&"_format(has_toolchains(), config.cmake.option, cmake_option);
-        }
-
-        return gen 
-            +  "cd {0} "_format(config.path.build)
-            +  "&& {0} cmake --build . {1} -- {2} "_format(sudo, target_cmd, build_option);
-    }
-    
     Build::Build()  {
         app_.add_option("Generator").abbr("G").args("{Generator}")
             .desc("cmake -G option")
-            .call_back([&](){ cmd.cmake_option += " -G {}"_format(app_.get_arg()); });
+            .call_back([&](){ cmake_.generator(app_.get_arg());});
         app_.add_option("ninja").abbr("n")
             .desc("ninja use to build this option remove build directory")
-            .call_back([&](){ clean=true; cmd.cmake_option += " -G Ninja ";
-                    cmake_.generator("Ninja");
-                       });
+            .call_back([&](){ cmake_.generator("Ninja"); clean=true; });
         app_.add_option("make").abbr("m")
             .desc("Unix make use to build this option remove build directory")
-            .call_back([&](){ clean = true; cmd.cmake_option += " -G {} "_format("Unix Makefiles"_quot); });
+            .call_back([&](){ cmake_.generator("Unix Makefiles"_quot); clean = true;  });
         app_.add_option("gcc").abbr("g")
             .desc("g++ use to compile ")
-            .call_back([&](){ cmd.cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("g++"); });
+            .call_back([&](){ cmake_.define("CMAKE_CXX_COMPILER", "g++"); });
         app_.add_option("clang").abbr("c")
             .desc("clang++ use to compile ")
-            .call_back([&](){ cmd.cmake_option += " -DCMAKE_CXX_COMPILER={0}"_format("clang++");
-                    cmake_.define("CMAKE_CXX_COMPILER", "clang++");
-                       });
+            .call_back([&](){ cmake_.define("CMAKE_CXX_COMPILER", "clang++");});
         app_.add_option("release").abbr("r")
             .desc("compile release mode")
-            .call_back([&](){ cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("Release"); });
+            .call_back([&](){ cmake_.define("CMAKE_BUILD_TYPE", "Release"); });
         app_.add_option("debug").abbr("d")
             .desc("compile debug mode")
-            .call_back([&](){ cmd.cmake_option += " -DCMAKE_BUILD_TYPE={0}"_format("Debug"); });
+            .call_back([&](){ cmake_.define("CMAKE_BUILD_TYPE", "Debug"); });
+        app_.add_option("clear")
+            .desc("clear cmake cache")
+            .call_back([&]() { clean = true; });
         app_.add_option("ntc")
             .desc("not change CMakeLists.txt test options")
-            .call_back([this]() { none_tc = true; });
+            .call_back([&]() { none_tc = true; });
         app_.add_option("tc")
             .desc("only change CMakeLists.txt")
-            .call_back([this]() { only_tc = true; });
+            .call_back([&]() { only_tc = true; });
+        app_.add_option("check")
+            .desc("dependency check")
+            .call_back([&]() { cmake_.no_cache=true; });
         app_.add_option("export")
             .desc("export cppkg")
             .call_back([&]() { config_load(); export_cppkg(); });
         app_.add_option("local")
             .desc("install local")
-            .call_back([&]() { cmd.is_install_local = true; clean = true; });
+            .call_back([&]() { cmake_.define("CMAKE_INSTALL_PREFIX", "{}local"_format(tool::cppm_root()));clean=true;});
         app_.add_option("global")
             .desc("install global")
-            .call_back([&]() { cmd.is_install_local = false; clean = true; });
+            .call_back([&]() { cmake_.sudo=true; cmake_.define("CMAKE_INSTALL_PREFIX", ""); clean = true; });
         app_.add_command("install")
             .desc("cmake target install ")
-            .call_back([this]() { cmd.is_install = true; });
+            .call_back([&]() { cmake_.install = true; });
         app_.add_command().args("{cppm options} {builder options}")
             .desc("Build command")
             .call_back([&](){
@@ -100,29 +77,24 @@ namespace cppm::option
                         fmt::print("CMakeLists.txt Changed\n");
                         util::write_file("{0}/CMakeLists.txt"_format(config_.path.root), tranc_cmake);
                     }
-                    auto cppm_root = tool::cppm_root(); 
-                    util::over_write_copy_file("{0}cmake/cppm_tool.cmake"_format(cppm_root)
+                    util::over_write_copy_file("{0}cmake/cppm_tool.cmake"_format(tool::cppm_root())
                                               ,"{0}/cppm_tool.cmake"_format(config_.path.cmake));
                     if(only_tc) { exit(1); }
                 }
                 if(clean) {
-                    fs::remove(config_.path.build + "/CMakeCache.txt")
-                        //fs::remove_all(config_.path.build);
-                        //fs::create_directory(config_.path.build);
+                    fs::remove(config_.path.build + "/CMakeCache.txt");
                 }
                 if(!app_.args().empty()) {
-                    cmd.build_option += util::accumulate(app_.args(), " ");
+                    cmake_.generator_options(util::str::quot(util::accumulate(app_.args(), " ")));
                     app_.args().clear();
                 }
-                auto cmd1 = cmd.build(config_);
-                auto cmd2 = cmd.after_option;
-                // fmt::print(cmd1);
-                // fmt::print(cmd2);
-                cmake_.build(config_.path.root);
-                system(cmd1.c_str());
-                if(cmd2 != "") system(cmd2.c_str());
-                //util::system::exec(cmd.build(config_).c_str(), [](auto& str){ fmt::print(str); });
-                //util::system::exec(cmd.after_option.c_str(),   [](auto& str){ fmt::print(str); });
+                if(config_.cppm_config.package.toolchains() != "") {
+                    cmake_.define("CMAKE_TOOLCHAIN_FILE", config_.cppm_config.package.toolchains());
+                }
+                if(util::compiler::what() != "msvc"s) {
+                    cmake_.generator_options(" -j{} "_format(std::thread::hardware_concurrency()));
+                }
+                cmake_.build(config_.path.root, "build");
             });
     }
 
