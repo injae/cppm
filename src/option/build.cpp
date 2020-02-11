@@ -74,7 +74,7 @@ namespace cppm::option
                 if(!none_tc) {
                     auto tranc_cmake = config_.generate();
                     if(util::file_hash("{0}/CMakeLists.txt"_format(config_.path.root)) != hash::md5(tranc_cmake)) {
-                        fmt::print("CMakeLists.txt Changed\n");
+                        fmt::print("[cppm] Generate CMakeLists.txt\n");
                         util::write_file("{0}/CMakeLists.txt"_format(config_.path.root), tranc_cmake);
                     }
                     util::over_write_copy_file("{0}cmake/cppm_tool.cmake"_format(tool::cppm_root())
@@ -82,6 +82,7 @@ namespace cppm::option
                     if(only_tc) { exit(1); }
                 }
                 if(clean) {
+                    fmt::print("[cppm] Clean build/CMakeCache.txt\n");
                     fs::remove(config_.path.build + "/CMakeCache.txt");
                 }
                 if(!app_.args().empty()) {

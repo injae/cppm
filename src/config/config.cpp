@@ -4,6 +4,7 @@
 #include "package/package.h"
 #include "util/version.h"
 #include "util/filesystem.h"
+#include "util/optional.hpp"
 #include <iostream>
 
 namespace cppm
@@ -26,11 +27,9 @@ namespace cppm
         for(auto [name, dep] : dependencies.list) {
             if(dep.hunter) { continue; }
             std::string tpath = "";
-            if(dep.load_path.empty()) {
-                if(!fs::exists("{}/{}"_format(path.root, dep.load_path))) {
-                    fmt::print(stderr, "can't find load-path library, {}", dep.load_path);
-                    exit(1);
-                }
+            if(dep.load_path != "") {
+                util::panic(fs::exists("{}/{}"_format(path.root, dep.load_path))
+                           ,"[cppm-error] can't find load-path library, {}/{}"_format(path.root, dep.load_path));
                 continue;
             }
             if(!fs::exists("{0}/{1}"_format(path.thirdparty,name))){
@@ -52,7 +51,7 @@ namespace cppm
             cppkg::install(*this, path);
         }
         for(auto& [name, dep] : dependencies.list) {
-            if(dep.module == "" && !dep.hunter) {
+            if(dep.module == "" && !dep.hunter && dep.type == "lib") {
                 std::string tpath = "";
                 if(dep.version == "latest") {
                     auto vpath = Version::get_latest_version_folder("{0}/{1}"_format(path.thirdparty,name));
@@ -85,7 +84,7 @@ namespace cppm
         //test.parse(table);
         compiler.parse(table);
         dependencies.parse(table);
-        //std::cout << (*table) << std::endl;
+        std::cout << (*table) << std::endl;
         cppm_config.load();
     }
 

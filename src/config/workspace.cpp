@@ -2,6 +2,7 @@
 #include<fmt/format.h>
 #include<cpptoml.h>
 #include"config/config.h"
+#include"util/filesystem.h"
 
 namespace cppm
 {
@@ -14,19 +15,20 @@ namespace cppm
             std::for_each(member.begin(), member.end()
             , [&](auto path) {
                   Config sub = Config().load(path);
+                  if(!fs::exists(path+"/CMakeLists.txt")) system("cd {} && cppm build --tc"_format(path).c_str());
                   auto mem = cpptoml::make_table();
                   if(!sub.libs.list.empty()) {
-                    auto lib = sub.libs.list.front();
-                    mem->insert("version", sub.package.version);
-                    mem->insert("module", lib.name);
-                    mem->insert("load-path", path);
-                    dep->insert(lib.name, mem);
+                      auto lib = sub.libs.list.front();
+                      mem->insert("version", sub.package.version);
+                      mem->insert("module", lib.name);
+                      mem->insert("load-path", path);
+                      dep->insert(lib.name, mem);
                   }
                   else {
-                    mem->insert("version", sub.package.version);
-                    mem->insert("load-path", path);
-                    mem->insert("type", "bin");
-                    dep->insert(sub.package.name, mem);
+                      mem->insert("version", sub.package.version);
+                      mem->insert("load-path", path);
+                      mem->insert("type", "bin");
+                      dep->insert(sub.package.name, mem);
                   }
             });
             table->insert("dependencies", dep);
