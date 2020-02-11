@@ -28,7 +28,7 @@ namespace cppm
         for(const auto& bin : list) {
             std::vector<std::string> sources;
             for(const auto& src : bin.sources) {
-                auto result = util::find_files(config.path.root, std::regex(src), false);
+                auto result = util::find_files(config.path.root, std::regex(src, std::regex_constants::grep), false);
                 sources.insert(sources.end(), result.begin(), result.end());
             }
             gen += "\n\ncppm_target_install({0} {1} {2}\nSOURCES {3}\n)\n"_format(bin.name, "BINARY", bin.install ? "INSTALL":"", util::accumulate(sources, "\n\t"));

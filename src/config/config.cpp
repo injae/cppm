@@ -51,7 +51,8 @@ namespace cppm
             cppkg::install(*this, path);
         }
         for(auto& [name, dep] : dependencies.list) {
-            if(dep.module == "" && !dep.hunter && dep.type == "lib") {
+            if(((dep.module == "") && !dep.hunter )) {
+                if(dep.load_path != "") continue;
                 std::string tpath = "";
                 if(dep.version == "latest") {
                     auto vpath = Version::get_latest_version_folder("{0}/{1}"_format(path.thirdparty,name));
@@ -84,7 +85,7 @@ namespace cppm
         //test.parse(table);
         compiler.parse(table);
         dependencies.parse(table);
-        std::cout << (*table) << std::endl;
+        //std::cout << (*table) << std::endl;
         cppm_config.load();
     }
 
