@@ -1,2 +1,4 @@
 build/
-.#*
+.*
+.ccls-cache/
+compiler_commands.json

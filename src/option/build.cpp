@@ -21,6 +21,7 @@ using namespace cppm::util::str;
 namespace cppm::option
 {
     Build::Build()  {
+        cmake_.define("CMAKE_INSTALL_PREFIX", "{}local"_format(tool::cppm_root()));
         app_.add_option("Generator").abbr("G").args("{Generator}")
             .desc("cmake -G option")
             .call_back([&](){ cmake_.generator(app_.get_arg());});
@@ -44,28 +45,29 @@ namespace cppm::option
             .call_back([&](){ cmake_.define("CMAKE_BUILD_TYPE", "Debug"); });
         app_.add_option("clear")
             .desc("clear cmake cache")
-            .call_back([&]() { clean = true; });
+            .call_back([&](){ clean = true; });
         app_.add_option("ntc")
             .desc("not change CMakeLists.txt test options")
-            .call_back([&]() { none_tc = true; });
+            .call_back([&](){ none_tc = true; });
         app_.add_option("tc")
             .desc("only change CMakeLists.txt")
-            .call_back([&]() { only_tc = true; });
+            .call_back([&](){ only_tc = true; });
         app_.add_option("check")
             .desc("dependency check")
-            .call_back([&]() { cmake_.no_cache=true; });
+            .call_back([&](){ cmake_.no_cache=true; });
         app_.add_option("export")
             .desc("export cppkg")
-            .call_back([&]() { config_load(); export_cppkg(); });
+            .call_back([&](){ config_load(); export_cppkg(); });
         app_.add_option("local")
             .desc("install local")
-            .call_back([&]() { cmake_.define("CMAKE_INSTALL_PREFIX", "{}local"_format(tool::cppm_root()));clean=true;});
+            .call_back([&](){ cmake_.define("CMAKE_INSTALL_PREFIX", "{}local"_format(tool::cppm_root())); clean=true;});
         app_.add_option("global")
             .desc("install global")
-            .call_back([&]() { cmake_.sudo=true; cmake_.define("CMAKE_INSTALL_PREFIX", ""); clean = true; });
+            .call_back([&](){ cmake_.sudo=true; cmake_.define("CMAKE_INSTALL_PREFIX", "/usr/local"); clean = true; });
         app_.add_command("install")
             .desc("cmake target install ")
-            .call_back([&]() { cmake_.install = true; });
+            .call_back([&](){ cmake_.install = true; })
+            .call_back([&](){ cmake_.define("CMAKE_BUILD_TYPE", "Release"); });
         app_.add_command().args("{cppm options} {builder options}")
             .desc("Build command")
             .call_back([&](){

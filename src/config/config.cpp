@@ -30,6 +30,7 @@ namespace cppm
             if(dep.load_path != "") {
                 util::panic(fs::exists("{}/{}"_format(path.root, dep.load_path))
                            ,"[cppm-error] can't find load-path library, {}/{}"_format(path.root, dep.load_path));
+                dep.load_path = "{}/{}"_format(path.root, dep.load_path);
                 continue;
             }
             if(!fs::exists("{0}/{1}"_format(path.thirdparty,name))){

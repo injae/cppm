@@ -22,11 +22,11 @@ namespace cppm
                 dependency.link_type   = toml::get(dep, "lnk_type" , "public");
                 dependency.none_module = toml::get(dep, "no_module", false);
                 dependency.hunter      = toml::get(dep, "hunter"   , false);
-                dependency.type        = toml::get(dep, "type"   , "lib");
+                dependency.type        = toml::get(dep, "type"     , "lib");
                 dependency.module      = dependency.hunter ? toml::panic(dep, "module") : toml::get(dep, "module", "");
                 dependency.version     = toml::get(dep, "version"   , "latest");
                 dependency.components  = toml::get(dep, "components", "");
-                dependency.load_path   = toml::get(dep, "load-path", "");
+                dependency.load_path   = toml::get(dep, "load-path ", "");
                 list[dependency.name] = dependency;
             }
             else {

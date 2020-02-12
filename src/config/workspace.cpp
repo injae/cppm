@@ -21,6 +21,7 @@ namespace cppm
                       auto lib = sub.libs.list.front();
                       mem->insert("version", sub.package.version);
                       mem->insert("module", lib.name);
+                      mem->insert("type", "lib");
                       mem->insert("load-path", path);
                       dep->insert(lib.name, mem);
                   }
