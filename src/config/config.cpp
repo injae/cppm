@@ -20,16 +20,32 @@ namespace cppm
         return config; 
     }
 
+    void Config::parse(table_ptr table) {
+        package.parse(table);
+        cmake.parse(table);
+        hunter.parse(table);
+        builder.parse(table);
+        workspace.parse(table);
+        bins.parse(table);
+        libs.parse(table);
+        //test.parse(table);
+        compiler.parse(table);
+        dependencies.parse(table);
+        //std::cout << (*table) << std::endl;
+        cppm_config.load();
+    }
+
     void Config::dependency_check() {
         using namespace package;
         std::vector<Dependency> not_installed_dep;
         fs::create_directories(path.thirdparty);
-        for(auto [name, dep] : dependencies.list) {
+        for(auto& [name, dep] : dependencies.list) {
             if(dep.hunter) { continue; }
             std::string tpath = "";
+            fmt::print("{} = {},{},{}\n",name, dep.name, dep.module, dep.load_path);
             if(dep.load_path != "") {
                 util::panic(fs::exists("{}/{}"_format(path.root, dep.load_path))
-                           ,"[cppm-error] can't find load-path library, {}/{}"_format(path.root, dep.load_path));
+                           ,"[cppm-error] can't find load-path package, {}/{}\n"_format(path.root, dep.load_path));
                 dep.load_path = "{}/{}"_format(path.root, dep.load_path);
                 continue;
             }
@@ -39,7 +55,7 @@ namespace cppm
             }
             if(dep.version == "latest") {
                 auto vpath = Version::get_latest_version_folder("{0}/{1}"_format(path.thirdparty,name));
-                if(!vpath) { fmt::print(stderr, "can't find {}/{}",name, dep.version); exit(1); }
+                util::panic(vpath, "can't find {}/{}\n"_format(name, dep.version));
                 tpath = *vpath;
             }
             else { tpath = "{0}/{1}/{2}"_format(path.thirdparty,name,dep.version); }
@@ -75,20 +91,6 @@ namespace cppm
         }
     }
 
-    void Config::parse(table_ptr table) {
-        package.parse(table);
-        cmake.parse(table);
-        hunter.parse(table);
-        builder.parse(table);
-        workspace.parse(table);
-        bins.parse(table);
-        libs.parse(table);
-        //test.parse(table);
-        compiler.parse(table);
-        dependencies.parse(table);
-        //std::cout << (*table) << std::endl;
-        cppm_config.load();
-    }
 
     void Config::build_lock(table_ptr table, table_ptr lock) {
         lock->insert("target", cpptoml::make_inner_table("default.platform.default"s));

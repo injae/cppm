@@ -26,7 +26,7 @@ namespace cppm
                 dependency.module      = dependency.hunter ? toml::panic(dep, "module") : toml::get(dep, "module", "");
                 dependency.version     = toml::get(dep, "version"   , "latest");
                 dependency.components  = toml::get(dep, "components", "");
-                dependency.load_path   = toml::get(dep, "load-path ", "");
+                dependency.load_path   = toml::get(dep, "load-path", "");
                 list[dependency.name] = dependency;
             }
             else {
