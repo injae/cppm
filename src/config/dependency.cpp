@@ -68,12 +68,13 @@ namespace cppm
         std::string gen;
         for(auto& [name ,dep] : list) {
             if(dep.load_path != "") {
+                gen += dep.type == "lib" ? "find_cppkg({0} {1} MODULE {2} LOADPATH)\n"_format(name, dep.version, dep.module) : "";
                 gen += "add_subdirectory({})\n"_format(dep.load_path);
                 continue;
             }
             auto components = dep.components =="" ? "" : " COMPONENTS " + dep.components;
             auto hunter = dep.hunter ? " HUNTER" : "";
-            gen += "find_cppkg({0} {1}{2}{3})\n"_format(name,dep.version,components, hunter);
+            gen += "find_cppkg({0} {1} MODULE {2}{3}{4})\n"_format(name, dep.version, dep.module, components, hunter);
         }
         return gen;
     }

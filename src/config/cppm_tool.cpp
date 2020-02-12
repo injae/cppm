@@ -56,9 +56,9 @@ namespace cppm::tool
             std::vector<std::string> pub_deps, pri_deps, int_deps;
             for(const auto& dep : target->deps) {
                 auto g_dep = config.dependencies.list[dep];
-                     if(g_dep.link_type == "public")    pub_deps.push_back(g_dep.module);
-                else if(g_dep.link_type == "private")   pri_deps.push_back(g_dep.module);
-                else if(g_dep.link_type == "interface") int_deps.push_back(g_dep.module);
+                     if(g_dep.link_type == "public")    pub_deps.push_back(g_dep.name);
+                else if(g_dep.link_type == "private")   pri_deps.push_back(g_dep.name);
+                else if(g_dep.link_type == "interface") int_deps.push_back(g_dep.name);
             }
             auto trans = [&](std::string title, std::vector<std::string> list){
                              return "\n{0}\t{1}"_format(title,util::accumulate(list, "\n\t"));

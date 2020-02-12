@@ -10,12 +10,12 @@ cppm_compiler_option(DEFAULT)
 
 
 include(cmake/cppm_install.cmake)
-find_cppkg(cpptoml git)
-find_cppkg(fmt 6.0.0)
-find_cppkg(hashpp git)
-find_cppkg(md5 git)
-find_cppkg(nlpo git)
-find_cppkg(range-v3 0.9.0)
+find_cppkg(cpptoml git MODULE cpptoml::cpptoml )
+find_cppkg(fmt 6.0.0 MODULE fmt::fmt)
+find_cppkg(hashpp git MODULE hashpp::hashpp )
+find_cppkg(md5 git MODULE md5::md5 )
+find_cppkg(nlpo git MODULE nlpo::nlpo )
+find_cppkg(range-v3 0.9.0 MODULE range-v3)
 
 cppm_target_define(cppm BINARY 
 SOURCES 
@@ -98,11 +98,11 @@ SOURCES
 
 cppm_target_dependencies(cppm 
 PUBLIC	
-	cpptoml::cpptoml 
-	fmt::fmt
-	hashpp::hashpp 
-	md5::md5 
-	nlpo::nlpo 
+	cpptoml
+	fmt
+	hashpp
+	md5
+	nlpo
 	range-v3
 )
 
