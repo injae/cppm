@@ -1,0 +1,27 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Compiler Setting
+      env:
+        CC: ${{matrix.compiler}}
+    - name: CMake build
+      run: cmake -Bbuild .. && cd build && cmake --build .
+    - name: Cppm build install
+      run: cd build && ./cppm build install
+  build-windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: CMake build
+      run: cmake -Bbuild .. && cd build && cmake --build .
+    - name: Cppm build install
+      run: cd build/Debug && ./cppm build install
