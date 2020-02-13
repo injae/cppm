@@ -44,8 +44,7 @@ before_install:
 
 script:
   - eval "${SUDO}" cmake -H. -Bbuild
-  - cd build && eval "${SUDO}" cmake --build .;
-  - ./cppm build install
+  - cd build && eval "${SUDO}" cmake --build . ;
 
 #import:
 #  - docs/.travis.yml
