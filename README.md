@@ -1,11 +1,9 @@
 
-Cppm [![gitbook][5]][6]
+Cppm 
 ========
 |Linux|Windows|
 |:----|:------|
-[![Linux](https://github.com/injae/cppm/workflows/Linux/badge.svg) | ![Windows](https://github.com/injae/cppm/workflows/Windows/badge.svg)] | 
-[5]: https://aleen42.github.io/badges/src/gitbook_2.svg
-[6]: https://cppm.gitbook.io/project/
+![Linux](https://github.com/injae/cppm/workflows/Linux/badge.svg) | ![Windows](https://github.com/injae/cppm/workflows/Windows/badge.svg) | 
 
 ![](cppm_demo.gif)
 > Cppm is a cross platform C++ project manager like Rust's Cargo.   
