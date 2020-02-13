@@ -12,7 +12,7 @@ jobs:
       run: |
         sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
         sudo apt-get update
-        sudo apt-get -q g++-8 gcc-8 libc++-dev libc++abi-dev build-essential libstdc++-8-dev
+        sudo apt-get install -yq g++-8 gcc-8 libc++-dev libc++abi-dev build-essential libstdc++-8-dev
       env:
         CC: gcc-8
         CXX: g++-8
@@ -32,7 +32,7 @@ jobs:
         sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
         sudo add-apt-repository -y "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial main"
         sudo apt-get update
-        sudo apt-get -yq clang-8 libc++-dev libc++abi-8-dev libstdc++-8-dev build-essential
+        sudo apt-get install -yq clang-8 libc++-dev libc++abi-8-dev libstdc++-8-dev build-essential
       env:
         CC: clang-8
         CXX: clang++-8
