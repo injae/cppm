@@ -16,10 +16,8 @@ jobs:
       env:
         CC: ${{matrix.compiler}}
     - name: CMake build
-      working-directory: ./cppm
-      run: cmake -Bbuild .. && cd build && cmake --build .
+      run: cmake -Bbuild . && cd build && cmake --build .
     - name: Cppm build install
-      working-directory: ./cppm
       run: cd build && ./cppm build install
   build-windows:
     runs-on: windows-latest
@@ -27,8 +25,6 @@ jobs:
     - name: Cloning
       uses: actions/checkout@master
     - name: CMake build
-      working-directory: ./cppm
-      run: cmake -Bbuild .. && cd build && cmake --build .
+      run: cmake -Bbuild . && cd build && cmake --build .
     - name: Cppm build install
-      working-directory: ./cppm
       run: cd build && ./cppm build install
