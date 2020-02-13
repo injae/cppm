@@ -47,6 +47,6 @@ script:
   - cd build && eval "${SUDO}" cmake --build .;
   - ./cppm build install
 
-import:
-  - docs/.travis.yml
+#import:
+#  - docs/.travis.yml
 
