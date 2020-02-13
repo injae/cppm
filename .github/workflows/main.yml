@@ -9,7 +9,9 @@ jobs:
       matrix:
         compiler: [gcc, clang]
     steps:
-    - uses: actions/checkout@master
+    - name: Cloning
+      uses: actions/checkout@master
+      path: ''
     - name: Compiler Setting
       run: echo Compiler Setting
       env:
@@ -21,7 +23,9 @@ jobs:
   build-windows:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@master
+    - name: Cloning
+      uses: actions/checkout@master
+      path: ''
     - name: CMake build
       run: cmake -Bbuild .. && cd build && cmake --build .
     - name: Cppm build install
