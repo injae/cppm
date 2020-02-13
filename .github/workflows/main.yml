@@ -11,6 +11,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Compiler Setting
+      run: echo Compiler Setting
       env:
         CC: ${{matrix.compiler}}
     - name: CMake build
