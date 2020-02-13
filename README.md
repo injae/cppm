@@ -1,9 +1,9 @@
 
 Cppm 
 ========
-|Linux|Windows|
-|:----|:------|
-![Linux](https://github.com/injae/cppm/workflows/Linux/badge.svg) | ![Windows](https://github.com/injae/cppm/workflows/Windows/badge.svg) | 
+|Linux|Windows|MacOS|
+|:----|:------|:----|
+![Linux](https://github.com/injae/cppm/workflows/Linux/badge.svg) | ![Windows](https://github.com/injae/cppm/workflows/Windows/badge.svg) | ![MacOS](https://github.com/injae/cppm/workflows/MacOS/badge.svg) |
 
 ![](cppm_demo.gif)
 > Cppm is a cross platform C++ project manager like Rust's Cargo.   
