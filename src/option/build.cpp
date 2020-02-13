@@ -2,7 +2,7 @@
 #include <thread>
 #include <memory>
 #include <fmt/format.h>
-#include <md5/md5.h>
+#include <hashpp/md5.h>
 #include <string>
 
 #include "option/build.h"
@@ -75,7 +75,7 @@ namespace cppm::option
                 fs::create_directories(config_.path.build);
                 if(!none_tc) {
                     auto tranc_cmake = config_.generate();
-                    if(util::file_hash("{0}/CMakeLists.txt"_format(config_.path.root)) != hash::md5(tranc_cmake)) {
+                    if(util::file_hash("{0}/CMakeLists.txt"_format(config_.path.root)) != hashpp::md5(tranc_cmake)) {
                         fmt::print("[cppm] Generate CMakeLists.txt\n");
                         util::write_file("{0}/CMakeLists.txt"_format(config_.path.root), tranc_cmake);
                     }
@@ -97,7 +97,7 @@ namespace cppm::option
                 if(util::compiler::what() != "msvc"s) {
                     cmake_.generator_options(" -j{} "_format(std::thread::hardware_concurrency()));
                 }
-                cmake_.build(config_.path.root, "build", true);
+                cmake_.build(config_.path.root, "build");
             });
     }
 

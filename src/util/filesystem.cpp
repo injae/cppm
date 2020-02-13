@@ -1,7 +1,7 @@
 #include "util/filesystem.h"
 #include "util/algorithm.hpp"
 #include <fmt/format.h>
-#include <md5/md5.h>
+#include <hashpp/md5.h>
 #include <iostream>
 
 #ifdef _WIN32
@@ -120,6 +120,6 @@ namespace cppm::util
     }
 
     std::string file_hash(const std::string& name) {
-        return hash::md5(read_file_all(name));
+        return hashpp::md5(read_file_all(name));
     }
 }

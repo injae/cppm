@@ -13,7 +13,6 @@ include(cmake/cppm_install.cmake)
 find_cppkg(cpptoml git MODULE cpptoml::cpptoml )
 find_cppkg(fmt 6.0.0 MODULE fmt::fmt)
 find_cppkg(hashpp git MODULE hashpp::hashpp )
-find_cppkg(md5 git MODULE md5::md5 )
 find_cppkg(nlpo git MODULE nlpo::nlpo )
 find_cppkg(range-v3 0.9.0 MODULE range-v3)
 
@@ -101,7 +100,6 @@ PUBLIC
 	cpptoml
 	fmt
 	hashpp
-	md5
 	nlpo
 	range-v3
 )
