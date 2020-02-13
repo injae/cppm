@@ -7,7 +7,7 @@ jobs:
     runs-on: windows-2019
     strategy:
       matrix:
-        build-type: ['Debug', 'Release']
+        build-type: ['Release', 'Debug']
     steps:
     - name: Clone Repository
       uses: actions/checkout@master
