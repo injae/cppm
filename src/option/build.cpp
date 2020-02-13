@@ -97,7 +97,7 @@ namespace cppm::option
                 if(util::compiler::what() != "msvc"s) {
                     cmake_.generator_options(" -j{} "_format(std::thread::hardware_concurrency()));
                 }
-                cmake_.build(config_.path.root, "build",true);
+                cmake_.build(config_.path.root, "build");
             });
     }
 

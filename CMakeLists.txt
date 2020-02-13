@@ -92,6 +92,7 @@ SOURCES
 	include/option/init.h
 	include/package/package.h
 	include/package/repo.h
+	include/cppm_version.h
 )
 
 
