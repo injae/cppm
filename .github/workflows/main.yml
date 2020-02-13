@@ -20,9 +20,9 @@ jobs:
     - name: ccache setting
       run: sudo apt-get install -yq ccache
     - name: CMake build
-      run: cmake -Bbuild . && cd build && cmake --build .
+      run: cmake -Bbuild . && cd build && cmake --build . --target install
     - name: Cppm build install
-      run: cd build && ./cppm build install
+      run: cp build/cppm . && ./cppm build install
   ubuntu-xenial-llvm-8:
     runs-on: ubuntu-16.04
     steps:
@@ -41,9 +41,9 @@ jobs:
     - name: ccache setting
       run: sudo apt-get install -yq ccache
     - name: CMake build
-      run: cmake -Bbuild . && cd build && cmake --build .
+      run: cmake -Bbuild . && cd build && cmake --build . --target install
     - name: Cppm build install
-      run: cd build && ./cppm build install
+      run: cp build/cppm . && ./cppm build install
 
   #build-linux:
   #  runs-on: ubuntu-latest
