@@ -42,7 +42,6 @@ namespace cppm
         for(auto& [name, dep] : dependencies.list) {
             if(dep.hunter) { continue; }
             std::string tpath = "";
-            fmt::print("{} = {},{},{}\n",name, dep.name, dep.module, dep.load_path);
             if(dep.load_path != "") {
                 util::panic(fs::exists("{}/{}"_format(path.root, dep.load_path))
                            ,"[cppm-error] can't find load-path package, {}/{}\n"_format(path.root, dep.load_path));
