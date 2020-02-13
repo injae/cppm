@@ -17,7 +17,7 @@ jobs:
         CC: gcc-8
         CXX: g++-8
     - name: ccache setting
-      run: sudo apt-get -yq ccache
+      run: sudo apt-get install -yq ccache
     - name: CMake build
       run: cmake -Bbuild . && cd build && cmake --build .
     - name: Cppm build install
@@ -37,7 +37,7 @@ jobs:
         CC: clang-8
         CXX: clang++-8
     - name: ccache setting
-      run: sudo apt-get -q ccache
+      run: sudo apt-get install -yq ccache
     - name: CMake build
       run: cmake -Bbuild . && cd build && cmake --build .
     - name: Cppm build install
