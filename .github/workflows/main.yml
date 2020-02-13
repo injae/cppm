@@ -9,7 +9,7 @@ jobs:
       matrix:
         compiler: [gcc, clang]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@master
     - name: Compiler Setting
       run: echo Compiler Setting
       env:
@@ -21,7 +21,7 @@ jobs:
   build-windows:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@master
     - name: CMake build
       run: cmake -Bbuild .. && cd build && cmake --build .
     - name: Cppm build install
