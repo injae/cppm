@@ -17,8 +17,6 @@ jobs:
       run: |
         echo "::set-env name=CC::gcc-8"
         echo "::set-env name=CXX::g++-8"
-    - name: ccache setting
-      run: sudo apt-get install -yq ccache
     - name: CMake build
       run: cmake -Bbuild . && cd build && cmake --build . 
     - name: Cppm build install
@@ -38,8 +36,6 @@ jobs:
       run: |
         echo "::set-env name=CC::clang-8"
         echo "::set-env name=CXX::clang++-8"
-    - name: ccache install
-      run: sudo apt-get install -yq ccache
     - name: CMake build
       run: cmake -Bbuild . && cd build && cmake --build . 
     - name: Cppm build install
