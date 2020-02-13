@@ -9,6 +9,11 @@ jobs:
     - name: Clone Repository
       uses: actions/checkout@master
     - name: CMake build
-      run: cmake -Bbuild . && cd build && cmake --build . 
+      run: |
+        cmake -Bbuild .
+        cd build
+        cmake --build . 
     - name: Cppm build install
-      run: cp build/cppm . && ./cppm build -h
+      run: |
+        cd build
+        ./cppm build -h
