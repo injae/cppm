@@ -11,24 +11,24 @@ jobs:
     steps:
     - name: Cloning
       uses: actions/checkout@master
-      with:
-        path: ./
     - name: Compiler Setting
       run: echo Compiler Setting
       env:
         CC: ${{matrix.compiler}}
     - name: CMake build
+      working-directory: ./cppm
       run: cmake -Bbuild .. && cd build && cmake --build .
     - name: Cppm build install
+      working-directory: ./cppm
       run: cd build && ./cppm build install
   build-windows:
     runs-on: windows-latest
     steps:
     - name: Cloning
       uses: actions/checkout@master
-      with:
-        path: ./
     - name: CMake build
+      working-directory: ./cppm
       run: cmake -Bbuild .. && cd build && cmake --build .
     - name: Cppm build install
+      working-directory: ./cppm
       run: cd build && ./cppm build install
