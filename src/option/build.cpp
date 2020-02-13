@@ -39,10 +39,10 @@ namespace cppm::option
             .call_back([&](){ cmake_.define("CMAKE_CXX_COMPILER", "clang++");});
         app_.add_option("release").abbr("r")
             .desc("compile release mode")
-            .call_back([&](){ cmake_.define("CMAKE_BUILD_TYPE", "Release"); });
+            .call_back([&](){ cmake_.build_type="Release"; });
         app_.add_option("debug").abbr("d")
             .desc("compile debug mode")
-            .call_back([&](){ cmake_.define("CMAKE_BUILD_TYPE", "Debug"); });
+            .call_back([&](){ cmake_.build_type="Debug"; });
         app_.add_option("clear")
             .desc("clear cmake cache")
             .call_back([&](){ clean = true; });
@@ -67,7 +67,7 @@ namespace cppm::option
         app_.add_command("install")
             .desc("cmake target install ")
             .call_back([&](){ cmake_.install = true; })
-            .call_back([&](){ cmake_.define("CMAKE_BUILD_TYPE", "Release"); });
+            .call_back([&](){ cmake_.build_type="Release"; });
         app_.add_command().args("{cppm options} {builder options}")
             .desc("Build command")
             .call_back([&](){
@@ -97,7 +97,7 @@ namespace cppm::option
                 if(util::compiler::what() != "msvc"s) {
                     cmake_.generator_options(" -j{} "_format(std::thread::hardware_concurrency()));
                 }
-                cmake_.build(config_.path.root, "build");
+                cmake_.build(config_.path.root, "build", true);
             });
     }
 

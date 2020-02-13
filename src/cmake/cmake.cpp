@@ -68,12 +68,13 @@ namespace cppm::cmake
     Cmake Cmake::build(const std::string& root, const std::string& build_path, bool debug) {
         cache = Cache("{}/{}"_format(root, build_path));
         while(!after_hooks.empty()) { after_hooks.front()(cache, cmake_option); after_hooks.pop(); }
+        define("CMAKE_BUILD_TYPE", build_type);
 
         auto script = "cd {}/{} && "_format(root, build_path);
         script += (no_cache || cmake_option || !cache->exist_file())  ? "cmake {}.. && "_format(*cmake_option) : "";
 
         auto target_script = target_ ? "--target {} "_format(*target_) : "";
-        script += "cmake --build . {}-- {}"_format(target_script, *generator_option);
+        script += "cmake --build . {}--config {} -- {}"_format(target_script, build_type, *generator_option);
 
         auto is_sudo = (!(strcmp(util::system::what(), "windows")) || sudo) ? "sudo" : "";
         script += install ? " && {} cmake --install ."_format(is_sudo) : "";

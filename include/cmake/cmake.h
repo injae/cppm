@@ -42,6 +42,7 @@ namespace cppm::cmake
         std::queue<std::function<void(std::optional<Cache>&, opt_str&)>> after_hooks;
     public:
         bool install=false;
+        std::string build_type="Debug";
         bool no_cache=false;
         bool sudo=false;
     };

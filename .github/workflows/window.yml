@@ -15,5 +15,5 @@ jobs:
         cmake --build . --config Release
     - name: Cppm build install
       run: |
-        cd build
+        cd build/Release
         ./cppm build -h
