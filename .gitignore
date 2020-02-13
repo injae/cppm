@@ -2,3 +2,4 @@ build/
 .*
 .ccls-cache/
 compiler_commands.json
+docs/book/

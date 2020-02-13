@@ -20,6 +20,7 @@ namespace cppm
             if(dep_table.second->is_table()) {
                 auto dep = util::panic(toml::get_table(deps, dependency.name), "can't find {}"_format(dependency.name));
                 dependency.link_type   = toml::get(dep, "lnk_type" , "public");
+                dependency.link_type   = toml::get(dep, "link" , "public");
                 dependency.none_module = toml::get(dep, "no_module", false);
                 dependency.hunter      = toml::get(dep, "hunter"   , false);
                 dependency.type        = toml::get(dep, "type"     , "lib");
