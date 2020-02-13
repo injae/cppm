@@ -1,0 +1,6 @@
+[book]
+authors = ["injae"]
+language = "en"
+multilingual = false
+src = "src"
+title = "cppm-book"
