@@ -44,18 +44,13 @@ export PATH="$HOME/.cppm/local/bin:$PATH"
 # need visual studio 
 git clone https://github.com/INJAE/cppm.git
 cd cppm
-cmake -Bbuild
+cmake -Bbuild --Release
 cd build
-cmake --build . 
-cd Debug
+cmake --build . --config Release
+cd Release
 ./cppm build install
 # Add System Path \.cppm\local\bin
 ```
-## OSX
-AppleClang is not supported.  
-AppleClang does not support the C++ standard perfectly.   
-Set GCC or Clang as the default compiler to compile on OSX.  
-Ex. #include<optional> is not available.   
 
 ## Features
 - [x] cmake dependencies auto installer (cppkg)
@@ -65,11 +60,12 @@ Ex. #include<optional> is not available.
 - [x] regist cppkg package in local repository (cppm add cppkg {name})
 - [x] cppkg repository update (cppm update)
 - [x] hunter package dependency available 
+- [x] sub project option
 - [ ] unit test option
-- [ ] sub project option
 
 ## Document
 ### [GitBook](https://cppm.gitbook.io/project/)
+### Beta: [GitBook](https://injae.github.io/cppm/)
 
 
 

@@ -5,15 +5,18 @@ on: [push]
 jobs:
   windows-msvc:
     runs-on: windows-2019
+    strategy:
+      matrix:
+        build-type: ['Debug', 'Release']
     steps:
     - name: Clone Repository
       uses: actions/checkout@master
     - name: CMake build
       run: |
-        cmake -Bbuild -DCMAKE_BUILD_TYPE=Release.
+        cmake -Bbuild -DCMAKE_BUILD_TYPE=${{marix.build-type}}.
         cd build
-        cmake --build . --config Release
+        cmake --build . --config ${{matrix.build-type}}
     - name: Cppm build install
       run: |
-        cd build/Release
+        cd build/${{matix.build-type}}
         ./cppm build -h
