@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 include(cmake/cppm_tool.cmake)
 cppm_project()
-project(cppm VERSION 1.0.9 LANGUAGES C CXX)
+project(cppm VERSION 0.0.9 LANGUAGES C CXX)
 cppm_setting()
 
 cppm_cxx_standard(17)

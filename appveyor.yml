@@ -39,6 +39,6 @@ cache:
 build_script:
     - cmake -H. -Bbuild -G %generator%
     - cd build
-    - cmake --build . --target install
+    - cmake --build .
 
 
