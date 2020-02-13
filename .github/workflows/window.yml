@@ -10,9 +10,9 @@ jobs:
       uses: actions/checkout@master
     - name: CMake build
       run: |
-        cmake -Bbuild -DCMAKE_BUILD_TYPE=Release .
+        cmake -Bbuild .
         cd build
-        cmake --build . 
+        cmake --build . --config Release
     - name: Cppm build install
       run: |
         cd build
