@@ -3,7 +3,7 @@ Cppm [![gitbook][5]][6]
 ========
 |Linux|Windows|
 |:----|:------|
-[![Linux][1] | ![Windows][2] | 
+[![Linux][1] | ![Windows][2]] | 
 [1]: https://github.com/injae/cppm/workflows/Linux/badge.svg
 [2]: https://github.com/injae/cppm/workflows/Windows/badge.svg
 [5]: https://aleen42.github.io/badges/src/gitbook_2.svg
