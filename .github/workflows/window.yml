@@ -18,5 +18,5 @@ jobs:
         cmake --build . --config ${{matrix.build-type}}
     - name: Cppm build install
       run: |
-        cd build/${{matix.build-type}}
+        cd build/${{matrix.build-type}}
         ./cppm build -h
