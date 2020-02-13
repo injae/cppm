@@ -3,7 +3,7 @@ name: c/c++ CI
 on: [push]
 
 jobs:
-  ubuntu-16.04-gcc-8:
+  ubuntu-xenial-gcc-8:
     runs-on: ubuntu-16.04
     steps:
     - name: Clone Repository
@@ -22,7 +22,7 @@ jobs:
       run: cmake -Bbuild . && cd build && cmake --build .
     - name: Cppm build install
       run: cd build && ./cppm build install
-  ubuntu-16.04-llvm-8:
+  ubuntu-xenial-llvm-8:
     runs-on: ubuntu-16.04
     steps:
     - name: Clone Repository
