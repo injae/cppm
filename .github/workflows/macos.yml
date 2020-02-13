@@ -13,7 +13,7 @@ jobs:
         brew install llvm@8 cmake
     - name: Compiler Setting
       run: |
-        echo "::set-env name=CC::clang
+        echo "::set-env name=CC::clang"
         echo "::set-env name=CXX::clang++"
     - name: CMake build
       run: cmake -Bbuild . && cd build && cmake --build . 
