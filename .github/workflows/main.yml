@@ -20,7 +20,7 @@ jobs:
     - name: CMake build
       run: cmake -Bbuild . && cd build && cmake --build . 
     - name: Cppm build install
-      run: cp build/cppm . && ./cppm build install
+      run: cp build/cppm . && ./cppm build -h
   ubuntu-xenial-llvm-8:
     runs-on: ubuntu-16.04
     steps:
@@ -39,7 +39,7 @@ jobs:
     - name: CMake build
       run: cmake -Bbuild . && cd build && cmake --build . 
     - name: Cppm build install
-      run: cp build/cppm . && ./cppm build install
+      run: cp build/cppm . && ./cppm build -h
 
   #build-linux:
   #  runs-on: ubuntu-latest
