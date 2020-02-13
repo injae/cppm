@@ -40,7 +40,7 @@ jobs:
         echo "::set-env name=CXX::clang++-8"
     - name: ccache install
       run: sudo apt-get install -yq ccache
-    - secrets: CMake build
+    - name: CMake build
       run: cmake -Bbuild . && cd build && cmake --build . 
     - name: Cppm build install
       run: cp build/cppm . && ./cppm build install
