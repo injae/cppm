@@ -5,16 +5,23 @@ namespace cppm
 {
     void Cmake::parse(table_ptr table)
     {
-        auto cmake = table->get_table("cmake");
-        if(!cmake) cmake = cpptoml::make_table();
-        version    = cmake->get_as<std::string>("version" ).value_or("3.6");
-        option     = cmake->get_as<std::string>("option"  ).value_or("");
-        builder    = cmake->get_as<std::string>("builder" ).value_or("make");
-        compiler   = cmake->get_as<std::string>("compiler").value_or("none");
-        auto tool_chains = cmake->get_array_of<std::string>("toolchain");
-        if(tool_chains) for(const auto& tool : *tool_chains) {tool_chain.push_back(tool);} 
-        auto includes = cmake->get_array_of<std::string>("include");
-        if(includes) for(const auto& inc : *includes) {include.push_back(inc);} 
+        auto cmake = toml::get_table(table, "cmake");
+        version  = toml::get(cmake, "version" , "3.12");
+        option   = toml::get(cmake, "option"  , "");
+        builder  = toml::get(cmake, "builder" , "make");
+        compiler = toml::get(cmake, "compiler", "none");
+        toml::get_array(cmake, "toolchain", tool_chain);
+        toml::get_array(cmake, "include"  , include);
+    }
+
+    void Cmake::build_lock(table_ptr table, table_ptr lock) {
+        auto origin = toml::get_table(table, "cmake");
+        auto cmake = cpptoml::make_table();
+        cmake->insert("version" , toml::get(origin, "version" , "3.12"));
+        cmake->insert("option"  , toml::get(origin, "option"  , ""));
+        cmake->insert("builder" , toml::get(origin, "builder" , "make"));
+        cmake->insert("compiler", toml::get(origin, "compiler", "none"));
+        lock->insert("cmake", cmake);
     }
 
     std::string Cmake::generate() {

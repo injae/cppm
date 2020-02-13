@@ -2,7 +2,7 @@
 #include "util/filesystem.h"
 #include "util/algorithm.hpp"
 #include "config/config.h"
-#include "util/cmake.h"
+#include "cmake/cmake.h"
 #include <string>
 #include <fmt/format.h>
 
@@ -11,22 +11,19 @@ namespace cppm
     void Libs::parse(table_ptr table) {
         auto table_array = table->get_table_array("lib");
         if(!table_array) return;
-        for(const auto& lib_table : *table_array) {
-            Lib lib;
-            lib.name = *lib_table->get_as<std::string>("name");
-            lib.type = lib_table->get_as<std::string>("type").value_or("static");
-            lib.install = lib_table->get_as<bool>("install").value_or(true);
-            auto source = lib_table->get_array_of<std::string>("source");
-            if(source) for(const auto& src : *source) {lib.sources.push_back(src);} 
-            auto deps = lib_table->get_array_of<std::string>("dependencies");
-            if(deps) for(const auto& dep : *deps) {lib.deps.push_back(dep);} 
-            list.emplace_back(std::move(lib));
-        }
+        toml::get_table_array(table, "lib", [&](auto tb) {
+             Lib lib;
+             lib.name    = toml::panic(tb, "name");
+             lib.type    = toml::get(tb, "type", "static");
+             lib.install = toml::get(tb, "install", true);
+             toml::get_array(tb, "source", lib.sources);
+             toml::get_array(tb, "dependencies", lib.deps);
+             list.emplace_back(std::move(lib));
+        });
     }
 
     std::string Libs::generate(Config& config) {
         using namespace fmt::literals;
-        using namespace util::cmake;
         auto lib_type = [&](std::string type) -> std::string {
                  if(type == "shared")           return "SHARED";
            else  if(type == "static")           return "STATIC";

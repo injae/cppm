@@ -8,7 +8,8 @@ namespace cppm
     class Package : public base_config
     {
     public:
-        void parse(table_ptr table);
+        void parse(table_ptr table) override;
+        void build_lock(table_ptr table, table_ptr lock) override;
     public:
         std::string name;
         std::string version;
@@ -17,7 +18,5 @@ namespace cppm
         std::string git_repo;
     };
 }
-
-
 
 #endif

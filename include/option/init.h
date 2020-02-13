@@ -16,6 +16,7 @@ namespace cppm::option
         void make_bin();
         void make_lib();
         std::string make_project();
+        void make_gitignore(Path& project);
     };
 }
 

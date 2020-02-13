@@ -13,6 +13,7 @@
 #include "config/dependency.h"
 #include "config/cppm_config.h"
 #include "config/hunter.h"
+#include "config/workspace.h"
 //#include "config/test.h"
 
 namespace cppm
@@ -22,7 +23,8 @@ namespace cppm
     public:
         static Config load(const std::string& path);
         void dependency_check();
-        void parse(table_ptr table);
+        void parse(table_ptr table) override;
+        void build_lock(table_ptr table, table_ptr lock) override;
         std::string generate();
         static void write(table_ptr table);
     public:
@@ -31,6 +33,7 @@ namespace cppm
         Bins         bins;
         Libs         libs;
         //Test         test;
+        WorkSpace    workspace;
         Hunter       hunter;
         Package      package;
         Builder      builder;

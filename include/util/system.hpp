@@ -47,6 +47,7 @@ namespace cppm::util::system
     constexpr const char* prefix() {
         switch(hash(what()))
         {
+        default:
         case "linux"_h:
         case "osx"_h:
             return "/usr/local/";

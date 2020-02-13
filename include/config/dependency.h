@@ -3,19 +3,18 @@
 
 #include <map>
 #include "config/base_config.h"
-#include "config/hunter.h"
-
+ 
 namespace cppm
 {
+    class Config;
     struct Dependency
     {
-        using table_ptr = std::shared_ptr<cpptoml::table>;
         std::string name;
         std::string module;
         bool none_module;
         bool hunter;
         std::string link_type;
-        std::string type;
+        std::string type; // lib | bin | cmake
         std::string version;
         std::string components;
         std::string load_path;
@@ -28,8 +27,9 @@ namespace cppm
         void parse(table_ptr table);
         std::string gen_find_package();
         std::string gen_find_cppkg();
-        std::string use_hunter(Hunter& hunter);
+        std::string use_hunter(Config& config);
         std::string generate();
+        ~Dependencies(){}
     public:
         std::map<std::string, Dependency> list;
     };

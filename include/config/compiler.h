@@ -19,6 +19,7 @@ namespace cppm
     public:
         void parse(table_ptr table);
         std::string generate();
+         ~Compiler() {} 
     public:
         std::map<std::string, CompilerType> debug_list;
         std::map<std::string, CompilerType> release_list;

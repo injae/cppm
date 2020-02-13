@@ -5,10 +5,6 @@ namespace cppm::option
 {
     Install::Install(Config& config) {
         package::Package package;
-        app_.add_option("help")
-            .abbr("h")
-            .desc("show cppm commands and options")
-            .call_back([&](){ app_.show_help(); });
         //app_.add_option("git")
         //    .abbr("g")
         //    .desc("install to git repo")

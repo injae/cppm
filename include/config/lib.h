@@ -7,11 +7,7 @@
 
 namespace cppm
 {
-    class Lib : public base_target
-    {
-    public:
-        std::string type;
-    };
+    class Lib : public base_target {};
 
     class Libs : public base_config
     {

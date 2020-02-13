@@ -26,6 +26,9 @@ namespace cppm::option
                 package::cppkg::search(name, version);
                 auto inst_proj = _base_cppm_project();
                 auto path = "{}install/__install"_format(tool::cppm_root());
+                if(fs::exists(path)) {
+                    fs::remove_all("{}/build"_format("build"));
+                }
                 fs::create_directories(path);
                 fs::create_directories(path + "/cmake");
                 fs::create_directories(path + "/src");

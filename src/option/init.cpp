@@ -14,10 +14,6 @@ using namespace cppm::util::str;
 namespace cppm::option
 {
     Init::Init() {
-        app_.add_option("help")
-            .abbr("h")
-            .desc("show cppm command and options")
-            .call_back([&](){ app_.show_help(); });
         app_.add_option("bin")
             .abbr("b")
             .desc("initialize new c++ binary project")
@@ -86,6 +82,7 @@ namespace cppm::option
         fs::create_directory(project.thirdparty);
         fs::create_directory(project.cmake);
         fs::create_directory(project.cmake + "/Modules");
+        make_gitignore(project);
 
         auto cppm_path = tool::cppm_root();
         fs::copy(cppm_path + "cmake/cppm_tool.cmake", project.cmake+"/cppm_tool.cmake");
@@ -96,5 +93,12 @@ namespace cppm::option
              + "   description = {}\n"_format(""_quot)
              + "\n"
              ;
+    }
+
+    void Init::make_gitignore(Path& project) {
+        std::fstream file; 
+        file.open(project.root + "/.gitignore", std::ios::out);
+        file << "build/\n.ccls-cache\ncompile_commands.json\n"_format();
+        file.close();
     }
 }

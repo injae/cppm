@@ -1,13 +1,8 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.12)
 
 include(cmake/cppm_tool.cmake)
 cppm_project()
-include(HunterGate)
-HunterGate(
-   URL "https://github.com/ruslo/hunter/archive/v0.23.214.tar.gz"
-   SHA1 "e14bc153a7f16d6a5eeec845fb0283c8fad8c358"
-)
-project(cppm VERSION 1.0.8 LANGUAGES C CXX)
+project(cppm VERSION 1.0.9 LANGUAGES C CXX)
 cppm_setting()
 
 cppm_cxx_standard(17)
@@ -15,13 +10,16 @@ cppm_compiler_option(DEFAULT)
 
 
 include(cmake/cppm_install.cmake)
-find_cppkg(cpptoml 0.4.0)
-find_cppkg(fmt 6.0.0)
-find_cppkg(md5 git)
-find_cppkg(nlpo git)
+find_cppkg(cpptoml git MODULE cpptoml::cpptoml )
+find_cppkg(fmt 6.0.0 MODULE fmt::fmt)
+find_cppkg(hashpp git MODULE hashpp::hashpp )
+find_cppkg(md5 git MODULE md5::md5 )
+find_cppkg(nlpo git MODULE nlpo::nlpo )
+find_cppkg(range-v3 0.9.0 MODULE range-v3)
 
 cppm_target_define(cppm BINARY 
 SOURCES 
+	src/cmake/cmake.cpp
 	src/util/version.cpp
 	src/util/filesystem.cpp
 	src/util/algorithm.cpp
@@ -31,6 +29,7 @@ SOURCES
 	src/config/base_target.cpp
 	src/config/test.cpp
 	src/config/bin.cpp
+	src/config/workspace.cpp
 	src/config/lib.cpp
 	src/config/cmake.cpp
 	src/config/builder.cpp
@@ -54,13 +53,14 @@ SOURCES
 	src/option/install.cpp
 	src/main.cpp
 	src/package/package.cpp
+	include/cmake/cmake.h
 	include/util/filesystem.h
 	include/util/hash.hpp
 	include/util/version.h
 	include/util/algorithm.hpp
 	include/util/system.hpp
+	include/util/optional.hpp
 	include/util/string.hpp
-	include/util/cmake.h
 	include/util/command.h
 	include/config/compiler.h
 	include/config/dependency.h
@@ -72,6 +72,7 @@ SOURCES
 	include/config/test.h
 	include/config/hunter.h
 	include/config/package.h
+	include/config/workspace.h
 	include/config/lib.h
 	include/config/cppm_tool.h
 	include/config/cmake.h
@@ -91,16 +92,17 @@ SOURCES
 	include/option/init.h
 	include/package/package.h
 	include/package/repo.h
-	include/cppm_version.h
 )
 
 
 cppm_target_dependencies(cppm 
 PUBLIC	
 	cpptoml
-	fmt::fmt
-	md5::md5 
-	nlpo::nlpo 
+	fmt
+	hashpp
+	md5
+	nlpo
+	range-v3
 )
 
 cppm_target_install(cppm)

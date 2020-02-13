@@ -1,0 +1,92 @@
+name: c/c++ CI
+
+on: [push]
+
+jobs:
+  ubuntu-xenial-gcc-8:
+    runs-on: ubuntu-16.04
+    steps:
+    - name: Clone Repository
+      uses: actions/checkout@master
+    - name: C++ Setting
+      run: |
+        sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+        sudo apt-get update
+        sudo apt-get install -yq g++-8 gcc-8 libc++-dev libc++abi-dev build-essential libstdc++-8-dev
+    - name: Compiler Setting
+      run: |
+        echo "::set-env name=CC::gcc-8"
+        echo "::set-env name=CXX::g++-8"
+    - name: CMake build
+      run: cmake -Bbuild . && cd build && cmake --build . 
+    - name: Cppm build install
+      run: cp build/cppm . && ./cppm build -h
+  ubuntu-xenial-llvm-8:
+    runs-on: ubuntu-16.04
+    steps:
+    - name: Clone Repository
+      uses: actions/checkout@master
+    - name: C++ Setting
+      run: |
+        sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+        sudo add-apt-repository -y "deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-8 main"
+        sudo apt-get update
+        sudo apt-get install -yq clang-8 libc++-dev libc++abi-dev libstdc++-8-dev build-essential
+    - name: Compiler Setting
+      run: |
+        echo "::set-env name=CC::clang-8"
+        echo "::set-env name=CXX::clang++-8"
+    - name: CMake build
+      run: cmake -Bbuild . && cd build && cmake --build . 
+    - name: Cppm build install
+      run: cp build/cppm . && ./cppm build -h
+
+  #build-linux:
+  #  runs-on: ubuntu-latest
+  #  strategy:
+  #    matrix:
+  #      c-compiler: [gcc, clang]
+  #      cxx-compiler: [g++, clang++]
+  #  steps:
+  #  - name: Clone Repository
+  #    uses: actions/checkout@master
+  #  - name: Compiler Setting
+  #    run: echo Compiler Setting
+  #    env:
+  #      CC: ${{matrix.compiler}}
+  #  - name: CMake build
+  #    run: cmake -Bbuild . && cd build && cmake --build .
+  #  - name: Cppm build install
+  #    run: cd build && ./cppm build install
+
+  #build-windows:
+  #  runs-on: windows-2019
+  #  steps:
+  #  - name: Clone Repository
+  #    uses: actions/checkout@master
+  #  - name: CMake build
+  #    run: |
+  #      cmake -Bbuild .
+  #      cd build
+  #      cmake --build .
+  #  - name: Cppm build install
+  #    run: |
+  #      cd build
+  #      ./cppm build install
+  #build-macos:
+  #  runs-on: macos-latest
+  #  strategy:
+  #    matrix:
+  #      c-compiler: [gcc, clang]
+  #      cxx-compiler: [g++, clang++]
+  #  steps:
+  #  - name: Clone Repository
+  #    uses: actions/checkout@master
+  #  - name: Compiler Setting
+  #    run: echo Compiler Setting
+  #    env:
+  #      CC: ${{matrix.compiler}}
+  #  - name: CMake build
+  #    run: cmake -Bbuild . && cd build && cmake --build .
+  #  - name: Cppm build install
+  #    run: cd build && ./cppm build install

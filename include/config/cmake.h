@@ -10,7 +10,8 @@ namespace cppm
     class Cmake : public base_config
     {
     public:
-        void parse(table_ptr table);
+        void parse(table_ptr table) override;
+        void build_lock(table_ptr table, table_ptr lock) override;
         std::string generate();
     public:
         std::string version;
