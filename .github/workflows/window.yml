@@ -1,0 +1,14 @@
+name: Windows
+
+on: [push]
+
+jobs:
+  windows-msvc:
+    runs-on: windows-2019
+    steps:
+    - name: Clone Repository
+      uses: actions/checkout@master
+    - name: CMake build
+      run: cmake -Bbuild . && cd build && cmake --build . 
+    - name: Cppm build install
+      run: cp build/cppm . && ./cppm build -h

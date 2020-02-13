@@ -1,4 +1,4 @@
-name: c/c++ CI
+name: Linux
 
 on: [push]
 

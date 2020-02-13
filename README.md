@@ -3,9 +3,10 @@ Cppm [![gitbook][5]][6]
 ========
 |Linux|Windows|
 |:----|:------|
-[![Linux build status][1]][2] | [![Windows build status][3]][4] | 
+[![Linux](https://github.com/injae/cppm/workflows/c/c++%20CI/badge.svg) | [![Windows build status][3]][4] | 
 
 [1]: https://travis-ci.com/injae/cppm.svg?branch=master
+
 [2]: https://travis-ci.com/injae/cppm
 [3]: https://ci.appveyor.com/api/projects/status/6ovjp02higajbxhm?svg=true
 [4]: https://ci.appveyor.com/project/injae/cppm
@@ -42,7 +43,7 @@ cd cppm
 cmake -Bbuild
 cd build
 cmake --build . 
-./cppm cppkg install cppm
+./cppm build install
 # Adding to cppm path
 export PATH="$HOME/.cppm/local/bin:$PATH"
 ```
@@ -55,7 +56,7 @@ cmake -Bbuild
 cd build
 cmake --build . 
 cd Debug
-./cppm cppkg install cppm
+./cppm build install
 # Add System Path \.cppm\local\bin
 ```
 ## OSX
