@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.6)
-project(fmt-6.0.0-install C CXX)
+project(fmt-git-install C CXX)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
 download_package(fmt
-    6.0.0
-    URL https://github.com/fmtlib/fmt/releases/download/6.0.0/fmt-6.0.0.zip
+    git
+    GIT https://github.com/injae/fmt.git
     LOCAL
     CMAKE_ARGS
         -DFMT_DOC=OFF
@@ -13,6 +13,7 @@ download_package(fmt
         ${CMAKE_ARGS}
     )
 
+#URL https://github.com/fmtlib/fmt/releases/download/6.0.0/fmt-6.0.0.zip
 # Other Options:
 # - Linux Configures:
 #    L_CONFIGURE {...}, L_BUILD {...}, L_INSTALL {...}

@@ -1,0 +1,13 @@
+[package]
+name = "fmt"
+# if you use git repo, package version is latest
+version = "git"
+description = "A modern formatting library"
+global=false
+# library name in cmake, cppm.toml use this value 
+# [dependencies]
+#${library_name} = {module =${value}}
+cmake = {name = "fmt::fmt", findlib=""}
+# write download value git or url
+#download = {git=""}
+download = {url="https://github.com/fmtlib/fmt/releases/download/6.0.0/fmt-6.0.0.zip"}

@@ -11,7 +11,7 @@ cppm_compiler_option(DEFAULT)
 
 include(cmake/cppm_install.cmake)
 find_cppkg(cpptoml git MODULE cpptoml::cpptoml )
-find_cppkg(fmt 6.0.0 MODULE fmt::fmt)
+find_cppkg(fmt git MODULE fmt::fmt)
 find_cppkg(hashpp git MODULE hashpp::hashpp )
 find_cppkg(nlpo git MODULE nlpo::nlpo )
 find_cppkg(range-v3 0.9.0 MODULE range-v3)
