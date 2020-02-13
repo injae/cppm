@@ -13,7 +13,7 @@ jobs:
       uses: actions/checkout@master
     - name: CMake build
       run: |
-        cmake -Bbuild -DCMAKE_BUILD_TYPE=${{marix.build-type}}.
+        cmake -Bbuild -DCMAKE_BUILD_TYPE=${{matrix.build-type}}.
         cd build
         cmake --build . --config ${{matrix.build-type}}
     - name: Cppm build install
