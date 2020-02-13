@@ -12,7 +12,7 @@ jobs:
     - name: Cloning
       uses: actions/checkout@master
       with:
-        path: ''
+        path: ./
     - name: Compiler Setting
       run: echo Compiler Setting
       env:
@@ -27,8 +27,8 @@ jobs:
     - name: Cloning
       uses: actions/checkout@master
       with:
-        path: ''
+        path: ./
     - name: CMake build
       run: cmake -Bbuild .. && cd build && cmake --build .
     - name: Cppm build install
-      run: cd build/Debug && ./cppm build install
+      run: cd build && ./cppm build install
