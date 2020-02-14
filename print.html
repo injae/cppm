@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>cppm-book</title>
+        <title>The Cppm Book</title>
         
         <meta name="robots" content="noindex" />
         
@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="getting_started_1.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li></ol></li><li class="expanded "><a href="cppm_guide.html"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li class="expanded "><a href="cppm_commands.html"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="install.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="expanded "><a href="first-steps.html"><strong aria-hidden="true">2.2.</strong> First Steps with Cppm</a></li></ol></li><li class="expanded "><a href="cppm_guide.html"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li><ol class="section"><li class="expanded "><a href="cppm_toml.html"><strong aria-hidden="true">3.1.</strong> cppm.toml</a></li><li class="expanded "><a href="cppkg_toml.html"><strong aria-hidden="true">3.2.</strong> cppkg.toml</a></li></ol></li><li class="expanded "><a href="cppm_commands.html"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -115,7 +115,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">cppm-book</h1>
+                        <h1 class="menu-title">The Cppm Book</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -150,9 +150,228 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#getting-started" id="getting-started">Getting Started</a></h1>
-<h1><a class="header" href="#installation" id="installation">Installation</a></h1>
-<h1><a class="header" href="#cppm-guide" id="cppm-guide">Cppm Guide</a></h1>
+                        <h1><a class="header" href="#the-cppm-book-beta" id="the-cppm-book-beta">The Cppm Book (<em><strong>BETA</strong></em>)</a></h1>
+<blockquote>
+<p><em><strong>Cppm</strong></em> is <em><strong>BETA</strong></em> Project Please Give Feedback</p>
+</blockquote>
+<p>Cppm is CMake based Cross Platform C++ package manager<br />
+Manage and Downloads C++ dependencies, easy project build, install,
+upload to <a href="https://github.com/injae/cppkg">cppkg</a></p>
+<h2><a class="header" href="#features" id="features">Features</a></h2>
+<ul>
+<li>Easy to use CMake </li>
+<li>Easy Config file than CMakeList.txt</li>
+<li>Generate Cross Platform CMake base C++ Project</li>
+<li>Manage Depdendency with <em><strong><a href="https://github.com/injae/cppkg">cppkg</a></strong></em> and <em><strong><a href="https://github.com/cpp-pm/hunter">Hunter Package Manage</a></strong></em></li>
+<li>Dependency install only use CMake</li>
+</ul>
+<h2><a class="header" href="#getting-started" id="getting-started">Getting Started</a></h2>
+<h4><a class="header" href="#to-get-started-with-cppm-install-this-dependency" id="to-get-started-with-cppm-install-this-dependency">To get started with Cppm, Install this Dependency</a></h4>
+<ul>
+<li><strong>C++ Compiler</strong> (c++17) # can use filesystem.h and optional.h</li>
+<li><strong>CMake</strong> (3.12)</li>
+<li>ccache (<em>optional</em>) # Build cache</li>
+</ul>
+<h2><a class="header" href="#installation" id="installation">Installation</a></h2>
+<h3><a class="header" href="#install-cppm" id="install-cppm">Install Cppm</a></h3>
+<p>cppm install command install defualt prefix is <strong>$HOME/.cppm/bin/local</strong> </p>
+<h4><a class="header" href="#linux-and-macos" id="linux-and-macos">Linux and MacOS</a></h4>
+<pre><code class="language-sh">git clone https://github.com/injae/cppm
+cd cppm
+cmake -Bbuild -DCMAKE_BUILD_TYPE=Release.
+cd build
+cmake --build .
+./cppm build install
+# Add to cppm path
+export PATH=$PATH:$HOME/.cppm/local/bin
+</code></pre>
+<h4><a class="header" href="#windows" id="windows">Windows</a></h4>
+<pre><code class="language-sh">git clone https://github.com/injae/cppm
+cd cppm
+cmake -Bbuild -DCMAKE_BUILD_TYPE=Release.
+cd build
+cmake --build . --config Release
+cd Release
+./cppm build install
+# Add Windows System Path /.cppm/local/bin
+</code></pre>
+<h2><a class="header" href="#first-steps-with-cppm" id="first-steps-with-cppm">First Steps with Cppm</a></h2>
+<p>To start a new package with Cppm, use <code>cppm init</code></p>
+<pre><code class="language-console">$ cppm init -h  
+Usage:
+   cppm init [--verbose]
+
+Option:
+   --bin [-b] {name}               :initialize new c++ binary project
+   --help [-h]                     :show cppm commands and options
+   --lib [-l] {name}               :initialize new c++ library project
+</code></pre>
+<p>New Binary Project</p>
+<pre><code class="language-console">$ cppm init --bin hello_world
+</code></pre>
+<p>Generated project</p>
+<pre><code class="language-console">$ cd hello_world
+$ tree .  
+.
+|-- build
+|-- cmake
+|   |-- Modules
+|   `-- cppm_tool.cmake
+|-- cppm.toml
+|-- include
+|-- src
+|   `-- main.cpp
+`-- thirdparty
+
+6 directories, 3 files
+</code></pre>
+<p>Cppm project config file <code>cppm.toml</code>. </p>
+<pre><code class="language-toml"># cppm.toml
+[package]
+   name = &quot;hello_world&quot;
+   version = &quot;0.0.1&quot;
+   description = &quot;&quot;
+
+[[bin]]
+   name = &quot;hello_world&quot;
+   source = [&quot;src/.*&quot;]
+</code></pre>
+<p>Generated defualt cpp file<code>src/main.cpp</code></p>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+int main(int argc, char* argv[]) {
+    std::cout&lt;&lt;&quot;hello world&quot;&lt;&lt;std::endl;
+    return 0; 
+} 
+</code></pre>
+<p>Compile &quot;hello_world&quot; project with <code>cppm build</code>, this command generate <code>CMakeLists.txt</code></p>
+<pre><code class="language-console">$ cppm build
+[cppm] Generate CMakeLists.txt
+From https://github.com/injae/cppm_tools
+   1c79dca..00fb374  0.0.9      -&gt; origin/0.0.9
+-- [cppm] cppm_tools-0.0.9 download to /home-path/.cppm/src/cppm_tools/0.0.9
+-- The C compiler identification is Clang 9.0.0
+-- The CXX compiler identification is Clang 9.0.0
+-- Check for working C compiler: /usr/local/opt/llvm/bin/clang
+-- Check for working C compiler: /usr/local/opt/llvm/bin/clang -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/local/opt/llvm/bin/clang++
+-- Check for working CXX compiler: /usr/local/opt/llvm/bin/clang++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- [cppm] Target: hello_world [Type:debug, Cppm:0.0.9, CMake:3.16.2]
+-- [cppm] System: x86_64-Darwin-19.3.0
+-- [cppm] Compiler: Clang-9.0.0
+-- [cppm] Generator: Unix Makefiles
+-- [cppm] Build Cache: ccache
+-- [cppm] cppm_root: /path/to/.cppm
+-- [cppm] c++ version: 17
+-- [cppm] Compiler Option: -std=c++17 |  -Wall -fPIC -O0 -g -g
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /path/to/hello_world/build
+Scanning dependencies of target hello_world
+[ 50%] Building CXX object CMakeFiles/hello_world.dir/src/main.cpp.o
+[100%] Linking CXX executable hello_world
+[100%] Built target hello_world
+</code></pre>
+<p>And the run it.</p>
+<pre><code class="language-console">$ cd build 
+$ ./hello_world
+hello world
+</code></pre>
+<p><em><strong>(beta)</strong></em> Easy run command <code>cppm run</code>, </p>
+<pre><code class="language-console">$ cppm run
+hello world
+</code></pre>
+<p>Generated <code>CMakeLists.txt</code></p>
+<pre><code class="language-cmake">cmake_minimum_required(VERSION 3.12)
+
+include(cmake/cppm_tool.cmake)
+cppm_project()
+project(hello_world VERSION 0.0.1 LANGUAGES C CXX)
+cppm_setting()
+
+cppm_cxx_standard(17)
+cppm_compiler_option(DEFAULT)
+
+cppm_target_define(hello_world BINARY 
+SOURCES 
+        src/main.cpp
+)
+
+cppm_target_dependencies(hello_world 
+)
+
+cppm_target_install(hello_world)
+</code></pre>
+<p>Changed project Directory</p>
+<pre><code class="language-console">$ tree .
+.
+|-- CMakeLists.txt
+|-- build
+|   |-- CMakeCache.txt
+|   |-- CMakeFiles
+|   |   |-- 3.16.2
+|   |   |   |-- CMakeCCompiler.cmake
+|   |   |   |-- CMakeCXXCompiler.cmake
+|   |   |   |-- CMakeDetermineCompilerABI_C.bin
+|   |   |   |-- CMakeDetermineCompilerABI_CXX.bin
+|   |   |   |-- CMakeSystem.cmake
+|   |   |   |-- CompilerIdC
+|   |   |   |   |-- CMakeCCompilerId.c
+|   |   |   |   |-- a.out
+|   |   |   |   `-- tmp
+|   |   |   `-- CompilerIdCXX
+|   |   |       |-- CMakeCXXCompilerId.cpp
+|   |   |       |-- a.out
+|   |   |       `-- tmp
+|   |   |-- CMakeDirectoryInformation.cmake
+|   |   |-- CMakeOutput.log
+|   |   |-- CMakeTmp
+|   |   |-- Makefile.cmake
+|   |   |-- Makefile2
+|   |   |-- TargetDirectories.txt
+|   |   |-- cmake.check_cache
+|   |   |-- hello_world.dir
+|   |   |   |-- CXX.includecache
+|   |   |   |-- DependInfo.cmake
+|   |   |   |-- build.make
+|   |   |   |-- cmake_clean.cmake
+|   |   |   |-- depend.internal
+|   |   |   |-- depend.make
+|   |   |   |-- flags.make
+|   |   |   |-- link.txt
+|   |   |   |-- progress.make
+|   |   |   `-- src
+|   |   |       `-- main.cpp.o
+|   |   `-- progress.marks
+|   |-- Makefile
+|   |-- cmake_install.cmake
+|   |-- compile_commands.json
+|   `-- hello_world
+|-- cmake
+|   |-- Modules
+|   `-- cppm_tool.cmake
+|-- cppm.toml
+|-- include
+|-- src
+|   `-- main.cpp
+`-- thirdparty
+
+15 directories, 35 files
+</code></pre>
+<h2><a class="header" href="#cppm-guide" id="cppm-guide">Cppm Guide</a></h2>
+<ul>
+<li><a href="./cppm_toml.html">cppm.toml</a></li>
+<li><a href="./cppkg_toml.html">cppkg.toml</a></li>
+</ul>
+<h1><a class="header" href="#cppkgtoml" id="cppkgtoml">cppkg.toml</a></h1>
+<h2><a class="header" href="#cppkgtoml-1" id="cppkgtoml-1">cppkg.toml</a></h2>
 <pre><code class="language-toml">[package]
     name = &quot;...&quot;
     version = &quot;...&quot;

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Installation - cppm-book</title>
+        <title>cppkg.toml - The Cppm Book</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="getting_started_1.html" class="active"><strong aria-hidden="true">2.1.</strong> Installation</a></li></ol></li><li class="expanded "><a href="cppm_guide.html"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li class="expanded "><a href="cppm_commands.html"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="install.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="expanded "><a href="first-steps.html"><strong aria-hidden="true">2.2.</strong> First Steps with Cppm</a></li></ol></li><li class="expanded "><a href="cppm_guide.html"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li><ol class="section"><li class="expanded "><a href="cppm_toml.html"><strong aria-hidden="true">3.1.</strong> cppm.toml</a></li><li class="expanded "><a href="cppkg_toml.html" class="active"><strong aria-hidden="true">3.2.</strong> cppkg.toml</a></li></ol></li><li class="expanded "><a href="cppm_commands.html"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -113,7 +113,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">cppm-book</h1>
+                        <h1 class="menu-title">The Cppm Book</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -148,20 +148,139 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#installation" id="installation">Installation</a></h1>
+                        <h2><a class="header" href="#cppkgtoml" id="cppkgtoml">cppkg.toml</a></h2>
+<pre><code class="language-toml">[package]
+    name = &quot;...&quot;
+    version = &quot;...&quot;
+    desciprtion = &quot;...&quot;
+    standard = &quot;{11|14|17(default)|20}&quot; # (optional)
+    git = &quot;...&quot; # (optional) this option use to cppm build --export
+</code></pre>
+<pre><code class="language-toml">[hunter] # (optional)  hunter package manager setting option
+    use = true|false(default) # if you use hunter package this option is default is true
+    url = &quot;...&quot; # (optional) custom hunter version url setting option, [ url, sha1 ] is pair
+    sha1 = &quot;...&quot; # (optional) custom hunter version sha1 setting option, [ url, sha1 ] is pair
+</code></pre>
+<pre><code class="language-toml">[cmake] # (optional) cmake setting option 
+    include = [&quot;xxx.cmake&quot;, ...] # (optional) this option is include cmake file
+    version = &quot;...&quot; # (optional) minimum cmake version setting option default is 3.12
+    option = &quot;...&quot; # (optional) cmake build option use to command 'cppm build'
+</code></pre>
+<pre><code class="language-toml"># (deprecated) next version
+[builder]
+    make = {option =&quot;...&quot;}
+    ninja = {option =&quot;...&quot;}
+</code></pre>
+<pre><code class="language-toml">[compiler.debug] # (optional) this is only debug mode compiler option
+[compiler.release] # (optional) this is only release mode compiler option
+[compiler] # (optional) this is debug and release compiler option target compiler is same
+    clang = &quot;...&quot; # compiler option
+    gcc = &quot;...&quot; # compiler option
+    msvc = &quot;...&quot; # compiler option
+</code></pre>
+<pre><code class="language-toml"># (working)
+[target.{name}.compiler]
+[target.{name}.compiler.debug]
+
+
+[target.{name}.compiler.release]
+</code></pre>
+<pre><code class="language-toml">[[bin]]
+    name = &quot;...&quot; # target name (require)
+    sources = [&quot;src/xxx.cpp&quot;, ...] # (require)
+    install = true(default)|false  # disable install setting
+    standard = &quot;{11|14|17(default)|20}&quot;  #(working)
+
+#     
+[bin.dependencies]
+    ${name} = ${dependency options}
+    ${name} = ${dependency options}
+# or
+dependencies = {
+    ${name} = ${dependency options},
+    ${name} = ${dependency options},
+}
+</code></pre>
+<pre><code class="language-toml">[[lib]]
+    name = &quot;...&quot; # target name, export cmake package name 
+    type = &quot;static(default)|shared|hearder_only&quot; # (require)
+    sources = [&quot;src/xxx.cpp&quot;, ...] # use source files, type = &quot;header_only&quot; no nessasery this option
+    install = true(default)|false  # disable install setting
+    standard = &quot;{11|14|17(default)|20}&quot;  #(working)
+</code></pre>
+<pre><code class="language-toml"># (working) sub project setting
+[workspace]
+    member = [&quot;path/&quot;, &quot;path&quot;]
+</code></pre>
+<pre><code class="language-toml"># (working) target classification depedencies add
+[target.{name}.dependencies]
+# (working)
+[target.{name}.platform.{type}.dependencies]
+# (working)
+[target.{name}.platform.{type}.sources]
+</code></pre>
+<pre><code class="language-toml"># (working)
+[[test]]
+
+</code></pre>
+<pre><code class="language-toml"># (working)
+[[example]]
+
+</code></pre>
+<pre><code class="language-toml"># (working)
+[dev-dependencies]
+
+</code></pre>
+<pre><code class="language-toml"># global dependencies setting option, is same [target.default.platform.default.dependencies] (working)
+[dependencies] 
+    # cppkg package add dependency
+    # name   version(require)
+      ... = &quot;x.x.x|git|latest(default)&quot; # latest ordering is x.x.x &gt; git 
+    # nomal cmake package add dependency
+    # name        (require)                   (optional)           (optional) default is public            (optional) package type  
+      ... = {module = &quot;...&quot; , version =&quot;...&quot;, components=&quot;... ...&quot;, link = &quot;public|private|interface&quot;, type=&quot;lib(default)|bin&quot; }
+    # hunter package add dependency
+    # name        (require)                   (optional)           (optional) default is public            (require) load hunter package
+      ... = {module = &quot;...&quot; , version =&quot;...&quot;, components=&quot;... ...&quot;, link = &quot;public|private|interface&quot; , hunter= true }
+    # none cmake package add dependency
+    # name        (require)            (optional)           (optional) default is public (require) none cmake package
+      ... = {module = &quot;...&quot;, components=&quot;... ...&quot;, lnk_type = &quot;public|private|interface&quot;, no_module= true }
+    # module is name that cmake find_package 
+    # matched cmake scirpt
+    # find_package(${name} ${version} COMPONENTS ${components})
+    # target_link_libraries(${target} ${lnk_type} ${modle})
+    #link.public    =&gt; this library use header and source
+    #link.private   =&gt; this library use source only
+    #link.interface =&gt; this library use header only 
+
+</code></pre>
+<pre><code class="language-toml"># (working) platform classification depdencies setting 
+[platform.windows|macos|linux|unix.dependencies] 
+
+</code></pre>
+<pre><code class="language-toml"># (working)
+[exclude]
+
+</code></pre>
+<pre><code class="language-toml"># (working)
+[ci.github_action]
+[ci.appveyer]
+[ci.azure]
+[ci.travis]
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="getting_started.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="cppm_toml.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="cppm_guide.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="cppm_commands.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -173,13 +292,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="getting_started.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="cppm_toml.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="cppm_guide.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="cppm_commands.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

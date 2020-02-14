@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Cppm Commands - The Cppm Book</title>
+        <title>Installation - The Cppm Book</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="install.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="expanded "><a href="first-steps.html"><strong aria-hidden="true">2.2.</strong> First Steps with Cppm</a></li></ol></li><li class="expanded "><a href="cppm_guide.html"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li><ol class="section"><li class="expanded "><a href="cppm_toml.html"><strong aria-hidden="true">3.1.</strong> cppm.toml</a></li><li class="expanded "><a href="cppkg_toml.html"><strong aria-hidden="true">3.2.</strong> cppkg.toml</a></li></ol></li><li class="expanded "><a href="cppm_commands.html" class="active"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="install.html" class="active"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="expanded "><a href="first-steps.html"><strong aria-hidden="true">2.2.</strong> First Steps with Cppm</a></li></ol></li><li class="expanded "><a href="cppm_guide.html"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li><ol class="section"><li class="expanded "><a href="cppm_toml.html"><strong aria-hidden="true">3.1.</strong> cppm.toml</a></li><li class="expanded "><a href="cppkg_toml.html"><strong aria-hidden="true">3.2.</strong> cppkg.toml</a></li></ol></li><li class="expanded "><a href="cppm_commands.html"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,18 +148,44 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#cppm-commands" id="cppm-commands">Cppm Commands</a></h1>
+                        <h2><a class="header" href="#installation" id="installation">Installation</a></h2>
+<h3><a class="header" href="#install-cppm" id="install-cppm">Install Cppm</a></h3>
+<p>cppm install command install defualt prefix is <strong>$HOME/.cppm/bin/local</strong> </p>
+<h4><a class="header" href="#linux-and-macos" id="linux-and-macos">Linux and MacOS</a></h4>
+<pre><code class="language-sh">git clone https://github.com/injae/cppm
+cd cppm
+cmake -Bbuild -DCMAKE_BUILD_TYPE=Release.
+cd build
+cmake --build .
+./cppm build install
+# Add to cppm path
+export PATH=$PATH:$HOME/.cppm/local/bin
+</code></pre>
+<h4><a class="header" href="#windows" id="windows">Windows</a></h4>
+<pre><code class="language-sh">git clone https://github.com/injae/cppm
+cd cppm
+cmake -Bbuild -DCMAKE_BUILD_TYPE=Release.
+cd build
+cmake --build . --config Release
+cd Release
+./cppm build install
+# Add Windows System Path /.cppm/local/bin
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="cppkg_toml.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="getting_started.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
+                        
+                            <a rel="next" href="first-steps.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -169,11 +195,15 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="cppkg_toml.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="getting_started.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
+                
+                    <a href="first-steps.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 
