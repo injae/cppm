@@ -166,7 +166,7 @@
     version = &quot;...&quot; # (optional) minimum cmake version setting option default is 3.12
     option = &quot;...&quot; # (optional) cmake build option use to command 'cppm build'
 </code></pre>
-<pre><code class="language-toml"># (deprecated) next version
+<pre><code class="language-toml"># (deprecated)
 [builder]
     make = {option =&quot;...&quot;}
     ninja = {option =&quot;...&quot;}
@@ -178,28 +178,12 @@
     gcc = &quot;...&quot; # compiler option
     msvc = &quot;...&quot; # compiler option
 </code></pre>
-<pre><code class="language-toml"># (working)
-[target.{name}.compiler]
-[target.{name}.compiler.debug]
-
-
-[target.{name}.compiler.release]
-</code></pre>
 <pre><code class="language-toml">[[bin]]
     name = &quot;...&quot; # target name (require)
     sources = [&quot;src/xxx.cpp&quot;, ...] # (require)
     install = true(default)|false  # disable install setting
     standard = &quot;{11|14|17(default)|20}&quot;  #(working)
 
-#     
-[bin.dependencies]
-    ${name} = ${dependency options}
-    ${name} = ${dependency options}
-# or
-dependencies = {
-    ${name} = ${dependency options},
-    ${name} = ${dependency options},
-}
 </code></pre>
 <pre><code class="language-toml">[[lib]]
     name = &quot;...&quot; # target name, export cmake package name 
@@ -208,28 +192,9 @@ dependencies = {
     install = true(default)|false  # disable install setting
     standard = &quot;{11|14|17(default)|20}&quot;  #(working)
 </code></pre>
-<pre><code class="language-toml"># (working) sub project setting
+<pre><code class="language-toml"># sub project setting
 [workspace]
     member = [&quot;path/&quot;, &quot;path&quot;]
-</code></pre>
-<pre><code class="language-toml"># (working) target classification depedencies add
-[target.{name}.dependencies]
-# (working)
-[target.{name}.platform.{type}.dependencies]
-# (working)
-[target.{name}.platform.{type}.sources]
-</code></pre>
-<pre><code class="language-toml"># (working)
-[[test]]
-
-</code></pre>
-<pre><code class="language-toml"># (working)
-[[example]]
-
-</code></pre>
-<pre><code class="language-toml"># (working)
-[dev-dependencies]
-
 </code></pre>
 <pre><code class="language-toml"># global dependencies setting option, is same [target.default.platform.default.dependencies] (working)
 [dependencies] 
@@ -267,6 +232,42 @@ dependencies = {
 [ci.appveyer]
 [ci.azure]
 [ci.travis]
+</code></pre>
+<pre><code class="language-toml"># (working)
+[target.{name}.compiler]
+[target.{name}.compiler.debug]
+
+
+[target.{name}.compiler.release]
+</code></pre>
+<pre><code class="language-toml"># (working) target classification depedencies add
+[target.{name}.dependencies]
+# (working)
+[target.{name}.platform.{type}.dependencies]
+# (working)
+[target.{name}.platform.{type}.sources]
+</code></pre>
+<pre><code class="language-toml"># (working)
+[[test]]
+
+</code></pre>
+<pre><code class="language-toml"># (working)
+[[example]]
+
+</code></pre>
+<pre><code class="language-toml"># (working)
+[dev-dependencies]
+
+</code></pre>
+<pre><code class="language-toml"># (working)    
+[bin.dependencies]
+    ${name} = ${dependency options}
+    ${name} = ${dependency options}
+# or
+dependencies = {
+    ${name} = ${dependency options},
+    ${name} = ${dependency options},
+}
 </code></pre>
 
                     </main>
