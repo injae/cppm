@@ -1,5 +1,5 @@
 
-Cppm ***(BETA)*** ![[github pages](https://github.com/injae/cppm/workflows/github%20pages/badge.svg)](https://injae.github.io/cppm/)
+[Cppm](https://injae.github.io/cppm/) ***(BETA)*** 
 ========
 |Linux|Windows|MacOS|
 |:----|:------|:----|
