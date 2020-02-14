@@ -1,5 +1,5 @@
 
-Cppm 
+Cppm ![github pages](https://github.com/injae/cppm/workflows/github%20pages/badge.svg)
 ========
 |Linux|Windows|MacOS|
 |:----|:------|:----|
@@ -16,15 +16,6 @@ Cppm
 > Not many libraries are supported by the cppkg yet.   
 > So cppm made the package of the [Hunter Package Manager](https://github.com/ruslo/hunter) available.   
 > If there is a library you want to add, please issue a pull request to the [Cppkg repository](https://github.com/injae/cppkg)  
-
-## Dependencies
-1. cmake (minimum 3.6)  
-2. [Hunter Package Manager](https://github.com/ruslo/hunter)  
-3. c++-17-compiler (g++8 or clang++-8 or visual studio 2017)
-4. nlpo
-5. cpptoml
-6. fmt
-7. md5
 
 ## Installation
 ### Ubuntu

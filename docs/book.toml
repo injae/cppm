@@ -3,4 +3,4 @@ authors = ["injae"]
 language = "en"
 multilingual = false
 src = "src"
-title = "cppm-book"
+title = "The Cppm Book"

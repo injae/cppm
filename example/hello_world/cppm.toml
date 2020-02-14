@@ -1,0 +1,8 @@
+[package]
+   name = "hello_world"
+   version = "0.0.1"
+   description = ""
+
+[[bin]]
+   name = "hello_world"
+   source = ["src/.*"]
