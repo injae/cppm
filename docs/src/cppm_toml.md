@@ -21,7 +21,7 @@
     option = "..." # (optional) cmake build option use to command 'cppm build'
 ```
 ```toml
-# (deprecated) next version
+# (deprecated)
 [builder]
     make = {option ="..."}
     ninja = {option ="..."}
@@ -35,29 +35,12 @@
     msvc = "..." # compiler option
 ```
 ```toml
-# (working)
-[target.{name}.compiler]
-[target.{name}.compiler.debug]
-
-
-[target.{name}.compiler.release]
-```
-```toml
 [[bin]]
     name = "..." # target name (require)
     sources = ["src/xxx.cpp", ...] # (require)
     install = true(default)|false  # disable install setting
     standard = "{11|14|17(default)|20}"  #(working)
 
-#     
-[bin.dependencies]
-    ${name} = ${dependency options}
-    ${name} = ${dependency options}
-# or
-dependencies = {
-    ${name} = ${dependency options},
-    ${name} = ${dependency options},
-}
 ```
 ```toml
 [[lib]]
@@ -68,32 +51,9 @@ dependencies = {
     standard = "{11|14|17(default)|20}"  #(working)
 ```
 ```toml
-# (working) sub project setting
+# sub project setting
 [workspace]
     member = ["path/", "path"]
-```
-```toml
-# (working) target classification depedencies add
-[target.{name}.dependencies]
-# (working)
-[target.{name}.platform.{type}.dependencies]
-# (working)
-[target.{name}.platform.{type}.sources]
-```
-```toml
-# (working)
-[[test]]
-
-```
-```toml
-# (working)
-[[example]]
-
-```
-```toml
-# (working)
-[dev-dependencies]
-
 ```
 ```toml
 # global dependencies setting option, is same [target.default.platform.default.dependencies] (working)
@@ -135,4 +95,47 @@ dependencies = {
 [ci.appveyer]
 [ci.azure]
 [ci.travis]
+```
+
+```toml
+# (working)
+[target.{name}.compiler]
+[target.{name}.compiler.debug]
+
+
+[target.{name}.compiler.release]
+```
+```toml
+# (working) target classification depedencies add
+[target.{name}.dependencies]
+# (working)
+[target.{name}.platform.{type}.dependencies]
+# (working)
+[target.{name}.platform.{type}.sources]
+```
+```toml
+# (working)
+[[test]]
+
+```
+```toml
+# (working)
+[[example]]
+
+```
+```toml
+# (working)
+[dev-dependencies]
+
+```
+```toml
+# (working)    
+[bin.dependencies]
+    ${name} = ${dependency options}
+    ${name} = ${dependency options}
+# or
+dependencies = {
+    ${name} = ${dependency options},
+    ${name} = ${dependency options},
+}
 ```
