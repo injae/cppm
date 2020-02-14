@@ -46,6 +46,9 @@ namespace cppm::option
         app_.add_option("clear")
             .desc("clear cmake cache")
             .call_back([&](){ clean = true; });
+        app_.add_option("detail")
+            .desc("show cppm generate cmake commands")
+            .call_back([&](){ cmake_.detail = true; });
         app_.add_option("ntc")
             .desc("not change CMakeLists.txt test options")
             .call_back([&](){ none_tc = true; });

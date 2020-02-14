@@ -65,10 +65,10 @@ namespace cppm::cmake
         return *this;
     }
 
-    Cmake Cmake::build(const std::string& root, const std::string& build_path, bool debug) {
+    Cmake Cmake::build(const std::string& root, const std::string& build_path) {
         cache = Cache("{}/{}"_format(root, build_path));
-        while(!after_hooks.empty()) { after_hooks.front()(cache, cmake_option); after_hooks.pop(); }
         define("CMAKE_BUILD_TYPE", build_type);
+        while(!after_hooks.empty()) { after_hooks.front()(cache, cmake_option); after_hooks.pop(); }
 
         auto script = "cd {}/{} && "_format(root, build_path);
         script += (no_cache || cmake_option || !cache->exist_file())  ? "cmake {}.. && "_format(*cmake_option) : "";
@@ -78,7 +78,7 @@ namespace cppm::cmake
 
         auto is_sudo = (!(strcmp(util::system::what(), "windows")) || sudo) ? "sudo" : "";
         script += install ? " && {} cmake --install ."_format(is_sudo) : "";
-        if(debug) fmt::print(script + "\n");
+        if(detail) fmt::print(script + "\n");
         system(script.c_str());
         return *this;
     }

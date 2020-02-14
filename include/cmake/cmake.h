@@ -33,7 +33,7 @@ namespace cppm::cmake
         Cmake set_target(const std::string& target);
         Cmake generator_options(const std::string& option);
         Cmake define(const std::string name, const std::string value, const std::string option_type="D");
-        Cmake build(const std::string& root, const std::string& build_path="build", bool debug=false);
+        Cmake build(const std::string& root, const std::string& build_path="build");
     private:
         std::optional<Cache> cache;
         opt_str cmake_option=std::nullopt;
@@ -45,6 +45,7 @@ namespace cppm::cmake
         std::string build_type="Debug";
         bool no_cache=false;
         bool sudo=false;
+        bool detail=false;
     };
 }
 
