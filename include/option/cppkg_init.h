@@ -2,7 +2,8 @@
 #define __CPPM_OPTION_CPPKG_INIT_H__
 
 #include "option/base_option.h"
-#include "package/package.h"
+#include "cppkg/cppkg.h"
+#include "config/dependency.h"
 
 namespace cppm::option
 {
@@ -11,7 +12,7 @@ namespace cppm::option
     public:
         CppkgInit();
     private:
-        package::Package pkg;
+        Dependency pkg;
         bool regist = false;
     };
 }

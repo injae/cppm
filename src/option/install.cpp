@@ -1,10 +1,8 @@
 #include "option/install.h"
-#include "package/package.h"
 
 namespace cppm::option
 {
     Install::Install(Config& config) {
-        package::Package package;
         //app_.add_option("git")
         //    .abbr("g")
         //    .desc("install to git repo")

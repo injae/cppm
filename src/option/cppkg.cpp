@@ -1,6 +1,6 @@
 #include "option/cppkg.h"
 #include "config/cppm_tool.h"
-#include "package/package.h"
+#include "cppkg/cppkg.h"
 #include "option/cppkg_init.h"
 #include "util/filesystem.h"
 #include "util/string.hpp"
@@ -39,13 +39,13 @@ namespace cppm::option
     void Cppkg::_build() {
         if(app_.args().empty())    { fmt::print(stderr,"need argument");     exit(1);}
         if(app_.args().size() > 1) { fmt::print(stderr,"too many argument"); exit(1);}
-        package::cppkg::build(app_.get_arg());
+        cppkg::build(app_.get_arg());
     }
 
     void Cppkg::_push() {
         if(app_.args().empty())    { fmt::print(stderr,"need argument");}
         if(app_.args().size() > 1) { fmt::print(stderr,"too many argument");}
-        package::cppkg::regist(app_.get_arg());
+        cppkg::regist(app_.get_arg());
     }
 
 }

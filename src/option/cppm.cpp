@@ -5,7 +5,6 @@
 #include "option/build.h"
 #include "option/init.h"
 #include "option/cppm_config.h"
-#include "package/package.h"
 #include "config/cppm_package.h"
 #include "cppm_version.h"
 #include "option/cppkg.h"
@@ -39,7 +38,9 @@ namespace cppm::option
     void Cppm::_run() {
         using namespace fmt::literals;
         config_load();
-        auto binary_path = "{0}/{1}"_format(config_.path.build,config_.package.name);
+        auto cache = cmake::Cache(config_.path.build);
+        
+        auto binary_path = "{0}/{1}/{2}"_format(config_.path.build, cache["CMAKE_BUILD_TYPE"], config_.package.name);
         auto args = util::accumulate(app_.args(), " "); app_.args().clear();
         system((binary_path + args).c_str());
     }

@@ -7,10 +7,35 @@
 #include "config/cppm_tool.h"
 #include "util/filesystem.h"
 #include "config/config.h"
+#include "util/version.h"
+#include "cppkg/cppkg.h"
 
 using namespace fmt::literals;
 namespace cppm
 {
+    void Dependency::parse(table_ptr table) {
+          version      = toml::get(table, "version"  , "latest");
+          type         = toml::get(table, "type"     , "lib");
+          desc         = toml::get(table, "description"     , "");
+          link_type    = toml::get(table, "link"     , "public");
+          none_module  = toml::get(table, "no_module", false);
+          hunter       = toml::get(table, "hunter"   , false);
+          module       = hunter ? toml::panic(table, "module") : toml::get(table, "module", "");
+          flags        = toml::get(table, "flags", "");
+          components   = toml::get(table, "components", "");
+          load_path    = toml::get(table, "load-path", "");
+          helper       = toml::get(table, "helper", "");
+          custom       = toml::get(table, "custom", false);
+          download.url = toml::get(table, "git", "");
+          if(download.url == "") {
+              download.url = toml::get(table, "url", "");
+          }
+          else {
+              download.branch = toml::get(table, "branch", "");
+              download.is_git = true;
+          }
+    }
+
     void Dependencies::parse(table_ptr table) {
         auto deps = table->get_table("dependencies");
         if(!deps) return ;
@@ -19,15 +44,7 @@ namespace cppm
             dependency.name = dep_table.first;
             if(dep_table.second->is_table()) {
                 auto dep = util::panic(toml::get_table(deps, dependency.name), "can't find {}"_format(dependency.name));
-                dependency.link_type   = toml::get(dep, "lnk_type" , "public");
-                dependency.link_type   = toml::get(dep, "link" , "public");
-                dependency.none_module = toml::get(dep, "no_module", false);
-                dependency.hunter      = toml::get(dep, "hunter"   , false);
-                dependency.type        = toml::get(dep, "type"     , "lib");
-                dependency.module      = dependency.hunter ? toml::panic(dep, "module") : toml::get(dep, "module", "");
-                dependency.version     = toml::get(dep, "version"   , "latest");
-                dependency.components  = toml::get(dep, "components", "");
-                dependency.load_path   = toml::get(dep, "load-path", "");
+                dependency.parse(dep);
                 list[dependency.name] = dependency;
             }
             else {
@@ -38,8 +55,8 @@ namespace cppm
                 dependency.none_module = false;
                 dependency.hunter = (what[4] == "hunter") ? true : false;
                 if(dependency.hunter) {
-                    dependency.module  = what[5];
-                    dependency.type    = "lib";
+                    dependency.module = what[5];
+                    dependency.type   = "lib";
                 }
                 else if(what[4] == "stable" ||  what[4] == "nightly"){ /* need to make */ }
                 if(what[1] == "^") { } // version manager
@@ -50,19 +67,6 @@ namespace cppm
                 list[dependency.name] = dependency;
             }
         } 
-    }
-
-    std::string Dependencies::gen_find_package() {
-        std::string gen;
-        for(auto& [name, dep] : list) {
-            if(dep.load_path != "") {
-                gen += "add_subdirectory({})"_format(dep.load_path);
-            }
-            auto components = dep.components == "" ? "" : "components=\"{}\""_format(dep.components);
-            auto version = dep.version == "latest" ? "" : dep.version; 
-            gen += "find_package({0} {1} {2})\n"_format(name, version, dep.components);
-        }
-        return gen;
     }
 
     std::string Dependencies::generate() {
@@ -78,6 +82,31 @@ namespace cppm
             gen += "find_cppkg({0} {1} MODULE {2}{3}{4})\n"_format(name, dep.version, dep.module, components, hunter);
         }
         return gen;
+    }
+
+    void Dependencies::after_init(Config & config) {
+        fs::create_directory(config.path.thirdparty);
+        for(auto& [name, dep] : list) {
+            if(dep.hunter) continue;
+            else if(dep.load_path != "") {
+                util::panic(fs::exists("{}/{}"_format(config.path.root, dep.load_path))
+                          ,"[cppm-error] can't find load-path package, {}/{}\n"_format(config.path.root,dep.load_path));
+                dep.load_path = "{}/{}"_format(config.path.root, dep.load_path);
+                continue;
+            }
+            else {
+                auto path = Version::find_version_folder("{}/{}"_format(config.path.thirdparty,name), dep.version);
+                if(!path) {
+                    cppkg::install(config, cppkg::search(dep.name, dep.version));
+                    path = Version::find_version_folder("{}/{}"_format(config.path.thirdparty,name), dep.version);
+                }
+                auto load_dep = cppkg::parse(name, *path);
+                dep.module     = load_dep.module;
+                dep.type       = load_dep.type;
+                dep.version    = load_dep.version;
+                dep.components = load_dep.components;
+            }
+        }
     }
 
     std::string Dependencies::use_hunter(Config& config) {

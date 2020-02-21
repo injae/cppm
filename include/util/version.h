@@ -23,6 +23,7 @@ namespace cppm
         operator std::string() const;
         friend std::ostream& operator << (std::ostream& stream, const Version& other);
         static std::optional<std::string> get_latest_version_folder(const std::string& path);
+        static std::optional<std::string> find_version_folder(const std::string& path, const std::string& version);
 
         bool git = false;
         bool latest = false;

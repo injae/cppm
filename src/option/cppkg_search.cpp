@@ -25,19 +25,18 @@ namespace cppm::option
                            , "Name", "Version", "Repository","Description","Use");
                 fmt::print("{:=<20}{:=<10}{:=<13}{:=<50}{:=<70}\n"
                            , "=", "=", "=","=","=");
-                auto list = package::cppkg::list();
-                for(auto& [rname, repo] : list.repos) {
+                auto list = cppkg::list();
+                for(auto& [rname, repo] : list) {
                     if(!is_all && show_one && repo_name == rname) continue;
                     else if(!is_all && !show_one && rname == "hunter") continue;
 
                     for(auto& [pname, pkg] : repo.pkgs) {
                         for(auto& [vname, ver] : util::reverse(pkg.versions)) {
-                            package::Package package;
-                            package.parse(cpptoml::parse_file("{0}/{1}"_format(ver,"cppkg.toml")));
-                            if(name != ""&&!has_str(pname, name)&&!has_str(package.description, name)) break; 
+                            Dependency dep = cppkg::parse(pname, ver);
+                            if(name != ""&&!has_str(pname, name)&&!has_str(dep.desc, name)) break; 
                             fmt::print("{:<20}{:<10}{:<13}{:<50}{:<70}\n"
                                       , str_cut(pname, 20), std::string(vname), rname
-                                      , str_cut(package.description, 50), _make_use_column(package,rname));
+                                      , str_cut(dep.desc, 50), _make_use_column(dep,rname));
                         }
                     }
                 }
@@ -45,13 +44,13 @@ namespace cppm::option
         });
     }
 
-    std::string CppkgSearch::_make_use_column(const package::Package& pkg, const std::string& repo) {
-        auto component = pkg.cmake.components != ""
-            ? " components={0}"_format(quot(pkg.cmake.components)) : "";
+    std::string CppkgSearch::_make_use_column(const Dependency& dep, const std::string& repo) {
+        auto component = dep.components != ""
+            ? " components={0}"_format(quot(dep.components)) : "";
         return repo == "cppkg" && component == ""
-               ? "{0}={1}"_format(pkg.name, quot(pkg.version))
+               ? "{0}={1}"_format(dep.name, quot(dep.version))
                : "{0}={{module={1}, version={2}{3}}}"_format(
-                  pkg.name, quot(pkg.cmake.name), quot(pkg.version), component);
+                  dep.name, quot(dep.module), quot(dep.version), component);
 
     }
 

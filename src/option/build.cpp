@@ -10,7 +10,7 @@
 #include "util/algorithm.hpp"
 #include "util/command.h"
 #include "util/filesystem.h"
-#include "package/package.h"
+#include "cppkg/cppkg.h"
 #include "util/system.hpp"
 #include "util/string.hpp"
 #include "cmake/cmake.h"
@@ -104,20 +104,20 @@ namespace cppm::option
             });
     }
 
-    void Build::export_cppkg() {
-        package::Package pkg;
+    void Build::export_cppkg() { 
+        Dependency pkg;
         pkg.name = config_.package.name;
         for(auto& lib : config_.libs.list) {
-            pkg.cmake.name += lib.install ? "{0}::{1} "_format(config_.package.name,lib.name) : "";
+            pkg.module += lib.install ? "{0}::{1} "_format(config_.package.name, lib.name) : "";
+            pkg.type = "lib";
         }
-        pkg.description = config_.package.description;
-        pkg.download.git.url = config_.package.git_repo;
+        if(!config_.bins.list.empty()) pkg.type = "bin";
+        pkg.desc = config_.package.description;
+        pkg.download.url = config_.package.git_repo;
+        pkg.download.is_git = true;
         pkg.version = "git";
-        if(pkg.download.git.url == "") { fmt::print(stderr, "need config setting\n[package]\n    git = {{repo}}\n"); exit(1); }
-        pkg.deps = config_.dependencies;
-        pkg.global = false;
-        package::cppkg::init(pkg);
-        package::cppkg::build(pkg.name);
-        //package::cppkg::regist("{}/{}"_format(pkg.name,pkg.version));
+        cppkg::init(pkg);
+        cppkg::build(pkg.name);
+        exit(0);
     }
 }

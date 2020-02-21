@@ -2,7 +2,7 @@
 #define __CPPM_OPTION_CPPKG_SEARCH_H__
 
 #include "option/base_option.h"
-#include "package/package.h"
+#include "cppkg/cppkg.h"
 
 namespace cppm::option
 {
@@ -13,7 +13,7 @@ namespace cppm::option
     private:
         void _show_hunter_package(const std::string& target);
         void _show_all();
-        std::string _make_use_column(const package::Package& pkg, const std::string& repo);
+        std::string _make_use_column(const Dependency& dep, const std::string& repo);
         bool is_all = false;
         bool show_one = false;
         std::string repo_name;

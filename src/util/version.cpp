@@ -82,4 +82,21 @@ namespace cppm
                         });
              return versions->begin()->path().string();
     }
+
+    std::optional<std::string> Version::find_version_folder(const std::string& path, const std::string& version) {
+        if(version != "latest") {
+            return fs::exists("{}/{}"_format(path,version)) ? std::make_optional("{}/{}"_format(path,version))
+                                                            : std::nullopt;
+        }
+        if(auto versions = util::file_list(path)) {
+            std::sort(versions->begin(),versions->end()
+                        ,[](auto a, auto b){
+                            auto av = Version(a.path().filename().string());
+                            auto bv = Version(b.path().filename().string());
+                            return av > bv;
+                        });
+             return versions->begin()->path().string();
+        }
+        return std::nullopt;
+    }
 }

@@ -22,9 +22,9 @@ namespace cppm
     {
     public:
         static Config load(const std::string& path);
-        void dependency_check();
         void parse(table_ptr table) override;
         void build_lock(table_ptr table, table_ptr lock) override;
+        void after_init(Config & config) override;
         std::string generate();
         static void write(table_ptr table);
     public:
@@ -40,6 +40,7 @@ namespace cppm
         Compiler     compiler;
         Dependencies dependencies;
         CppmConfig   cppm_config;
+        table_ptr lock;
     };
 }
 

@@ -13,12 +13,14 @@ namespace cppm
     using namespace std::literals;
     using namespace fmt::literals;
     using table_ptr = std::shared_ptr<cpptoml::table>;
+    class Config;
     class base_config
     {
     protected:
     public:
         virtual void parse(table_ptr table) = 0;
         virtual void build_lock(table_ptr table, table_ptr lock) {};
+        virtual void after_init(Config& config) {};
         virtual ~base_config() {};
     };
 }

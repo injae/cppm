@@ -13,3 +13,9 @@ download = {git="https://github.com/injae/nlpo.git"}
 #download = {url=""}
 [dependencies]
 fmt={module="fmt::fmt", version="latest",  lnk_type="private"  }
+
+[nlpo]
+version = "git"
+description = "c++ program option and command library"
+module  = "nlpo::nlpo "
+git="https://github.com/injae/nlpo.git"

@@ -1,5 +1,5 @@
 #include "option/cppkg_install.h"
-#include "package/package.h"
+#include "cppkg/cppkg.h"
 #include "util/system.hpp"
 #include "config/config.h"
 #include "util/string.hpp"
@@ -23,7 +23,7 @@ namespace cppm::option
                      if(app_.args().size() < 1) { fmt::print(stderr, "need package name");  exit(1); }
                 else if(app_.args().size() > 1) { fmt::print(stderr, "too many arguments"); exit(1); }
                 auto name = app_.get_arg();
-                package::cppkg::search(name, version);
+                cppkg::search(name, version);
                 auto inst_proj = _base_cppm_project();
                 auto path = "{}install/__install"_format(tool::cppm_root());
                 if(fs::exists(path)) {

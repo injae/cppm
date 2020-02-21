@@ -11,3 +11,10 @@ cmake = {name = "fmt::fmt", findlib=""}
 # write download value git or url
 #download = {git=""}
 download = {url="https://github.com/fmtlib/fmt/releases/download/6.0.0/fmt-6.0.0.zip"}
+
+
+[fmt]
+version = "6.0.0"
+description = "A modern formatting library"
+module = "fmt::fmt"
+url="https://github.com/fmtlib/fmt/releases/download/6.0.0/fmt-6.0.0.zip"

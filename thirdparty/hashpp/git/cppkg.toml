@@ -11,3 +11,10 @@ cmake = {name = "hashpp::hashpp ", findlib=""}
 # write download value git or url
 download = {git="https://github.com/injae/hashpp.git"}
 #download = {url=""}
+
+
+[hashpp]
+version = "git"
+description = "c++ hash algorithm library"
+module = "hashpp::hashpp "
+git="https://github.com/injae/hashpp.git"

@@ -1,8 +1,6 @@
 #include "config/config.h"
 #include "cmake/cmake.h"
 #include "config/cppm_tool.h"
-#include "package/package.h"
-#include "util/version.h"
 #include "util/filesystem.h"
 #include "util/optional.hpp"
 #include <iostream>
@@ -11,12 +9,12 @@ namespace cppm
 {
     Config Config::load(const std::string &path) {
         auto table = cpptoml::parse_file(path+"/cppm.toml");
-        auto lock = cpptoml::make_table();
         Config config;
+        config.lock = cpptoml::make_table();
         config.path = Path::make(path);
         config.parse(table);
         //config.build_lock(table, lock);
-        config.dependency_check();
+        config.after_init(config);
         return config; 
     }
 
@@ -35,59 +33,10 @@ namespace cppm
         cppm_config.load();
     }
 
-    void Config::dependency_check() {
-        using namespace package;
-        std::vector<Dependency> not_installed_dep;
-        fs::create_directories(path.thirdparty);
-        for(auto& [name, dep] : dependencies.list) {
-            if(dep.hunter) { continue; }
-            std::string tpath = "";
-            if(dep.load_path != "") {
-                util::panic(fs::exists("{}/{}"_format(path.root, dep.load_path))
-                           ,"[cppm-error] can't find load-path package, {}/{}\n"_format(path.root, dep.load_path));
-                dep.load_path = "{}/{}"_format(path.root, dep.load_path);
-                continue;
-            }
-            if(!fs::exists("{0}/{1}"_format(path.thirdparty,name))){
-                not_installed_dep.push_back(dep);
-                continue;
-            }
-            if(dep.version == "latest") {
-                auto vpath = Version::get_latest_version_folder("{0}/{1}"_format(path.thirdparty,name));
-                util::panic(vpath, "can't find {}/{}\n"_format(name, dep.version));
-                tpath = *vpath;
-            }
-            else { tpath = "{0}/{1}/{2}"_format(path.thirdparty,name,dep.version); }
-            if(!fs::exists("{0}/{1}.cmake.in"_format(tpath,name))) {
-                not_installed_dep.push_back(dep);
-            }
-        }
-        for(auto dep : not_installed_dep){
-            auto path = cppkg::search(dep.name, dep.version);
-            cppkg::install(*this, path);
-        }
-        for(auto& [name, dep] : dependencies.list) {
-            if(((dep.module == "") && !dep.hunter )) {
-                if(dep.load_path != "") continue;
-                std::string tpath = "";
-                if(dep.version == "latest") {
-                    auto vpath = Version::get_latest_version_folder("{0}/{1}"_format(path.thirdparty,name));
-                    if(!vpath) { fmt::print(stderr, "can't find {}/{}",name, dep.version); exit(1); }
-                    tpath = *vpath;
-                }
-                else {
-                    tpath = "{0}/{1}/{2}"_format(path.thirdparty,name,dep.version);
-                    if(!fs::exists(tpath)) { fmt::print(stderr, "can't find {}/{}",name, dep.version); exit(1); }
-                }
-                auto table = cpptoml::parse_file("{}/cppkg.toml"_format(tpath));
-                package::Package pkg;
-                pkg.parse(table);
-                dep.module     = pkg.cmake.name;
-                dep.type       = pkg.type;
-                dep.version    = pkg.version;
-                dep.components = pkg.cmake.components;
-            }
-        }
+
+    void Config::after_init(Config & config) {
+        config.dependencies.after_init(config);
+        
     }
 
 

@@ -50,8 +50,8 @@ SOURCES
 	src/option/add.cpp
 	src/option/build.cpp
 	src/option/install.cpp
+	src/cppkg/cppkg.cpp
 	src/main.cpp
-	src/package/package.cpp
 	include/cmake/cmake.h
 	include/util/filesystem.h
 	include/util/hash.hpp
@@ -89,8 +89,8 @@ SOURCES
 	include/option/cppm.h
 	include/option/cppkg.h
 	include/option/init.h
-	include/package/package.h
-	include/package/repo.h
+	include/cppkg/repo.h
+	include/cppkg/cppkg.h
 	include/cppm_version.h
 )
 

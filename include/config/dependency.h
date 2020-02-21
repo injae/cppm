@@ -7,26 +7,40 @@
 namespace cppm
 {
     class Config;
+
+    namespace detail {
+        struct download
+        {
+            std::string url;
+            std::string branch;
+            bool is_git;
+        };
+    }
+
     struct Dependency
     {
         std::string name;
+        std::string version;
+        std::string desc;
         std::string module;
+        std::string components;
+        std::string load_path;
+        std::string flags;
         bool none_module;
         bool hunter;
         std::string link_type;
         std::string type; // lib | bin | cmake
-        std::string version;
-        std::string components;
-        std::string load_path;
-        void insert(table_ptr table);
+        detail::download download;
+        std::string helper; // Find${LIbrary}.cmake add
+        bool custom = false; // Find${LIbrary}.cmake add
+        void parse(table_ptr table);
     };
 
     class Dependencies : public base_config
     {
     public:
-        void parse(table_ptr table);
-        std::string gen_find_package();
-        std::string gen_find_cppkg();
+        void parse(table_ptr table) override;
+        void after_init(Config& config) override;
         std::string use_hunter(Config& config);
         std::string generate();
         ~Dependencies(){}
