@@ -18,9 +18,7 @@ jobs:
         echo "::set-env name=CC::gcc-8"
         echo "::set-env name=CXX::g++-8"
     - name: CMake build
-      run: cmake -Bbuild . && cd build && cmake --build . 
-    - name: Cppm build install
-      run: cp build/cppm . && ./cppm build -h
+      run: cmake -Bbuild . && cd build && cmake --build .
   ubuntu-xenial-llvm-8:
     runs-on: ubuntu-16.04
     steps:
