@@ -21,6 +21,10 @@ namespace cppkg
     }
 
     std::string translate(cppm::Dependency& dep) {
+        using namespace cppm;
+        util::panic(dep.module == "" && dep.type == "lib","require module={cmake module name}\n");
+        util::panic(dep.desc   == "","require description={packag description}\n");
+        util::panic(dep.download.url == "","require url={download url or git}\n");
         std::string cmake;
         auto download = dep.download.is_git ? "GIT {} "_format(dep.download.url) : "URL {} "_format(dep.download.url) ;
         download += dep.download.branch != "" ? "GIT_TAG {} "_format(dep.download.branch) : "";
@@ -32,10 +36,13 @@ namespace cppkg
         cmake += "#    W_CONFIGURE {...}, W_BUILD {...}, W_INSTALL {...}\n";
         cmake += "# - Install Path Options:\n";
         cmake += "#    LOCAL(default) GLOBAL \n";
-        cmake += "cmake_minimum_required(VERSION 3.6)\n"
-               + "project({0}-{1}-install C CXX)\n\n"_format(dep.name, dep.version)
-               + "include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)\n"
-               + "download_package({} {} {} LOCAL)\n\n"_format(dep.name, dep.version, download);
+        cmake += "cmake_minimum_required(VERSION 3.6)\n"  
+              +  "project({0}-{1}-install C CXX)\n\n"_format(dep.name, dep.version)
+              +  "include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)\n" 
+              +  "download_package({} {} {} CMAKE_ARGS ${{CMAKE_ARGS}} {})\n\n"_format( dep.name
+                                                                                            , dep.version
+                                                                                            , download
+                                                                                            , dep.flags);
         return cmake;
     }
 
@@ -73,13 +80,10 @@ namespace cppkg
     void build(const std::string& name) {
         using namespace cppm;
         auto dep = cppkg::parse(name);
-        util::panic(dep.module == "" && dep.type == "lib","require module={cmake module name}\n");
-        util::panic(dep.desc   == "","require description={packag description}\n");
-        util::panic(dep.download.url == "","require url={download url or git}\n");
-        auto dir_name = "{0}/{1}"_format(dep.name, dep.version);
-        util::panic(fs::exists(dir_name), "existed {0}/{1}"_format(dep.name, dep.version));
+        auto dir_name = "{}/{}"_format(dep.name, dep.version);
+        util::panic(fs::exists(dir_name), "existed {}"_format(dir_name));
         fs::create_directories(dir_name);
-        auto file = "{0}/{1}.cmake.in"_format(dir_name,dep.name);
+        auto file = "{}/{}.cmake.in"_format(dir_name,dep.name);
         util::write(file, translate(dep));
         fmt::print("[cppkg] Success to make {} package\n",dep.name);
     }

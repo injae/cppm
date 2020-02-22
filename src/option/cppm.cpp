@@ -19,7 +19,8 @@ namespace cppm::option
             .desc("show cppm version")
             .call_back([&](){ fmt::print("cppm version {}\n", CPPM_VERSION);});
         app_.add_command<CppmConfig>("config")
-            .desc("cppm config setting");
+            .desc("cppm config setting")
+            .is_show(false);
         app_.add_command<Init>("init")
             .desc("make c++ project");
         app_.add_command("update")

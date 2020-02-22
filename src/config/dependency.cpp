@@ -16,7 +16,7 @@ namespace cppm
     void Dependency::parse(table_ptr table) {
           version      = toml::get(table, "version"  , "latest");
           type         = toml::get(table, "type"     , "lib");
-          desc         = toml::get(table, "description"     , "");
+          desc         = toml::get(table, "description", "");
           link_type    = toml::get(table, "link"     , "public");
           none_module  = toml::get(table, "no_module", false);
           hunter       = toml::get(table, "hunter"   , false);
@@ -29,6 +29,7 @@ namespace cppm
           download.url = toml::get(table, "git", "");
           if(download.url == "") {
               download.url = toml::get(table, "url", "");
+              download.is_git = false;
           }
           else {
               download.branch = toml::get(table, "branch", "");
@@ -100,11 +101,10 @@ namespace cppm
                     cppkg::install(config, cppkg::search(dep.name, dep.version));
                     path = Version::find_version_folder("{}/{}"_format(config.path.thirdparty,name), dep.version);
                 }
-                auto load_dep = cppkg::parse(name, *path);
-                dep.module     = load_dep.module;
-                dep.type       = load_dep.type;
-                dep.version    = load_dep.version;
-                dep.components = load_dep.components;
+                auto load_dep  = cppkg::parse(name, *path);
+                dep = load_dep;
+                auto cmake_file = "{}/{}.cmake.in"_format(*path, dep.name);
+                if(!fs::exists(cmake_file)) { util::write(cmake_file ,cppkg::translate(dep)); }
             }
         }
     }

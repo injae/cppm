@@ -13,7 +13,7 @@ namespace cppm
         {
             std::string url;
             std::string branch;
-            bool is_git;
+            bool is_git=false;
         };
     }
 

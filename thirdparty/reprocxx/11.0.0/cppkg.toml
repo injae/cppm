@@ -1,0 +1,6 @@
+[reprocxx]
+    version = "11.0.0"
+    description = "Cross-platform (C99/C++11) process library"
+    url = "https://github.com/DaanDeMeyer/reproc/archive/v11.0.1.tar.gz"
+    module = "reprocxx"
+    flags = "-DREPROCXX=ON"
