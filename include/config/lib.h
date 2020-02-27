@@ -13,7 +13,6 @@ namespace cppm
     {
     public:
         void parse(table_ptr table);
-        std::string generate(Config& config);
     public:
         std::vector<Lib> list;
     };

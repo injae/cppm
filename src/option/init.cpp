@@ -17,19 +17,15 @@ namespace cppm::option
         app_.add_option("bin")
             .abbr("b")
             .desc("initialize new c++ binary project")
-            .args("{name}")
-            .call_back([&](){ this->make_bin(); });
+            .call_back([&](nlpo::arg::One arg){ make_bin(arg); }, "{binary name}");
         app_.add_option("lib")
             .abbr("l")
             .desc("initialize new c++ library project")
-            .args("{name}")
-            .call_back([&](){ this->make_lib(); });
+            .call_back([&](nlpo::arg::One arg){ make_lib(arg); }, "{library name}");
     }
 
-    void Init::make_bin() {
-        auto name = app_.args().front();
-        auto gen = make_project();
-
+    void Init::make_bin(const std::string& name) {
+        auto gen = make_project(name);
         gen += "[[bin]]\n"
             +  "   name = {}\n"_format(quot(name))
             +  "   source = [{}]\n"_format("src/.*"_quot)
@@ -44,13 +40,10 @@ namespace cppm::option
         file.open(project.source + "/main.cpp", std::ios::out);
         file << "#include <iostream>\nint main(int argc, char* argv[]) {\n    std::cout<<\"hello world\"<<std::endl;\n    return 0; \n}";
         file.close();
-        app_.args().pop_front();
     } 
 
-    void Init::make_lib() {
-        auto name = app_.args().front();
-        auto gen = make_project();
-
+    void Init::make_lib(const std::string& name) {
+        auto gen = make_project(name);
         gen += "[[lib]]\n"
             +  "   name = {}\n"_format(quot(name))
             +  "   type = {}\n"_format("shared"_quot)
@@ -64,17 +57,12 @@ namespace cppm::option
         file.close();
 
         fs::create_directory(project.include + "/" + name);
-        app_.args().pop_front();
     }
 
-    std::string Init::make_project() {
-        if(app_.args().size() <= 0)  { std::cerr << "need project name"  << std::endl; exit(1);}
-        if(app_.args().size() >  1)  { std::cerr << "too many argument"  << std::endl; exit(1);}
-        auto project_name = app_.args().front();
-
-        if(fs::exists(project_name)) { std::cerr << "this name is exist" << std::endl; exit(1);}
-        fs::create_directory(project_name);
-        auto project = Path::make((fs::current_path()/project_name).string());
+    std::string Init::make_project(const std::string& name) {
+        if(fs::exists(name)) { std::cerr << "this name is exist" << std::endl; exit(1);}
+        fs::create_directory(name);
+        auto project = Path::make((fs::current_path()/name).string());
         fs::create_directory(project.build);
         fs::create_directory(project.cmake);
         fs::create_directory(project.include);
@@ -88,7 +76,7 @@ namespace cppm::option
         fs::copy(cppm_path + "cmake/cppm_tool.cmake", project.cmake+"/cppm_tool.cmake");
 
         return "[package]\n"
-             + "   name = {}\n"_format(quot(project_name))
+             + "   name = {}\n"_format(quot(name))
              + "   version = {}\n"_format("0.0.1"_quot)
              + "   description = {}\n"_format(""_quot)
              + "\n"

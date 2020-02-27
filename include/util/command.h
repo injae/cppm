@@ -8,7 +8,6 @@
 #include <reproc++/reproc.hpp>
 
 namespace console {
-    using namespace fmt::literals;
     using hook = std::function<bool(reproc::stream, const u_int8_t*, size_t)>;
     namespace hooks {
         struct normal {

@@ -1,7 +1,7 @@
 #include "util/command.h"
 #include <reproc++/sink.hpp>
 
-namespace cppm::util
+namespace console
 {
     std::vector<std::string> split(const std::string &txt, char ch)
     {

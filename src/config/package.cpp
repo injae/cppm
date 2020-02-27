@@ -7,7 +7,7 @@ namespace cppm
 {
     void Package::parse(table_ptr table) {
         auto package = util::panic(table->get_table("package"), "cppm.toml need package tables");
-        name         = toml::panic<std::string>(package, "name");
+        name         = toml::panic(package, "name");
         version      = toml::get(package, "version", "0.0.1");
         standard     = toml::get(package, "standard", "17"); 
         description  = toml::get(package, "description", "");

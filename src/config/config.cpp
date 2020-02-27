@@ -7,16 +7,17 @@
 
 namespace cppm
 {
-    Config Config::load(const std::string &path) {
+    Config::ptr Config::load(const std::string &path) {
         auto table = cpptoml::parse_file(path+"/cppm.toml");
-        Config config;
-        config.lock = cpptoml::make_table();
-        config.path = Path::make(path);
-        config.parse(table);
+        auto config = std::shared_ptr<Config>(new Config);
+        config->lock = cpptoml::make_table();
+        config->path = Path::make(path);
+        config->parse(table);
         //config.build_lock(table, lock);
-        config.after_init(config);
+        config->after_init(config);
         return config; 
     }
+
 
     void Config::parse(table_ptr table) {
         package.parse(table);
@@ -34,8 +35,8 @@ namespace cppm
     }
 
 
-    void Config::after_init(Config & config) {
-        config.dependencies.after_init(config);
+    void Config::after_init(Config::ptr config) {
+        config->dependencies.after_init(config);
         
     }
 
@@ -66,7 +67,7 @@ namespace cppm
              + "\n"
              + "include(cmake/cppm_tool.cmake)\n"
              + "cppm_project()\n"
-             + dependencies.use_hunter(*this)
+             + dependencies.use_hunter(shared_from_this())
              + "project({0} VERSION {1} LANGUAGES C CXX)\n"_format(package.name, package.version)
              + "cppm_setting()\n"
              + "\n"
@@ -75,9 +76,9 @@ namespace cppm
              + "\n"
              + cmake.generate()
              + dependencies.generate()
-             + tool::target_define(*this)
-             + tool::target_dependencies(*this)
-             + tool::target_install(*this)
+             + tool::target_define(shared_from_this())
+             + tool::target_dependencies(shared_from_this())
+             + tool::target_install(shared_from_this())
              + "\n"
              ;
     }

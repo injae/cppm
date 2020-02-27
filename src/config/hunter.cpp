@@ -12,7 +12,7 @@ namespace cppm
         auto hunter = toml::get_table(table, "hunter");
         url         = toml::get(hunter, "url" , "https://github.com/ruslo/hunter/archive/v0.23");
         sha1        = toml::get(hunter, "sha1", "e14bc153a7f16d6a5eeec845fb0283c8fad8c358");       
-        use_hunter  = toml::get(hunter, "use" , false);
+        use_hunter  = toml::get_bool(hunter, "use" , false);
     }
 
     void Hunter::build_lock(table_ptr table, table_ptr lock) {

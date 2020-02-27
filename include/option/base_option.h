@@ -11,11 +11,11 @@ namespace cppm::option
     public:
         nlpo::App& app() { return app_; }
         virtual ~base_option() {}
-        void config_load();
+        bool config_load();
         void start_from(const std::string& path) { start_path_ = path; }
     protected:
         nlpo::App app_;
-        Config config_;
+        Config::ptr config_;
         std::string start_path_ = "";
     };
 }

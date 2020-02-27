@@ -14,22 +14,22 @@ namespace cppm
             auto dep = toml::get_table(table, "dependencies");
             std::for_each(member.begin(), member.end()
             , [&](auto path) {
-                  Config sub = Config().load(path);
+                  auto sub = Config::load(path);
                   if(!fs::exists(path+"/CMakeLists.txt")) system("cd {} && cppm build --tc"_format(path).c_str());
                   auto mem = cpptoml::make_table();
-                  if(!sub.libs.list.empty()) {
-                      auto lib = sub.libs.list.front();
-                      mem->insert("version", sub.package.version);
+                  if(!sub->libs.list.empty()) {
+                      auto lib = sub->libs.list.front();
+                      mem->insert("version", sub->package.version);
                       mem->insert("module", lib.name);
                       mem->insert("type", "lib");
                       mem->insert("load-path", path);
                       dep->insert(lib.name, mem);
                   }
                   else {
-                      mem->insert("version", sub.package.version);
+                      mem->insert("version", sub->package.version);
                       mem->insert("load-path", path);
                       mem->insert("type", "bin");
-                      dep->insert(sub.package.name, mem);
+                      dep->insert(sub->package.name, mem);
                   }
             });
             table->insert("dependencies", dep);

@@ -16,7 +16,7 @@ namespace cppkg {
     void build(const std::string& name);
     void regist(const std::string& name);
     dep_in_repo search(const std::string& name, const std::string& version); 
-    void install(cppm::Config& config, const dep_in_repo& depr);
+    void install(cppm::Config::ptr config, const dep_in_repo& depr);
 }
 
 #endif

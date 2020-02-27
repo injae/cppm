@@ -13,9 +13,9 @@ namespace cppm::option
     public:
         Init();
     private:
-        void make_bin();
-        void make_lib();
-        std::string make_project();
+        void make_bin(const std::string& name);
+        void make_lib(const std::string& name);
+        std::string make_project(const std::string& name);
         void make_gitignore(Path& project);
     };
 }

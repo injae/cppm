@@ -21,7 +21,7 @@ namespace cppm
         std::vector<std::string> deps;
         std::optional<Compiler> compiler = std::nullopt;
         std::optional<Dependencies> dependencies = std::nullopt;
-        std::vector<std::string> get_sources(Config& config);
+        std::vector<std::string> get_sources(std::shared_ptr<Config> config);
     };
 }
 

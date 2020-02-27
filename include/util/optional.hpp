@@ -46,13 +46,16 @@ namespace cppm::toml {
         return tb;
 
     }
-
     inline int get(std::shared_ptr<cpptoml::table> table, const std::string& name, int def_v) {
         return table->get_as<int>(name).value_or(def_v);
     }
 
     inline std::string get(std::shared_ptr<cpptoml::table> table, const std::string& name, std::string_view def_v) {
         return table->get_as<std::string>(name).value_or(std::string{def_v});
+    }
+
+    inline bool get_bool(std::shared_ptr<cpptoml::table> table, const std::string& name, bool def_v) {
+        return table->get_as<bool>(name).value_or(def_v);
     }
 
     template<typename T>
@@ -77,7 +80,6 @@ namespace cppm::toml {
         if(arr) { std::copy(arr->begin(), arr->end(), std::back_inserter(dest)); }
         return arr;
     }
-
 
 }
 #endif

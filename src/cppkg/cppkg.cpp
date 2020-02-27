@@ -153,20 +153,20 @@ namespace cppkg
         return {dep, path};
     }
 
-    void install(cppm::Config& config, const dep_in_repo& depr) {
+    void install(cppm::Config::ptr config, const dep_in_repo& depr) {
         using namespace cppm;
         auto [dep, path] = depr;
         if(dep.helper != "") {
             fmt::print("{0}\n",dep.helper);
-            fmt::print("Install {0} to {1}/Modules/\n",dep.helper, config.path.cmake);
-            if(!fs::exists("{0}/Modules/"_format(config.path.cmake))) {
-                fs::create_directories("{0}/Modules"_format(config.path.cmake));
+            fmt::print("Install {0} to {1}/Modules/\n",dep.helper, config->path.cmake);
+            if(!fs::exists("{0}/Modules/"_format(config->path.cmake))) {
+                fs::create_directories("{0}/Modules"_format(config->path.cmake));
             }
             fs::copy("{0}/{1}"_format(path,dep.helper)
-                     ,"{0}/Modules/{1}"_format(config.path.cmake,dep.helper));
+                     ,"{0}/Modules/{1}"_format(config->path.cmake,dep.helper));
         }
         util::recursive_copy(path,"{0}/{1}/{2}"_format(
-                             config.path.thirdparty, dep.name, dep.version));
+                             config->path.thirdparty, dep.name, dep.version));
         fmt::print("Install Cppkg {0}/{1}\n",dep.name, dep.version);
     }
 }

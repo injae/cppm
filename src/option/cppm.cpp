@@ -39,9 +39,9 @@ namespace cppm::option
     void Cppm::_run() {
         using namespace fmt::literals;
         config_load();
-        auto cache = cmake::Cache(config_.path.build);
+        auto cache = cmake::Cache(config_->path.build);
         
-        auto binary_path = "{0}/{1}/{2}"_format(config_.path.build, cache["CMAKE_BUILD_TYPE"], config_.package.name);
+        auto binary_path = "{0}/{1}/{2}"_format(config_->path.build, cache["CMAKE_BUILD_TYPE"], config_->package.name);
         auto args = util::accumulate(app_.args(), " "); app_.args().clear();
         system((binary_path + args).c_str());
     }

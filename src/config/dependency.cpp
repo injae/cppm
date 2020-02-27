@@ -18,8 +18,8 @@ namespace cppm
           type         = toml::get(table, "type"     , "lib");
           desc         = toml::get(table, "description", "");
           link_type    = toml::get(table, "link"     , "public");
-          none_module  = toml::get(table, "no_module", false);
-          hunter       = toml::get(table, "hunter"   , false);
+          none_module  = toml::get_bool(table, "no_module", false);
+          hunter       = toml::get_bool(table, "hunter"   , false);
           module       = hunter ? toml::panic(table, "module") : toml::get(table, "module", "");
           flags        = toml::get(table, "flags", "");
           components   = toml::get(table, "components", "");
@@ -85,21 +85,21 @@ namespace cppm
         return gen;
     }
 
-    void Dependencies::after_init(Config & config) {
-        fs::create_directory(config.path.thirdparty);
+    void Dependencies::after_init(Config::ptr config) {
+        fs::create_directory(config->path.thirdparty);
         for(auto& [name, dep] : list) {
             if(dep.hunter) continue;
             else if(dep.load_path != "") {
-                util::panic(fs::exists("{}/{}"_format(config.path.root, dep.load_path))
-                          ,"[cppm-error] can't find load-path package, {}/{}\n"_format(config.path.root,dep.load_path));
-                dep.load_path = "{}/{}"_format(config.path.root, dep.load_path);
+                util::panic(fs::exists("{}/{}"_format(config->path.root, dep.load_path))
+                          ,"[cppm-error] can't find load-path package, {}/{}\n"_format(config->path.root,dep.load_path));
+                dep.load_path = "{}/{}"_format(config->path.root, dep.load_path);
                 continue;
             }
             else {
-                auto path = Version::find_version_folder("{}/{}"_format(config.path.thirdparty,name), dep.version);
+                auto path = Version::find_version_folder("{}/{}"_format(config->path.thirdparty,name), dep.version);
                 if(!path) {
                     cppkg::install(config, cppkg::search(dep.name, dep.version));
-                    path = Version::find_version_folder("{}/{}"_format(config.path.thirdparty,name), dep.version);
+                    path = Version::find_version_folder("{}/{}"_format(config->path.thirdparty,name), dep.version);
                 }
                 auto load_dep  = cppkg::parse(name, *path);
                 dep = load_dep;
@@ -109,13 +109,13 @@ namespace cppm
         }
     }
 
-    std::string Dependencies::use_hunter(Config& config) {
+    std::string Dependencies::use_hunter(Config::ptr config) {
         auto result = std::find_if(list.begin(), list.end(), [](auto h){ return h.second.hunter == true; });
-        if(result != list.end()) { config.hunter.use_hunter = true; }
-        if(config.hunter.use_hunter) {
+        if(result != list.end()) { config->hunter.use_hunter = true; }
+        if(config->hunter.use_hunter) {
             util::over_write_copy_file("{0}cmake/HunterGate.cmake"_format(tool::cppm_root())
-                                      ,"{0}/HunterGate.cmake"_format(config.path.cmake));
-            return config.hunter.generate();
+                                      ,"{0}/HunterGate.cmake"_format(config->path.cmake));
+            return config->hunter.generate();
         }
         else { return ""; }
     }

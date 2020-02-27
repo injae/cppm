@@ -40,8 +40,8 @@ namespace cppm
     {
     public:
         void parse(table_ptr table) override;
-        void after_init(Config& config) override;
-        std::string use_hunter(Config& config);
+        void after_init(std::shared_ptr<Config> config) override;
+        std::string use_hunter(std::shared_ptr<Config> config);
         std::string generate();
         ~Dependencies(){}
     public:

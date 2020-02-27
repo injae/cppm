@@ -20,7 +20,7 @@ namespace cppm
     public:
         virtual void parse(table_ptr table) = 0;
         virtual void build_lock(table_ptr table, table_ptr lock) {};
-        virtual void after_init(Config& config) {};
+        virtual void after_init(std::shared_ptr<Config> config) {};
         virtual ~base_config() {};
     };
 }

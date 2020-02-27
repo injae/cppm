@@ -11,6 +11,7 @@ include  = ["cmake/cppm_install.cmake"]
 [[bin]]
 name   = "cppm"
 source = ["src/.*", "include/.*"]
+install = false
 
 #[test]
 #source = ["test/.*"]

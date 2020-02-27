@@ -18,13 +18,14 @@
 
 namespace cppm
 {
-    class Config : public base_config
+    class Config : public base_config , public std::enable_shared_from_this<Config>
     {
     public:
-        static Config load(const std::string& path);
+        using ptr = std::shared_ptr<Config>;
+        static Config::ptr load(const std::string& path);
         void parse(table_ptr table) override;
         void build_lock(table_ptr table, table_ptr lock) override;
-        void after_init(Config & config) override;
+        void after_init(Config::ptr config) override;
         std::string generate();
         static void write(table_ptr table);
     public:

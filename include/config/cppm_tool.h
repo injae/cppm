@@ -6,9 +6,9 @@
 namespace cppm::tool
 {
     std::string cppm_root();
-    std::string target_define(Config& config);
-    std::string target_dependencies(Config& config);
-    std::string target_install(Config& config);
+    std::string target_define(Config::ptr config);
+    std::string target_dependencies(Config::ptr config);
+    std::string target_install(Config::ptr config);
 }
 
 #endif
