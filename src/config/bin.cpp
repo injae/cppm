@@ -15,7 +15,7 @@ namespace cppm
              Bin bin; 
              bin.name    = toml::panic(tb, "name");
              bin.install = toml::get_bool(tb, "install", true);
-             fmt::print("{}",bin.install);
+             bin.exclude_flag = tb->template get_as<std::string>("optional");
              toml::get_array(tb, "source"      , bin.sources);
              toml::get_array(tb, "dependencies", bin.deps);
              list.emplace_back(std::move(bin));

@@ -28,7 +28,7 @@ namespace cppm
         std::string flags;
         bool none_module;
         bool hunter;
-        std::string link_type;
+        std::string link_type; // public | private | interface
         std::string type; // lib | bin | cmake
         detail::download download;
         std::string helper; // Find${LIbrary}.cmake add

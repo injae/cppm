@@ -18,6 +18,7 @@ namespace cppm::tool
 
     std::string target_define(Config::ptr config) {
         std::string gen;
+        auto optional_define = [](std::optional<std::string> flag) { return flag ? "OPTIONAL {}"_format(*flag) : ""; };
         for(auto& lib : config->libs.list) {
             auto sources = lib.get_sources(config);
             std::string type = lib.type;
@@ -27,13 +28,14 @@ namespace cppm::tool
                 std::transform(type.begin(), type.end(), type.begin(), ::toupper);
                 gen_sources = "\nSOURCES {0}"_format(util::accumulate(sources, "\n\t"));
             }
-            gen += "\ncppm_target_define({0} {1} {2})\n"_format(lib.name, type, gen_sources);
+            gen += "\ncppm_target_define({0} {1} {2} {3})\n"_format( lib.name, type
+                                                                   , optional_define(lib.exclude_flag), gen_sources);
         }
 
         for(auto& bin : config->bins.list) {
             auto sources = bin.get_sources(config);
-            gen += "\ncppm_target_define({0} {1} \nSOURCES {2}\n)\n"_format(
-                    bin.name, "BINARY", util::accumulate(sources, "\n\t"));
+            gen += "\ncppm_target_define({0} {1} {2}\nSOURCES {3}\n)\n"_format(
+                   bin.name, "BINARY", optional_define(bin.exclude_flag),  util::accumulate(sources, "\n\t"));
         }
 
         return gen;
@@ -61,7 +63,7 @@ namespace cppm::tool
                 else if(g_dep.link_type == "interface") int_deps.push_back(g_dep.name);
             }
             auto trans = [&](std::string title, std::vector<std::string> list){
-                             return "\n{0}\t{1}"_format(title,util::accumulate(list, "\n\t"));
+                             return "\n{0}\t{1}"_format(title, util::accumulate(list, "\n\t"));
                          };
             std::string gen_dep; 
             if(!pub_deps.empty()) gen_dep += trans("PUBLIC"   , pub_deps);
