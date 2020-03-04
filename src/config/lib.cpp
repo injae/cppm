@@ -18,6 +18,7 @@ namespace cppm
              lib.type    = toml::get(tb, "type", "static");
              lib.install = toml::get_bool(tb, "install", true);
              lib.exclude_flag = tb->template get_as<std::string>("optional");
+             lib.exclude = toml::get_bool(tb, "exclude", false);
              toml::get_array(tb, "source", lib.sources);
              toml::get_array(tb, "dependencies", lib.deps);
              list.emplace_back(std::move(lib));

@@ -43,8 +43,8 @@ namespace cppm::option
         app_.add_option("debug").abbr("d")
             .desc("compile debug mode")
             .call_back([&](){ cmake_.build_type="Debug"; });
-        app_.add_option("clear")
-            .desc("clear cmake cache")
+        app_.add_option("clean")
+            .desc("clean cmake cache")
             .call_back([&](){ clean = true; });
         app_.add_option("detail")
             .desc("show cppm generate cmake commands")

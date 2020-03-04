@@ -18,6 +18,7 @@ namespace cppm
         bool install;
         std::string source;
         std::optional<std::string> exclude_flag;
+        bool exclude;
         std::vector<std::string> sources;
         std::vector<std::string> deps;
         std::optional<Compiler> compiler = std::nullopt;
