@@ -73,10 +73,7 @@ namespace cppm::option
             .call_back([&](){ cmake_.build_type="Release"; });
         app_.add_option("prefix")
             .desc("cmake install prefix")
-            .call_back([](nlpo::arg::One arg){
-                           fmt::print(arg);
-                           exit(1);
-                       });
+            .call_back([&](nlpo::arg::One arg){ cmake_.define("CMAKE_INSTALL_PREFIX", arg); clean=true; });
         app_.add_command().args("{cppm options} {builder options}")
             .desc("Build command")
             .call_back([&](){
