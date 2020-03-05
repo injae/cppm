@@ -5,9 +5,6 @@
 #include "util/string.hpp"
 #include "util/algorithm.hpp"
 #include "util/command.h"
-#include <reproc++/reproc.hpp>
-#include <reproc++/sink.hpp>
-#include <sstream>
 #include <regex>
 
 namespace cppm::cmake
