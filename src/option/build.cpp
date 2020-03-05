@@ -8,7 +8,6 @@
 #include "option/build.h"
 #include "config/cppm_tool.h"
 #include "util/algorithm.hpp"
-#include "util/command.h"
 #include "util/filesystem.h"
 #include "cppkg/cppkg.h"
 #include "util/system.hpp"

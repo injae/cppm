@@ -14,13 +14,11 @@ find_cppkg(cpptoml git MODULE cpptoml::cpptoml )
 find_cppkg(fmt 6.0.0 MODULE fmt::fmt)
 find_cppkg(hashpp git MODULE hashpp::hashpp )
 find_cppkg(nlpo git MODULE nlpo::nlpo )
-find_cppkg(reprocxx 11.0.0 MODULE reprocxx)
 
 cppm_target_define(cppm BINARY 
 SOURCES 
 	src/cmake/cmake.cpp
 	src/util/version.cpp
-	src/util/command.cpp
 	src/util/filesystem.cpp
 	src/util/algorithm.cpp
 	src/util/system.cpp
@@ -61,7 +59,6 @@ SOURCES
 	include/util/system.hpp
 	include/util/optional.hpp
 	include/util/string.hpp
-	include/util/command.h
 	include/config/compiler.h
 	include/config/dependency.h
 	include/config/config.h
@@ -102,7 +99,6 @@ PUBLIC
 	fmt
 	hashpp
 	nlpo
-	reprocxx
 )
 
 cppm_target_install(cppm)

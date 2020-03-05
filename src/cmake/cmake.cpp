@@ -4,7 +4,6 @@
 #include "util/system.hpp"
 #include "util/string.hpp"
 #include "util/algorithm.hpp"
-#include "util/command.h"
 #include <regex>
 
 namespace cppm::cmake
