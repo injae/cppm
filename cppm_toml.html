@@ -192,7 +192,7 @@
     install = true(default)|false  # disable install setting
     standard = &quot;{11|14|17(default)|20}&quot;  #(working)
 </code></pre>
-<pre><code class="language-toml"># sub project setting
+<pre><code class="language-toml"># sub project setting (BETA)
 [workspace]
     member = [&quot;path/&quot;, &quot;path&quot;]
 </code></pre>
@@ -249,7 +249,6 @@
 </code></pre>
 <pre><code class="language-toml"># (working)
 [[test]]
-
 </code></pre>
 <pre><code class="language-toml"># (working)
 [[example]]
@@ -260,10 +259,6 @@
 
 </code></pre>
 <pre><code class="language-toml"># (working)    
-[bin.dependencies]
-    ${name} = ${dependency options}
-    ${name} = ${dependency options}
-# or
 dependencies = {
     ${name} = ${dependency options},
     ${name} = ${dependency options},
