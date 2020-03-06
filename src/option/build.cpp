@@ -84,12 +84,13 @@ namespace cppm::option
                         fmt::print("[cppm] Generate CMakeLists.txt\n");
                         util::write_file("{0}/CMakeLists.txt"_format(config_->path.root), tranc_cmake);
                     }
+                    fs::create_directories(config_->path.cmake);
                     util::over_write_copy_file("{0}cmake/cppm_tool.cmake"_format(tool::cppm_root())
                                               ,"{0}/cppm_tool.cmake"_format(config_->path.cmake));
                     if(only_tc) { exit(1); }
                 }
                 if(clean) {
-                    fmt::print("[cppm] Clean build/CMakeCache.txt\n");
+                    fmt::print("[cppm] Clean {}/CMakeCache.txt\n"_format(config_->path.build));
                     fs::remove(config_->path.build + "/CMakeCache.txt");
                 }
                 if(!app_.args().empty()) {

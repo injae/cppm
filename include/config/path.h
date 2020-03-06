@@ -2,6 +2,7 @@
 #define __CPPM_CONFIG_PATH_H__
 
 #include <string>
+#include <filesystem>
 
 
 namespace cppm

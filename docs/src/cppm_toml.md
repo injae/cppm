@@ -51,7 +51,7 @@
     standard = "{11|14|17(default)|20}"  #(working)
 ```
 ```toml
-# sub project setting
+# sub project setting (BETA)
 [workspace]
     member = ["path/", "path"]
 ```
@@ -116,7 +116,6 @@
 ```toml
 # (working)
 [[test]]
-
 ```
 ```toml
 # (working)
@@ -130,10 +129,6 @@
 ```
 ```toml
 # (working)    
-[bin.dependencies]
-    ${name} = ${dependency options}
-    ${name} = ${dependency options}
-# or
 dependencies = {
     ${name} = ${dependency options},
     ${name} = ${dependency options},

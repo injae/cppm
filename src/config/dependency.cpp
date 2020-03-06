@@ -86,13 +86,15 @@ namespace cppm
     }
 
     void Dependencies::after_init(Config::ptr config) {
-        fs::create_directory(config->path.thirdparty);
         for(auto& [name, dep] : list) {
             if(dep.hunter) continue;
             else if(dep.load_path != "") {
                 util::panic(fs::exists("{}/{}"_format(config->path.root, dep.load_path))
-                          ,"[cppm-error] can't find load-path package, {}/{}\n"_format(config->path.root,dep.load_path));
-                dep.load_path = "{}/{}"_format(config->path.root, dep.load_path);
+                          ,"[cppm-error] can't find load-path package, {}/{}\n"_format(config->path.root, dep.load_path));
+                fs::path root(config->path.root);
+                fmt::print("{}\n",dep.load_path);
+                //dep.load_path = (root/dep.load_path);
+                //dep.load_path = "{}/{}"_format(config->path.root, dep.load_path);
                 continue;
             }
             else {

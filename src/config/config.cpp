@@ -12,6 +12,7 @@ namespace cppm
         auto config = std::shared_ptr<Config>(new Config);
         config->lock = cpptoml::make_table();
         config->path = Path::make(path);
+        table->insert("root", config->path.root);
         config->parse(table);
         //config.build_lock(table, lock);
         config->after_init(config);
@@ -30,7 +31,7 @@ namespace cppm
         //test.parse(table);
         compiler.parse(table);
         dependencies.parse(table);
-        //std::cout << (*table) << std::endl;
+        std::cout << (*table) << std::endl;
         cppm_config.load();
     }
 
@@ -65,7 +66,9 @@ namespace cppm
 
         return "cmake_minimum_required(VERSION {0})\n"_format(cmake.version)
              + "\n"
+             + "if(NOT IS_CPPM_LOADED)\n"
              + "include(cmake/cppm_tool.cmake)\n"
+             + "endif()\n"
              + "cppm_project()\n"
              + dependencies.use_hunter(shared_from_this())
              + "project({0} VERSION {1} LANGUAGES C CXX)\n"_format(package.name, package.version)

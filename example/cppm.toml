@@ -1,0 +1,13 @@
+[package]
+    name = "example"
+    
+[workspace]
+    member = ["fmt_cppkg", "hello_world"]
+
+#[[workspace]]
+#    path = "fmt_cppkg"
+#    exclude = true
+#
+#[[workspace]]
+#    path = "hello_world"
+#    exclude = true

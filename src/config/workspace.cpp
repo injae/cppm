@@ -12,8 +12,11 @@ namespace cppm
         toml::get_array(workspace, "member", member);
         if(!member.empty()) {
             auto dep = toml::get_table(table, "dependencies");
+            auto root = fs::path(toml::panic(table, "root"));
             std::for_each(member.begin(), member.end()
             , [&](auto path) {
+                  auto origin_path = path;
+                  path = root/path;
                   auto sub = Config::load(path);
                   if(!fs::exists(path+"/CMakeLists.txt")) system("cd {} && cppm build --tc"_format(path).c_str());
                   auto mem = cpptoml::make_table();
@@ -22,12 +25,12 @@ namespace cppm
                       mem->insert("version", sub->package.version);
                       mem->insert("module", lib.name);
                       mem->insert("type", "lib");
-                      mem->insert("load-path", path);
+                      mem->insert("load-path", origin_path);
                       dep->insert(lib.name, mem);
                   }
                   else {
                       mem->insert("version", sub->package.version);
-                      mem->insert("load-path", path);
+                      mem->insert("load-path", origin_path);
                       mem->insert("type", "bin");
                       dep->insert(sub->package.name, mem);
                   }

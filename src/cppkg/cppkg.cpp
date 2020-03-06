@@ -155,6 +155,7 @@ namespace cppkg
 
     void install(cppm::Config::ptr config, const dep_in_repo& depr) {
         using namespace cppm;
+        fs::create_directory(config->path.thirdparty);
         auto [dep, path] = depr;
         if(dep.helper != "") {
             fmt::print("{0}\n",dep.helper);
