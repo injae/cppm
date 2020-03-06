@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.12)
 
+if(NOT IS_CPPM_LOADED)
 include(cmake/cppm_tool.cmake)
+endif()
 cppm_project()
 project(cppm VERSION 0.0.9 LANGUAGES C CXX)
 cppm_setting()

@@ -16,7 +16,7 @@ namespace cppm
             std::for_each(member.begin(), member.end()
             , [&](auto path) {
                   auto origin_path = path;
-                  path = root/path;
+                  path = (root/path).string();
                   auto sub = Config::load(path);
                   if(!fs::exists(path+"/CMakeLists.txt")) system("cd {} && cppm build --tc"_format(path).c_str());
                   auto mem = cpptoml::make_table();
