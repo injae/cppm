@@ -1,92 +1,31 @@
 string(REPLACE "\\" "/" HOME "$ENV{HOME}")
-set(CPPM_ROOT ${HOME}/.cppm)
-list(APPEND CMAKE_MODULE_PATH "${HOME}/.cppm/tool")
+set(CPPM_VERSION "nightly")
 
-macro(cppm_load)
-    cmake_parse_arguments(_ARG "NIGHTLY" "" "" ${ARGN})
-    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/")
-    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
+set(CPPM_ROOT   ${HOME}/.cppm)
+set(CPPM_SOURCE ${CPPM_ROOT}/src)
+set(CPPM_CACHE  ${CPPM_ROOT}/cache)
+set(CPPM_CORE   ${CPPM_SOURCE}/cppm_tools/${CPPM_VERSION})
 
-    if(NOT EXISTS ${CPPM_ROOT}/tool)
-        find_package(Git REQUIRED)
-        if(NOT GIT_FOUND)
-            message(FATAL_ERROR "git not found!")
-        endif()
-        message(STATUS "[cppm] Downloading cppm tool to ${CPPM_ROOT}/tool")
-        make_directory("${CPPM_ROOT}")
-        execute_process(
-            COMMAND ${GIT_EXECUTABLE} clone https://github.com/injae/cppm_tools.git tool 
-            WORKING_DIRECTORY ${CPPM_ROOT}
-        )
-    endif()
-
-    set(CPPM_TOOL_VERSION "master")
-    if(${ARG_NIGHTLY})
-        set(CPPM_TOOL_VERSION "nightly")
-    endif()
-
-    include(download/git)
-    git_clone(tool
-        URL https://github.com/injae/cppm_tools.git
-        PATH ${CPPM_ROOT}
-        BRANCH ${CPPM_TOOL_VERSION} QUIET)
-    git_clone(cppkg
-        URL https://github.com/injae/cppkg.git
-        PATH ${CPPM_ROOT}/repo
-        BRANCH ${CPPM_TOOL_VERSION} QUIET)
-endmacro()
-
-macro(cppm_project)
-    cmake_parse_arguments(_ARG "" "" "" ${ARGN})
-    cppm_load()
-    include(cppm/cppm_project/1.0.7)
-    _cppm_project(${_ARG_UNPARSED_ARGUMENTS})
-endmacro()
-
-macro(cppm_cxx_standard)
-    cmake_parse_arguments(_ARG "" "" "" ${ARGN})
-    include(cppm/cxx_standard/1.0.7)
-    _cppm_cxx_standard(${_ARG_UNPARSED_ARGUMENTS})
-endmacro()
+if(NOT DEFINED IS_CPPM_LOADED)
+set(_install_script "${CPPM_CACHE}/cppm-tools/${CPPM_VERSION}/install-script")
+file(WRITE ${_install_script}/CMakeLists.txt
+"cmake_minimum_required(VERSION 3.6)
+project(CPPM_TOOLS_DOWNLOAD NONE)
+include(ExternalProject)
+ExternalProject_Add(cppm-tools
+    GIT_REPOSITORY https://github.com/injae/cppm_tools.git
+    GIT_TAG ${CPPM_VERSION}
+    SOURCE_DIR ${CPPM_CORE}
+    BINARY_DIR ${CPPM_CACHE}/cppm-tools/${CPPM_VERSION}/build
+    CONFIGURE_COMMAND \"\"
+    BUILD_COMMAND  \"\"
+    INSTALL_COMMAND \"\"
+)"
+)
+execute_process(COMMAND cmake . WORKING_DIRECTORY ${_install_script} OUTPUT_QUIET)
+execute_process(COMMAND cmake  --build . WORKING_DIRECTORY ${_install_script} OUTPUT_QUIET)
+set(IS_CPPM_LOADED TRUE)
+endif()
+include(${CPPM_CORE}/core_load.cmake)
 
 
-macro(cppm_compiler_option)
-    include(cppm/compiler_option/1.0.7)
-    _cppm_compiler_option(${ARGN})
-endmacro()
-
-macro(cppm_setting)
-  cmake_parse_arguments(_ARG "" "" "" ${ARGN})
-  include(cppm/setting/1.0.7)
-  _cppm_setting(${_ARG_UNPARSED_ARGUMENTS})
-endmacro()
-
-macro(find_cppkg)
-    cmake_parse_arguments(ARG "" "" "" ${ARGN})
-    include(cppkg/find/1.0.7)
-    _find_cppkg(${ARG_UNPARSED_ARGUMENTS})
-endmacro()
-
-macro(cppm_target_define)
-    cmake_parse_arguments(ARG "" "" "" ${ARGN})
-    include(cppm/target/define/1.0.5)
-    _cppm_target_define(${ARG_UNPARSED_ARGUMENTS})
-endmacro()
-
-macro(cppm_target_dependencies)
-    cmake_parse_arguments(ARG "" "" "" ${ARGN})
-    include(cppm/target/dependencies/1.0.5)
-    _cppm_target_dependencies(${ARG_UNPARSED_ARGUMENTS})
-endmacro()
-
-macro(cppm_target_install)
-    cmake_parse_arguments(ARG "" "" "" ${ARGN})
-    include(cppm/target/install/1.0.5)
-    _cppm_target_install(${ARG_UNPARSED_ARGUMENTS})
-endmacro()
-
-macro(download_package)
-    cmake_parse_arguments(ARG "" "" "" ${ARGN})
-    include(cppkg/download/1.0.7)
-    _download_package(${ARG_UNPARSED_ARGUMENTS})
-endmacro()

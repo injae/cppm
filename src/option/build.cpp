@@ -62,21 +62,23 @@ namespace cppm::option
             .call_back([&](){ config_load(); export_cppkg(); });
         app_.add_option("local")
             .desc("install local")
-            .call_back([&](){ cmake_.define("CMAKE_INSTALL_PREFIX", "{}local"_format(tool::cppm_root())); clean=true;});
+            .call_back([&](){ cmake_.prefix = ""; clean=true;});
         app_.add_option("global")
             .desc("install global")
-            .call_back([&](){ cmake_.sudo=true; cmake_.define("CMAKE_INSTALL_PREFIX", "/usr/local"); clean = true; });
+            .call_back([&](){ cmake_.sudo=true; cmake_.prefix = "/usr/local"; clean = true; });
         app_.add_command("install")
             .desc("cmake target install ")
             .call_back([&](){ cmake_.install = true; })
             .call_back([&](){ cmake_.build_type="Release"; });
         app_.add_option("prefix")
             .desc("cmake install prefix")
-            .call_back([&](nlpo::arg::One arg){ cmake_.define("CMAKE_INSTALL_PREFIX", arg); clean=true; });
+            .call_back([&](nlpo::arg::One arg){ cmake_.prefix = arg; clean=true; });
         app_.add_command().args("{cppm options} {builder options}")
             .desc("Build command")
             .call_back([&](){
                 config_load();
+                if(cmake_.prefix == "") cmake_.prefix = "{}/local/share/{}-{}"_format(
+                                                      tool::cppm_root() ,config_->package.name ,config_->package.version);
                 fs::create_directories(config_->path.build);
                 if(!none_tc) {
                     auto tranc_cmake = config_->generate();

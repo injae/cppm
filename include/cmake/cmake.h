@@ -33,6 +33,7 @@ namespace cppm::cmake
         Cmake set_target(const std::string& target);
         Cmake generator_options(const std::string& option);
         Cmake define(const std::string name, const std::string value, const std::string option_type="D");
+        Cmake set(const std::string name, const std::string value, const std::string option_type="D");
         Cmake build(const std::string& root, const std::string& build_path="build");
     private:
         std::optional<Cache> cache;
@@ -42,6 +43,7 @@ namespace cppm::cmake
         std::queue<std::function<void(std::optional<Cache>&, opt_str&)>> after_hooks;
     public:
         bool install=false;
+        std::string prefix="";
         std::string build_type="Debug";
         bool no_cache=false;
         bool sudo=false;

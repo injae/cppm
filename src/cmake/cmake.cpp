@@ -53,6 +53,14 @@ namespace cppm::cmake
         return *this;
     }
 
+    Cmake Cmake::set(const std::string name, const std::string value, const std::string option_type) {
+        if(!cache->exist(name, value)) {
+            if(!cmake_option) cmake_option = "";
+            *cmake_option += "-{}{}={} "_format(option_type, name, value);
+        }
+        return *this;
+    }
+
     Cmake Cmake::generator_options(const std::string& option) {
         if(!generator_option) generator_option = "";
         *generator_option += option;
@@ -68,6 +76,7 @@ namespace cppm::cmake
         cache = Cache("{}/{}"_format(root, build_path));
         define("CMAKE_BUILD_TYPE", build_type);
         while(!after_hooks.empty()) { after_hooks.front()(cache, cmake_option); after_hooks.pop(); }
+        if(prefix != "") set("CMAKE_INSTALL_PREFIX", prefix);
 
         auto script = "cd {}/{} && "_format(root, build_path);
         script += (no_cache || cmake_option || !cache->exist_file())  ? "cmake {}.. && "_format(*cmake_option) : "";

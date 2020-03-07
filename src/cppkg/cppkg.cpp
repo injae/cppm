@@ -14,7 +14,7 @@ namespace cppkg
         auto config = cpptoml::parse_file("{}cppkg.toml"_format(path));
         cppm::Dependency dep;
         dep.name = name;
-        auto ptable = util::panic(config->get_table(name), "need [{}] setting\n");
+        auto ptable = util::panic(config->get_table(name), "need [{}] setting\n"_format(name));
         dep.parse(ptable);
         
         return dep;
@@ -144,7 +144,7 @@ namespace cppkg
                 if(fs::exists(target)) { find_repos[repo_name] = target; }
             }
         }
-        util::panic(find_repos.empty(), "can't find {0}/{1} package"_format(name, version));
+        util::panic(!find_repos.empty(), "can't find {0}/{1} package"_format(name, version));
         std::string path = "";
         if (find_repos.find("cppkg") != find_repos.end()) path = find_repos["cppkg"];
         else if (find_repos.find("local") != find_repos.end()) path = find_repos["local"];
