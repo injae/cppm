@@ -1,5 +1,4 @@
 #include "option/add.h"
-#include "config/cppm_package.h"
 
 #include <iostream>
 #include <fmt/format.h>
@@ -24,7 +23,7 @@ namespace cppm::option
             fmt::print(stderr, "need argument");
             exit(1);
         }
-        CppmPackage::add_toolchain(app_.get_arg());
+        //        CppmPackage::add_toolchain(app_.get_arg());
     }
 
     void Add::_cppm_path() {
@@ -32,7 +31,7 @@ namespace cppm::option
             fmt::print(stderr, "need argument");
             exit(1);
         }
-        CppmPackage::add_cppm_path(app_.get_arg());
+        //CppmPackage::add_cppm_path(app_.get_arg());
     }
 
 }

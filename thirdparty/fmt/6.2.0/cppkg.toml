@@ -1,0 +1,5 @@
+[fmt]
+version = "6.2.0"
+description = "A modern formatting library"
+module = "fmt::fmt"
+url="https://github.com/fmtlib/fmt/releases/download/6.2.0/fmt-6.2.0.zip"

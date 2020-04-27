@@ -1,7 +1,8 @@
 #include "option/cppkg_search.h"
-#include "util/string.hpp"
-#include "util/filesystem.h"
-#include "util/algorithm.hpp"
+#include "cppm/core/cppm_tool.hpp"
+#include "cppm/util/string.hpp"
+#include "cppm/util/filesystem.h"
+#include "cppm/util/algorithm.hpp"
 #include <fmt/format.h>
 
 using namespace fmt::literals;
@@ -32,11 +33,11 @@ namespace cppm::option
 
                     for(auto& [pname, pkg] : repo.pkgs) {
                         for(auto& [vname, ver] : util::reverse(pkg.versions)) {
-                            Dependency dep = cppkg::parse(pname, ver);
-                            if(name != ""&&!has_str(pname, name)&&!has_str(dep.desc, name)) break; 
+                            auto dep = cppkg::parse(pname, ver);
+                            if(name != ""&&!has_str(pname, name)&&!has_str(*dep.description, name)) break; 
                             fmt::print("{:<20}{:<10}{:<13}{:<50}{:<70}\n"
                                       , str_cut(pname, 20), std::string(vname), rname
-                                      , str_cut(dep.desc, 50), _make_use_column(dep,rname));
+                                      , str_cut(*dep.description, 50), _make_use_column(dep,rname));
                         }
                     }
                 }
@@ -44,18 +45,17 @@ namespace cppm::option
         });
     }
 
-    std::string CppkgSearch::_make_use_column(const Dependency& dep, const std::string& repo) {
-        auto component = dep.components != ""
-            ? " components={0}"_format(quot(dep.components)) : "";
+    std::string CppkgSearch::_make_use_column(const core::Dependency& dep, const std::string& repo) {
+        auto component = dep.components
+            ? " components={0}"_format(quot(*dep.components)) : "";
         return repo == "cppkg" && component == ""
-               ? "{0}={1}"_format(dep.name, quot(dep.version))
+               ? "{0}={1}"_format(dep.name, quot(*dep.version))
                : "{0}={{module={1}, version={2}{3}}}"_format(
-                  dep.name, quot(dep.module), quot(dep.version), component);
-
+                  dep.name, quot(dep.module), quot(*dep.version), component);
     }
 
     void CppkgSearch::_show_hunter_package(const std::string& target){
-        if(auto list = util::file_list(Hunter::package_path())) {
+        if(auto list = util::file_list(core::hunter_root())) {
             for(auto pkg : *list) {
                 auto name = pkg.path().filename().string();
                 if(!has_str(name, target)) { continue; }

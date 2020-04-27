@@ -23,12 +23,13 @@
 sudo apt-get install build-essential
 git clone https://github.com/INJAE/cppm.git
 cd cppm
-cmake -Bbuild
+cmake -Bbuild --Release
 cd build
-cmake --build . 
+cmake --build . --config Release
+cd Release
 ./cppm build install
 # Adding to cppm path
-export PATH="$HOME/.cppm/local/bin:$PATH"
+export PATH="$HOME/.cppm/bin:$PATH"
 ```
 ### Windows
 ```
@@ -40,7 +41,7 @@ cd build
 cmake --build . --config Release
 cd Release
 ./cppm build install
-# Add System Path \.cppm\local\bin
+# Add System Path \.cppm\bin
 ```
 
 ## Features

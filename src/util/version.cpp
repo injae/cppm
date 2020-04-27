@@ -1,5 +1,6 @@
-#include "util/version.h"
-#include "util/filesystem.h"
+#include "cppm/util/version.h"
+#include "cppm/util/filesystem.h"
+#include "cppm/util/algorithm.hpp"
 
 #include <cstdio>
 #include <iostream>
@@ -72,15 +73,13 @@ namespace cppm
     }
 
     std::optional<std::string> Version::get_latest_version_folder(const std::string& path) {
-            auto versions = util::file_list(path);
-            if(!versions) return std::nullopt;
-            std::sort(versions->begin(),versions->end()
-                        ,[](auto a, auto b){
-                            auto av = Version(a.path().filename().string());
-                            auto bv = Version(b.path().filename().string());
-                            return av > bv;
-                        });
-             return versions->begin()->path().string();
+         auto versions = util::file_list(path);
+         if(!versions) return std::nullopt;
+         versions.value() |= actions::sort([](auto a, auto b){
+                                 auto av = Version(a.path().filename().string());
+                                 auto bv = Version(b.path().filename().string());
+                                 return av > bv;});
+         return versions->begin()->path().string();
     }
 
     std::optional<std::string> Version::find_version_folder(const std::string& path, const std::string& version) {
@@ -89,12 +88,10 @@ namespace cppm
                                                             : std::nullopt;
         }
         if(auto versions = util::file_list(path)) {
-            std::sort(versions->begin(),versions->end()
-                        ,[](auto a, auto b){
-                            auto av = Version(a.path().filename().string());
-                            auto bv = Version(b.path().filename().string());
-                            return av > bv;
-                        });
+            versions.value() |= actions::sort([](auto a, auto b){
+                                    auto av = Version(a.path().filename().string());
+                                    auto bv = Version(b.path().filename().string());
+                                    return av > bv;});
              return versions->begin()->path().string();
         }
         return std::nullopt;

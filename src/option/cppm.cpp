@@ -1,13 +1,12 @@
 #include <string>
 #include <iostream>
 #include "option/cppm.h"
-#include "util/algorithm.hpp"
 #include "option/build.h"
 #include "option/init.h"
-#include "option/cppm_config.h"
-#include "config/cppm_package.h"
+//#include "option/cppm_config.h"
 #include "cppm_version.h"
 #include "option/cppkg.h"
+#include "cppm/util/algorithm.hpp"
 
 #include <fmt/format.h>
 
@@ -18,9 +17,9 @@ namespace cppm::option
         app_.add_option("version").abbr("v")
             .desc("show cppm version")
             .call_back([&](){ fmt::print("cppm version {}\n", CPPM_VERSION);});
-        app_.add_command<CppmConfig>("config")
-            .desc("cppm config setting")
-            .is_show(false);
+        //app_.add_command<CppmConfig>("config")
+        //    .desc("cppm config setting")
+        //    .is_show(false);
         app_.add_command<Init>("init")
             .desc("make c++ project");
         app_.add_command("update")
@@ -48,9 +47,6 @@ namespace cppm::option
 
     void Cppm::_update() {
         using namespace fmt::literals;
-        CppmPackage config;
-        config.parse(cpptoml::parse_file(CppmPackage::config_path()));
-
         system("cppm cppkg install cppm");
     }
 

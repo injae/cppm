@@ -1,20 +1,6 @@
-[package]
-name = "hashpp"
-# if you use git repo, package version is git
-version = "git"
-description = "c++ hash algorithm library"
-global=false
-# library name in cmake, cppm.toml use this value 
-# [dependencies]
-#${library_name} = {module =${value}}
-cmake = {name = "hashpp::hashpp ", findlib=""}
-# write download value git or url
-download = {git="https://github.com/injae/hashpp.git"}
-#download = {url=""}
-
-
 [hashpp]
 version = "git"
 description = "c++ hash algorithm library"
-module = "hashpp::hashpp "
+module = "hashpp::hashpp"
 git="https://github.com/injae/hashpp.git"
+custom = true

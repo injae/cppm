@@ -1,0 +1,6 @@
+[submodule "nlpo"]
+	path = libs/nlpo
+	url = https://github.com/injae/nlpo.git
+[submodule "libs/tomlpp"]
+	path = libs/tomlpp
+	url = https://github.com/injae/cpptoml.git

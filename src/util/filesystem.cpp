@@ -1,15 +1,18 @@
-#include "util/filesystem.h"
-#include "util/algorithm.hpp"
+#include "cppm/util/filesystem.h"
+#include "cppm/util/algorithm.hpp"
 #include <fmt/format.h>
 #include <hashpp/md5.h>
 #include <iostream>
 
 #ifdef _WIN32
 #include <direct.h>
-#define GetCurrentDir _getcwd
+#define cross_getcwd _getcwd
+#define cross_chdir _chdir
 #else
 #include <unistd.h>
-#define GetCurrentDir getcwd
+#define cross_getcwd getcwd
+                                                \
+#define cross_chdir chdir
 #endif
 
 namespace cppm::util
@@ -25,6 +28,7 @@ namespace cppm::util
         std::vector<std::string> matching_files;
         fs::path path_(path);
         fs::directory_iterator end_itr;
+
         for(auto it : files) {
             std::smatch what;
             auto file = str::erase(it.path().generic_string(), path_.generic_string() + "/");
@@ -88,7 +92,7 @@ namespace cppm::util
 
     std::string current_dir() {
         char buff[FILENAME_MAX];
-        GetCurrentDir( buff, FILENAME_MAX );
+        cross_getcwd( buff, FILENAME_MAX );
         std::string current_working_dir(buff);
         return current_working_dir;
     }
@@ -99,7 +103,7 @@ namespace cppm::util
         if (fs::is_directory(src)) {
             fs::create_directories(dst);
             for (fs::directory_entry item : fs::directory_iterator(src)) {
-            recursive_copy(item.path(), dst/item.path().filename());
+                recursive_copy(item.path(), dst/item.path().filename());
             }
         } 
         else if (fs::is_regular_file(src)) {fs::copy(src, dst);} 

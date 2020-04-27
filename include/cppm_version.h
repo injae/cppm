@@ -1,6 +1,8 @@
+#pragma once
+
 #ifndef __CPPM_VERSION_H_
 #define __CPPM_VERSION_H_
 
-#define CPPM_VERSION "0.0.9"
+#define CPPM_VERSION "0.0.10"
 
 #endif

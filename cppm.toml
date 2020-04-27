@@ -1,23 +1,36 @@
 [package]
 name    = "cppm"
-version = "0.0.9"
+version = "0.0.10"
 description = "c++ cmake maker use to toml like Cargo"
 git = "https://github.com/injae/cppm.git"
-
 
 [cmake]
 include  = ["cmake/cppm_install.cmake"]
 
+[lib]
+name = "cppm-core"
+source = ["src/core/.*", "src/util/.*", "src/cppkg/.*"]
+
 [[bin]]
 name   = "cppm"
-source = ["src/.*", "include/.*"]
+source = ["src/cmake/.*","src/option/.*", "src/util/.*", "src/main.cpp"]
+
+[[test]]
+name   = "cppm-test-check"
+source = ["tests/test.cpp"]
+
+[[example]]
+name   = "cppm-core-load"
+source = ["examples/example.cpp"]
+
+[workspace]
+    member = ["libs/nlpo", "libs/tomlpp"]
 
 [dependencies]
-cpptoml  = "git"
-fmt      = "6.0.0"
-nlpo     = "git"
+#ctre     = "2.8.1"
+fmt      = "6.2.0"
 hashpp   = "git"
-#range-v3 = "0.9.0"
+range-v3 = "0.10.0"
 
-#[workspace]
-#    member = ["example"]
+[dev-dependencies]
+    Catch2 = "2.9.1"

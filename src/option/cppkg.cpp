@@ -1,9 +1,9 @@
 #include "option/cppkg.h"
-#include "config/cppm_tool.h"
-#include "cppkg/cppkg.h"
 #include "option/cppkg_init.h"
-#include "util/filesystem.h"
-#include "util/string.hpp"
+#include "cppm/core/cppm_tool.hpp"
+#include "cppm/cppkg/cppkg.h"
+#include "cppm/util/filesystem.h"
+#include "cppm/util/string.hpp"
 #include "option/cppkg_install.h"
 #include "option/cppkg_search.h"
 
@@ -31,7 +31,7 @@ namespace cppm::option
 
     void Cppkg::_update() {
         using namespace fmt::literals;
-        auto cppkg_path = "{0}repo/cppkg"_format(tool::cppm_root());
+        auto cppkg_path = "{0}repo/cppkg"_format(core::cppm_root());
         auto command = "cd {0} && git pull"_format(cppkg_path);
         system(command.c_str());
     }

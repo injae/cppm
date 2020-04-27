@@ -1,0 +1,8 @@
+[ctre]
+version="2.8.1" #(require)
+type="lib" #lib(default) | bin | cmake
+description="A Compile time PCRE (almost) compatible regular expression matcher." #(require)
+module="ctre::ctre" #(require) if none_module=true -> no require
+url="https://github.com/hanickadot/compile-time-regular-expressions/archive/v2.8.1.tar.gz" #(require)
+#branch="" #(optional & require git)
+#link="public" #default

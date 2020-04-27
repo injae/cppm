@@ -1,9 +1,4 @@
-cmake_minimum_required(VERSION 3.6)
-project(hashpp-git-install C CXX)
-
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
-download_package(hashpp git GIT https://github.com/injae/hashpp.git   LOCAL)
-
+# Cppkg Base Dependency Downloader
 # Other Options:
 # - Linux Configures:
 #    L_CONFIGURE {...}, L_BUILD {...}, L_INSTALL {...}
@@ -11,3 +6,9 @@ download_package(hashpp git GIT https://github.com/injae/hashpp.git   LOCAL)
 #    W_CONFIGURE {...}, W_BUILD {...}, W_INSTALL {...}
 # - Install Path Options:
 #    LOCAL(default) GLOBAL 
+cmake_minimum_required(VERSION 3.6)
+project(hashpp-git-install C CXX)
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
+download_package(hashpp git  GIT https://github.com/injae/hashpp.git CMAKE_ARGS ${CMAKE_ARGS} )
+

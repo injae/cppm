@@ -1,9 +1,10 @@
 #include "cmake/cmake.h"
-#include "util/filesystem.h"
-#include "util/optional.hpp"
-#include "util/system.hpp"
-#include "util/string.hpp"
-#include "util/algorithm.hpp"
+#include "cppm/util/filesystem.h"
+#include "cppm/util/optional.hpp"
+#include "cppm/util/system.hpp"
+#include "cppm/util/string.hpp"
+#include "cppm/util/algorithm.hpp"
+#include <sstream>
 #include <regex>
 
 namespace cppm::cmake
@@ -75,8 +76,8 @@ namespace cppm::cmake
     Cmake Cmake::build(const std::string& root, const std::string& build_path) {
         cache = Cache("{}/{}"_format(root, build_path));
         define("CMAKE_BUILD_TYPE", build_type);
-        while(!after_hooks.empty()) { after_hooks.front()(cache, cmake_option); after_hooks.pop(); }
         if(prefix != "") set("CMAKE_INSTALL_PREFIX", prefix);
+        while(!after_hooks.empty()) { after_hooks.front()(cache, cmake_option); after_hooks.pop(); }
 
         auto script = "cd {}/{} && "_format(root, build_path);
         script += (no_cache || cmake_option || !cache->exist_file())  ? "cmake {}.. && "_format(*cmake_option) : "";

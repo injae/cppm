@@ -43,7 +43,7 @@
 
 ```
 ```toml
-[[lib]]
+[lib]
     name = "..." # target name, export cmake package name 
     type = "static(default)|shared|hearder_only" # (require)
     sources = ["src/xxx.cpp", ...] # use source files, type = "header_only" no nessasery this option
