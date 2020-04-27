@@ -1,4 +1,9 @@
-string(REPLACE "\\" "/" HOME "$ENV{HOME}")
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    set(env_home "$ENV{USERPROFILE}")
+else()
+    set(env_home "$ENV{HOME}")
+endif()
+string(REPLACE "\\" "/" HOME "${env_home}")
 set(CPPM_VERSION "0.0.10")
 
 set(CPPM_ROOT   ${HOME}/.cppm)
