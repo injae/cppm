@@ -36,7 +36,7 @@ namespace cppm::util::system
     }
 
     std::string home_path() {
-        return (strcmp(util::system::what(), "windows"))
+        return !(strcmp(util::system::what(), "windows"))
             ? "{}/"_format(std::getenv("USERPROFILE")) : "{}/"_format(std::getenv("HOME"));
     }                                              
 }
