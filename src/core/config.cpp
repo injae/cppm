@@ -20,7 +20,7 @@ namespace cppm::core {
              if(source) {
                 source = *source
                        | views::transform([&config](auto it){ 
-                              auto files = util::find_files(config->path.root, std::regex(it), false);
+                              auto files = util::find_files(config->path.root.string(), std::regex(it), false);
                               if(files.empty()) { fmt::print(stderr, "can't find {}\n", it); exit(1); }
                               return files; })
                        | views::cache1
@@ -81,7 +81,7 @@ namespace cppm::core {
                          dep.version = it->package.version;
                          dep.type    = it->lib->type;
                          dep.module  = it->lib->name;
-                         dep.path    = it->path.root.lexically_relative(root);
+                         dep.path    = it->path.root.lexically_relative(root).string();
                          dep.link    = "public";
                          dep.repo    = "workspace";
                          return yield(std::make_pair(dep.name, dep));})

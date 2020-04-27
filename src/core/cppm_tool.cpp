@@ -296,7 +296,7 @@ namespace cppm::core {
 
     void install_cppm_download_package(fs::path path, Dependency& dep) {
         auto script = cppm_download_package(dep);
-        auto filename = path/"{}.cmake.in"_format(dep.name);
+        auto filename = path/("{}.cmake.in"_format(dep.name));
         if(util::file_hash(filename) != hashpp::md5(script)) { util::write_file(filename, script); }
     }
 
