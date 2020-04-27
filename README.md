@@ -26,7 +26,7 @@
 ### Ubuntu
 ```
 sudo apt-get install build-essential
-git clone https://github.com/injae/cppm.git
+git clone --recurse-submodules https://github.com/injae/cppm.git
 cd cppm
 cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
 cd build
@@ -45,7 +45,7 @@ brew install llvm cmake
 # Adding to llvm clang env
 # export CC=#llvm clang path
 # export CXX=#llvm clang++ path 
-git clone https://github.com/injae/cppm.git
+git clone --recurse-submodules https://github.com/injae/cppm.git
 cd cppm
 cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
 cd build
@@ -59,7 +59,7 @@ export PATH="$HOME/.cppm/bin:$PATH"
 ```
 # need visual studio , git , cmake
 # scoop install git cmake
-git clone https://github.com/injae/cppm.git
+git clone --recurse-submodules https://github.com/injae/cppm.git
 cd cppm
 cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
 cd build
@@ -86,3 +86,5 @@ cd Release
 
 
 
+$env:Path += ""
+$env:Path += ";C:\Users\nieel\scoop\shims\"
