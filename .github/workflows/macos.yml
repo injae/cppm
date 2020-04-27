@@ -8,6 +8,7 @@ jobs:
     steps:
     - name: Clone Repository
       uses: actions/checkout@master
+      submodules: true
     - name: C++ Setting
       run: |
         brew install llvm@8 cmake

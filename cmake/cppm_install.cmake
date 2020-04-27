@@ -5,6 +5,6 @@ file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake      DESTINATION ${C
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/cmake/HunterGate.cmake     DESTINATION ${CPPM_MODULE})
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/version.h.in"
-               "${CMAKE_CURRENT_SOURCE_DIR}/include/cppm_version.h")
+               "${CMAKE_CURRENT_SOURCE_DIR}/src/cppm_version.h")
 
 include(${CPPM_CORE}/cppkg/updater.cmake)
