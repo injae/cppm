@@ -15,10 +15,10 @@ jobs:
         brew install llvm cmake
     - name: Compiler Setting
       run: |
-        echo "::set-env name=CC::/usr/local/llvm/bin/clang"
-        echo "::set-env name=CXX::/usr/local/llvm/bin/clang++"
+        echo "::set-env name=CC::clang"
+        echo "::set-env name=CXX::clang++"
     - name: CMake build
-      run: cmake -Bbuild . && cd build && cmake --build . 
+      run: CC=/usr/local/opt/llvm/bin/clang CXX=/usr/local/opt/llvm/bin/clang++ cmake -Bbuild . && cd build && cmake --build . 
 
 
   #  runs-on: macos-latest
