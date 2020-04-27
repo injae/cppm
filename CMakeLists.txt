@@ -10,10 +10,10 @@ cppm_setting()
 cppm_cxx_standard(17)
 cppm_compiler_option(
    DEBUG
-      MSVC "/std:c++lastest"
+      MSVC "/std:c++latest"
 
    RELEASE
-      MSVC "/std:c++lastest"
+      MSVC "/std:c++latest"
 )
 
 include(cmake/cppm_install.cmake)
