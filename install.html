@@ -150,16 +150,17 @@
                     <main>
                         <h2><a class="header" href="#installation" id="installation">Installation</a></h2>
 <h3><a class="header" href="#install-cppm" id="install-cppm">Install Cppm</a></h3>
-<p>cppm install command install defualt prefix is <strong>$HOME/.cppm/bin/local</strong> </p>
+<p>cppm install command install defualt prefix is <strong>$HOME/.cppm/bin</strong> </p>
 <h4><a class="header" href="#linux-and-macos" id="linux-and-macos">Linux and MacOS</a></h4>
 <pre><code class="language-sh">git clone https://github.com/injae/cppm
 cd cppm
 cmake -Bbuild -DCMAKE_BUILD_TYPE=Release.
 cd build
-cmake --build .
+cmake --build . --config Release
+cd Release
 ./cppm build install
 # Add to cppm path
-export PATH=$PATH:$HOME/.cppm/local/bin
+export PATH=$PATH:$HOME/.cppm/bin
 </code></pre>
 <h4><a class="header" href="#windows" id="windows">Windows</a></h4>
 <pre><code class="language-sh">git clone https://github.com/injae/cppm
@@ -169,7 +170,7 @@ cd build
 cmake --build . --config Release
 cd Release
 ./cppm build install
-# Add Windows System Path /.cppm/local/bin
+# Add Windows System Path /.cppm/bin
 </code></pre>
 
                     </main>
