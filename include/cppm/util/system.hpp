@@ -11,11 +11,11 @@
 namespace cppm::util::system
 {
     #if   defined(_WIN32)
-        #define PLATFORM_NAME "windows" // Windows
+        #define CPPM_PLATFORM_NAME "windows" // Windows
     #elif defined(_WIN64)
-        #define PLATFORM_NAME "windows" // Windows
+        #define CPPM_PLATFORM_NAME "windows" // Windows
     #elif defined(__CYGWIN__) && !defined(_WIN32)
-        #define PLATFORM_NAME "windows" // Windows (Cygwin POSIX under Microsoft Window)
+        #define CPPM_PLATFORM_NAME "windows" // Windows (Cygwin POSIX under Microsoft Window)
     #elif defined(__ANDROID__)
         #define CPPM_PLATFORM_NAME "android" // Android (implies Linux, so it must come first)
     #elif defined(__linux__)
