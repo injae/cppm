@@ -6,6 +6,9 @@
 ![Linux](https://github.com/injae/cppm/workflows/Linux/badge.svg) | ![Windows](https://github.com/injae/cppm/workflows/Windows/badge.svg) | ![MacOS](https://github.com/injae/cppm/workflows/MacOS/badge.svg) |
 
 ![](cppm_demo.gif)
+> My native language is not English. Please let me know if you have any problems with grammar.
+> This project was inspired by Rust's Cargo.  
+> So the configuration of the configuration file is almost similar to Rust's Cargo.toml.
 > Cppm is a cross platform C++ project manager like Rust's Cargo.   
 > Cmake is as difficult to use as package manager in other languages.   
 > So, like other package managers, to manage the C++ project,   
@@ -16,11 +19,32 @@
 > Not many libraries are supported by the cppkg yet.   
 > So cppm made the package of the [Hunter Package Manager](https://github.com/ruslo/hunter) available.   
 > If there is a library you want to add, please issue a pull request to the [Cppkg repository](https://github.com/injae/cppkg)  
+> Any cppm.toml documentation that is lacking due to time issues would be appreciated   
+> if you refer to Cargo.toml documentation or contact me. Documents will be updated as soon as possible.  
 
 ## Installation
 ### Ubuntu
 ```
 sudo apt-get install build-essential
+git clone https://github.com/INJAE/cppm.git
+cd cppm
+cmake -Bbuild --Release
+cd build
+cmake --build . --config Release
+cd Release
+./cppm build install
+# Adding to cppm path
+export PATH="$HOME/.cppm/bin:$PATH"
+```
+
+
+### Macos
+```
+# AppleClang not working (can't use filesystem and optional)
+brew install llvm cmake
+# Adding to clang env
+# export CC=clang 
+# export CXX=clang++ 
 git clone https://github.com/INJAE/cppm.git
 cd cppm
 cmake -Bbuild --Release
@@ -53,7 +77,7 @@ cd Release
 - [x] cppkg repository update (cppm update)
 - [x] hunter package dependency available 
 - [x] sub project option
-- [ ] unit test option
+- [x] unit test option
 
 ## Document
 ### [GitBook](https://cppm.gitbook.io/project/)
