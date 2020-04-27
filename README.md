@@ -26,9 +26,9 @@
 ### Ubuntu
 ```
 sudo apt-get install build-essential
-git clone https://github.com/INJAE/cppm.git
+git clone https://github.com/injae/cppm.git
 cd cppm
-cmake -Bbuild --Release
+cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
 cd build
 cmake --build . --config Release
 cd Release
@@ -42,12 +42,12 @@ export PATH="$HOME/.cppm/bin:$PATH"
 ```
 # AppleClang not working (can't use filesystem and optional)
 brew install llvm cmake
-# Adding to clang env
-# export CC=clang 
-# export CXX=clang++ 
-git clone https://github.com/INJAE/cppm.git
+# Adding to llvm clang env
+# export CC=#llvm clang path
+# export CXX=#llvm clang++ path 
+git clone https://github.com/injae/cppm.git
 cd cppm
-cmake -Bbuild --Release
+cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
 cd build
 cmake --build . --config Release
 cd Release
@@ -57,10 +57,10 @@ export PATH="$HOME/.cppm/bin:$PATH"
 ```
 ### Windows
 ```
-# need visual studio 
-git clone https://github.com/INJAE/cppm.git
+# need visual studio , git , cmake
+git clone https://github.com/injae/cppm.git
 cd cppm
-cmake -Bbuild --Release
+cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
 cd build
 cmake --build . --config Release
 cd Release
