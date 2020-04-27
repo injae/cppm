@@ -85,7 +85,7 @@ namespace cppm::cmake
         auto target_script = target_ ? "--target {} "_format(*target_) : "";
         script += "cmake --build . {}--config {} -- {}"_format(target_script, build_type, *generator_option);
 
-        auto is_sudo = (!(strcmp(util::system::what(), "windows")) || sudo) ? "sudo" : "";
+        auto is_sudo = (!(strcmp(util::system::what(), "windows")) && sudo) ? "sudo" : "";
         script += install ? " && {} cmake --install ."_format(is_sudo) : "";
         if(detail) fmt::print(script + "\n");
         system(script.c_str());
