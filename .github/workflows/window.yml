@@ -11,7 +11,8 @@ jobs:
     steps:
     - name: Clone Repository
       uses: actions/checkout@master
-      submodules: true
+      withs:
+        submodules: true
     - name: CMake build
       run: |
         cmake -Bbuild -DCMAKE_BUILD_TYPE=${{matrix.build-type}} .

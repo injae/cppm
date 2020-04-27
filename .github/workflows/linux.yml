@@ -8,7 +8,8 @@ jobs:
     steps:
     - name: Clone Repository
       uses: actions/checkout@master
-      submodules: true
+      withs:
+        submodules: true
     - name: C++ Setting
       run: |
         sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
