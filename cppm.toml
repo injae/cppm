@@ -29,7 +29,7 @@ source = ["examples/example.cpp"]
 [dependencies]
 fmt      = "6.2.0"
 hashpp   = "git"
-range-v3 = "0.10.0"
+range-v3 = "git"
 
 [dev-dependencies]
     Catch2 = "2.9.1"

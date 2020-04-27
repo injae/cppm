@@ -14,7 +14,7 @@ include(cmake/cppm_install.cmake)
 find_cppkg(fmt 6.2.0 MODULE fmt::fmt)
 find_cppkg(hashpp git MODULE hashpp::hashpp)
 find_cppkg(nlpo 1.0.3 MODULE nlpo LOADPATH libs/nlpo)
-find_cppkg(range-v3 0.10.0 MODULE range-v3::range-v3)
+find_cppkg(range-v3 git MODULE range-v3::range-v3)
 find_cppkg(tomlpp 0.6.0 MODULE tomlpp LOADPATH libs/tomlpp)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
