@@ -8,7 +8,7 @@ jobs:
     steps:
     - name: Clone Repository
       uses: actions/checkout@master
-      withs:
+      with:
         submodules: true
     - name: C++ Setting
       run: |

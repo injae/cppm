@@ -11,7 +11,7 @@ jobs:
     steps:
     - name: Clone Repository
       uses: actions/checkout@master
-      withs:
+      with:
         submodules: true
     - name: CMake build
       run: |
