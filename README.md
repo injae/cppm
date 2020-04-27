@@ -58,6 +58,7 @@ export PATH="$HOME/.cppm/bin:$PATH"
 ### Windows
 ```
 # need visual studio , git , cmake
+# scoop install git cmake
 git clone https://github.com/injae/cppm.git
 cd cppm
 cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
