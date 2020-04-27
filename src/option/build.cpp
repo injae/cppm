@@ -112,7 +112,7 @@ namespace cppm::option
         pkg.name = config_->package.name;
         if(config_->lib) {
             auto& lib = config_->lib;
-            pkg.module += lib->install ? "{0}::{1} "_format(config_->package.name, lib->name) : "";
+            pkg.module = lib->install ? "{0}::{1} "_format(config_->package.name, lib->name) : "";
             pkg.type = "lib";
         }
         if(!config_->bins) pkg.type = "bin";

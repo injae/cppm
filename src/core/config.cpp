@@ -12,7 +12,7 @@ namespace cppm::core {
         opt<Config> config;
         Path p = Path::make(path);
         if(!fs::exists(p.root/"cppm.toml")) { fmt::print("can't find {} file", p.root.string()); }
-        auto table = toml::orm::parser(config, ((p.root/"cppm.toml").string()));
+        toml::orm::parser(config, (p.root/"cppm.toml").string());
         //std::cout << *table << std::endl;
         config->path = p;
         // cppkg parse sources
@@ -42,7 +42,8 @@ namespace cppm::core {
         if(config->examples) ranges::for_each(*config->examples, [&parse_source](auto& it) {parse_source(it.source);});
 
         // dependency <- load cppkg package thirdparty/{name}/{version}
-        auto load_cppkg = [&config](opt<nested<Dependency>>& target) {
+        auto table = toml::parse_file((p.root/"cppm.toml").string());
+        auto load_cppkg = [&config,table](opt<nested<Dependency>>& target, std::string name) {
             if(target) {
                 auto deps = target.value();
                 auto& thirdparty = config->path.thirdparty;
@@ -53,6 +54,7 @@ namespace cppm::core {
                     return yield_if(fs::exists(path), path.string());
                 };
                 ranges::for_each(paths, [&target](auto& it) { toml::orm::parser(target, it); });
+                toml::orm::parser(target, table->get_table(name));
                 ranges::for_each(*target, [&config](auto& it) {
                      auto& [_, dep] = it;
                      if(!*dep.custom) {
@@ -63,8 +65,8 @@ namespace cppm::core {
             }
         };
 
-        load_cppkg(config->dependencies);
-        load_cppkg(config->dev_dependencies);
+        load_cppkg(config->dependencies, "dependencies");
+        load_cppkg(config->dev_dependencies, "dev-dependencies");
 
         // workspace -> dependencies
         if(config->workspace) {

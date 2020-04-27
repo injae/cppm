@@ -51,7 +51,7 @@ namespace cppm::option
         return repo == "cppkg" && component == ""
                ? "{0}={1}"_format(dep.name, quot(*dep.version))
                : "{0}={{module={1}, version={2}{3}}}"_format(
-                  dep.name, quot(dep.module), quot(*dep.version), component);
+                  dep.name, quot(*dep.module), quot(*dep.version), component);
     }
 
     void CppkgSearch::_show_hunter_package(const std::string& target){

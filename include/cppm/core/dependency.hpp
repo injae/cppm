@@ -26,7 +26,7 @@ namespace cppm::core {
                 .element(TOML_D(custom), false)
                 .element(no_cmake, "no_module", false)
                 .element(TOML_D(components));
-            if(not defn.is_value()&& *type == "lib") defn.element(TOML_D(module));
+            if(not defn.is_value() && *type == "lib") defn.element(TOML_D(module));
             defn.no_remains();
         }
 
@@ -45,7 +45,7 @@ namespace cppm::core {
         opt<std::string> flags;
         opt<bool> custom;
         opt<bool> no_cmake;
-        std::string module;
+        opt<std::string> module;
     };
 }
 

@@ -60,7 +60,7 @@ namespace cppkg
                     +"version={} #(require)\n"_format(value(*dep.version))
                     +"type={} #lib(default) | bin | cmake\n"_format(value(*dep.type))
                     +"description={} #(require)\n"_format(value(*dep.description))
-                    +"module={} #(require) if none_module=true -> no require\n"_format(value(dep.module))
+                    +"module={} #(require) if none_module=true -> no require\n"_format(value(*dep.module))
                     +"{}={} #(require)\n"_format(url_type,value(*dep.url))
                     +"{}branch={} #(optional & require git)\n"_format(is_branch, value(*dep.branch))
                     +"#link={} #default\n"_format(value("public"))
