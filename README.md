@@ -66,7 +66,7 @@ cd build
 cmake --build . --config Release
 cd Release
 ./cppm build install
-# Add System Path \.cppm\bin
+# Add System Path %USERPROFILE%\.cppm\bin
 ```
 
 ## Features
