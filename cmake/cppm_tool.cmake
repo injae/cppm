@@ -1,4 +1,4 @@
-if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
     set(env_home "$ENV{USERPROFILE}")
 else()
     set(env_home "$ENV{HOME}")
