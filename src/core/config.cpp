@@ -83,7 +83,7 @@ namespace cppm::core {
                          dep.version = it->package.version;
                          dep.type    = it->lib->type;
                          dep.module  = it->lib->name;
-                         dep.path    = it->path.root.lexically_relative(root).string();
+                         dep.path    = it->path.root.lexically_relative(root).generic_string();
                          dep.link    = "public";
                          dep.repo    = "workspace";
                          return yield(std::make_pair(dep.name, dep));})
