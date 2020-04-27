@@ -33,9 +33,3 @@ range-v3 = "0.10.0"
 
 [dev-dependencies]
     Catch2 = "2.9.1"
-
-[profile.dev.compiler]
-    msvc = "/std:c++latest"
-
-[profile.release.compiler]
-    msvc = "/std:c++latest"

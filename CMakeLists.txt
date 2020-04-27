@@ -8,13 +8,7 @@ cppm_project()
 project(cppm VERSION 0.0.10 LANGUAGES C CXX)
 cppm_setting()
 cppm_cxx_standard(17)
-cppm_compiler_option(
-   DEBUG
-      MSVC "/std:c++latest"
-
-   RELEASE
-      MSVC "/std:c++latest"
-)
+cppm_compiler_option(DEFAULT)
 
 include(cmake/cppm_install.cmake)
 find_cppkg(fmt 6.2.0 MODULE fmt::fmt)
