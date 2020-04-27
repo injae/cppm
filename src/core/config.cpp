@@ -12,7 +12,8 @@ namespace cppm::core {
         opt<Config> config;
         Path p = Path::make(path);
         if(!fs::exists(p.root/"cppm.toml")) { fmt::print("can't find {} file", p.root.string()); }
-        toml::orm::parser(config, ((p.root/"cppm.toml").string()));
+        auto table = toml::orm::parser(config, ((p.root/"cppm.toml").string()));
+        std::cout << table << std::endl;
         config->path = p;
         // cppkg parse sources
         auto parse_source = [&config](auto& source) {
