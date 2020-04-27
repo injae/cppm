@@ -64,8 +64,8 @@ cd cppm
 cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
 cd build
 cmake --build . --config Release
-cd Release
-./cppm build install
+cd Release && ./cppm build
+cd ../ && cmake --install .
 # Add System Path %USERPROFILE%\.cppm\bin
 ```
 
