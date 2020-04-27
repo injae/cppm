@@ -84,8 +84,8 @@ namespace cppm::core {
                          dep.path    = it->path.root.lexically_relative(root);
                          dep.link    = "public";
                          dep.repo    = "workspace";
-                         return yield(std::make_pair(dep.name,dep));})
-                     | to<std::map>;
+                         return yield(std::make_pair(dep.name, dep));})
+                | to<std::map>;
              
             if(not config->dependencies) { config->dependencies = opt<nested<Dependency>>(); }
             ranges::insert(config->dependencies.value(),dep);

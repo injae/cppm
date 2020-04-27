@@ -3,7 +3,7 @@ name: MacOS
 on: [push]
 
 jobs:
-  macos-clang-8:
+  macos-clang:
     runs-on: macos-latest
     steps:
     - name: Clone Repository
@@ -12,7 +12,7 @@ jobs:
         submodules: true
     - name: C++ Setting
       run: |
-        brew install llvm@8 cmake
+        brew install llvm cmake
     - name: Compiler Setting
       run: |
         echo "::set-env name=CC::clang"
