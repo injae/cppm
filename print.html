@@ -214,17 +214,18 @@ Option:
 <pre><code class="language-console">$ cd hello_world
 $ tree .  
 .
-|-- build
-|-- cmake
-|   |-- Modules
-|   `-- cppm_tool.cmake
+|-- build  # Build directory
+|   |-- Debug   # Debug mode target directory 
+|   `-- Release # Release mode target directory
+|-- cmake    # cmake module path
+|   |-- Modules  # cmake Find*.cmake path
+|   `-- cppm_tool.cmake # cppm_tool load tool
 |-- cppm.toml
-|-- include
-|-- src
+|-- include   # public header
+|-- src       # private header and sources
 |   `-- main.cpp
-`-- thirdparty
-
-6 directories, 3 files
+`-- thirdparty # cppkg config and file path
+    `-- ${cppkg_name}/${cppkg_version}/cppkg.toml  # cppkg config file
 </code></pre>
 <p>Cppm project config file <code>cppm.toml</code>. </p>
 <pre><code class="language-toml"># cppm.toml
@@ -271,7 +272,7 @@ From https://github.com/injae/cppm_tools
 -- [cppm] Build Cache: ccache
 -- [cppm] cppm_root: /path/to/.cppm
 -- [cppm] c++ version: 17
--- [cppm] Compiler Option: -std=c++17 |  -Wall -fPIC -O0 -g -g
+-- [cppm] Compiler Option: -std=c++17 -Wall -fPIC -O0 -g -g
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /path/to/hello_world/build
@@ -281,7 +282,7 @@ Scanning dependencies of target hello_world
 [100%] Built target hello_world
 </code></pre>
 <p>And the run it.</p>
-<pre><code class="language-console">$ cd build 
+<pre><code class="language-console">$ cd build/Debug
 $ ./hello_world
 hello world
 </code></pre>
@@ -305,66 +306,69 @@ SOURCES
         src/main.cpp
 )
 
-cppm_target_dependencies(hello_world 
-)
+cppm_target_dependencies(hello_world)
 
 cppm_target_install(hello_world)
 </code></pre>
 <p>Changed project Directory</p>
 <pre><code class="language-console">$ tree .
 .
-|-- CMakeLists.txt
-|-- build
-|   |-- CMakeCache.txt
-|   |-- CMakeFiles
-|   |   |-- 3.16.2
-|   |   |   |-- CMakeCCompiler.cmake
-|   |   |   |-- CMakeCXXCompiler.cmake
-|   |   |   |-- CMakeDetermineCompilerABI_C.bin
-|   |   |   |-- CMakeDetermineCompilerABI_CXX.bin
-|   |   |   |-- CMakeSystem.cmake
-|   |   |   |-- CompilerIdC
-|   |   |   |   |-- CMakeCCompilerId.c
-|   |   |   |   |-- a.out
-|   |   |   |   `-- tmp
-|   |   |   `-- CompilerIdCXX
-|   |   |       |-- CMakeCXXCompilerId.cpp
-|   |   |       |-- a.out
-|   |   |       `-- tmp
-|   |   |-- CMakeDirectoryInformation.cmake
-|   |   |-- CMakeOutput.log
-|   |   |-- CMakeTmp
-|   |   |-- Makefile.cmake
-|   |   |-- Makefile2
-|   |   |-- TargetDirectories.txt
-|   |   |-- cmake.check_cache
-|   |   |-- hello_world.dir
-|   |   |   |-- CXX.includecache
-|   |   |   |-- DependInfo.cmake
-|   |   |   |-- build.make
-|   |   |   |-- cmake_clean.cmake
-|   |   |   |-- depend.internal
-|   |   |   |-- depend.make
-|   |   |   |-- flags.make
-|   |   |   |-- link.txt
-|   |   |   |-- progress.make
-|   |   |   `-- src
-|   |   |       `-- main.cpp.o
-|   |   `-- progress.marks
-|   |-- Makefile
-|   |-- cmake_install.cmake
-|   |-- compile_commands.json
-|   `-- hello_world
-|-- cmake
-|   |-- Modules
-|   `-- cppm_tool.cmake
-|-- cppm.toml
-|-- include
-|-- src
-|   `-- main.cpp
-`-- thirdparty
-
-15 directories, 35 files
+├── CMakeLists.txt
+├── build
+│   ├── CMakeCache.txt
+│   ├── CMakeFiles
+│   │   ├── 3.17.1
+│   │   │   ├── CMakeCCompiler.cmake
+│   │   │   ├── CMakeCXXCompiler.cmake
+│   │   │   ├── CMakeDetermineCompilerABI_C.bin
+│   │   │   ├── CMakeDetermineCompilerABI_CXX.bin
+│   │   │   ├── CMakeSystem.cmake
+│   │   │   ├── CompilerIdC
+│   │   │   │   ├── CMakeCCompilerId.c
+│   │   │   │   ├── a.out
+│   │   │   │   └── tmp
+│   │   │   └── CompilerIdCXX
+│   │   │       ├── CMakeCXXCompilerId.cpp
+│   │   │       ├── a.out
+│   │   │       └── tmp
+│   │   ├── CMakeDirectoryInformation.cmake
+│   │   ├── CMakeOutput.log
+│   │   ├── CMakeTmp
+│   │   ├── Makefile.cmake
+│   │   ├── Makefile2
+│   │   ├── TargetDirectories.txt
+│   │   ├── cmake.check_cache
+│   │   ├── progress.marks
+│   │   ├── tb.dir
+│   │   │   ├── CXX.includecache
+│   │   │   ├── DependInfo.cmake
+│   │   │   ├── build.make
+│   │   │   ├── cmake_clean.cmake
+│   │   │   ├── depend.internal
+│   │   │   ├── depend.make
+│   │   │   ├── flags.make
+│   │   │   ├── link.txt
+│   │   │   ├── progress.make
+│   │   │   └── src
+│   │   │       └── main.cpp.o
+│   │   └── tb_info.dir
+│   │       ├── DependInfo.cmake
+│   │       ├── build.make
+│   │       ├── cmake_clean.cmake
+│   │       └── progress.make
+│   ├── Debug
+│   │   └── tb  # Binary or Library export Directory
+│   ├── Makefile
+│   ├── cmake_install.cmake
+│   └── compile_commands.json
+├── cmake
+│   ├── Modules
+│   └── cppm_tool.cmake
+├── cppm.toml
+├── include
+├── src
+│   └── main.cpp
+└── thirdparty 
 </code></pre>
 <h2><a class="header" href="#cppm-guide" id="cppm-guide">Cppm Guide</a></h2>
 <ul>
@@ -373,77 +377,88 @@ cppm_target_install(hello_world)
 </ul>
 <h1><a class="header" href="#cppkgtoml" id="cppkgtoml">cppkg.toml</a></h1>
 <pre><code class="language-toml">[package]
-    name = &quot;...&quot;
-    version = &quot;...&quot;
-    desciprtion = &quot;...&quot;
-    standard = &quot;{11|14|17(default)|20}&quot; # (optional)
-    git = &quot;...&quot; # (optional) this option use to cppm build --export
+    name = &quot;...&quot; # (require)
+    version = &quot;...&quot; # (require)
+    desciprtion = &quot;...&quot; # (require)
+    standard = &quot;{11|14|17(default)|20}&quot;
+    git = &quot;...&quot; # this option use to cppm build --export
 </code></pre>
 <pre><code class="language-toml">[hunter] # (optional)  hunter package manager setting option
     use = true|false(default) # if you use hunter package this option is default is true
-    url = &quot;...&quot; # (optional) custom hunter version url setting option, [ url, sha1 ] is pair
-    sha1 = &quot;...&quot; # (optional) custom hunter version sha1 setting option, [ url, sha1 ] is pair
+    url = &quot;...&quot; # custom hunter version url setting option, [ url, sha1 ] is pair
+    sha1 = &quot;...&quot; # custom hunter version sha1 setting option, [ url, sha1 ] is pair
 </code></pre>
 <pre><code class="language-toml">[cmake] # (optional) cmake setting option 
-    include = [&quot;xxx.cmake&quot;, ...] # (optional) this option is include cmake file
-    version = &quot;...&quot; # (optional) minimum cmake version setting option default is 3.12
-    option = &quot;...&quot; # (optional) cmake build option use to command 'cppm build'
+    include = [&quot;xxx.cmake&quot;, ...] # this option is include cmake file
+    version = &quot;...&quot; # minimum cmake version setting option default is 3.12
+    option = &quot;...&quot; # cmake build option use to command 'cppm build'
+    toolchains = &quot;...&quot; # (incomplete) cmake toolchains option
 </code></pre>
-<pre><code class="language-toml"># (deprecated)
-[builder]
-    make = {option =&quot;...&quot;}
-    ninja = {option =&quot;...&quot;}
-</code></pre>
-<pre><code class="language-toml">[compiler.debug] # (optional) this is only debug mode compiler option
-[compiler.release] # (optional) this is only release mode compiler option
-[compiler] # (optional) this is debug and release compiler option target compiler is same
+<p>Profiles
+Prfiles provide a way alter the compiler settings, 
+Profile settings can be overridden for specific packages</p>
+<pre><code class="language-toml">[profile.dev] # this is only debug or test or example mode compiler option
+[profile.release] # this is only release mode compiler option
+[profile.test] # (incomplete) this is only test mode compiler option
+[profile.release.compiler] # this is only release mode compiler option
     clang = &quot;...&quot; # compiler option
     gcc = &quot;...&quot; # compiler option
     msvc = &quot;...&quot; # compiler option
+[profile.release.package.{package.name}] # (incomplete) override for specific packages
+[profile.release.package.{package_name}.compiler] # (incomplete) this is only release mode compiler option
 </code></pre>
 <pre><code class="language-toml">[[bin]]
     name = &quot;...&quot; # target name (require)
-    sources = [&quot;src/xxx.cpp&quot;, ...] # (require)
+    sources = [&quot;src/ss/.*&quot;, src/xx.cpp, ...] # (require), source files, you can use regex
     install = true(default)|false  # disable install setting
-    standard = &quot;{11|14|17(default)|20}&quot;  #(working)
-
 </code></pre>
 <pre><code class="language-toml">[lib]
     name = &quot;...&quot; # target name, export cmake package name 
-    type = &quot;static(default)|shared|hearder_only&quot; # (require)
-    sources = [&quot;src/xxx.cpp&quot;, ...] # use source files, type = &quot;header_only&quot; no nessasery this option
+    type = &quot;static(default)|shared|hearder-only&quot; 
+    namespace = &quot;... &quot; (default: [package.name]) # cmake export namespace  
+    sources = [&quot;src/xxx.cpp&quot;, ...] # type = &quot;header_only&quot; this option not working
     install = true(default)|false  # disable install setting
-    standard = &quot;{11|14|17(default)|20}&quot;  #(working)
 </code></pre>
-<pre><code class="language-toml"># sub project setting (BETA)
+<pre><code class="language-toml">[[test]]
+    name = &quot;...&quot; # target name, export cmake package name 
+    type = &quot;binary(default)|static|shared|hearder-only&quot; 
+    sources = [&quot;src/xxx.cpp&quot;, ...] # use source files, type = &quot;header_only&quot; no nessasery this optio
+    install = true|false(default)  # disable install setting
+</code></pre>
+<pre><code class="language-toml">[[example]]
+    name = &quot;...&quot; # target name, export cmake package name 
+    type = &quot;binary(default)|static|shared|hearder-only&quot; 
+    sources = [&quot;src/xxx.cpp&quot;, ...] # use source files, type = &quot;header_only&quot; no nessasery this option
+    install = true|false(default)  # disable install setting
+</code></pre>
+<pre><code class="language-toml"># sub project setting
 [workspace]
     member = [&quot;path/&quot;, &quot;path&quot;]
 </code></pre>
-<pre><code class="language-toml"># global dependencies setting option, is same [target.default.platform.default.dependencies] (working)
+<pre><code class="language-toml">[dev-dependency] # this dependency only work debug mode
 [dependencies] 
     # cppkg package add dependency
     # name   version(require)
-      ... = &quot;x.x.x|git|latest(default)&quot; # latest ordering is x.x.x &gt; git 
-    # nomal cmake package add dependency
+      ... = &quot;x.x.x|git|latest&quot; # this config find cppkg.toml in ${package root}/thirdparty/${name}/${version}/cppkg.toml
+    # inline dependency setting
     # name        (require)                   (optional)           (optional) default is public            (optional) package type  
-      ... = {module = &quot;...&quot; , version =&quot;...&quot;, components=&quot;... ...&quot;, link = &quot;public|private|interface&quot;, type=&quot;lib(default)|bin&quot; }
+      ... = {module = &quot;...&quot; , version =&quot;...&quot;, components=&quot;... ...&quot;, link = &quot;public|private|interface&quot;, type=&quot;lib(default)|bin|cmake(incomplete)&quot;, repo=&quot;cppkg(default)|hunter&quot; }
     # hunter package add dependency
     # name        (require)                   (optional)           (optional) default is public            (require) load hunter package
-      ... = {module = &quot;...&quot; , version =&quot;...&quot;, components=&quot;... ...&quot;, link = &quot;public|private|interface&quot; , hunter= true }
+      ... = {module = &quot;...&quot; , version =&quot;latest&quot;, components=&quot;... ...&quot;, link = &quot;public|private|interface&quot; ,    repo=&quot;hunter&quot; }
     # none cmake package add dependency
     # name        (require)            (optional)           (optional) default is public (require) none cmake package
       ... = {module = &quot;...&quot;, components=&quot;... ...&quot;, lnk_type = &quot;public|private|interface&quot;, no_module= true }
     # module is name that cmake find_package 
     # matched cmake scirpt
     # find_package(${name} ${version} COMPONENTS ${components})
-    # target_link_libraries(${target} ${lnk_type} ${modle})
-    #link.public    =&gt; this library use header and source
-    #link.private   =&gt; this library use source only
-    #link.interface =&gt; this library use header only 
-
+    # target_link_libraries(${target} ${lnk_type} ${module})
+    #link.public    =&gt; this library use header and source , dependency foward 
+    #link.private   =&gt; this library use source only, dependency not forward
+    #link.interface =&gt; this library use header only, dependency forward
 </code></pre>
-<pre><code class="language-toml"># (working) platform classification depdencies setting 
-[platform.windows|macos|linux|unix.dependencies] 
+<pre><code class="language-toml"># (incomplete) platform classification depdencies setting 
+[target.windows|macos|linux|unix.dependencies] 
 
 </code></pre>
 <pre><code class="language-toml"># (working)
@@ -456,38 +471,20 @@ cppm_target_install(hello_world)
 [ci.azure]
 [ci.travis]
 </code></pre>
-<pre><code class="language-toml"># (working)
-[target.{name}.compiler]
-[target.{name}.compiler.debug]
-
-
-[target.{name}.compiler.release]
-</code></pre>
-<pre><code class="language-toml"># (working) target classification depedencies add
-[target.{name}.dependencies]
-# (working)
-[target.{name}.platform.{type}.dependencies]
-# (working)
-[target.{name}.platform.{type}.sources]
-</code></pre>
-<pre><code class="language-toml"># (working)
-[[test]]
-</code></pre>
-<pre><code class="language-toml"># (working)
-[[example]]
-
-</code></pre>
-<pre><code class="language-toml"># (working)
-[dev-dependencies]
-
-</code></pre>
-<pre><code class="language-toml"># (working)    
-dependencies = {
-    ${name} = ${dependency options},
-    ${name} = ${dependency options},
-}
-</code></pre>
 <h2><a class="header" href="#cppkgtoml-1" id="cppkgtoml-1">cppkg.toml</a></h2>
+<p>this setting is same [dependency.${dep name}]</p>
+<pre><code class="language-toml">[${name}] 
+    version = &quot;x.x.x|git|latest(hunter only)&quot;
+    type = &quot;lib(default)|bin|cmake(incomplete)&quot;
+    git = &quot;...&quot; # if git version 
+    url = &quot;...&quot; # if x.x.x version
+    module = &quot;...&quot; # (require)
+    link = &quot;public(default)|private|interface&quot;
+    custom = &quot;false(default)|true&quot; # this config table export ${name}.cmake.in 
+                                   # if you wan't custom ${name}.cmake.in this option set true
+    repo = &quot;cppkg(default)|hunter&quot;
+    components = &quot;...&quot;
+</code></pre>
 <h1><a class="header" href="#cppm-commands" id="cppm-commands">Cppm Commands</a></h1>
 
                     </main>

@@ -149,6 +149,19 @@
                 <div id="content" class="content">
                     <main>
                         <h2><a class="header" href="#cppkgtoml" id="cppkgtoml">cppkg.toml</a></h2>
+<p>this setting is same [dependency.${dep name}]</p>
+<pre><code class="language-toml">[${name}] 
+    version = &quot;x.x.x|git|latest(hunter only)&quot;
+    type = &quot;lib(default)|bin|cmake(incomplete)&quot;
+    git = &quot;...&quot; # if git version 
+    url = &quot;...&quot; # if x.x.x version
+    module = &quot;...&quot; # (require)
+    link = &quot;public(default)|private|interface&quot;
+    custom = &quot;false(default)|true&quot; # this config table export ${name}.cmake.in 
+                                   # if you wan't custom ${name}.cmake.in this option set true
+    repo = &quot;cppkg(default)|hunter&quot;
+    components = &quot;...&quot;
+</code></pre>
 
                     </main>
 
