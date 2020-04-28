@@ -21,17 +21,18 @@ Generated project
 $ cd hello_world
 $ tree .  
 .
-|-- build
-|-- cmake
-|   |-- Modules
-|   `-- cppm_tool.cmake
+|-- build  # Build directory
+|   |-- Debug   # Debug mode target directory 
+|   `-- Release # Release mode target directory
+|-- cmake    # cmake module path
+|   |-- Modules  # cmake Find*.cmake path
+|   `-- cppm_tool.cmake # cppm_tool load tool
 |-- cppm.toml
-|-- include
-|-- src
+|-- include   # public header
+|-- src       # private header and sources
 |   `-- main.cpp
-`-- thirdparty
-
-6 directories, 3 files
+`-- thirdparty # cppkg config and file path
+    `-- ${cppkg_name}/${cppkg_version}/cppkg.toml  # cppkg config file
 ~~~
 
 Cppm project config file ```cppm.toml```. 
@@ -84,7 +85,7 @@ From https://github.com/injae/cppm_tools
 -- [cppm] Build Cache: ccache
 -- [cppm] cppm_root: /path/to/.cppm
 -- [cppm] c++ version: 17
--- [cppm] Compiler Option: -std=c++17 |  -Wall -fPIC -O0 -g -g
+-- [cppm] Compiler Option: -std=c++17 -Wall -fPIC -O0 -g -g
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /path/to/hello_world/build
@@ -95,7 +96,7 @@ Scanning dependencies of target hello_world
 ~~~
 And the run it.  
 ~~~console
-$ cd build 
+$ cd build/Debug
 $ ./hello_world
 hello world
 ~~~
@@ -121,8 +122,7 @@ SOURCES
         src/main.cpp
 )
 
-cppm_target_dependencies(hello_world 
-)
+cppm_target_dependencies(hello_world)
 
 cppm_target_install(hello_world)
 ~~~
@@ -131,58 +131,62 @@ Changed project Directory
 ~~~console
 $ tree .
 .
-|-- CMakeLists.txt
-|-- build
-|   |-- CMakeCache.txt
-|   |-- CMakeFiles
-|   |   |-- 3.16.2
-|   |   |   |-- CMakeCCompiler.cmake
-|   |   |   |-- CMakeCXXCompiler.cmake
-|   |   |   |-- CMakeDetermineCompilerABI_C.bin
-|   |   |   |-- CMakeDetermineCompilerABI_CXX.bin
-|   |   |   |-- CMakeSystem.cmake
-|   |   |   |-- CompilerIdC
-|   |   |   |   |-- CMakeCCompilerId.c
-|   |   |   |   |-- a.out
-|   |   |   |   `-- tmp
-|   |   |   `-- CompilerIdCXX
-|   |   |       |-- CMakeCXXCompilerId.cpp
-|   |   |       |-- a.out
-|   |   |       `-- tmp
-|   |   |-- CMakeDirectoryInformation.cmake
-|   |   |-- CMakeOutput.log
-|   |   |-- CMakeTmp
-|   |   |-- Makefile.cmake
-|   |   |-- Makefile2
-|   |   |-- TargetDirectories.txt
-|   |   |-- cmake.check_cache
-|   |   |-- hello_world.dir
-|   |   |   |-- CXX.includecache
-|   |   |   |-- DependInfo.cmake
-|   |   |   |-- build.make
-|   |   |   |-- cmake_clean.cmake
-|   |   |   |-- depend.internal
-|   |   |   |-- depend.make
-|   |   |   |-- flags.make
-|   |   |   |-- link.txt
-|   |   |   |-- progress.make
-|   |   |   `-- src
-|   |   |       `-- main.cpp.o
-|   |   `-- progress.marks
-|   |-- Makefile
-|   |-- cmake_install.cmake
-|   |-- compile_commands.json
-|   `-- hello_world
-|-- cmake
-|   |-- Modules
-|   `-- cppm_tool.cmake
-|-- cppm.toml
-|-- include
-|-- src
-|   `-- main.cpp
-`-- thirdparty
-
-15 directories, 35 files
+├── CMakeLists.txt
+├── build
+│   ├── CMakeCache.txt
+│   ├── CMakeFiles
+│   │   ├── 3.17.1
+│   │   │   ├── CMakeCCompiler.cmake
+│   │   │   ├── CMakeCXXCompiler.cmake
+│   │   │   ├── CMakeDetermineCompilerABI_C.bin
+│   │   │   ├── CMakeDetermineCompilerABI_CXX.bin
+│   │   │   ├── CMakeSystem.cmake
+│   │   │   ├── CompilerIdC
+│   │   │   │   ├── CMakeCCompilerId.c
+│   │   │   │   ├── a.out
+│   │   │   │   └── tmp
+│   │   │   └── CompilerIdCXX
+│   │   │       ├── CMakeCXXCompilerId.cpp
+│   │   │       ├── a.out
+│   │   │       └── tmp
+│   │   ├── CMakeDirectoryInformation.cmake
+│   │   ├── CMakeOutput.log
+│   │   ├── CMakeTmp
+│   │   ├── Makefile.cmake
+│   │   ├── Makefile2
+│   │   ├── TargetDirectories.txt
+│   │   ├── cmake.check_cache
+│   │   ├── progress.marks
+│   │   ├── tb.dir
+│   │   │   ├── CXX.includecache
+│   │   │   ├── DependInfo.cmake
+│   │   │   ├── build.make
+│   │   │   ├── cmake_clean.cmake
+│   │   │   ├── depend.internal
+│   │   │   ├── depend.make
+│   │   │   ├── flags.make
+│   │   │   ├── link.txt
+│   │   │   ├── progress.make
+│   │   │   └── src
+│   │   │       └── main.cpp.o
+│   │   └── tb_info.dir
+│   │       ├── DependInfo.cmake
+│   │       ├── build.make
+│   │       ├── cmake_clean.cmake
+│   │       └── progress.make
+│   ├── Debug
+│   │   └── tb  # Binary or Library export Directory
+│   ├── Makefile
+│   ├── cmake_install.cmake
+│   └── compile_commands.json
+├── cmake
+│   ├── Modules
+│   └── cppm_tool.cmake
+├── cppm.toml
+├── include
+├── src
+│   └── main.cpp
+└── thirdparty 
 ~~~
 
 

@@ -2,86 +2,98 @@
 
 ```toml
 [package]
-    name = "..."
-    version = "..."
-    desciprtion = "..."
-    standard = "{11|14|17(default)|20}" # (optional)
-    git = "..." # (optional) this option use to cppm build --export
+    name = "..." # (require)
+    version = "..." # (require)
+    desciprtion = "..." # (require)
+    standard = "{11|14|17(default)|20}"
+    git = "..." # this option use to cppm build --export
 ```
 ```toml
 [hunter] # (optional)  hunter package manager setting option
     use = true|false(default) # if you use hunter package this option is default is true
-    url = "..." # (optional) custom hunter version url setting option, [ url, sha1 ] is pair
-    sha1 = "..." # (optional) custom hunter version sha1 setting option, [ url, sha1 ] is pair
+    url = "..." # custom hunter version url setting option, [ url, sha1 ] is pair
+    sha1 = "..." # custom hunter version sha1 setting option, [ url, sha1 ] is pair
 ```
 ```toml
 [cmake] # (optional) cmake setting option 
-    include = ["xxx.cmake", ...] # (optional) this option is include cmake file
-    version = "..." # (optional) minimum cmake version setting option default is 3.12
-    option = "..." # (optional) cmake build option use to command 'cppm build'
+    include = ["xxx.cmake", ...] # this option is include cmake file
+    version = "..." # minimum cmake version setting option default is 3.12
+    option = "..." # cmake build option use to command 'cppm build'
+    toolchains = "..." # (incomplete) cmake toolchains option
 ```
+Profiles
+Prfiles provide a way alter the compiler settings, 
+Profile settings can be overridden for specific packages
 ```toml
-# (deprecated)
-[builder]
-    make = {option ="..."}
-    ninja = {option ="..."}
-```
-```toml
-[compiler.debug] # (optional) this is only debug mode compiler option
-[compiler.release] # (optional) this is only release mode compiler option
-[compiler] # (optional) this is debug and release compiler option target compiler is same
+[profile.dev] # this is only debug or test or example mode compiler option
+[profile.release] # this is only release mode compiler option
+[profile.test] # (incomplete) this is only test mode compiler option
+[profile.release.compiler] # this is only release mode compiler option
     clang = "..." # compiler option
     gcc = "..." # compiler option
     msvc = "..." # compiler option
+[profile.release.package.{package.name}] # (incomplete) override for specific packages
+[profile.release.package.{package_name}.compiler] # (incomplete) this is only release mode compiler option
 ```
 ```toml
 [[bin]]
     name = "..." # target name (require)
-    sources = ["src/xxx.cpp", ...] # (require)
+    sources = ["src/ss/.*", src/xx.cpp, ...] # (require), source files, you can use regex
     install = true(default)|false  # disable install setting
-    standard = "{11|14|17(default)|20}"  #(working)
-
 ```
 ```toml
 [lib]
     name = "..." # target name, export cmake package name 
-    type = "static(default)|shared|hearder_only" # (require)
-    sources = ["src/xxx.cpp", ...] # use source files, type = "header_only" no nessasery this option
+    type = "static(default)|shared|hearder-only" 
+    namespace = "... " (default: [package.name]) # cmake export namespace  
+    sources = ["src/xxx.cpp", ...] # type = "header_only" this option not working
     install = true(default)|false  # disable install setting
-    standard = "{11|14|17(default)|20}"  #(working)
 ```
 ```toml
-# sub project setting (BETA)
+[[test]]
+    name = "..." # target name, export cmake package name 
+    type = "binary(default)|static|shared|hearder-only" 
+    sources = ["src/xxx.cpp", ...] # use source files, type = "header_only" no nessasery this optio
+    install = true|false(default)  # disable install setting
+```
+```toml
+[[example]]
+    name = "..." # target name, export cmake package name 
+    type = "binary(default)|static|shared|hearder-only" 
+    sources = ["src/xxx.cpp", ...] # use source files, type = "header_only" no nessasery this option
+    install = true|false(default)  # disable install setting
+```
+```toml
+# sub project setting
 [workspace]
     member = ["path/", "path"]
 ```
 ```toml
-# global dependencies setting option, is same [target.default.platform.default.dependencies] (working)
+[dev-dependency] # this dependency only work debug mode
 [dependencies] 
     # cppkg package add dependency
     # name   version(require)
-      ... = "x.x.x|git|latest(default)" # latest ordering is x.x.x > git 
-    # nomal cmake package add dependency
+      ... = "x.x.x|git|latest" # this config find cppkg.toml in ${package root}/thirdparty/${name}/${version}/cppkg.toml
+    # inline dependency setting
     # name        (require)                   (optional)           (optional) default is public            (optional) package type  
-      ... = {module = "..." , version ="...", components="... ...", link = "public|private|interface", type="lib(default)|bin" }
+      ... = {module = "..." , version ="...", components="... ...", link = "public|private|interface", type="lib(default)|bin|cmake(incomplete)", repo="cppkg(default)|hunter" }
     # hunter package add dependency
     # name        (require)                   (optional)           (optional) default is public            (require) load hunter package
-      ... = {module = "..." , version ="...", components="... ...", link = "public|private|interface" , hunter= true }
+      ... = {module = "..." , version ="latest", components="... ...", link = "public|private|interface" ,    repo="hunter" }
     # none cmake package add dependency
     # name        (require)            (optional)           (optional) default is public (require) none cmake package
       ... = {module = "...", components="... ...", lnk_type = "public|private|interface", no_module= true }
     # module is name that cmake find_package 
     # matched cmake scirpt
     # find_package(${name} ${version} COMPONENTS ${components})
-    # target_link_libraries(${target} ${lnk_type} ${modle})
-    #link.public    => this library use header and source
-    #link.private   => this library use source only
-    #link.interface => this library use header only 
-
+    # target_link_libraries(${target} ${lnk_type} ${module})
+    #link.public    => this library use header and source , dependency foward 
+    #link.private   => this library use source only, dependency not forward
+    #link.interface => this library use header only, dependency forward
 ```
 ```toml
-# (working) platform classification depdencies setting 
-[platform.windows|macos|linux|unix.dependencies] 
+# (incomplete) platform classification depdencies setting 
+[target.windows|macos|linux|unix.dependencies] 
 
 ```
 ```toml
@@ -95,42 +107,4 @@
 [ci.appveyer]
 [ci.azure]
 [ci.travis]
-```
-
-```toml
-# (working)
-[target.{name}.compiler]
-[target.{name}.compiler.debug]
-
-
-[target.{name}.compiler.release]
-```
-```toml
-# (working) target classification depedencies add
-[target.{name}.dependencies]
-# (working)
-[target.{name}.platform.{type}.dependencies]
-# (working)
-[target.{name}.platform.{type}.sources]
-```
-```toml
-# (working)
-[[test]]
-```
-```toml
-# (working)
-[[example]]
-
-```
-```toml
-# (working)
-[dev-dependencies]
-
-```
-```toml
-# (working)    
-dependencies = {
-    ${name} = ${dependency options},
-    ${name} = ${dependency options},
-}
 ```
