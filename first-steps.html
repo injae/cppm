@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="install.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="expanded "><a href="first-steps.html" class="active"><strong aria-hidden="true">2.2.</strong> First Steps with Cppm</a></li></ol></li><li class="expanded "><a href="cppm_guide.html"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li><ol class="section"><li class="expanded "><a href="cppm_toml.html"><strong aria-hidden="true">3.1.</strong> cppm.toml</a></li><li class="expanded "><a href="cppkg_toml.html"><strong aria-hidden="true">3.2.</strong> cppkg.toml</a></li></ol></li><li class="expanded "><a href="cppm_commands.html"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="install.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="expanded "><a href="first-steps.html" class="active"><strong aria-hidden="true">2.2.</strong> First Steps with Cppm</a></li></ol></li><li class="expanded "><a href="cppm_guide.html"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li><ol class="section"><li class="expanded "><a href="package_layout.html"><strong aria-hidden="true">3.1.</strong> Package Layout</a></li><li class="expanded "><a href="cppm_structure.html"><strong aria-hidden="true">3.2.</strong> Cppm Structure</a></li><li class="expanded "><a href="cppm_toml.html"><strong aria-hidden="true">3.3.</strong> cppm.toml</a></li><li class="expanded "><a href="dependencies.html"><strong aria-hidden="true">3.4.</strong> Dependencies</a></li></ol></li><li class="expanded "><a href="cppm_commands.html"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -179,7 +179,7 @@ $ tree .
 `-- thirdparty # cppkg config and file path
     `-- ${cppkg_name}/${cppkg_version}/cppkg.toml  # cppkg config file
 </code></pre>
-<p>Cppm project config file <code>cppm.toml</code>. </p>
+<p>Cppm project config file </p>
 <pre><code class="language-toml"># cppm.toml
 [package]
    name = &quot;hello_world&quot;
@@ -190,8 +190,9 @@ $ tree .
    name = &quot;hello_world&quot;
    source = [&quot;src/.*&quot;]
 </code></pre>
-<p>Generated defualt cpp file<code>src/main.cpp</code></p>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
+<p>Generated defualt cpp file</p>
+<pre><code class="language-cpp">// src/main.cpp
+#include &lt;iostream&gt;
 int main(int argc, char* argv[]) {
     std::cout&lt;&lt;&quot;hello world&quot;&lt;&lt;std::endl;
     return 0; 
@@ -224,7 +225,7 @@ From https://github.com/injae/cppm_tools
 -- [cppm] Build Cache: ccache
 -- [cppm] cppm_root: /path/to/.cppm
 -- [cppm] c++ version: 17
--- [cppm] Compiler Option: -std=c++17 -Wall -fPIC -O0 -g -g
+-- [cppm] Compiler Option: -std=c++17 -Wall -fPIC -O0 -g
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /path/to/hello_world/build
@@ -238,7 +239,7 @@ Scanning dependencies of target hello_world
 $ ./hello_world
 hello world
 </code></pre>
-<p><em><strong>(beta)</strong></em> Easy run command <code>cppm run</code>, </p>
+<p>Easy run command <code>cppm run</code>, default binary name ${[package.name]}</p>
 <pre><code class="language-console">$ cppm run
 hello world
 </code></pre>
@@ -291,7 +292,7 @@ cppm_target_install(hello_world)
 │   │   ├── TargetDirectories.txt
 │   │   ├── cmake.check_cache
 │   │   ├── progress.marks
-│   │   ├── tb.dir
+│   │   ├── hello_world.dir
 │   │   │   ├── CXX.includecache
 │   │   │   ├── DependInfo.cmake
 │   │   │   ├── build.make
@@ -303,13 +304,13 @@ cppm_target_install(hello_world)
 │   │   │   ├── progress.make
 │   │   │   └── src
 │   │   │       └── main.cpp.o
-│   │   └── tb_info.dir
+│   │   └── hello_world_info.dir
 │   │       ├── DependInfo.cmake
 │   │       ├── build.make
 │   │       ├── cmake_clean.cmake
 │   │       └── progress.make
 │   ├── Debug
-│   │   └── tb  # Binary or Library export Directory
+│   │   └── hello_world  # Binary or Library export Directory
 │   ├── Makefile
 │   ├── cmake_install.cmake
 │   └── compile_commands.json

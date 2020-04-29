@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>cppkg.toml - The Cppm Book</title>
+        <title>Package Layout - The Cppm Book</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="install.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="expanded "><a href="first-steps.html"><strong aria-hidden="true">2.2.</strong> First Steps with Cppm</a></li></ol></li><li class="expanded "><a href="cppm_guide.html"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li><ol class="section"><li class="expanded "><a href="cppm_toml.html"><strong aria-hidden="true">3.1.</strong> cppm.toml</a></li><li class="expanded "><a href="cppkg_toml.html" class="active"><strong aria-hidden="true">3.2.</strong> cppkg.toml</a></li></ol></li><li class="expanded "><a href="cppm_commands.html"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="install.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="expanded "><a href="first-steps.html"><strong aria-hidden="true">2.2.</strong> First Steps with Cppm</a></li></ol></li><li class="expanded "><a href="cppm_guide.html"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li><ol class="section"><li class="expanded "><a href="package_layout.html" class="active"><strong aria-hidden="true">3.1.</strong> Package Layout</a></li><li class="expanded "><a href="cppm_structure.html"><strong aria-hidden="true">3.2.</strong> Cppm Structure</a></li><li class="expanded "><a href="cppm_toml.html"><strong aria-hidden="true">3.3.</strong> cppm.toml</a></li><li class="expanded "><a href="dependencies.html"><strong aria-hidden="true">3.4.</strong> Dependencies</a></li></ol></li><li class="expanded "><a href="cppm_commands.html"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,19 +148,57 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2><a class="header" href="#cppkgtoml" id="cppkgtoml">cppkg.toml</a></h2>
-<p>this setting is same [dependency.${dep name}]</p>
-<pre><code class="language-toml">[${name}] 
-    version = &quot;x.x.x|git|latest(hunter only)&quot;
-    type = &quot;lib(default)|bin|cmake(incomplete)&quot;
-    git = &quot;...&quot; # if git version 
-    url = &quot;...&quot; # if x.x.x version
-    module = &quot;...&quot; # (require)
-    link = &quot;public(default)|private|interface&quot;
-    custom = &quot;false(default)|true&quot; # this config table export ${name}.cmake.in 
-                                   # if you wan't custom ${name}.cmake.in this option set true
-    repo = &quot;cppkg(default)|hunter&quot;
-    components = &quot;...&quot;
+                        <h2><a class="header" href="#cppm-base-project-layout" id="cppm-base-project-layout">Cppm Base Project Layout</a></h2>
+<pre><code class="language-console">.
+|-- cppm.toml # cppm config file
+|-- CMakeLists.txt # &lt;-- generated from cppm.toml 
+|-- build  # Build directory
+|   |-- Debug   # Debug mode target directory 
+|   `-- Release # Release mode target directory
+|-- cmake    # cmake module path
+|   |-- Modules  # cmake Find*.cmake path
+|   `-- cppm_tool.cmake # cppm_tool load script (require)
+|-- include   # public header (export header)
+|-- src       # private header and sources
+|   `-- main.cpp
+|-- test      # test src directory 
+|   `-- test01.cpp 
+|-- examples  # example src directory
+|   `-- example01.cpp 
+`-- thirdparty # cppkg config and file path
+    `-- ${cppkg_name}/${cppkg_version}/cppkg.toml  # cppkg config file
+</code></pre>
+<h2><a class="header" href="#cppkg-structure" id="cppkg-structure">Cppkg Structure</a></h2>
+<pre><code class="language-console">~/.cppm/
+├── bin  # cppm installed binary path
+│   └── cppm # -&gt; ../share/cppm-0.0.10/bin/cppm
+├── cache ... # cmake build cache
+├── cmake  # cppm module path
+│   ├── HunterGate.cmake # if you use hunter package this file copy your package cmake/HunterGate.cmake
+│   └── cppm_tool.cmake 
+├── repo # cppkg regiested package installer path 
+│   └── cppkg
+│       ├── Catch2
+│       │   ├── 2.9.1
+│       │   │   ├── Catch2.cmake.in
+│       │   │   ├── cppkg.toml
+│       │   │   └── dep.cmake
+│       │   └── git
+│       │       ├── Catch2.cmake.in
+│       │       ├── cppkg.toml
+│       │       └── dep.cmake
+│       ├── cppm
+│       │   └── git
+│       .       ├── cppkg.toml
+│       .       ├── cppm.cmake.in
+│       .       └── dep.cmake
+└── share  # cppkg install path
+    ├── cppm-0.0.10
+    .   ├── bin ...
+    .   ├── include ...
+    .   ├── lib ...
+    .   └── src ...
+ 
 </code></pre>
 
                     </main>
@@ -168,13 +206,13 @@
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="cppm_toml.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="cppm_guide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="cppm_commands.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="cppm_structure.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -186,13 +224,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="cppm_toml.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="cppm_guide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="cppm_commands.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="cppm_structure.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

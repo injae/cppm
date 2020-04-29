@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="install.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="expanded "><a href="first-steps.html"><strong aria-hidden="true">2.2.</strong> First Steps with Cppm</a></li></ol></li><li class="expanded "><a href="cppm_guide.html"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li><ol class="section"><li class="expanded "><a href="cppm_toml.html"><strong aria-hidden="true">3.1.</strong> cppm.toml</a></li><li class="expanded "><a href="cppkg_toml.html"><strong aria-hidden="true">3.2.</strong> cppkg.toml</a></li></ol></li><li class="expanded "><a href="cppm_commands.html"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="install.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="expanded "><a href="first-steps.html"><strong aria-hidden="true">2.2.</strong> First Steps with Cppm</a></li></ol></li><li class="expanded "><a href="cppm_guide.html"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li><ol class="section"><li class="expanded "><a href="package_layout.html"><strong aria-hidden="true">3.1.</strong> Package Layout</a></li><li class="expanded "><a href="cppm_structure.html"><strong aria-hidden="true">3.2.</strong> Cppm Structure</a></li><li class="expanded "><a href="cppm_toml.html"><strong aria-hidden="true">3.3.</strong> cppm.toml</a></li><li class="expanded "><a href="dependencies.html"><strong aria-hidden="true">3.4.</strong> Dependencies</a></li></ol></li><li class="expanded "><a href="cppm_commands.html"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -175,6 +175,13 @@ upload to <a href="https://github.com/injae/cppkg">cppkg</a></p>
 <h2><a class="header" href="#installation" id="installation">Installation</a></h2>
 <h3><a class="header" href="#install-cppm" id="install-cppm">Install Cppm</a></h3>
 <p>cppm install command install defualt prefix is <strong>$HOME/.cppm/bin</strong> </p>
+<h2><a class="header" href="#require" id="require">Require</a></h2>
+<ul>
+<li>C++17 Compiler (AppleClang can't build)</li>
+<li>CMake (Minumum 3.12)</li>
+<li>git</li>
+<li>ccache (optional)</li>
+</ul>
 <h4><a class="header" href="#linux-and-macos" id="linux-and-macos">Linux and MacOS</a></h4>
 <pre><code class="language-sh">git clone https://github.com/injae/cppm
 cd cppm
@@ -194,7 +201,7 @@ cd build
 cmake --build . --config Release
 cd Release
 ./cppm build install
-# Add Windows System Path /.cppm/bin
+# Add Windows System Path %USERPROFILE%/.cppm/bin
 </code></pre>
 <h2><a class="header" href="#first-steps-with-cppm" id="first-steps-with-cppm">First Steps with Cppm</a></h2>
 <p>To start a new package with Cppm, use <code>cppm init</code></p>
@@ -227,7 +234,7 @@ $ tree .
 `-- thirdparty # cppkg config and file path
     `-- ${cppkg_name}/${cppkg_version}/cppkg.toml  # cppkg config file
 </code></pre>
-<p>Cppm project config file <code>cppm.toml</code>. </p>
+<p>Cppm project config file </p>
 <pre><code class="language-toml"># cppm.toml
 [package]
    name = &quot;hello_world&quot;
@@ -238,8 +245,9 @@ $ tree .
    name = &quot;hello_world&quot;
    source = [&quot;src/.*&quot;]
 </code></pre>
-<p>Generated defualt cpp file<code>src/main.cpp</code></p>
-<pre><code class="language-cpp">#include &lt;iostream&gt;
+<p>Generated defualt cpp file</p>
+<pre><code class="language-cpp">// src/main.cpp
+#include &lt;iostream&gt;
 int main(int argc, char* argv[]) {
     std::cout&lt;&lt;&quot;hello world&quot;&lt;&lt;std::endl;
     return 0; 
@@ -272,7 +280,7 @@ From https://github.com/injae/cppm_tools
 -- [cppm] Build Cache: ccache
 -- [cppm] cppm_root: /path/to/.cppm
 -- [cppm] c++ version: 17
--- [cppm] Compiler Option: -std=c++17 -Wall -fPIC -O0 -g -g
+-- [cppm] Compiler Option: -std=c++17 -Wall -fPIC -O0 -g
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /path/to/hello_world/build
@@ -286,7 +294,7 @@ Scanning dependencies of target hello_world
 $ ./hello_world
 hello world
 </code></pre>
-<p><em><strong>(beta)</strong></em> Easy run command <code>cppm run</code>, </p>
+<p>Easy run command <code>cppm run</code>, default binary name ${[package.name]}</p>
 <pre><code class="language-console">$ cppm run
 hello world
 </code></pre>
@@ -339,7 +347,7 @@ cppm_target_install(hello_world)
 │   │   ├── TargetDirectories.txt
 │   │   ├── cmake.check_cache
 │   │   ├── progress.marks
-│   │   ├── tb.dir
+│   │   ├── hello_world.dir
 │   │   │   ├── CXX.includecache
 │   │   │   ├── DependInfo.cmake
 │   │   │   ├── build.make
@@ -351,13 +359,13 @@ cppm_target_install(hello_world)
 │   │   │   ├── progress.make
 │   │   │   └── src
 │   │   │       └── main.cpp.o
-│   │   └── tb_info.dir
+│   │   └── hello_world_info.dir
 │   │       ├── DependInfo.cmake
 │   │       ├── build.make
 │   │       ├── cmake_clean.cmake
 │   │       └── progress.make
 │   ├── Debug
-│   │   └── tb  # Binary or Library export Directory
+│   │   └── hello_world  # Binary or Library export Directory
 │   ├── Makefile
 │   ├── cmake_install.cmake
 │   └── compile_commands.json
@@ -375,6 +383,90 @@ cppm_target_install(hello_world)
 <li><a href="./cppm_toml.html">cppm.toml</a></li>
 <li><a href="./cppkg_toml.html">cppkg.toml</a></li>
 </ul>
+<h2><a class="header" href="#cppm-base-project-layout" id="cppm-base-project-layout">Cppm Base Project Layout</a></h2>
+<pre><code class="language-console">.
+|-- cppm.toml # cppm config file
+|-- CMakeLists.txt # &lt;-- generated from cppm.toml 
+|-- build  # Build directory
+|   |-- Debug   # Debug mode target directory 
+|   `-- Release # Release mode target directory
+|-- cmake    # cmake module path
+|   |-- Modules  # cmake Find*.cmake path
+|   `-- cppm_tool.cmake # cppm_tool load script (require)
+|-- include   # public header (export header)
+|-- src       # private header and sources
+|   `-- main.cpp
+|-- test      # test src directory 
+|   `-- test01.cpp 
+|-- examples  # example src directory
+|   `-- example01.cpp 
+`-- thirdparty # cppkg config and file path
+    `-- ${cppkg_name}/${cppkg_version}/cppkg.toml  # cppkg config file
+</code></pre>
+<h2><a class="header" href="#cppkg-structure" id="cppkg-structure">Cppkg Structure</a></h2>
+<pre><code class="language-console">~/.cppm/
+├── bin  # cppm installed binary path
+│   └── cppm # -&gt; ../share/cppm-0.0.10/bin/cppm
+├── cache ... # cmake build cache
+├── cmake  # cppm module path
+│   ├── HunterGate.cmake # if you use hunter package this file copy your package cmake/HunterGate.cmake
+│   └── cppm_tool.cmake 
+├── repo # cppkg regiested package installer path 
+│   └── cppkg
+│       ├── Catch2
+│       │   ├── 2.9.1
+│       │   │   ├── Catch2.cmake.in
+│       │   │   ├── cppkg.toml
+│       │   │   └── dep.cmake
+│       │   └── git
+│       │       ├── Catch2.cmake.in
+│       │       ├── cppkg.toml
+│       │       └── dep.cmake
+│       ├── cppm
+│       │   └── git
+│       .       ├── cppkg.toml
+│       .       ├── cppm.cmake.in
+│       .       └── dep.cmake
+└── share  # cppkg install path
+    ├── cppm-0.0.10
+    .   ├── bin ...
+    .   ├── include ...
+    .   ├── lib ...
+    .   └── src ...
+ 
+</code></pre>
+<h2><a class="header" href="#cppm-structure" id="cppm-structure">Cppm Structure</a></h2>
+<pre><code class="language-console">~/.cppm/
+├── bin  # cppm installed binary path
+│   └── cppm # -&gt; ../share/cppm-0.0.10/bin/cppm
+├── cache ... # cmake build cache
+├── cmake  # cppm module path
+│   ├── HunterGate.cmake # if you use hunter package this file copy your package cmake/HunterGate.cmake
+│   └── cppm_tool.cmake 
+├── repo # cppkg regiested package installer path 
+│   └── cppkg
+│       ├── Catch2
+│       │   ├── 2.9.1
+│       │   │   ├── Catch2.cmake.in
+│       │   │   ├── cppkg.toml
+│       │   │   └── dep.cmake
+│       │   └── git
+│       │       ├── Catch2.cmake.in
+│       │       ├── cppkg.toml
+│       │       └── dep.cmake
+│       ├── cppm
+│       │   └── git
+│       .       ├── cppkg.toml
+│       .       ├── cppm.cmake.in
+│       .       └── dep.cmake
+└── share  # cppkg install path
+    ├── cppm-0.0.10
+    .   ├── bin ...
+    .   ├── include ...
+    .   ├── lib ...
+    .   └── src ...
+ 
+</code></pre>
 <h1><a class="header" href="#cppkgtoml" id="cppkgtoml">cppkg.toml</a></h1>
 <pre><code class="language-toml">[package]
     name = &quot;...&quot; # (require)
@@ -461,18 +553,65 @@ Profile settings can be overridden for specific packages</p>
 [target.windows|macos|linux|unix.dependencies] 
 
 </code></pre>
-<pre><code class="language-toml"># (working)
+<pre><code class="language-toml"># (incomplete)
 [exclude]
 
 </code></pre>
-<pre><code class="language-toml"># (working)
+<pre><code class="language-toml"># (incomplete)
 [ci.github_action]
 [ci.appveyer]
 [ci.azure]
 [ci.travis]
 </code></pre>
-<h2><a class="header" href="#cppkgtoml-1" id="cppkgtoml-1">cppkg.toml</a></h2>
-<p>this setting is same [dependency.${dep name}]</p>
+<h1><a class="header" href="#dependencies" id="dependencies">Dependencies</a></h1>
+<p><em><strong><a href="https://github.com/injae/cppkg">cppkg</a></strong></em> is cppm central package repository<br />
+cppm use it by default to find requested packages<br />
+if you want to use <em><strong><a href="https://github.com/cpp-pm/hunter">Hunter Package Manage</a></strong></em> manager set repo=&quot;hunter&quot;<br />
+you can find package with <em><strong>cppm cppkg search</strong></em></p>
+<pre><code class="language-console">$ cppm cppkg search -h
+Usage:
+   cppm cppkg search [--verbose]
+
+Option:
+   --all [-a]                      :show all package 
+   --help [-h]                     :show cppm commands and options
+   --repo [-r] {repo name}         :show {repo_name}'s packages  # cppkg or hunter
+</code></pre>
+<h2><a class="header" href="#adding-a-dependency" id="adding-a-dependency">Adding a Dependency</a></h2>
+<p>add <em><strong>[dependencies]</strong></em> in your <em><strong>cppm.toml</strong></em>file </p>
+<pre><code class="language-toml">[dependencies]
+fmt = &quot;6.2.0&quot;
+</code></pre>
+<p>Re-run <em><strong>cppm build</strong></em>, and Cppm Search yout package thirdparty directory <em><strong>thirdparty/fmt/6.2.0/cppkg.toml</strong></em><br />
+if can't find it cppm search from <em><strong><a href="https://github.com/injae/cppkg">cppkg</a></strong></em> repository and copy to <em><strong>thirdparty/fmt/6.2.0/cppkg.toml</strong></em></p>
+<p>You can easily add unregistered packages</p>
+<p>if you want to add unregistered package need to make cppkg.toml file
+if unregistered package is cmake base package only need 3 config <em><strong>version</strong></em> <em><strong>git or url</strong></em> *** module ***</p>
+<h3><a class="header" href="#example-fmt-library" id="example-fmt-library">Example fmt library</a></h3>
+<p>6.2.0 version config</p>
+<pre><code class="language-toml"># thirdparty/fmt/6.2.0/cppkg.toml
+[fmt]
+version = &quot;6.2.0&quot;
+description = &quot;A modern formatting library&quot;
+module = &quot;fmt::fmt&quot;
+url=&quot;https://github.com/fmtlib/fmt/releases/download/6.2.0/fmt-6.2.0.zip&quot;
+flags=&quot;-DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_FUZZ=OFF&quot; # (optional) for cmake build fast flags
+</code></pre>
+<p>git repository version<br />
+git version dependency always git version check in CMake build step</p>
+<pre><code class="language-toml"># thirdparty/fmt/git/cppkg.toml
+[fmt]
+version = &quot;git&quot;
+description = &quot;A modern formatting library&quot;
+module = &quot;fmt::fmt&quot;
+git=&quot;https://github.com/fmtlib/fmt.git&quot;
+flags=&quot;-DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_FUZZ=OFF&quot; # (optional) for cmake build fast flags
+</code></pre>
+<p>Hunter package manager version</p>
+<pre><code class="language-toml">[dependencies]
+fmt = {version=&quot;latest&quot;, module=&quot;fmt::fmt&quot;, repo=&quot;hunter&quot;}
+</code></pre>
+<h1><a class="header" href="#dependency-format" id="dependency-format">Dependency Format</a></h1>
 <pre><code class="language-toml">[${name}] 
     version = &quot;x.x.x|git|latest(hunter only)&quot;
     type = &quot;lib(default)|bin|cmake(incomplete)&quot;
@@ -483,6 +622,7 @@ Profile settings can be overridden for specific packages</p>
     custom = &quot;false(default)|true&quot; # this config table export ${name}.cmake.in 
                                    # if you wan't custom ${name}.cmake.in this option set true
     repo = &quot;cppkg(default)|hunter&quot;
+    flags=&quot;${cmake build flags}&quot;
     components = &quot;...&quot;
 </code></pre>
 <h1><a class="header" href="#cppm-commands" id="cppm-commands">Cppm Commands</a></h1>

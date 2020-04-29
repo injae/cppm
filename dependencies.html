@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Cppm Guide - The Cppm Book</title>
+        <title>Dependencies - The Cppm Book</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="install.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="expanded "><a href="first-steps.html"><strong aria-hidden="true">2.2.</strong> First Steps with Cppm</a></li></ol></li><li class="expanded "><a href="cppm_guide.html" class="active"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li><ol class="section"><li class="expanded "><a href="package_layout.html"><strong aria-hidden="true">3.1.</strong> Package Layout</a></li><li class="expanded "><a href="cppm_structure.html"><strong aria-hidden="true">3.2.</strong> Cppm Structure</a></li><li class="expanded "><a href="cppm_toml.html"><strong aria-hidden="true">3.3.</strong> cppm.toml</a></li><li class="expanded "><a href="dependencies.html"><strong aria-hidden="true">3.4.</strong> Dependencies</a></li></ol></li><li class="expanded "><a href="cppm_commands.html"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="install.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="expanded "><a href="first-steps.html"><strong aria-hidden="true">2.2.</strong> First Steps with Cppm</a></li></ol></li><li class="expanded "><a href="cppm_guide.html"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li><ol class="section"><li class="expanded "><a href="package_layout.html"><strong aria-hidden="true">3.1.</strong> Package Layout</a></li><li class="expanded "><a href="cppm_structure.html"><strong aria-hidden="true">3.2.</strong> Cppm Structure</a></li><li class="expanded "><a href="cppm_toml.html"><strong aria-hidden="true">3.3.</strong> cppm.toml</a></li><li class="expanded "><a href="dependencies.html" class="active"><strong aria-hidden="true">3.4.</strong> Dependencies</a></li></ol></li><li class="expanded "><a href="cppm_commands.html"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,24 +148,81 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2><a class="header" href="#cppm-guide" id="cppm-guide">Cppm Guide</a></h2>
-<ul>
-<li><a href="./cppm_toml.html">cppm.toml</a></li>
-<li><a href="./cppkg_toml.html">cppkg.toml</a></li>
-</ul>
+                        <h1><a class="header" href="#dependencies" id="dependencies">Dependencies</a></h1>
+<p><em><strong><a href="https://github.com/injae/cppkg">cppkg</a></strong></em> is cppm central package repository<br />
+cppm use it by default to find requested packages<br />
+if you want to use <em><strong><a href="https://github.com/cpp-pm/hunter">Hunter Package Manage</a></strong></em> manager set repo=&quot;hunter&quot;<br />
+you can find package with <em><strong>cppm cppkg search</strong></em></p>
+<pre><code class="language-console">$ cppm cppkg search -h
+Usage:
+   cppm cppkg search [--verbose]
+
+Option:
+   --all [-a]                      :show all package 
+   --help [-h]                     :show cppm commands and options
+   --repo [-r] {repo name}         :show {repo_name}'s packages  # cppkg or hunter
+</code></pre>
+<h2><a class="header" href="#adding-a-dependency" id="adding-a-dependency">Adding a Dependency</a></h2>
+<p>add <em><strong>[dependencies]</strong></em> in your <em><strong>cppm.toml</strong></em>file </p>
+<pre><code class="language-toml">[dependencies]
+fmt = &quot;6.2.0&quot;
+</code></pre>
+<p>Re-run <em><strong>cppm build</strong></em>, and Cppm Search yout package thirdparty directory <em><strong>thirdparty/fmt/6.2.0/cppkg.toml</strong></em><br />
+if can't find it cppm search from <em><strong><a href="https://github.com/injae/cppkg">cppkg</a></strong></em> repository and copy to <em><strong>thirdparty/fmt/6.2.0/cppkg.toml</strong></em></p>
+<p>You can easily add unregistered packages</p>
+<p>if you want to add unregistered package need to make cppkg.toml file
+if unregistered package is cmake base package only need 3 config <em><strong>version</strong></em> <em><strong>git or url</strong></em> *** module ***</p>
+<h3><a class="header" href="#example-fmt-library" id="example-fmt-library">Example fmt library</a></h3>
+<p>6.2.0 version config</p>
+<pre><code class="language-toml"># thirdparty/fmt/6.2.0/cppkg.toml
+[fmt]
+version = &quot;6.2.0&quot;
+description = &quot;A modern formatting library&quot;
+module = &quot;fmt::fmt&quot;
+url=&quot;https://github.com/fmtlib/fmt/releases/download/6.2.0/fmt-6.2.0.zip&quot;
+flags=&quot;-DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_FUZZ=OFF&quot; # (optional) for cmake build fast flags
+</code></pre>
+<p>git repository version<br />
+git version dependency always git version check in CMake build step</p>
+<pre><code class="language-toml"># thirdparty/fmt/git/cppkg.toml
+[fmt]
+version = &quot;git&quot;
+description = &quot;A modern formatting library&quot;
+module = &quot;fmt::fmt&quot;
+git=&quot;https://github.com/fmtlib/fmt.git&quot;
+flags=&quot;-DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_FUZZ=OFF&quot; # (optional) for cmake build fast flags
+</code></pre>
+<p>Hunter package manager version</p>
+<pre><code class="language-toml">[dependencies]
+fmt = {version=&quot;latest&quot;, module=&quot;fmt::fmt&quot;, repo=&quot;hunter&quot;}
+</code></pre>
+<h1><a class="header" href="#dependency-format" id="dependency-format">Dependency Format</a></h1>
+<pre><code class="language-toml">[${name}] 
+    version = &quot;x.x.x|git|latest(hunter only)&quot;
+    type = &quot;lib(default)|bin|cmake(incomplete)&quot;
+    git = &quot;...&quot; # if git version 
+    url = &quot;...&quot; # if x.x.x version
+    module = &quot;...&quot; # (require)
+    link = &quot;public(default)|private|interface&quot;
+    custom = &quot;false(default)|true&quot; # this config table export ${name}.cmake.in 
+                                   # if you wan't custom ${name}.cmake.in this option set true
+    repo = &quot;cppkg(default)|hunter&quot;
+    flags=&quot;${cmake build flags}&quot;
+    components = &quot;...&quot;
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="first-steps.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="cppm_toml.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="package_layout.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="cppm_commands.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -177,13 +234,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="first-steps.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="cppm_toml.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="package_layout.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="cppm_commands.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

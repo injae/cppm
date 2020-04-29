@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="install.html" class="active"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="expanded "><a href="first-steps.html"><strong aria-hidden="true">2.2.</strong> First Steps with Cppm</a></li></ol></li><li class="expanded "><a href="cppm_guide.html"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li><ol class="section"><li class="expanded "><a href="cppm_toml.html"><strong aria-hidden="true">3.1.</strong> cppm.toml</a></li><li class="expanded "><a href="cppkg_toml.html"><strong aria-hidden="true">3.2.</strong> cppkg.toml</a></li></ol></li><li class="expanded "><a href="cppm_commands.html"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
+                <ol class="chapter"><li class="expanded "><a href="introdution.html"><strong aria-hidden="true">1.</strong> Introdution</a></li><li class="expanded "><a href="getting_started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li><ol class="section"><li class="expanded "><a href="install.html" class="active"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="expanded "><a href="first-steps.html"><strong aria-hidden="true">2.2.</strong> First Steps with Cppm</a></li></ol></li><li class="expanded "><a href="cppm_guide.html"><strong aria-hidden="true">3.</strong> Cppm Guide</a></li><li><ol class="section"><li class="expanded "><a href="package_layout.html"><strong aria-hidden="true">3.1.</strong> Package Layout</a></li><li class="expanded "><a href="cppm_structure.html"><strong aria-hidden="true">3.2.</strong> Cppm Structure</a></li><li class="expanded "><a href="cppm_toml.html"><strong aria-hidden="true">3.3.</strong> cppm.toml</a></li><li class="expanded "><a href="dependencies.html"><strong aria-hidden="true">3.4.</strong> Dependencies</a></li></ol></li><li class="expanded "><a href="cppm_commands.html"><strong aria-hidden="true">4.</strong> Cppm Commands</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -151,6 +151,13 @@
                         <h2><a class="header" href="#installation" id="installation">Installation</a></h2>
 <h3><a class="header" href="#install-cppm" id="install-cppm">Install Cppm</a></h3>
 <p>cppm install command install defualt prefix is <strong>$HOME/.cppm/bin</strong> </p>
+<h2><a class="header" href="#require" id="require">Require</a></h2>
+<ul>
+<li>C++17 Compiler (AppleClang can't build)</li>
+<li>CMake (Minumum 3.12)</li>
+<li>git</li>
+<li>ccache (optional)</li>
+</ul>
 <h4><a class="header" href="#linux-and-macos" id="linux-and-macos">Linux and MacOS</a></h4>
 <pre><code class="language-sh">git clone https://github.com/injae/cppm
 cd cppm
@@ -170,7 +177,7 @@ cd build
 cmake --build . --config Release
 cd Release
 ./cppm build install
-# Add Windows System Path /.cppm/bin
+# Add Windows System Path %USERPROFILE%/.cppm/bin
 </code></pre>
 
                     </main>
