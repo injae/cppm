@@ -11,5 +11,6 @@ this setting is same [dependency.${dep name}]
     custom = "false(default)|true" # this config table export ${name}.cmake.in 
                                    # if you wan't custom ${name}.cmake.in this option set true
     repo = "cppkg(default)|hunter"
+    flags="${cmake build flags}"
     components = "..."
 ```

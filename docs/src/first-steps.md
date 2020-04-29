@@ -35,7 +35,7 @@ $ tree .
     `-- ${cppkg_name}/${cppkg_version}/cppkg.toml  # cppkg config file
 ~~~
 
-Cppm project config file ```cppm.toml```. 
+Cppm project config file 
 ~~~toml
 # cppm.toml
 [package]
@@ -48,8 +48,9 @@ Cppm project config file ```cppm.toml```.
    source = ["src/.*"]
 ~~~
 
-Generated defualt cpp file```src/main.cpp```
+Generated defualt cpp file
 ~~~cpp
+// src/main.cpp
 #include <iostream>
 int main(int argc, char* argv[]) {
     std::cout<<"hello world"<<std::endl;
@@ -85,7 +86,7 @@ From https://github.com/injae/cppm_tools
 -- [cppm] Build Cache: ccache
 -- [cppm] cppm_root: /path/to/.cppm
 -- [cppm] c++ version: 17
--- [cppm] Compiler Option: -std=c++17 -Wall -fPIC -O0 -g -g
+-- [cppm] Compiler Option: -std=c++17 -Wall -fPIC -O0 -g
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /path/to/hello_world/build
@@ -100,7 +101,7 @@ $ cd build/Debug
 $ ./hello_world
 hello world
 ~~~
-***(beta)*** Easy run command ```cppm run```, 
+Easy run command ```cppm run```, default binary name ${[package.name]}   
 ~~~console
 $ cppm run
 hello world
@@ -157,7 +158,7 @@ $ tree .
 │   │   ├── TargetDirectories.txt
 │   │   ├── cmake.check_cache
 │   │   ├── progress.marks
-│   │   ├── tb.dir
+│   │   ├── hello_world.dir
 │   │   │   ├── CXX.includecache
 │   │   │   ├── DependInfo.cmake
 │   │   │   ├── build.make
@@ -169,13 +170,13 @@ $ tree .
 │   │   │   ├── progress.make
 │   │   │   └── src
 │   │   │       └── main.cpp.o
-│   │   └── tb_info.dir
+│   │   └── hello_world_info.dir
 │   │       ├── DependInfo.cmake
 │   │       ├── build.make
 │   │       ├── cmake_clean.cmake
 │   │       └── progress.make
 │   ├── Debug
-│   │   └── tb  # Binary or Library export Directory
+│   │   └── hello_world  # Binary or Library export Directory
 │   ├── Makefile
 │   ├── cmake_install.cmake
 │   └── compile_commands.json

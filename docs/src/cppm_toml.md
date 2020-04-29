@@ -1,5 +1,4 @@
 # cppkg.toml
-
 ```toml
 [package]
     name = "..." # (require)
@@ -97,12 +96,12 @@ Profile settings can be overridden for specific packages
 
 ```
 ```toml
-# (working)
+# (incomplete)
 [exclude]
 
 ```
 ```toml
-# (working)
+# (incomplete)
 [ci.github_action]
 [ci.appveyer]
 [ci.azure]

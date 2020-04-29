@@ -61,7 +61,8 @@ namespace cppm::option
                 if(!has_str(name, target)) { continue; }
                 fmt::print("{:<20}{:<10}{:<13}{:<50}{:<70}\n"
                         , str_cut(name, 20), "latest" , "hunter", ""
-                        , "https://docs.hunter.sh/en/latest/packages/pkg/{}.html#index-0"_format(name));
+                        , "https://hunter.readthedocs.io/en/latest/packages/pkg/{}.html"_format(name));
+                           
             }
         }
     }

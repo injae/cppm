@@ -50,7 +50,9 @@ namespace cppm::core {
                 auto paths = deps >>= [thirdparty,&config](auto& it) {
                     auto& [name, dep] = it;
                     auto path = thirdparty/"{}/{}/cppkg.toml"_format(dep.name, dep.version);
-                    if(!fs::exists(path)) { cppkg::install(*config, cppkg::search(dep.name, *dep.version)); }
+                    if(!fs::exists(path) && *dep.repo == "cppkg") {
+                        cppkg::install(*config, cppkg::search(dep.name, *dep.version));
+                    }
                     return yield_if(fs::exists(path), path.string());
                 };
                 ranges::for_each(paths, [&target](auto& it) { toml::orm::parser(target, it); });

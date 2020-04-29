@@ -10,8 +10,8 @@ namespace cppm::core {
     public:
         template<typename Def>
         void parse(Def& defn) {
-            defn.element(TOML_D(url),  "https://github.com/ruslo/hunter/archive/v0.23")
-                .element(TOML_D(sha1), "e14bc153a7f16d6a5eeec845fb0283c8fad8c358")
+            defn.element(TOML_D(url),  "https://github.com/cpp-pm/hunter/archive/v0.23.253.tar.gz")
+                .element(TOML_D(sha1), "88ea6d37c897a81a080eb9ae0f69d7807bbb3c73")
                 .element(TOML_D(use),  false);
         }
         opt<std::string> url;

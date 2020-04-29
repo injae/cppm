@@ -81,10 +81,4 @@ cd ../ && cmake --install .
 - [x] unit test option
 
 ## Document
-### [GitBook](https://cppm.gitbook.io/project/)
-### Beta: [GitBook](https://injae.github.io/cppm/)
-
-
-
-$env:Path += ""
-$env:Path += ";C:\Users\nieel\scoop\shims\"
+### [GitBook](https://injae.github.io/cppm/)
