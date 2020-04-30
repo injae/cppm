@@ -7,6 +7,7 @@
 #include "cppm_version.h"
 #include "option/cppkg.h"
 #include "cppm/util/algorithm.hpp"
+#include "cppm/util/filesystem.h"
 
 #include <fmt/format.h>
 
@@ -33,6 +34,16 @@ namespace cppm::option
             .is_show(false)
             .call_back([&](){ _run(); });
         app_.add_command<Cppkg>("cppkg").desc("cppkg option and commands");
+        app_.add_command("test")
+            .desc("run the tests")
+            .args("{ctest flags}")
+            .call_back([&](){
+                config_load();
+                util::working_directory(config_->path.build.c_str());
+                auto str_args = "ctest " + util::accumulate(app_.args(), " "); app_.args().clear();
+                system(str_args.c_str());
+            });
+            
     } 
 
     void Cppm::_run() {

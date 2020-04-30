@@ -4,18 +4,13 @@ if(NOT IS_CPPM_LOADED)
     include(cmake/cppm_tool.cmake)
 endif()
 cppm_project()
-include(HunterGate)
-HunterGate(
-   URL https://github.com/cpp-pm/hunter/archive/v0.23.253.tar.gz
-   SHA1 88ea6d37c897a81a080eb9ae0f69d7807bbb3c73
-)
+
 project(cppm VERSION 0.0.10 LANGUAGES C CXX)
 cppm_setting()
 cppm_cxx_standard(17)
 cppm_compiler_option(DEFAULT)
 
 include(cmake/cppm_install.cmake)
-find_cppkg(GSL latest MODULE GSL::gsl HUNTER)
 find_cppkg(fmt 6.2.0 MODULE fmt::fmt)
 find_cppkg(hashpp git MODULE hashpp::hashpp)
 find_cppkg(nlpo 1.0.3 MODULE nlpo LOADPATH libs/nlpo)
@@ -93,7 +88,7 @@ endif()
 end_cppm_unit_test_area()
 
 
-set(global_deps PUBLIC GSL fmt hashpp nlpo range-v3 tomlpp)
+set(global_deps PUBLIC fmt hashpp nlpo range-v3 tomlpp)
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
    list(APPEND global_deps PUBLIC Catch2)
 endif()

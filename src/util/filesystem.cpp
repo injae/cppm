@@ -11,12 +11,13 @@
 #else
 #include <unistd.h>
 #define cross_getcwd getcwd
-                                                \
 #define cross_chdir chdir
 #endif
 
 namespace cppm::util
 {
+    int working_directory(std::string path) { return cross_chdir(path.c_str()); }
+
     auto file_list(const fs::path& path) -> std::optional<std::vector<fs::directory_entry>> {
         fs::directory_iterator b(path), e;
         std::vector<fs::directory_entry> list{b, e};

@@ -25,6 +25,7 @@ namespace cppm::option
         app_.add_command<CppkgSearch>("search").args("{name}").desc("search cppkg repo, default is only cppkg");
         app_.add_command("push").args("{name}")
             .desc("push cppkg in local repo")
+            .is_show(false)
             .call_back([&](){ _push(); });
         app_.add_command<CppkgInstall>("install").args("{name}").desc("install cppkg package");
     }

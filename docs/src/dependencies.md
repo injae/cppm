@@ -1,7 +1,7 @@
 # Dependencies
 ***[cppkg](https://github.com/injae/cppkg)*** is cppm central package repository  
 cppm use it by default to find requested packages  
-if you want to use ***[Hunter Package Manage](https://github.com/cpp-pm/hunter)*** manager set repo="hunter"  
+if you want to use ***[Hunter Package Manager](https://github.com/cpp-pm/hunter)*** manager set repo="hunter"  
 you can find package with ***cppm cppkg search***
 ```console
 $ cppm cppkg search -h
@@ -58,7 +58,6 @@ fmt = {version="latest", module="fmt::fmt", repo="hunter"}
 ```
 
 
-
 # Dependency Format
 ```toml
 [${name}] 
@@ -68,9 +67,10 @@ fmt = {version="latest", module="fmt::fmt", repo="hunter"}
     url = "..." # if x.x.x version
     module = "..." # (require)
     link = "public(default)|private|interface"
-    custom = "false(default)|true" # this config table export ${name}.cmake.in 
-                                   # if you wan't custom ${name}.cmake.in this option set true
+    custom = "false(default)|true" # cppm build time cppkg.toml translate ${name}.cmake.in in 
+                                   # if you want to custom installer(${name}.cmake.in) set true
     repo = "cppkg(default)|hunter"
     flags="${cmake build flags}"
+    helper="Find...cmake" (optional) cmake/Modules/Find${package_name}.cmake 
     components = "..."
 ```

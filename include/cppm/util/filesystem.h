@@ -24,6 +24,7 @@ struct fmt::formatter<fs::path> {
 
 namespace cppm::util
 {
+    int working_directory(std::string path);
     auto file_list(const fs::path& path) -> std::optional<std::vector<fs::directory_entry>>;
     auto recursive_file_list(const fs::path& path)-> std::optional<std::vector<fs::directory_entry>>;
     auto find_file(const fs::path& path, const std::string& file_name) -> std::optional<fs::path>;

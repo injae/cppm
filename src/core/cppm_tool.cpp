@@ -82,11 +82,6 @@ namespace cppm::core {
                 };
             find_hunter(config.dependencies);
             find_hunter(config.dev_dependencies);
-            //if(config.target && is_hunter) {
-            //    ranges::for_each(config.target.value(), [](auto target) {
-            //        
-            //    });
-            //}
         }
         if(is_hunter) {
             util::over_write_copy_file("{0}cmake/HunterGate.cmake"_format(cppm_root())

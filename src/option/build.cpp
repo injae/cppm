@@ -3,6 +3,7 @@
 #include <memory>
 #include <fmt/format.h>
 #include <hashpp/md5.h>
+#include <cstdlib>
 #include <string>
 
 #include "option/build.h"

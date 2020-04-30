@@ -4,6 +4,7 @@
 #include <cppm/cppkg/cppkg.h>
 #include <cppm/core/cppm_tool.hpp>
 #include <tomlpp/orm.hpp>
+#include <range/v3/all.hpp>
 #include <map>
 
 namespace cppkg
@@ -81,6 +82,19 @@ namespace cppkg
         auto file = "{}/{}.cmake.in"_format(dir_name,dep.name);
         util::write(file, core::cppm_download_package(dep));
         fmt::print("[cppkg] Success to make {} package\n",dep.name);
+    }
+    void build() {
+        using namespace cppm;
+        std::optional<std::list<core::Dependency>> deps;
+        toml::orm::parser(deps,"cppkg.toml");
+        if(deps) {
+            ranges::for_each(*deps, [](auto it){
+                
+            });
+        }
+        //auto file = "{}/{}.cmake.in"_format(dir_name,dep.name);
+        //util::write(file, core::cppm_download_package(dep));
+        //fmt::print("[cppkg] Success to make {} package\n",dep.name);
     }
 
     void regist(const std::string& name) {
