@@ -85,14 +85,14 @@ namespace cppkg
         fmt::print("[cppkg] Success to make {} package\n",dep.name);
     }
     void build() {
-        using namespace cppm;
-        std::optional<std::list<core::Dependency>> deps;
-        toml::orm::parser(deps,"cppkg.toml");
-        if(deps) {
-            ranges::for_each(*deps, [](auto it){
-                
-            });
-        }
+        //using namespace cppm;
+        //std::optional<std::list<core::Dependency>> deps;
+        //toml::orm::parser(deps,"cppkg.toml");
+        //if(deps) {
+        //    ranges::for_each(*deps, [](auto it){
+        //        
+        //    });
+        //}
         //auto file = "{}/{}.cmake.in"_format(dir_name,dep.name);
         //util::write(file, core::cppm_download_package(dep));
         //fmt::print("[cppkg] Success to make {} package\n",dep.name);
