@@ -39,7 +39,7 @@ namespace cppm::option
             .args("{ctest flags}")
             .call_back([&](){
                 config_load();
-                util::working_directory(config_->path.build.c_str());
+                util::working_directory(config_->path.build.string().c_str());
                 auto str_args = "ctest " + util::accumulate(app_.args(), " "); app_.args().clear();
                 system(str_args.c_str());
             });
