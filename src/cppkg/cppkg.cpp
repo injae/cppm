@@ -6,6 +6,7 @@
 #include <tomlpp/orm.hpp>
 #include <range/v3/all.hpp>
 #include <map>
+#include <list>
 
 namespace cppkg
 {
