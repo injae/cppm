@@ -534,7 +534,7 @@ Profile settings can be overridden for specific packages</p>
 <h1><a class="header" href="#dependencies" id="dependencies">Dependencies</a></h1>
 <p><em><strong><a href="https://github.com/injae/cppkg">cppkg</a></strong></em> is cppm central package repository<br />
 cppm use it by default to find requested packages<br />
-if you want to use <em><strong><a href="https://github.com/cpp-pm/hunter">Hunter Package Manage</a></strong></em> manager set repo=&quot;hunter&quot;<br />
+if you want to use <em><strong><a href="https://github.com/cpp-pm/hunter">Hunter Package Manager</a></strong></em> manager set repo=&quot;hunter&quot;<br />
 you can find package with <em><strong>cppm cppkg search</strong></em></p>
 <pre><code class="language-console">$ cppm cppkg search -h
 Usage:
@@ -587,10 +587,11 @@ fmt = {version=&quot;latest&quot;, module=&quot;fmt::fmt&quot;, repo=&quot;hunte
     url = &quot;...&quot; # if x.x.x version
     module = &quot;...&quot; # (require)
     link = &quot;public(default)|private|interface&quot;
-    custom = &quot;false(default)|true&quot; # this config table export ${name}.cmake.in 
-                                   # if you wan't custom ${name}.cmake.in this option set true
+    custom = &quot;false(default)|true&quot; # cppm build time cppkg.toml translate ${name}.cmake.in in 
+                                   # if you want to custom installer(${name}.cmake.in) set true
     repo = &quot;cppkg(default)|hunter&quot;
     flags=&quot;${cmake build flags}&quot;
+    helper=&quot;Find...cmake&quot; (optional) cmake/Modules/Find${package_name}.cmake 
     components = &quot;...&quot;
 </code></pre>
 <h1><a class="header" href="#cppm-commands" id="cppm-commands">Cppm Commands</a></h1>
