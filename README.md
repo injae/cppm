@@ -6,14 +6,19 @@
 ![Linux](https://github.com/injae/cppm/workflows/Linux/badge.svg) | ![Windows](https://github.com/injae/cppm/workflows/Windows/badge.svg) | ![MacOS](https://github.com/injae/cppm/workflows/MacOS/badge.svg) |
 
 ![](cppm_demo.gif)
+
+## Dependencies
+- c++ compiler (c++17)
+- CMake (minimum 3.12)
+- Git
+- Ccache (optional)
+
 > Cppm is a cross platform C++ project manager like Rust's Cargo.   
+> cppm only needs cmake, c++-compiler, git.  
 > This project was inspired by Rust's Cargo.  
 > So the configuration of the configuration file is almost similar to Rust's Cargo.toml.
-> CMake is as difficult to use as package manager in other languages.   
-> So, like other package managers, to manage the C++ project,   
 > we created the cppm.toml file so that we could create the CMake project.   
 > Cppm is made up of C++ and CMake only.   
-> So with a Cmake and a C++ Compiler, you can build it anywhere on the platform that Cmake supports.  
 > The goal of this project is to make the C++ project as comfortable as Rust's Cargo.  
 > Not many libraries are supported by the cppkg yet. But cppkg package make easy  
 > So cppm made the package of the [Hunter Package Manager](https://github.com/ruslo/hunter) available.   
