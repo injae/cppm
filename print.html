@@ -535,6 +535,7 @@ Profile settings can be overridden for specific packages</p>
 <p><em><strong><a href="https://github.com/injae/cppkg">cppkg</a></strong></em> is cppm central package repository<br />
 cppm use it by default to find requested packages<br />
 if you want to use <em><strong><a href="https://github.com/cpp-pm/hunter">Hunter Package Manager</a></strong></em> manager set repo=&quot;hunter&quot;<br />
+cppm auto detect vcpkg<br />
 you can find package with <em><strong>cppm cppkg search</strong></em></p>
 <pre><code class="language-console">$ cppm cppkg search -h
 Usage:
@@ -553,8 +554,27 @@ fmt = &quot;6.2.0&quot;
 <p>Re-run <em><strong>cppm build</strong></em>, and Cppm Search yout package thirdparty directory <em><strong>thirdparty/fmt/6.2.0/cppkg.toml</strong></em><br />
 if can't find it cppm search from <em><strong><a href="https://github.com/injae/cppkg">cppkg</a></strong></em> repository and copy to <em><strong>thirdparty/fmt/6.2.0/cppkg.toml</strong></em></p>
 <p>You can easily add unregistered packages</p>
-<p>if you want to add unregistered package need to make cppkg.toml file
-if unregistered package is cmake base package only need 3 config <em><strong>version</strong></em> <em><strong>git or url</strong></em> *** module ***</p>
+<p>If you want to add unregistered package need to make cppkg.toml file
+cmake base unregistered package is only need 3 config <em><strong>version</strong></em> <em><strong>git or url</strong></em> *** module ***
+no cmake base package need to <a href="dependencies.html#custom-downloader">custom downloader</a>
+cppm provides commands to create cppkg.toml</p>
+<h1><a class="header" href="#cppkg-file-generate-command" id="cppkg-file-generate-command">cppkg file generate command</a></h1>
+<pre><code class="language-console">$ cppm run cppkg init -h                                                                                                             
+Usage:
+   cppm cppkg init [--verbose]
+
+Option:
+   --des [-d] {description}        :add description    
+   --flags [-f] {arg}              :add cmake build flags
+   --git [-g] {repo}               :add git repo       
+   --git_tag [-t] {tag}            :add git tag        
+   --help [-h]                     :show cppm commands and options
+   --module [-m] {module}          :add module name    
+   --type [-t] {arg}               :add type default is lib
+   --uri [-U] {arg}                :auto detect uri or git and version
+   --url [-u] {url}                :add url repo Require --version
+   --version [-v] {version}        :add library version Require --version
+</code></pre>
 <h3><a class="header" href="#example-fmt-library" id="example-fmt-library">Example fmt library</a></h3>
 <p>6.2.0 version config</p>
 <pre><code class="language-toml"># thirdparty/fmt/6.2.0/cppkg.toml
@@ -566,7 +586,7 @@ url=&quot;https://github.com/fmtlib/fmt/releases/download/6.2.0/fmt-6.2.0.zip&qu
 flags=&quot;-DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_FUZZ=OFF&quot; # (optional) for cmake build fast flags
 </code></pre>
 <p>git repository version<br />
-git version dependency always git version check in CMake build step</p>
+git version dependency always version check in CMake build step</p>
 <pre><code class="language-toml"># thirdparty/fmt/git/cppkg.toml
 [fmt]
 version = &quot;git&quot;
@@ -575,9 +595,49 @@ module = &quot;fmt::fmt&quot;
 git=&quot;https://github.com/fmtlib/fmt.git&quot;
 flags=&quot;-DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_FUZZ=OFF&quot; # (optional) for cmake build fast flags
 </code></pre>
+<h3><a class="header" href="#easy-way-to-use-cppkg-init-command" id="easy-way-to-use-cppkg-init-command">Easy Way to use cppkg init command</a></h3>
+<pre><code class="language-console"># fmt 6.2.0
+$ cppm cppkg init -u &quot;https://github.com/fmtlib/fmt/releases/download/6.2.0/fmt-6.2.0.zip&quot; -v &quot;6.2.0&quot; -m &quot;fmt::fmt&quot; fmt
+# or (auto detect version)
+$ cppm cppkg init -U &quot;https://github.com/fmtlib/fmt/releases/download/6.2.0/fmt-6.2.0.zip&quot; fmt
+# fmt git
+$ cppm cppkg init -U &quot;https://github.com/fmtlib/fmt.git&quot; fmt
+# or (auto detect version)
+$ cppm cppkg init -g &quot;https://github.com/fmtlib/fmt.git&quot; -m &quot;fmt::fmt&quot; fmt
+# fmt 6.2.0 with cmake flags
+$ cppm cppkg init -U &quot;https://github.com/fmtlib/fmt/releases/download/6.2.0/fmt-6.2.0.zip&quot; --flags &quot;-DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_FUZZ=OFF&quot; fmt
+</code></pre>
 <p>Hunter package manager version</p>
-<pre><code class="language-toml">[dependencies]
+<pre><code class="language-toml"># cppm.toml
+[dependencies]
 fmt = {version=&quot;latest&quot;, module=&quot;fmt::fmt&quot;, repo=&quot;hunter&quot;}
+</code></pre>
+<h3><a class="header" href="#custom-downloader" id="custom-downloader">Custom Downloader</a></h3>
+<pre><code class="language-toml">#thirdparty/fmt/6.2.0/cppkg.toml
+[fmt]
+version = &quot;6.2.0&quot;
+description = &quot;A modern formatting library&quot;
+module = &quot;fmt::fmt&quot;
+url=&quot;https://github.com/fmtlib/fmt/releases/download/6.2.0/fmt-6.2.0.zip&quot;
+custom=true 
+#helper=&quot;&quot;(incomplete)
+</code></pre>
+<p><a href="https://cmake.org/cmake/help/latest/module/ExternalProject.html">ExternalProject_add</a></p>
+<pre><code class="language-cmake"># Cppkg Base Dependency Downloader
+# Almost same cmake ExternalProject_Add
+# Other Options:
+# - Linux Configures:
+#    L_CONFIGURE {...}, L_BUILD {...}, L_INSTALL {...}
+# - Windows Configures:
+#    W_CONFIGURE {...}, W_BUILD {...}, W_INSTALL {...}
+# - Install Path Options:
+#    LOCAL(default) GLOBAL 
+cmake_minimum_required(VERSION 3.6)
+project(fmt-6.2.0-install C CXX)
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH})
+download_package(fmt 6.2.0  URL https://github.com/fmtlib/fmt/releases/download/6.2.0/fmt-6.2.0.zip CMAKE_ARGS ${CMAKE_ARGS} -DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_FUZZ=OFF)
 </code></pre>
 <h1><a class="header" href="#dependency-format" id="dependency-format">Dependency Format</a></h1>
 <pre><code class="language-toml">[${name}] 
