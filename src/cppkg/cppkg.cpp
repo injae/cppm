@@ -44,8 +44,7 @@ namespace cppkg
 
     void init(const std::string& name) {
         cppm::core::Dependency dep;
-        dep.name = name;
-        dep.type = "lib";
+        dep.name = name; dep.type = "lib";
         init(dep);
     }
 
@@ -80,6 +79,7 @@ namespace cppkg
         util::panic(!fs::exists(dir_name), "existed {}"_format(dir_name));
         fs::create_directories(dir_name);
         fs::copy("cppkg.toml", dir_name+"/cppkg.toml");
+        fs::remove("cppkg.toml");
         auto file = "{}/{}.cmake.in"_format(dir_name,dep.name);
         util::write(file, core::cppm_download_package(dep));
         fmt::print("[cppkg] Success to make {} package\n",dep.name);
@@ -181,5 +181,11 @@ namespace cppkg
         util::recursive_copy(path,"{0}/{1}/{2}"_format(
                              config.path.thirdparty, dep.name, dep.version));
         fmt::print("Install Cppkg {0}/{1}\n",dep.name, dep.version);
+    }
+
+    cppm::core::Dependency cppkg_auto_gen(std::string& path) {
+        cppm::core::Dependency dep;
+
+        return dep;
     }
 }

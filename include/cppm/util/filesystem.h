@@ -41,6 +41,7 @@ namespace cppm::util
     }
     std::string current_dir();
     std::string read_file_all(const std::string& name);
+    std::optional<std::smatch> find_pattern(const fs::path& path, std::regex filter);
     std::string file_hash(const std::string& name);
 }
 #endif

@@ -268,6 +268,7 @@ namespace cppm::core {
             "cmake_minimum_required(VERSION 3.6)\n"
             "project({name}-{version}-install C CXX)\n\n"
             "include(${{CMAKE_CURRENT_SOURCE_DIR}}/cmake/cppm_tool.cmake)\n"
+            "set(CMAKE_PREFIX_PATH ${{CMAKE_PREFIX_PATH}})\n"
             "download_package({name} {version} {url} CMAKE_ARGS "
             "${{CMAKE_ARGS}} {flags})\n\n",
             "name"_a = dep.name, "version"_a = (*dep.version),
@@ -297,7 +298,6 @@ namespace cppm::core {
 
     Dependency cppm_auto_generate_cppkg(fs::path& path) {
         Dependency dep;
-        
 
 
         return dep;

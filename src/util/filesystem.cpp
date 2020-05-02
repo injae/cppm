@@ -127,4 +127,15 @@ namespace cppm::util
     std::string file_hash(const std::string& name) {
         return hashpp::md5(read_file_all(name));
     }
+
+    // if find pattern return smatch
+    std::optional<std::smatch> find_pattern(const fs::path& path, std::regex filter) {
+        if(!fs::exists(path)) { fmt::print(stderr, "can't find file {}",path.string()); exit(1); }
+        std::smatch match;
+        std::ifstream ifs(path);
+        for(std::string line; std::getline(ifs, line);) {
+            if(std::regex_match(line, match, filter)) { return match; }
+        }
+        return std::nullopt;
+    }
 }

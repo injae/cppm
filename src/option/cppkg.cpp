@@ -6,7 +6,6 @@
 #include "cppm/util/string.hpp"
 #include "option/cppkg_install.h"
 #include "option/cppkg_search.h"
-
 #include <fmt/format.h>
 
 using namespace fmt::literals;

@@ -58,8 +58,8 @@ namespace cppm::option
         fs::create_directory(project.include/name);
     }
 
-    std::string Init::make_project(const std::string& name) {
-        if(fs::exists(name)) { std::cerr << "this name is exist" << std::endl; exit(1);}
+    std::string Init::make_project(const std::string& name, bool dupl_check) {
+        if(dupl_check && fs::exists(name)) { std::cerr << "this name is exist" << std::endl; exit(1);}
         fs::create_directory(name);
         auto project = core::Path::make((fs::current_path()/name).string());
         fs::create_directory(project.build);
@@ -72,7 +72,8 @@ namespace cppm::option
         make_gitignore(project);
 
         auto cppm_path = core::cppm_root();
-        fs::copy(cppm_path + "cmake/cppm_tool.cmake", project.cmake/"cppm_tool.cmake");
+        util::over_write_copy_file("{0}cmake/cppm_tool.cmake"_format(core::cppm_root())
+                                    ,"{0}/cppm_tool.cmake"_format(project.cmake));
 
         return "[package]\n"
              + "   name = {}\n"_format(quot(name))

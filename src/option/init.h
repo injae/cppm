@@ -13,11 +13,11 @@ namespace cppm::option
     {
     public:
         Init();
+        static std::string make_project(const std::string& name, bool dupl_check=true);
+        static void make_gitignore(core::Path& project);
     private:
         void make_bin(const std::string& name);
         void make_lib(const std::string& name);
-        std::string make_project(const std::string& name);
-        void make_gitignore(core::Path& project);
     };
 }
 
