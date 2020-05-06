@@ -427,7 +427,7 @@ cppm_target_install(hello_world)
 │       .       ├── cppkg.toml
 │       .       ├── cppm.cmake.in
 │       .       └── dep.cmake
-└── share  # cppkg install path
+└── cppkg  # cppkg install path
     ├── cppm-0.0.10
     .   ├── bin ...
     .   ├── include ...
@@ -442,6 +442,7 @@ cppm_target_install(hello_world)
     desciprtion = &quot;...&quot; # (require)
     standard = &quot;{11|14|17(default)|20}&quot;
     git = &quot;...&quot; # this option use to cppm build --export
+    vcpkg= &quot;false(default)|true&quot; # cppm auto detect vcpkg option
 </code></pre>
 <pre><code class="language-toml">[hunter] # (optional)  hunter package manager setting option
     use = true|false(default) # if you use hunter package this option is default is true
@@ -535,7 +536,7 @@ Profile settings can be overridden for specific packages</p>
 <p><em><strong><a href="https://github.com/injae/cppkg">cppkg</a></strong></em> is cppm central package repository<br />
 cppm use it by default to find requested packages<br />
 if you want to use <em><strong><a href="https://github.com/cpp-pm/hunter">Hunter Package Manager</a></strong></em> manager set repo=&quot;hunter&quot;<br />
-cppm auto detect vcpkg<br />
+cppm auto detect vcpkg (with package.vcpkg config) 
 you can find package with <em><strong>cppm cppkg search</strong></em></p>
 <pre><code class="language-console">$ cppm cppkg search -h
 Usage:
