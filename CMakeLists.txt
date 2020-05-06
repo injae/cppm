@@ -31,6 +31,27 @@ SOURCES
     src/util/algorithm.cpp
     src/util/system.cpp
     src/cppkg/cppkg.cpp
+    include/cppm/core/package.hpp
+    include/cppm/core/dependency.hpp
+    include/cppm/core/hunter.hpp
+    include/cppm/core/config.hpp
+    include/cppm/core/cppm_tool.hpp
+    include/cppm/core/target.hpp
+    include/cppm/core/cppkg.hpp
+    include/cppm/core/profile.hpp
+    include/cppm/core/config_interface.hpp
+    include/cppm/core/cmake.hpp
+    include/cppm/core/workspace.hpp
+    include/cppm/core/compiler.hpp
+    include/cppm/util/filesystem.h
+    include/cppm/util/hash.hpp
+    include/cppm/util/version.h
+    include/cppm/util/algorithm.hpp
+    include/cppm/util/system.hpp
+    include/cppm/util/optional.hpp
+    include/cppm/util/string.hpp
+    include/cppm/cppkg/repo.h
+    include/cppm/cppkg/cppkg.h
 )
 
 cppm_target_define(cppm BINARY
@@ -64,6 +85,27 @@ SOURCES
     src/util/algorithm.cpp
     src/util/system.cpp
     src/main.cpp
+    include/cppm/core/package.hpp
+    include/cppm/core/dependency.hpp
+    include/cppm/core/hunter.hpp
+    include/cppm/core/config.hpp
+    include/cppm/core/cppm_tool.hpp
+    include/cppm/core/target.hpp
+    include/cppm/core/cppkg.hpp
+    include/cppm/core/profile.hpp
+    include/cppm/core/config_interface.hpp
+    include/cppm/core/cmake.hpp
+    include/cppm/core/workspace.hpp
+    include/cppm/core/compiler.hpp
+    include/cppm/util/filesystem.h
+    include/cppm/util/hash.hpp
+    include/cppm/util/version.h
+    include/cppm/util/algorithm.hpp
+    include/cppm/util/system.hpp
+    include/cppm/util/optional.hpp
+    include/cppm/util/string.hpp
+    include/cppm/cppkg/repo.h
+    include/cppm/cppkg/cppkg.h
 )
 
 cppm_examples_area()

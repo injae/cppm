@@ -76,7 +76,7 @@ namespace cppm::option
             .desc("Build command")
             .call_back([&](){
                 config_load();
-                if(cmake_.prefix == "") cmake_.prefix = "{}share/{}-{}"_format(
+                if(cmake_.prefix == "") cmake_.prefix = "{}cppkg/{}-{}"_format(
                                                       core::cppm_root() ,config_->package.name ,*config_->package.version);
                 fs::create_directories(config_->path.build);
                 if(!none_tc) {

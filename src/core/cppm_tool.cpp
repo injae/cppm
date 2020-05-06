@@ -10,6 +10,7 @@ namespace cppm::core {
     namespace cmake {
         template<typename T>
         std::string arg (std::string name, T& var) { return var ? " {} {}"_format(name, *var) : ""; }
+        std::string arg_flag(bool flag, std::string var) {return flag ? var : "";}
         template<typename T>
         std::string qarg(std::string name, T& var) { return var ? " {} \"{}\""_format(name, *var) : ""; }
         std::string quote(std::string var) { return "\"{}\""_format(var); }
@@ -38,7 +39,7 @@ namespace cppm::core {
               "if(NOT IS_CPPM_LOADED)\n"
               "    include(cmake/cppm_tool.cmake)\n"
               "endif()\n"
-              "cppm_project()\n"
+              "cppm_project({with_vcpkg})\n"
               "{hunter}\n" // dependencies hunter
               "project({pkg_name} VERSION {pkg_ver} LANGUAGES C CXX)\n"
               "cppm_setting()\n"
@@ -49,6 +50,7 @@ namespace cppm::core {
               "{cppkg_define}\n"
               "{cppkg_dependencies}\n"
               "{cppkg_install}\n"
+               ,"with_vcpkg"_a=cmake::arg_flag(config.package.with_vcpkg.value(), "WITH_VCPKG")
                ,"cmake_version"_a=config.cmake->version.value()
                ,"hunter"_a=hunter_load(config)
                ,"pkg_name"_a=config.package.name

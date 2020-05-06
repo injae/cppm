@@ -6,6 +6,7 @@
     desciprtion = "..." # (require)
     standard = "{11|14|17(default)|20}"
     git = "..." # this option use to cppm build --export
+    vcpkg= "false(default)|true" # cppm auto detect vcpkg option
 ```
 ```toml
 [hunter] # (optional)  hunter package manager setting option

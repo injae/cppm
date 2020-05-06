@@ -9,11 +9,11 @@ include  = ["cmake/cppm_install.cmake"]
 
 [lib]
 name = "cppm-core"
-source = ["src/core/.*", "src/util/.*", "src/cppkg/.*"]
+source = ["src/core/.*", "src/util/.*", "src/cppkg/.*", "include/.*"]
 
 [[bin]]
 name   = "cppm"
-source = ["src/cmake/.*","src/option/.*", "src/util/.*", "src/main.cpp"]
+source = ["src/cmake/.*","src/option/.*", "src/util/.*", "src/main.cpp", "include/.*"]
 
 [[test]]
 name   = "cppm-test-check"

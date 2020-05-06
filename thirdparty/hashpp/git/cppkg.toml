@@ -3,4 +3,3 @@ version = "git"
 description = "c++ hash algorithm library"
 module = "hashpp::hashpp"
 git="https://github.com/injae/hashpp.git"
-custom = true

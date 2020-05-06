@@ -8,14 +8,14 @@ set(CPPM_VERSION "0.0.10")
 
 set(CPPM_ROOT   ${HOME}/.cppm)
 set(CPPM_CACHE  ${CPPM_ROOT}/cache)
-set(CPPM_PKGS   ${CPPM_ROOT}/share)
+set(CPPM_PKGS   ${CPPM_ROOT}/cppkg)
 set(CPPM_CORE   ${CPPM_PKGS}/cppm-tools-${CPPM_VERSION})
 
 if(NOT DEFINED IS_CPPM_LOADED)
 set(_install_script "${CPPM_CACHE}/cppm-tools/${CPPM_VERSION}/install-script")
 file(WRITE ${_install_script}/CMakeLists.txt
 "cmake_minimum_required(VERSION 3.6)
-project(CPPM_TOOLS_DOWNLOAD NONE)
+Project(CPPM_TOOLS_DOWNLOAD NONE)
 include(ExternalProject)
 ExternalProject_Add(cppm-tools
     GIT_REPOSITORY https://github.com/injae/cppm_tools.git

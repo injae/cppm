@@ -2,7 +2,7 @@
 ***[cppkg](https://github.com/injae/cppkg)*** is cppm central package repository  
 cppm use it by default to find requested packages  
 if you want to use ***[Hunter Package Manager](https://github.com/cpp-pm/hunter)*** manager set repo="hunter"  
-cppm auto detect vcpkg   
+cppm auto detect vcpkg (with package.vcpkg config) 
 you can find package with ***cppm cppkg search***  
 ```console
 $ cppm cppkg search -h

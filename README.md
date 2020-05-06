@@ -36,6 +36,7 @@ name    = "cppm"
 version = "0.0.10"
 description = "c++ cmake maker use to toml like Cargo"
 git = "https://github.com/injae/cppm.git"
+#vcpkg =true # vcpkg auto detect flag
 
 [cmake]
 include  = ["cmake/cppm_install.cmake"]

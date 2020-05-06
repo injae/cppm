@@ -4,7 +4,6 @@
 #include <cppm/core/cppm_tool.hpp>
 #include <cppm/cppkg/cppkg.h>
 
-
 namespace cppm::core {
     std::optional<Config> Config::load(const std::string& path) {
         using namespace ranges;

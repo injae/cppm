@@ -10,5 +10,6 @@ cmake_minimum_required(VERSION 3.6)
 project(hashpp-git-install C CXX)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH})
 download_package(hashpp git  GIT https://github.com/injae/hashpp.git CMAKE_ARGS ${CMAKE_ARGS} )
 
