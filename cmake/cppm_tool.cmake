@@ -15,7 +15,7 @@ if(NOT DEFINED IS_CPPM_LOADED)
 set(_install_script "${CPPM_CACHE}/cppm-tools/${CPPM_VERSION}/install-script")
 file(WRITE ${_install_script}/CMakeLists.txt
 "cmake_minimum_required(VERSION 3.6)
-Project(CPPM_TOOLS_DOWNLOAD NONE)
+project(CPPM_TOOLS_DOWNLOAD NONE)
 include(ExternalProject)
 ExternalProject_Add(cppm-tools
     GIT_REPOSITORY https://github.com/injae/cppm_tools.git
