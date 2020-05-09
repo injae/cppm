@@ -5,7 +5,7 @@ if(NOT IS_CPPM_LOADED)
 endif()
 cppm_project()
 
-project(cppm VERSION 0.0.10 LANGUAGES C CXX)
+project(cppm VERSION 0.0.11 LANGUAGES C CXX)
 cppm_setting()
 cppm_cxx_standard(17)
 cppm_compiler_option(DEFAULT)
