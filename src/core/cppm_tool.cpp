@@ -236,6 +236,20 @@ namespace cppm::core {
                                  , cmake::append("global_deps",grouped_deps(config.dev_dependencies)));
         }
 
+        if(config.target) {
+            ranges::for_each(*config.target, [&gen,&grouped_deps](auto& it) {
+                auto& [name, target] = it;
+                gen += "\ntriplet_check({})\nif(_result)\n"_format(cmake::quote(name));
+                gen += cmake::append("global_deps",grouped_deps(target.dependencies));
+                if (target.dev_dependencies) {
+                    gen += "\nif(CMAKE_BUILD_TYPE STREQUAL \"Debug\")\n";
+                    gen += cmake::append("global_deps",grouped_deps(target.dev_dependencies));
+                    gen += "endif()\n";
+                }
+                gen += "\nendif()\n";
+            });
+        }
+
         auto set_dependencies = [&config](auto& target) {
             std::vector<std::string> deps{cmake::getf("global_deps")};
             if(target.type != "lib" && config.lib) deps.emplace_back(config.lib->name);

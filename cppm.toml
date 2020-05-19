@@ -13,7 +13,7 @@ source = ["src/core/.*", "src/util/.*", "src/cppkg/.*", "include/.*"]
 
 [[bin]]
 name   = "cppm"
-source = ["src/cmake/.*","src/option/.*", "src/util/.*", "src/main.cpp", "include/.*"]
+source = ["src/cmake/.*","src/option/.*", "src/util/.*", "src/main.cpp"]
 
 [[test]]
 name   = "cppm-test-check"
@@ -34,5 +34,5 @@ range-v3 = "git"
 [dev-dependencies]
     Catch2 = "2.9.1"
 
-[target.x64-unix.dependencies]
-    ctre = "2.8.1"
+[target.unix.dependencies]
+    dbg-macro = "git"

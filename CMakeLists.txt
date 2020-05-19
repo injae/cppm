@@ -21,9 +21,9 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 find_cppkg(Catch2 2.9.1 MODULE Catch2::Catch2)
 endif()
 
-triplet_check("x64-unix")
+triplet_check("unix")
 if(_result)
-find_cppkg(ctre 2.8.1 MODULE ctre::ctre)
+find_cppkg(dbg-macro git MODULE dbg-macro::dbg-macro)
 endif()
 
 
@@ -90,27 +90,6 @@ SOURCES
     src/util/algorithm.cpp
     src/util/system.cpp
     src/main.cpp
-    include/cppm/core/package.hpp
-    include/cppm/core/dependency.hpp
-    include/cppm/core/hunter.hpp
-    include/cppm/core/config.hpp
-    include/cppm/core/cppm_tool.hpp
-    include/cppm/core/target.hpp
-    include/cppm/core/cppkg.hpp
-    include/cppm/core/profile.hpp
-    include/cppm/core/config_interface.hpp
-    include/cppm/core/cmake.hpp
-    include/cppm/core/workspace.hpp
-    include/cppm/core/compiler.hpp
-    include/cppm/util/filesystem.h
-    include/cppm/util/hash.hpp
-    include/cppm/util/version.h
-    include/cppm/util/algorithm.hpp
-    include/cppm/util/system.hpp
-    include/cppm/util/optional.hpp
-    include/cppm/util/string.hpp
-    include/cppm/cppkg/repo.h
-    include/cppm/cppkg/cppkg.h
 )
 
 cppm_examples_area()
@@ -138,6 +117,11 @@ end_cppm_unit_test_area()
 set(global_deps PUBLIC fmt hashpp nlpo range-v3 tomlpp)
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
    list(APPEND global_deps PUBLIC Catch2)
+endif()
+
+triplet_check("unix")
+if(_result)
+list(APPEND global_deps PUBLIC dbg-macro)
 endif()
 cppm_target_dependencies(cppm-core
    ${global_deps})
