@@ -118,11 +118,6 @@ set(global_deps PUBLIC fmt hashpp nlpo range-v3 tomlpp)
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
    list(APPEND global_deps PUBLIC Catch2)
 endif()
-
-triplet_check("unix")
-if(_result)
-list(APPEND global_deps PUBLIC dbg-macro)
-endif()
 cppm_target_dependencies(cppm-core
    ${global_deps})
 
