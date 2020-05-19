@@ -42,7 +42,7 @@ namespace cppm::core {
 
         // dependency <- load cppkg package thirdparty/{name}/{version}
         auto table = toml::parse_file((p.root/"cppm.toml").string());
-        auto load_cppkg = [&config,table](opt<nested<Dependency>>& target, std::string name) {
+        auto load_cppkg = [&config,table](opt<nested<Dependency>>& target, std::string name, bool recursive=false) {
             if(target) {
                 auto deps = target.value();
                 auto& thirdparty = config->path.thirdparty;
@@ -55,7 +55,8 @@ namespace cppm::core {
                     return yield_if(fs::exists(path), path.string());
                 };
                 ranges::for_each(paths, [&target](auto& it) { toml::orm::parser(target, it); });
-                toml::orm::parser(target, table->get_table(name));
+                if(recursive) toml::orm::parser(target, table->get_table_qualified(name));
+                else          toml::orm::parser(target, table->get_table(name));
                 ranges::for_each(*target, [&config](auto& it) {
                      auto& [_, dep] = it;
                      if(!*dep.custom) {
@@ -68,6 +69,13 @@ namespace cppm::core {
 
         load_cppkg(config->dependencies, "dependencies");
         load_cppkg(config->dev_dependencies, "dev-dependencies");
+        if(config->target) {
+            ranges::for_each(*config->target, [&load_cppkg](auto& it) {
+                auto& [name, target] = it;
+                load_cppkg(target.dependencies, "target.{}.dependencies"_format(name),true);
+                load_cppkg(target.dev_dependencies, "target.{}.dev-dependencies"_format(name),true);
+            });
+        }
 
         // workspace -> dependencies
         if(config->workspace) {

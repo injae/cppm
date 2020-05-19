@@ -1,6 +1,6 @@
 [package]
 name    = "cppm"
-version = "0.0.10"
+version = "0.0.11"
 description = "c++ cmake maker use to toml like Cargo"
 git = "https://github.com/injae/cppm.git"
 
@@ -33,3 +33,6 @@ range-v3 = "git"
 
 [dev-dependencies]
     Catch2 = "2.9.1"
+
+[target.x64-unix.dependencies]
+    ctre = "2.8.1"

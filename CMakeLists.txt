@@ -5,7 +5,7 @@ if(NOT IS_CPPM_LOADED)
 endif()
 cppm_project()
 
-project(cppm VERSION 0.0.10 LANGUAGES C CXX)
+project(cppm VERSION 0.0.11 LANGUAGES C CXX)
 cppm_setting()
 cppm_cxx_standard(17)
 cppm_compiler_option(DEFAULT)
@@ -19,6 +19,11 @@ find_cppkg(tomlpp 0.6.0 MODULE tomlpp LOADPATH libs/tomlpp)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 find_cppkg(Catch2 2.9.1 MODULE Catch2::Catch2)
+endif()
+
+triplet_check("x64-unix")
+if(_result)
+find_cppkg(ctre 2.8.1 MODULE ctre::ctre)
 endif()
 
 

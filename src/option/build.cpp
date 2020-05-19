@@ -3,6 +3,7 @@
 #include <memory>
 #include <fmt/format.h>
 #include <hashpp/md5.h>
+
 #include <cstdlib>
 #include <string>
 
@@ -13,6 +14,7 @@
 #include "cppm/util/system.hpp"
 #include "cppm/util/string.hpp"
 #include "cppm/core/cppm_tool.hpp"
+#include "cppm_version.h"
 #include "cmake/cmake.h"
 using namespace fmt::literals;
 using namespace std::literals;
@@ -56,6 +58,9 @@ namespace cppm::option
         app_.add_option("check")
             .desc("dependency check")
             .call_back([&](){ cmake_.no_cache=true; });
+        app_.add_option("toolchains")
+            .desc("build with cmake toolchain")
+            .call_back([&](){ cmake_.toolchain = app_.get_arg(); });
         app_.add_option("export")
             .desc("export cppkg")
             .call_back([&](){ config_load(); export_cppkg(); });
@@ -69,42 +74,55 @@ namespace cppm::option
             .desc("cmake target install ")
             .call_back([&](){ cmake_.install = true; })
             .call_back([&](){ cmake_.build_type="Release"; });
+        app_.add_command("uninstall")
+            .desc("cmake target uninstall")
+            .call_back([&](){ cmake_.set_target("uninstall"); });
         app_.add_option("prefix")
             .desc("cmake install prefix")
             .call_back([&](nlpo::arg::One arg){ cmake_.prefix = arg; clean=true; });
         app_.add_command().args("{cppm options} {builder options}")
             .desc("Build command")
             .call_back([&](){
-                config_load();
-                if(cmake_.prefix == "") cmake_.prefix = "{}cppkg/{}-{}"_format(
-                                                      core::cppm_root() ,config_->package.name ,*config_->package.version);
-                fs::create_directories(config_->path.build);
+                auto is_cppm = config_load(false);
+                if(!is_cppm) { none_tc = true; }
+                auto cmake_script = util::reverse_find_file(fs::current_path() ,"CMakeLists.txt");
+                if(!is_cppm && !cmake_script) { fmt::print(stderr,"this package is not cmake project\n"); exit(1); }
+                core::Path path = is_cppm ? config_->path : core::Path::make(cmake_script->parent_path().string());
+                if(is_cppm) {
+                    if(config_->cmake && config_->cmake->toolchain) {
+                        cmake_.define("CMAKE_EXTERNAL_TOOLCHAIN_FILE", config_->cmake->toolchain.value());
+                    }
+                }
+                if(cmake_.toolchain) {
+                    cmake_.define("CMAKE_EXTERNAL_TOOLCHAIN_FILE", cmake_.toolchain.value());
+                }
+                cmake_.toolchain = "{}cppkg/cppm-tools-{}/toolchain.cmake"_format(core::cppm_root(), CPPM_VERSION);
+                if(cmake_.prefix == "") cmake_.define("USE_CPPM_PATH", "ON");
+                                        
+                fs::create_directories(path.build);
                 if(!none_tc) {
                     auto tranc_cmake = cppm_translate(*config_);
-                    if(util::file_hash("{0}/CMakeLists.txt"_format(config_->path.root)) != hashpp::md5(tranc_cmake)) {
+                    if(util::file_hash("{0}/CMakeLists.txt"_format(path.root)) != hashpp::md5(tranc_cmake)) {
                         fmt::print("[cppm] Generate CMakeLists.txt\n");
-                        util::write_file("{0}/CMakeLists.txt"_format(config_->path.root), tranc_cmake);
+                        util::write_file("{0}/CMakeLists.txt"_format(path.root), tranc_cmake);
                     }
-                    fs::create_directories(config_->path.cmake);
+                    fs::create_directories(path.cmake);
                     util::over_write_copy_file("{0}cmake/cppm_tool.cmake"_format(core::cppm_root())
-                                               ,"{0}/cppm_tool.cmake"_format(config_->path.cmake));
+                                               ,"{0}/cppm_tool.cmake"_format(path.cmake));
                     if(only_tc) { exit(1); }
                 }
                 if(clean) {
-                    fmt::print("[cppm] Clean {}/CMakeCache.txt\n"_format(config_->path.build));
+                    fmt::print("[cppm] Clean {}/CMakeCache.txt\n"_format(path.build));
                     fs::remove(config_->path.build/"CMakeCache.txt");
                 }
                 if(!app_.args().empty()) {
                     cmake_.generator_options(util::str::quot(util::accumulate(app_.args(), " ")));
                     app_.args().clear();
                 }
-                //if(config_->cppm_config.package.toolchains() != "") {
-                //    cmake_.define("CMAKE_TOOLCHAIN_FILE", config_->cppm_config.package.toolchains());
-                //}
                 if(util::compiler::what() != "msvc"s) {
                     cmake_.generator_options(" -j{} "_format(std::thread::hardware_concurrency()));
                 }
-                cmake_.build(config_->path.root.string(), "build");
+                cmake_.build(path.root.string(), "build");
             });
     }
 
@@ -113,10 +131,14 @@ namespace cppm::option
         pkg.name = config_->package.name;
         if(config_->lib) {
             auto& lib = config_->lib;
-            pkg.module = lib->install ? "{0}::{1} "_format(config_->package.name, lib->name) : "";
+            pkg.module =
+                lib->install
+                    ? "{0}::{1} "_format(config_->package.name, lib->name)
+                    : "";
             pkg.type = "lib";
         }
-        if(!config_->bins) pkg.type = "bin";
+        if (!config_->bins)
+          pkg.type = "bin";
         pkg.description = config_->package.description;
         pkg.git = *config_->package.git_repo;
         pkg.version = "git";

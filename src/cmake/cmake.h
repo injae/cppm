@@ -51,6 +51,7 @@ namespace cppm::cmake
         bool install=false;
         std::string prefix="";
         std::string build_type="Debug";
+        opt_str toolchain=std::nullopt;
         bool no_cache=false;
         bool sudo=false;
         bool detail=false;
