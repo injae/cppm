@@ -92,9 +92,26 @@ Profile settings can be overridden for specific packages
     #link.interface => this library use header only, dependency forward
 ```
 ```toml
-# (incomplete) platform classification depdencies setting 
-[target.windows|macos|linux|unix.dependencies] 
+[target.{triplet}.dependencies] 
+[target.{triplet}.dev-dependencies] 
 
+# triplet types
+# {arch}-{platform}-{generater}
+# arch
+# x86 or x64 or arm or arm64 or arm64s or arm7s or all(default)
+# platform
+# (       unix          )    (   windows  )
+# linux or osx or freebsd or uwp or windows
+# generator
+# make or ninja or msvc or xcode
+
+## example
+[target.x64-windows-msvc.dependencies]
+[target.windows.dependencies]
+[target.unix.dependencies]
+[target.x64-macos-make.dependencies]
+[target.macos.dependencies]
+[target.linux.dependencies]
 ```
 ```toml
 # (incomplete)
