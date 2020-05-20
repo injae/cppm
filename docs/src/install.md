@@ -27,11 +27,9 @@ export PATH=$PATH:$HOME/.cppm/bin
 # scoop install git cmake
 git clone --recurse-submodules https://github.com/injae/cppm.git
 cd cppm
-cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
+cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DUSE_CPPM_PATH=ON
 cd build
-cmake --build . --config Release
-cd Release && ./cppm build
-cd ../ && cmake --build . --target install --target cppm_link 
+cmake --build . --config Release --target install --target cppm_link
 # Add System Path %USERPROFILE%\.cppm\bin
 ```
 

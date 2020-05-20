@@ -21,11 +21,6 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 find_cppkg(Catch2 2.9.1 MODULE Catch2::Catch2)
 endif()
 
-triplet_check("unix")
-if(_result)
-find_cppkg(dbg-macro git MODULE dbg-macro::dbg-macro)
-endif()
-
 
 cppm_target_define(cppm-core STATIC
 SOURCES

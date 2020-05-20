@@ -96,20 +96,23 @@ Profile settings can be overridden for specific packages
 [target.{triplet}.dev-dependencies] 
 
 # triplet types
-# {arch}-{platform}-{generater}
+# {arch}-{platform}-{compiler}
 # arch
 # x86 or x64 or arm or arm64 or arm64s or arm7s or all(default)
 # platform
-# (       unix          )    (   windows  )
-# linux or osx or freebsd or uwp or windows
-# generator
-# make or ninja or msvc or xcode
+# (       unix                      )    (   windows  )
+# linux or osx or freebsd or android or uwp or windows
+# compiler
+# (        clang               )   
+# clang or clang_cl apple_clang or gnu(gcc) or msvc(cl) or intel or cuda(nvidia)
 
 ## example
 [target.x64-windows-msvc.dependencies]
+[target.all-windows-msvc.dependencies]
 [target.windows.dependencies]
 [target.unix.dependencies]
-[target.x64-macos-make.dependencies]
+[target.x64-macos-apple_clang.dependencies]
+[target.x64-macos-clang.dependencies]
 [target.macos.dependencies]
 [target.linux.dependencies]
 ```

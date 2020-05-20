@@ -34,5 +34,5 @@ range-v3 = "git"
 [dev-dependencies]
     Catch2 = "2.9.1"
 
-[target.unix.dependencies]
-    dbg-macro = "git"
+#[target.all-osx-clang.dependencies]
+#    dbg-macro = "git"
