@@ -18,7 +18,7 @@ jobs:
         echo "::set-env name=CC::clang"
         echo "::set-env name=CXX::clang++"
     - name: CMake build
-      run: CC=/usr/local/opt/llvm/bin/clang CXX=/usr/local/opt/llvm/bin/clang++ cmake -Bbuild . && cd build && cmake --build . 
+      run: CC=/usr/local/opt/llvm/bin/clang CXX=/usr/local/opt/llvm/bin/clang++ cmake -Bbuild -DCMAKE_BUILD_TYPE=Release . && cd build && cmake --build . --target install --target cppm_link
 
 
   #  runs-on: macos-latest

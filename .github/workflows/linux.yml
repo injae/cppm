@@ -20,7 +20,7 @@ jobs:
         echo "::set-env name=CC::gcc-8"
         echo "::set-env name=CXX::g++-8"
     - name: CMake build
-      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release . && cd build && cmake --build . && cd Release && ./cppm build install
+      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DUSE_CPPM_PATH=ON . && cd build && cmake --build . --target install --target cppm_link 
   ubuntu-xenial-llvm-8:
     runs-on: ubuntu-16.04
     steps:
@@ -39,5 +39,5 @@ jobs:
         echo "::set-env name=CC::clang-8"
         echo "::set-env name=CXX::clang++-8"
     - name: CMake build
-      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release . && cd build && cmake --build . && cd Release && ./cppm build install
+      run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DUSE_CPPM_PATH=ON . && cd build && cmake --build . --target install --target cppm_link 
 
