@@ -126,7 +126,7 @@ brew install llvm cmake
 # export CXX=#llvm clang++ path 
 git clone --recurse-submodules https://github.com/injae/cppm.git
 cd cppm
-cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
+cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DUSE_CPPM_PATH=ON .
 cd build
 cmake --build . --config Release
 cd Release
@@ -140,7 +140,7 @@ export PATH="$HOME/.cppm/bin:$PATH"
 # scoop install git cmake
 git clone --recurse-submodules https://github.com/injae/cppm.git
 cd cppm
-cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DUSE_CPPM_PATH=ON
+cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DUSE_CPPM_PATH=ON .
 cd build
 cmake --build . --config Release --target install --target cppm_link
 # Add System Path %USERPROFILE%\.cppm\bin
