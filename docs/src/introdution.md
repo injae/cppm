@@ -10,6 +10,9 @@ upload to [cppkg](https://github.com/injae/cppkg)
 * Easy to use CMake 
 * Easy Config file than CMakeList.txt
 * Generate Cross Platform CMake base C++ Project
+* Dependencies auto install in build step
+* can use cmake uninstall target
+* CMake base project can build with cppm (cppm build) (Use CMake's toolchain feature)
 * Manage Depdendency with ***[cppkg](https://github.com/injae/cppkg)*** and ***[Hunter Package Manage](https://github.com/cpp-pm/hunter)***
 * Dependency install only use CMake
 

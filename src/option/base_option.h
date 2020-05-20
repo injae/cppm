@@ -13,7 +13,7 @@ namespace cppm::option
     public:
         nlpo::App& app() { return app_; }
         virtual ~base_option() {}
-        bool config_load();
+        bool config_load(bool panic=true);
         void start_from(const std::string& path) { start_path_ = path; }
     protected:
         nlpo::App app_;

@@ -77,18 +77,22 @@ namespace cppm::cmake
         cache = Cache("{}/{}"_format(root, build_path));
         define("CMAKE_BUILD_TYPE", build_type);
         if(prefix != "") set("CMAKE_INSTALL_PREFIX", prefix);
+        if(toolchain)    set("CMAKE_TOOLCHAIN_FILE", *toolchain);
         while(!after_hooks.empty()) { after_hooks.front()(cache, cmake_option); after_hooks.pop(); }
 
-        auto script = "cd {}/{} && "_format(root, build_path);
-        script += (no_cache || cmake_option || !cache->exist_file())  ? "cmake {}.. && "_format(*cmake_option) : "";
+        auto current = fs::current_path();
+        util::working_directory("{}/{}"_format(root, build_path));
+        std::string script = (no_cache || cmake_option || !cache->exist_file())  ?
+                             "cmake {}.. && "_format(*cmake_option) : "";
 
         auto target_script = target_ ? "--target {} "_format(*target_) : "";
         script += "cmake --build . {}--config {} -- {}"_format(target_script, build_type, *generator_option);
 
         auto is_sudo = (!(strcmp(util::system::what(), "windows")) && sudo) ? "sudo" : "";
-        script += install ? " && {} cmake --install ."_format(is_sudo) : "";
+        script += install ? " && {} cmake --install . && cmake --build . --target cppm_link"_format(is_sudo) : "";
         if(detail) fmt::print(script + "\n");
         system(script.c_str());
+        util::working_directory(current.string());
         return *this;
     }
 }

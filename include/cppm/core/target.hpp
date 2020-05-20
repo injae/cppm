@@ -10,10 +10,12 @@ namespace cppm::core {
     public:
         template<typename Def>
         void parse(Def& defn) {
-           defn.element(TOML_D(dependencies))
-               .element(dev_dependencies,"dev-dependencies")
-               .no_remains();
+            defn.name();
+            defn.element(TOML_D(dependencies))
+                .element(dev_dependencies,"dev-dependencies")
+                .no_remains();
         }
+        std::string name;
         opt<nested<Dependency>> dependencies;
         opt<nested<Dependency>> dev_dependencies;
     };

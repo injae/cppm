@@ -74,8 +74,9 @@ namespace cppm::util
         if(!list) return std::nullopt; 
         for(const auto& file : *list) {
             if(file.path().filename() == file_name) return std::make_optional(file.path());
-            if(file.path().filename() == "/")       return std::nullopt;
+            if(file.path() == fs::current_path().root_path()) return std::nullopt;
         }
+        if(path == fs::current_path().root_path()) return std::nullopt;
         return reverse_find_file(path.parent_path(), file_name);
     }
 

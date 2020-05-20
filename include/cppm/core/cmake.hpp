@@ -14,7 +14,7 @@ namespace cppm::core {
                 .element(TOML_D(option))
                 .element(TOML_D(compiler))
                 .element(TOML_D(builder))
-                .element(TOML_D(toolchains))
+                .element(TOML_D(toolchain))
                 .element(TOML_D(include))
                 .no_remains();
         }
@@ -22,7 +22,7 @@ namespace cppm::core {
         opt<std::string> option;
         opt<std::string> compiler;
         opt<std::string> builder;
-        opt<arr<std::string>> toolchains;
+        opt<std::string> toolchain;
         opt<arr<std::string>> include;
     };
 }

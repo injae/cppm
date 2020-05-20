@@ -19,6 +19,7 @@ namespace cppm::core {
                 .element(TOML_D(repo), "cppkg")
                 .element(TOML_D(path))
                 .element(TOML_D(url))
+                .element(TOML_D(sha256))
                 .element(TOML_D(git))
                 .element(TOML_D(flags))
                 .element(TOML_D(helper))
@@ -26,8 +27,8 @@ namespace cppm::core {
                 .element(TOML_D(custom), false)
                 .element(no_cmake, "no_module", false)
                 .element(TOML_D(components));
-            if(not defn.is_value() && *type == "lib") defn.element(TOML_D(module));
-            defn.no_remains();
+            if(not defn.is_value() && *type == "lib") defn.element(TOML_D(module), "");
+            //defn.no_remains();
         }
 
         std::string name;
@@ -40,6 +41,7 @@ namespace cppm::core {
         opt<std::string> path;
         opt<std::string> git;
         opt<std::string> url;
+        opt<std::string> sha256;
         opt<std::string> helper;
         opt<std::string> branch;
         opt<std::string> flags;

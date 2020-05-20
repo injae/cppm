@@ -138,13 +138,14 @@ namespace cppm::core {
                 auto scripts = *deps | views::transform([](auto it) {
                     auto& [name, dep] = it;
                     auto hunter = dep.repo == "hunter" ? " HUNTER" : "";
-                    return fmt::format("find_cppkg({name} {ver} MODULE {module}{components}{path}{hunter})\n"
+                    return fmt::format("find_cppkg({name} {ver} {module}{components}{path}{hunter}{type})\n"
                                             ,"name"_a=dep.name
-                                            ,"ver"_a=*dep.version
-                                            ,"module"_a=dep.module
+                                            ,"ver"_a=dep.version
+                                            ,"module"_a=arg("MODULE",dep.module)
                                             ,"components"_a=qarg("COMPONENTS",dep.components)
                                             ,"path"_a=arg("LOADPATH",dep.path)
-                                            ,"hunter"_a=hunter);
+                                            ,"hunter"_a=hunter
+                                            ,"type"_a=arg("TYPE",dep.type));
                 }) | to_vector;
                 gen += fmt::format("{}",fmt::join(scripts, ""));
             }
@@ -155,8 +156,23 @@ namespace cppm::core {
             make_find_cppkg(config.dev_dependencies);
             gen += "endif()\n";
         }
+
+        if(config.target) {
+            ranges::for_each(*config.target, [&gen,&make_find_cppkg](auto& it) {
+                auto& [name, target] = it;
+                gen += "\ntriplet_check({})\nif(_result)\n"_format(quote(name));
+                make_find_cppkg(target.dependencies);
+                if (target.dev_dependencies) {
+                    gen += "\nif(CMAKE_BUILD_TYPE STREQUAL \"Debug\")\n";
+                    make_find_cppkg(target.dev_dependencies);
+                    gen += "endif()\n";
+                }
+                gen += "endif()\n";
+            });
+        }
         return gen;
     }
+
 
     std::string cppm_target_define(Config& config) {
         using namespace cmake;
@@ -221,6 +237,20 @@ namespace cppm::core {
                                  , cmake::append("global_deps",grouped_deps(config.dev_dependencies)));
         }
 
+        if(config.target) {
+            ranges::for_each(*config.target, [&gen,&grouped_deps](auto& it) {
+                auto& [name, target] = it;
+                gen += "\ntriplet_check({})\nif(_result)\n"_format(cmake::quote(name));
+                gen += cmake::append("global_deps",grouped_deps(target.dependencies));
+                if (target.dev_dependencies) {
+                    gen += "\nif(CMAKE_BUILD_TYPE STREQUAL \"Debug\")\n";
+                    gen += cmake::append("global_deps",grouped_deps(target.dev_dependencies));
+                    gen += "endif()\n";
+                }
+                gen += "\nendif()\n";
+            });
+        }
+
         auto set_dependencies = [&config](auto& target) {
             std::vector<std::string> deps{cmake::getf("global_deps")};
             if(target.type != "lib" && config.lib) deps.emplace_back(config.lib->name);
@@ -258,6 +288,7 @@ namespace cppm::core {
         auto download = cmake::arg("GIT", dep.git);
         download += cmake::arg("URL", dep.url);
         download += cmake::arg("GIT_TAG", dep.branch);
+        download += cmake::arg("SHA256", dep.sha256);
         return fmt::format(
             "# Cppkg Base Dependency Downloader\n"
             "# Other Options:\n"
@@ -270,7 +301,6 @@ namespace cppm::core {
             "cmake_minimum_required(VERSION 3.6)\n"
             "project({name}-{version}-install C CXX)\n\n"
             "include(${{CMAKE_CURRENT_SOURCE_DIR}}/cmake/cppm_tool.cmake)\n"
-            "set(CMAKE_PREFIX_PATH ${{CMAKE_PREFIX_PATH}})\n"
             "download_package({name} {version} {url} CMAKE_ARGS "
             "${{CMAKE_ARGS}} {flags})\n\n",
             "name"_a = dep.name, "version"_a = (*dep.version),

@@ -4,12 +4,12 @@ else()
     set(env_home "$ENV{HOME}")
 endif()
 string(REPLACE "\\" "/" HOME "${env_home}")
-set(CPPM_VERSION "0.0.10")
+set(CPPM_TOOLS_VERSION "0.0.11")
 
 set(CPPM_ROOT   ${HOME}/.cppm)
 set(CPPM_CACHE  ${CPPM_ROOT}/cache)
 set(CPPM_PKGS   ${CPPM_ROOT}/cppkg)
-set(CPPM_CORE   ${CPPM_PKGS}/cppm-tools-${CPPM_VERSION})
+set(CPPM_CORE   ${CPPM_PKGS}/cppm-tools-${CPPM_TOOLS_VERSION})
 
 if(NOT DEFINED IS_CPPM_LOADED)
 set(_install_script "${CPPM_CACHE}/cppm-tools/${CPPM_VERSION}/install-script")
@@ -19,9 +19,9 @@ project(CPPM_TOOLS_DOWNLOAD NONE)
 include(ExternalProject)
 ExternalProject_Add(cppm-tools
     GIT_REPOSITORY https://github.com/injae/cppm_tools.git
-    GIT_TAG ${CPPM_VERSION}
+    GIT_TAG ${CPPM_TOOLS_VERSION}
     SOURCE_DIR ${CPPM_CORE}
-    BINARY_DIR ${CPPM_CACHE}/cppm-tools/${CPPM_VERSION}/build
+    BINARY_DIR ${CPPM_CACHE}/cppm-tools/${CPPM_TOOLS_VERSION}/build
     CONFIGURE_COMMAND \"\"
     BUILD_COMMAND  \"\"
     INSTALL_COMMAND \"\"

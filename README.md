@@ -1,4 +1,5 @@
 
+
 [Cppm](https://injae.github.io/cppm/) ***(BETA)*** [Documents](https://injae.github.io/cppm/)
 ========
 |Linux|Windows|MacOS|
@@ -67,6 +68,11 @@ range-v3 = "git"
 
 [dev-dependencies]
     Catch2 = "2.9.1"
+
+#[target.x64-unix.dependencies]
+#[target.x64-unix.dev-dependencies]
+#[target.x64-windows.dependencies]
+#[target.windows.dev-dependencies]
 ```
 
 ## Easy to make Unregistered Package Add
@@ -134,11 +140,9 @@ export PATH="$HOME/.cppm/bin:$PATH"
 # scoop install git cmake
 git clone --recurse-submodules https://github.com/injae/cppm.git
 cd cppm
-cmake -Bbuild -DCMAKE_BUILD_TYPE=Release
+cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DUSE_CPPM_PATH=ON
 cd build
-cmake --build . --config Release
-cd Release && ./cppm build
-cd ../ && cmake --install .
+cmake --build . --config Release --target install --target cppm_link
 # Add System Path %USERPROFILE%\.cppm\bin
 ```
 
@@ -146,15 +150,18 @@ cd ../ && cmake --install .
 - [x] easy configure file (cppm.toml)
 - [x] generate build command (cppm build {options})
 - [x] cmake dependencies auto installer (cppkg)
+- [x] none cppm base project build (cppm build) (with cppm-toolchain) command
 - [x] easy cppkg file generator (cppm cppkg init)
+- [x] auto add CMake project uninstall target (cppm build uninstall) (with cppm-toolchain)
 - [x] no sudo, package local install path (~/.cppm/)
+- [x] unit test option (cppm test)
 - [x] Cppkg package search (cppm search)
 - [x] cmake project initialize (cppm init {options} {name})
-- [x] cppkg repository update (cppm update)
+- [x] cppkg repository update (cppm cppkg update)
 - [x] hunter package dependency available 
-- [x] auto detect vcpkg 
+- [x] auto detect vcpkg
+- [x] can use hunter package manager 
 - [x] sub project option (cppm.toml [workspace])
-- [x] unit test option (cppm test)
 
 ## Document
 ### [GitBook](https://injae.github.io/cppm/)

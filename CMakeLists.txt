@@ -11,14 +11,14 @@ cppm_cxx_standard(17)
 cppm_compiler_option(DEFAULT)
 
 include(cmake/cppm_install.cmake)
-find_cppkg(fmt 6.2.0 MODULE fmt::fmt)
-find_cppkg(hashpp git MODULE hashpp::hashpp)
-find_cppkg(nlpo 1.0.3 MODULE nlpo LOADPATH libs/nlpo)
-find_cppkg(range-v3 git MODULE range-v3::range-v3)
-find_cppkg(tomlpp 0.6.0 MODULE tomlpp LOADPATH libs/tomlpp)
+find_cppkg(fmt 6.2.0  MODULE fmt::fmt TYPE lib)
+find_cppkg(hashpp git  MODULE hashpp::hashpp TYPE lib)
+find_cppkg(nlpo 1.0.3  MODULE nlpo LOADPATH libs/nlpo TYPE lib)
+find_cppkg(range-v3 git  MODULE range-v3::range-v3 TYPE lib)
+find_cppkg(tomlpp 0.6.0  MODULE tomlpp LOADPATH libs/tomlpp TYPE lib)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-find_cppkg(Catch2 2.9.1 MODULE Catch2::Catch2)
+find_cppkg(Catch2 2.9.1  MODULE Catch2::Catch2 TYPE lib)
 endif()
 
 
@@ -31,27 +31,6 @@ SOURCES
     src/util/algorithm.cpp
     src/util/system.cpp
     src/cppkg/cppkg.cpp
-    include/cppm/core/package.hpp
-    include/cppm/core/dependency.hpp
-    include/cppm/core/hunter.hpp
-    include/cppm/core/config.hpp
-    include/cppm/core/cppm_tool.hpp
-    include/cppm/core/target.hpp
-    include/cppm/core/cppkg.hpp
-    include/cppm/core/profile.hpp
-    include/cppm/core/config_interface.hpp
-    include/cppm/core/cmake.hpp
-    include/cppm/core/workspace.hpp
-    include/cppm/core/compiler.hpp
-    include/cppm/util/filesystem.h
-    include/cppm/util/hash.hpp
-    include/cppm/util/version.h
-    include/cppm/util/algorithm.hpp
-    include/cppm/util/system.hpp
-    include/cppm/util/optional.hpp
-    include/cppm/util/string.hpp
-    include/cppm/cppkg/repo.h
-    include/cppm/cppkg/cppkg.h
 )
 
 cppm_target_define(cppm BINARY
@@ -85,27 +64,6 @@ SOURCES
     src/util/algorithm.cpp
     src/util/system.cpp
     src/main.cpp
-    include/cppm/core/package.hpp
-    include/cppm/core/dependency.hpp
-    include/cppm/core/hunter.hpp
-    include/cppm/core/config.hpp
-    include/cppm/core/cppm_tool.hpp
-    include/cppm/core/target.hpp
-    include/cppm/core/cppkg.hpp
-    include/cppm/core/profile.hpp
-    include/cppm/core/config_interface.hpp
-    include/cppm/core/cmake.hpp
-    include/cppm/core/workspace.hpp
-    include/cppm/core/compiler.hpp
-    include/cppm/util/filesystem.h
-    include/cppm/util/hash.hpp
-    include/cppm/util/version.h
-    include/cppm/util/algorithm.hpp
-    include/cppm/util/system.hpp
-    include/cppm/util/optional.hpp
-    include/cppm/util/string.hpp
-    include/cppm/cppkg/repo.h
-    include/cppm/cppkg/cppkg.h
 )
 
 cppm_examples_area()
