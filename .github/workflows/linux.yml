@@ -39,5 +39,5 @@ jobs:
         echo "::set-env name=CC::clang-8"
         echo "::set-env name=CXX::clang++-8"
     - name: CMake build
-      run: cmake -Bbuild . && cd build && cmake --build . --target install --target cppm_link 
+      run: cmake -Bbuild . && cd build && cmake --build && cd Release && ./cppm build install
 
