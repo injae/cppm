@@ -162,6 +162,9 @@ upload to <a href="https://github.com/injae/cppkg">cppkg</a></p>
 <li>Easy to use CMake </li>
 <li>Easy Config file than CMakeList.txt</li>
 <li>Generate Cross Platform CMake base C++ Project</li>
+<li>Dependencies auto install in build step</li>
+<li>can use cmake uninstall target</li>
+<li>CMake base project can build with cppm (cppm build) (Use CMake's toolchain feature)</li>
 <li>Manage Depdendency with <em><strong><a href="https://github.com/injae/cppkg">cppkg</a></strong></em> and <em><strong><a href="https://github.com/cpp-pm/hunter">Hunter Package Manage</a></strong></em></li>
 <li>Dependency install only use CMake</li>
 </ul>
@@ -194,14 +197,14 @@ cd Release
 export PATH=$PATH:$HOME/.cppm/bin
 </code></pre>
 <h4><a class="header" href="#windows" id="windows">Windows</a></h4>
-<pre><code class="language-sh">git clone https://github.com/injae/cppm
+<pre><code class="language-sh"># need visual studio , git , cmake
+# scoop install git cmake
+git clone --recurse-submodules https://github.com/injae/cppm.git
 cd cppm
-cmake -Bbuild -DCMAKE_BUILD_TYPE=Release.
+cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DUSE_CPPM_PATH=ON
 cd build
-cmake --build . --config Release
-cd Release
-./cppm build install
-# Add Windows System Path %USERPROFILE%/.cppm/bin
+cmake --build . --config Release --target install --target cppm_link
+# Add System Path %USERPROFILE%\.cppm\bin
 </code></pre>
 <h2><a class="header" href="#first-steps-with-cppm" id="first-steps-with-cppm">First Steps with Cppm</a></h2>
 <p>To start a new package with Cppm, use <code>cppm init</code></p>
@@ -404,8 +407,14 @@ cppm_target_install(hello_world)
     `-- ${cppkg_name}/${cppkg_version}/cppkg.toml  # cppkg config file
 </code></pre>
 <h2><a class="header" href="#cppm-structure" id="cppm-structure">Cppm Structure</a></h2>
+<p>cppm use cmake toolchain feature
+cppm build command use CMakeCache.txt </p>
+<p><em><strong>cppm build</strong></em> command search cppm.toml or CMakeLists.txt</p>
+<pre><code class="language-console">$ cppm build --detail 
+cmake -DCMAKE_TOOLCHAIN_FILE=/path/to/.cppm/cppkg/cppm-tools-0.0.11/toolchain.cmake -DUSE_CPPM_PATH=ON -DCMAKE_BUILD_TYPE=Debug .. &amp;&amp; cmake --build . --config Debug --  -j{your cpu core}
+</code></pre>
 <pre><code class="language-console">~/.cppm/
-├── bin  # cppm installed binary path
+├── bin  # cppm installed binary path (symbolic links)
 │   └── cppm # -&gt; ../share/cppm-0.0.10/bin/cppm
 ├── cache ... # cmake build cache
 ├── cmake  # cppm module path
@@ -416,23 +425,19 @@ cppm_target_install(hello_world)
 │       ├── Catch2
 │       │   ├── 2.9.1
 │       │   │   ├── Catch2.cmake.in
-│       │   │   ├── cppkg.toml
-│       │   │   └── dep.cmake
+│       │   │   └── cppkg.toml
 │       │   └── git
 │       │       ├── Catch2.cmake.in
-│       │       ├── cppkg.toml
-│       │       └── dep.cmake
+│       │       └── cppkg.toml
 │       ├── cppm
 │       │   └── git
 │       .       ├── cppkg.toml
-│       .       ├── cppm.cmake.in
-│       .       └── dep.cmake
+│       .       └── cppm.cmake.in 
 └── cppkg  # cppkg install path
-    ├── cppm-0.0.10
+    ├── cppm-0.0.11
     .   ├── bin ...
     .   ├── include ...
-    .   ├── lib ...
-    .   └── src ...
+    .   └── lib ...
  
 </code></pre>
 <h1><a class="header" href="#cppkgtoml" id="cppkgtoml">cppkg.toml</a></h1>
@@ -518,9 +523,29 @@ Profile settings can be overridden for specific packages</p>
     #link.private   =&gt; this library use source only, dependency not forward
     #link.interface =&gt; this library use header only, dependency forward
 </code></pre>
-<pre><code class="language-toml"># (incomplete) platform classification depdencies setting 
-[target.windows|macos|linux|unix.dependencies] 
+<pre><code class="language-toml">[target.{triplet}.dependencies] 
+[target.{triplet}.dev-dependencies] 
 
+# triplet types
+# {arch}-{platform}-{compiler}
+# arch
+# x86 or x64 or arm or arm64 or arm64s or arm7s or all(default)
+# platform
+# (       unix                      )    (   windows  )
+# linux or osx or freebsd or android or uwp or windows
+# compiler
+# (        clang               )   
+# clang or clang_cl apple_clang or gnu(gcc) or msvc(cl) or intel or cuda(nvidia)
+
+## example
+[target.x64-windows-msvc.dependencies]
+[target.all-windows-msvc.dependencies]
+[target.windows.dependencies]
+[target.unix.dependencies]
+[target.x64-macos-apple_clang.dependencies]
+[target.x64-macos-clang.dependencies]
+[target.macos.dependencies]
+[target.linux.dependencies]
 </code></pre>
 <pre><code class="language-toml"># (incomplete)
 [exclude]
@@ -656,6 +681,13 @@ download_package(fmt 6.2.0  URL https://github.com/fmtlib/fmt/releases/download/
     components = &quot;...&quot;
 </code></pre>
 <h1><a class="header" href="#cppm-commands" id="cppm-commands">Cppm Commands</a></h1>
+<ul>
+<li>***cppm build ***</li>
+<li>***cppm cppkg ***</li>
+<li>***cppm init ***</li>
+<li>***cppm test ***</li>
+<li>***cppm update ***</li>
+</ul>
 
                     </main>
 
