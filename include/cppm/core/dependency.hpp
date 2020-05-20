@@ -27,8 +27,8 @@ namespace cppm::core {
                 .element(TOML_D(custom), false)
                 .element(no_cmake, "no_module", false)
                 .element(TOML_D(components));
-            if(not defn.is_value() && *type == "lib") defn.element(TOML_D(module));
-            // defn.no_remains();
+            if(not defn.is_value() && *type == "lib") defn.element(TOML_D(module), "");
+            //defn.no_remains();
         }
 
         std::string name;

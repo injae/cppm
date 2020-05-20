@@ -7,8 +7,11 @@
 # - Install Path Options:
 #    LOCAL(default) GLOBAL 
 cmake_minimum_required(VERSION 3.6)
-project(hashpp-git-install C CXX)
+project(ccache-3.7.9-install)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
-download_package(hashpp git  GIT https://github.com/injae/hashpp.git CMAKE_ARGS ${CMAKE_ARGS} )
-
+cppm_download_package(ccache
+    VERSION 3.7.9
+    URL https://github.com/ccache/ccache/releases/download/v3.7.9/ccache-3.7.9.tar.gz
+    INSTALL_SCRIPT "./configure --prefix=${CPPM_ROOT}/bin && make install"
+)

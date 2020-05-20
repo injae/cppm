@@ -1,0 +1,9 @@
+[ccache]
+version="3.7.9" #(require)
+type="bin" #lib(default) | bin | cmake
+description="" #(require)
+module="none"
+url="https://github.com/ccache/ccache/releases/download/v3.7.9/ccache-3.7.9.tar.gz" #(require)
+custom =true
+#branch="" #(optional & require git)
+#link="public" #default
