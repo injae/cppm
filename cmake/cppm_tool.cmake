@@ -4,7 +4,7 @@ else()
     set(env_home "$ENV{HOME}")
 endif()
 string(REPLACE "\\" "/" HOME "${env_home}")
-set(CPPM_TOOLS_VERSION "0.0.11")
+set(CPPM_TOOLS_VERSION "dev")
 
 set(CPPM_ROOT   ${HOME}/.cppm)
 set(CPPM_CACHE  ${CPPM_ROOT}/cache)
