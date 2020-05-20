@@ -19,12 +19,12 @@ namespace cppm::option
                 if(std::regex_match(arg, match, is_url)) {
                     pkg.version = match[1];
                     pkg.url = arg;
-                    fmt::print("[cppkg] detect url and {}", pkg.version);
+                    fmt::print("[cppkg] detect url and {}\n", pkg.version);
                 }
                 else if(std::regex_match(arg, match, is_git)) {
                     pkg.version = "git";
                     pkg.git = arg;
-                    fmt::print("[cppkg] detect git and {}", pkg.version);
+                    fmt::print("[cppkg] detect git and {}\n", pkg.version);
                 }
                 else {
                     fmt::print(stderr, "can't parse uri\n");
@@ -65,7 +65,7 @@ namespace cppm::option
                 else if(app_.args().size() < 1) { fmt::print(stderr, "need package name"); exit(1); }
                 pkg.name = app_.get_arg();
                 if(!pkg.type) pkg.type = "lib";
-                if(!pkg.module) {
+                if(!pkg.module && *pkg.type == "lib") {
                     fmt::print("[cppkg] can't find module value\n");
                     fmt::print("[cppkg] module name find mode on\n");
                     auto current_path = fs::current_path();
