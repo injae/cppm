@@ -291,20 +291,13 @@ namespace cppm::core {
         download += cmake::arg("SHA256", dep.sha256);
         return fmt::format(
             "# Cppkg Base Dependency Downloader\n"
-            "# Other Options:\n"
-            "# - Linux Configures:\n"
-            "#    L_CONFIGURE {{...}}, L_BUILD {{...}}, L_INSTALL {{...}}\n"
-            "# - Windows Configures:\n"
-            "#    W_CONFIGURE {{...}}, W_BUILD {{...}}, W_INSTALL {{...}}\n"
-            "# - Install Path Options:\n"
-            "#    LOCAL(default) GLOBAL \n"
             "cmake_minimum_required(VERSION 3.6)\n"
-            "project({name}-{version}-install C CXX)\n\n"
+            "project({name}-{version}-install)\n\n"
             "include(${{CMAKE_CURRENT_SOURCE_DIR}}/cmake/cppm_tool.cmake)\n"
-            "download_package({name} {version} {url} CMAKE_ARGS "
+            "download_package({name} {version} {url} {type} CMAKE_ARGS "
             "${{CMAKE_ARGS}} {flags})\n\n",
             "name"_a = dep.name, "version"_a = (*dep.version),
-            "url"_a = download, "flags"_a = dep.flags.value_or(""));
+            "url"_a = download, "type"_a=cmake::arg("TYPE", dep.type), "flags"_a = dep.flags.value_or(""));
     }
 
     std::string hunter_root() {

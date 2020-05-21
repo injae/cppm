@@ -4,7 +4,7 @@ else()
     set(env_home "$ENV{HOME}")
 endif()
 string(REPLACE "\\" "/" HOME "${env_home}")
-set(CPPM_TOOLS_VERSION "dev")
+set(CPPM_TOOLS_VERSION "0.0.11")
 
 set(CPPM_ROOT   ${HOME}/.cppm)
 set(CPPM_CACHE  ${CPPM_ROOT}/cache)
@@ -12,7 +12,7 @@ set(CPPM_PKGS   ${CPPM_ROOT}/cppkg)
 set(CPPM_CORE   ${CPPM_PKGS}/cppm-tools-${CPPM_TOOLS_VERSION})
 
 if(NOT DEFINED IS_CPPM_LOADED)
-set(_install_script "${CPPM_CACHE}/cppm-tools/${CPPM_VERSION}/install-script")
+set(_install_script "${CPPM_CACHE}/cppm-tools/${CPPM_TOOLS_VERSION}/install-script")
 file(WRITE ${_install_script}/CMakeLists.txt
 "cmake_minimum_required(VERSION 3.6)
 project(CPPM_TOOLS_DOWNLOAD NONE)
