@@ -1,4 +1,5 @@
 #include "cppm/core/cppm_tool.hpp"
+#include "cppm_version.h"
 #include "cppm/util/filesystem.h"
 #include "cppm/util/version.h"
 #include <range/v3/all.hpp>
@@ -36,9 +37,8 @@ namespace cppm::core {
         std::string gen = fmt::format(
              "cmake_minimum_required(VERSION {cmake_version})\n"
               "\n"
-              "if(NOT IS_CPPM_LOADED)\n"
-              "    include(cmake/cppm_tool.cmake)\n"
-              "endif()\n"
+              "set(CPPM_VERSION {cppm_version})\n"
+              "include(cmake/cppm_loader.cmake)\n"
               "cppm_project({with_vcpkg})\n"
               "{hunter}\n" // dependencies hunter
               "project({pkg_name} VERSION {pkg_ver} LANGUAGES C CXX)\n"
@@ -50,6 +50,7 @@ namespace cppm::core {
               "{cppkg_define}\n"
               "{cppkg_dependencies}\n"
               "{cppkg_install}\n"
+               ,"cppm_version"_a=std::string(CPPM_VERSION)
                ,"with_vcpkg"_a=cmake::arg_flag(config.package.with_vcpkg.value(), "WITH_VCPKG")
                ,"cmake_version"_a=config.cmake->version.value()
                ,"hunter"_a=hunter_load(config)
@@ -293,10 +294,11 @@ namespace cppm::core {
             "# Cppkg Base Dependency Downloader\n"
             "cmake_minimum_required(VERSION 3.6)\n"
             "project({name}-{version}-install)\n\n"
-            "include(${{CMAKE_CURRENT_SOURCE_DIR}}/cmake/cppm_tool.cmake)\n"
+            "set(CPPM_VERSION {cppm_version})\n"
+            "include(${{CMAKE_CURRENT_SOURCE_DIR}}/cmake/cppm_loader.cmake)\n"
             "download_package({name} {version} {url} {type} CMAKE_ARGS "
             "${{CMAKE_ARGS}} {flags})\n\n",
-            "name"_a = dep.name, "version"_a = (*dep.version),
+            "name"_a = dep.name, "version"_a = (*dep.version), "cppm_version"_a=std::string(CPPM_VERSION),
             "url"_a = download, "type"_a=cmake::arg("TYPE", dep.type), "flags"_a = dep.flags.value_or(""));
     }
 

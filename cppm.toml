@@ -1,6 +1,6 @@
 [package]
 name    = "cppm"
-version = "0.0.11"
+version = "0.0.12"
 description = "c++ cmake maker use to toml like Cargo"
 git = "https://github.com/injae/cppm.git"
 
