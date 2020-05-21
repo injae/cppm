@@ -4,7 +4,6 @@ else()
     set(env_home "$ENV{HOME}")
 endif()
 string(REPLACE "\\" "/" HOME "${env_home}")
-set(CPPM_VERSION "0.0.12")
 
 set(CPPM_ROOT          ${HOME}/.cppm)
 set(CPPM_LOADER_CACHE  ${CPPM_ROOT}/cache/cppm-loader/git)
