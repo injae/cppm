@@ -1,14 +1,7 @@
 # Cppkg Base Dependency Downloader
-# Other Options:
-# - Linux Configures:
-#    L_CONFIGURE {...}, L_BUILD {...}, L_INSTALL {...}
-# - Windows Configures:
-#    W_CONFIGURE {...}, W_BUILD {...}, W_INSTALL {...}
-# - Install Path Options:
-#    LOCAL(default) GLOBAL 
 cmake_minimum_required(VERSION 3.6)
-project(range-v3-git-install C CXX)
+project(range-v3-git-install)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
-download_package(range-v3 git  GIT https://github.com/ericniebler/range-v3.git CMAKE_ARGS ${CMAKE_ARGS} -DRANGE_V3_TESTS=OFF -DRANGE_V3_EXAMPLES=OFF -DRANGE_V3_PERF=OFF -DRANGE_V3_HEADER_CHECKS=OFF)
+download_package(range-v3 git  GIT https://github.com/ericniebler/range-v3.git  TYPE lib CMAKE_ARGS ${CMAKE_ARGS} -DRANGE_V3_TESTS=OFF -DRANGE_V3_EXAMPLES=OFF -DRANGE_V3_PERF=OFF -DRANGE_V3_HEADER_CHECKS=OFF)
 

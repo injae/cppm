@@ -4,5 +4,6 @@
 #define __CPPM_VERSION_H_
 
 #define CPPM_VERSION "@PROJECT_VERSION@"
+#define CPPM_TOOLS_VERSION "@CPPM_TOOLS_VERSION@"
 
 #endif

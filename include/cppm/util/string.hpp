@@ -17,5 +17,4 @@ namespace cppm::util::str {
     }
 }
 
-
 #endif
