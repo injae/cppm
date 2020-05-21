@@ -4,3 +4,6 @@
 [submodule "libs/tomlpp"]
 	path = libs/tomlpp
 	url = https://github.com/injae/cpptoml.git
+[submodule "cppm-loader"]
+	path = cmake/cppm-loader
+	url = https://github.com/injae/cppm-loader.git

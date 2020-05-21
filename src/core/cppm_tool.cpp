@@ -293,7 +293,7 @@ namespace cppm::core {
             "# Cppkg Base Dependency Downloader\n"
             "cmake_minimum_required(VERSION 3.6)\n"
             "project({name}-{version}-install)\n\n"
-            "include(${{CMAKE_CURRENT_SOURCE_DIR}}/cmake/cppm_tool.cmake)\n"
+            "include(${{CMAKE_CURRENT_SOURCE_DIR}}/cmake/cppm_loader.cmake)\n"
             "download_package({name} {version} {url} {type} CMAKE_ARGS "
             "${{CMAKE_ARGS}} {flags})\n\n",
             "name"_a = dep.name, "version"_a = (*dep.version),

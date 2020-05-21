@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
 if(NOT IS_CPPM_LOADED)
-    include(cmake/cppm_tool.cmake)
+    include(cmake/cppm_loader.cmake)
 endif()
 cppm_project()
 

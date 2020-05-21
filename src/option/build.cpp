@@ -110,8 +110,8 @@ namespace cppm::option
                         util::write_file("{0}/CMakeLists.txt"_format(path.root), tranc_cmake);
                     }
                     fs::create_directories(path.cmake);
-                    util::over_write_copy_file("{0}cmake/cppm_tool.cmake"_format(core::cppm_root())
-                                               ,"{0}/cppm_tool.cmake"_format(path.cmake));
+                    util::over_write_copy_file("{0}cmake/cppm_loader.cmake"_format(core::cppm_root())
+                                               ,"{0}/cppm_loader.cmake"_format(path.cmake));
                     if(only_tc) { exit(1); }
                 }
                 if(clean) {
