@@ -15,7 +15,7 @@
 - Ccache (optional)
 
 > My native language is not English.  
-> Since I used a translator, please let me know if you have any problems with grammar.
+> Since I used a translator, please let me know if you have any problems with grammar.  
 > This project was inspired by Rust's Cargo.  
 > Cppm is a cross platform C++ project manager  
 > So the configuration of the configuration file is almost similar to Rust's Cargo.toml.  
@@ -66,8 +66,6 @@ range-v3 = "git"
 
 [dev-dependencies]
     Catch2 = "2.9.1"
-    
-    
 
 #[target.x64-unix.dependencies]
 #[target.x64-unix.dev-dependencies]
