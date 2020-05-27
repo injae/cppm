@@ -72,8 +72,8 @@ namespace cppm::option
         make_gitignore(project);
 
         auto cppm_path = core::cppm_root();
-        util::over_write_copy_file("{0}cmake/cppm_tool.cmake"_format(core::cppm_root())
-                                    ,"{0}/cppm_tool.cmake"_format(project.cmake));
+        util::over_write_copy_file("{0}cmake/cppm_loader.cmake"_format(core::cppm_root())
+                                    ,"{0}/cppm_loader.cmake"_format(project.cmake));
 
         return "[package]\n"
              + "   name = {}\n"_format(quot(name))
