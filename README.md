@@ -14,20 +14,18 @@
 - Git
 - Ccache (optional)
 
-> Cppm is a cross platform C++ project manager like Rust's Cargo.   
-> cppm only needs cmake, c++-compiler, git.  
+> My native language is not English.  
+> Since I used a translator, please let me know if you have any problems with grammar.
 > This project was inspired by Rust's Cargo.  
-> So the configuration of the configuration file is almost similar to Rust's Cargo.toml.
-> we created the cppm.toml file so that we could create the CMake project.   
-> Cppm is made up of C++ and CMake only.   
-> The goal of this project is to make the C++ project as comfortable as Rust's Cargo.  
+> Cppm is a cross platform C++ project manager  
+> So the configuration of the configuration file is almost similar to Rust's Cargo.toml.  
+> Using cppm, you can easily create a cross-platform c ++ project.  
+> Projects made with cppm only need c ++ compiler, cmake and git.  
+> Projects written in cppm automatically install dependencies.   
 > Not many libraries are supported by the cppkg yet. But cppkg package make easy  
 > So cppm made the package of the [Hunter Package Manager](https://github.com/ruslo/hunter) available.   
 > If there is a library you want to add, please issue a pull request to the [Cppkg repository](https://github.com/injae/cppkg)  
-> Cppm auto detect vcpkg toolchain
-> My native language is not English. Please let me know if you have any problems with grammar.
-> Any cppm.toml documentation that is lacking due to time issues would be appreciated   
-> if you refer to Cargo.toml documentation or contact me. Documents will be updated as soon as possible.  
+> Cppm auto detect vcpkg toolchain.  
 
 ## Easy Config file
 ```toml
@@ -37,7 +35,7 @@ name    = "cppm"
 version = "0.0.10"
 description = "c++ cmake maker use to toml like Cargo"
 git = "https://github.com/injae/cppm.git"
-#vcpkg =true # vcpkg auto detect flag
+#vcpkg =true # vcpkg auto detect flag, but not recommended option
 
 [cmake]
 include  = ["cmake/cppm_install.cmake"]
@@ -68,6 +66,8 @@ range-v3 = "git"
 
 [dev-dependencies]
     Catch2 = "2.9.1"
+    
+    
 
 #[target.x64-unix.dependencies]
 #[target.x64-unix.dev-dependencies]
@@ -77,34 +77,36 @@ range-v3 = "git"
 
 ## Easy to make Unregistered Package Add
 ```console
+$ cd {package root}/thirdparty
 $ cppm cppkg init -U "https://github.com/fmtlib/fmt/releases/download/6.2.0/fmt-6.2.0.zip" fmt
 ```
 ```toml
 # fmt/6.2.0/cppkg.toml
 [fmt]
 version = "6.2.0"
-description = "A modern formatting library"
+description = ""
 module = "fmt::fmt"
 url="https://github.com/fmtlib/fmt/releases/download/6.2.0/fmt-6.2.0.zip"
 ```
 
 ```console
+$ cd {package root}/thirdparty
 $ cppm cppkg init -U "https://github.com/fmtlib/fmt.git" fmt
 ```
 ```toml
 # fmt/git/cppkg.toml
 [fmt]
 version = "git"
-description = "A modern formatting library"
+description = ""
 module = "fmt::fmt"
 git="https://github.com/fmtlib/fmt.git"
 flags="-DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_FUZZ=OFF" # (optional) for cmake build fast flags
 ```
 
 ## Installation
-### Ubuntu
+### Linux 
 ```console
-sudo apt-get install build-essential
+# install c++17 compiler, cmake and git
 git clone --recurse-submodules https://github.com/injae/cppm.git
 cd cppm
 cmake -Bbuild -DCMAKE_BUILD_TYPE=Release

@@ -19,29 +19,6 @@ namespace cppkg
         return (*dep)[name];
     }
 
-    std::string translate(cppm::core::Dependency& dep) {
-        using namespace cppm;
-        std::string cmake;
-        auto download = dep.git ? "GIT {} "_format(*dep.git) : "URL {} "_format(*dep.url) ;
-        download += dep.branch ? "GIT_TAG {} "_format(*dep.branch) : "";
-        cmake += "# Cppkg Base Dependency Downloader\n"
-                 "# Other Options:\n"
-                 "# - Linux Configures:\n"
-                 "#    L_CONFIGURE {...}, L_BUILD {...}, L_INSTALL {...}\n"
-                 "# - Windows Configures:\n"
-                 "#    W_CONFIGURE {...}, W_BUILD {...}, W_INSTALL {...}\n"
-                 "# - Install Path Options:\n"
-                 "#    LOCAL(default) GLOBAL \n"
-                 "cmake_minimum_required(VERSION 3.6)\n"  
-              +  "project({0}-{1}-install C CXX)\n\n"_format(dep.name, *dep.version)
-              +  "include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)\n" 
-              +  "download_package({} {} {} CMAKE_ARGS ${{CMAKE_ARGS}} {})\n\n"_format( dep.name
-                                                                                      , dep.version
-                                                                                      , download
-                                                                                      , dep.flags.value_or(""));
-        return cmake;
-    }
-
     void init(const std::string& name) {
         cppm::core::Dependency dep;
         dep.name = name; dep.type = "lib";

@@ -10,7 +10,7 @@
 namespace cppkg {
     using dep_in_repo = std::pair<cppm::core::Dependency,std::string>;
     cppm::core::Dependency parse(const std::string& name, std::string path="");
-    std::string translate(cppm::core::Dependency& dep);
+    //    std::string translate(cppm::core::Dependency& dep);
     void init(const std::string& name);
     void init(cppm::core::Dependency& dep);
     Repos list();

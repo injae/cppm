@@ -28,5 +28,3 @@ execute_process(COMMAND cmake . WORKING_DIRECTORY ${_install_script} OUTPUT_QUIE
 execute_process(COMMAND cmake  --build . WORKING_DIRECTORY ${_install_script} OUTPUT_QUIET)
 endif()
 include(${CPPM_LOADER_PATH}/load.cmake)
-
-set(CPPM_VERSION "0.0.11")
