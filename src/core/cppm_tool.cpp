@@ -43,7 +43,7 @@ namespace cppm::core {
               "cppm_project({with_vcpkg})\n"
               "{hunter}\n" // dependencies hunter
               "project({pkg_name} VERSION {pkg_ver} LANGUAGES C CXX)\n"
-              "cppm_setting()\n"
+              "cppm_setting({unity_build})\n"
               "cppm_cxx_standard({cpp_ver})\n"
               "{compiler}\n"
               "{include}\n"
@@ -52,6 +52,7 @@ namespace cppm::core {
               "{cppkg_dependencies}\n"
               "{cppkg_install}\n"
                ,"cppm_version"_a=std::string(CPPM_VERSION)
+               ,"unity_build"_a=cmake::arg_flag(config.package.unity_build.value(), "UNITY_BUILD")
                ,"with_vcpkg"_a=cmake::arg_flag(config.package.with_vcpkg.value(), "WITH_VCPKG")
                ,"cmake_version"_a=config.cmake->version.value()
                ,"hunter"_a=hunter_load(config)
@@ -64,7 +65,7 @@ namespace cppm::core {
                ,"cppkg_define"_a=cppm_target_define(config)
                ,"cppkg_dependencies"_a=cppm_target_dependencies(config)
                ,"cppkg_install"_a=cppm_target_install(config)
-              );
+        );
         
 
         return gen;

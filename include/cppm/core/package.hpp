@@ -15,6 +15,7 @@ namespace cppm::core {
                 .element(TOML_D(standard), "17")
                 .element(TOML_D(description), "")
                 .element(with_vcpkg, "vcpkg", false)
+                .element(unity_build, "unity-build", false)
                 .element(git_repo, "git")
                 .no_remains();
         }
@@ -24,6 +25,7 @@ namespace cppm::core {
         opt<std::string> standard;
         opt<std::string> git_repo;
         opt<bool> with_vcpkg;
+        opt<bool> unity_build;
     };
 }
 
