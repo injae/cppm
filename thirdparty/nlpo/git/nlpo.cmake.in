@@ -1,18 +1,8 @@
+# Cppkg Base Dependency Downloader
 cmake_minimum_required(VERSION 3.6)
-project(nlpo-git-install NONE)
+project(nlpo-git-install)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
-download_package(
-    nlpo
-    git
-    GIT https://github.com/injae/nlpo.git
-    LOCAL
-    CMAKE_ARGS ${CMAKE_ARGS})
+set(CPPM_VERSION 0.0.13)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_loader.cmake)
+download_package(nlpo git  GIT https://github.com/injae/nlpo.git  TYPE lib CMAKE_ARGS ${CMAKE_ARGS} )
 
-# Other Options:
-# - Linux Configures:
-#    L_CONFIGURE {...}, L_BUILD {...}, L_INSTALL {...}
-# - Windows Configures:
-#    W_CONFIGURE {...}, W_BUILD {...}, W_INSTALL {...}
-# - Install Path Options:
-#    LOCAL(default) GLOBAL 

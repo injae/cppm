@@ -98,7 +98,8 @@ namespace cppm::option
                     if(auto match = util::find_pattern(target_file,filter)) {
                         pkg.module = (*match)[1].str();
                     } else {
-                        fmt::print(stderr, "this package can't generate cppkg file\n maybe this package is not cmake package or unexportable package\n");
+                        fmt::print(stderr, "this package can't generate cppkg file\n"
+                                           "maybe this package is not cmake package or unexportable package\n");
                         exit(1);
                     }
                     util::working_directory(current_path.string());

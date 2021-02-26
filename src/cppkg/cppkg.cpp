@@ -3,10 +3,10 @@
 #include <cppm/util/optional.hpp>
 #include <cppm/cppkg/cppkg.h>
 #include <cppm/core/cppm_tool.hpp>
-#include <tomlpp/orm.hpp>
 #include <range/v3/all.hpp>
 #include <map>
 #include <list>
+#include <serdepp/adaptor/toml11.hpp>
 
 namespace cppkg
 {
@@ -15,7 +15,8 @@ namespace cppkg
         using namespace cppm;
         path = path != "" ? "{}/"_format(path) : "";
         std::optional<std::map<std::string,core::Dependency>> dep;
-        auto config = toml::orm::parser(dep,"{}cppkg.toml"_format(path));
+        dep = serde::parse_file_and_serde<toml::value, std::map<std::string,core::Dependency>>("{}cppkg.toml"_format(path));
+        //auto config = toml::orm::parser(dep,"{}cppkg.toml"_format(path));
         return (*dep)[name];
     }
 
@@ -30,7 +31,7 @@ namespace cppkg
         auto value = [](const std::string& str){ return "\"{}\""_format(str); };
         //auto convert = [](const bool flag) { return flag ? "true" : "false"; };
         util::panic(!fs::exists("cppkg.toml"), "existed cppkg.toml");
-        auto url_type = dep.git ? "git" : "url";
+        auto url_type = dep.git ? "git={}"_format(value(*dep.git)) : "url={}"_format(value(*dep.url));
         auto is_branch = dep.branch ? "" : "#";
         util::create("cppkg.toml");
         util::write("cppkg.toml"
@@ -39,7 +40,7 @@ namespace cppkg
                     +"type={} #lib(default) | bin | cmake\n"_format(value(*dep.type))
                     +"description={} #(require)\n"_format(value(*dep.description))
                     +"module={} #(require) if none_module=true -> no require\n"_format(value(*dep.module))
-                    +"{}={} #(require)\n"_format(url_type,value(*dep.url))
+                    +"{} #(require)\n"_format(url_type)
                     +"{}branch={} #(optional & require git)\n"_format(is_branch, value(*dep.branch))
                     +"#link={} #default\n"_format(value("public"))
                     //+"#components={} #(optional)\n"_format(value(*dep.components))

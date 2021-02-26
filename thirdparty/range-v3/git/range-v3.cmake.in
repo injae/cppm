@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.6)
 project(range-v3-git-install)
 
-set(CPPM_VERSION 0.0.12)
+set(CPPM_VERSION 0.0.13)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_loader.cmake)
 download_package(range-v3 git  GIT https://github.com/ericniebler/range-v3.git  TYPE lib CMAKE_ARGS ${CMAKE_ARGS} -DRANGE_V3_TESTS=OFF -DRANGE_V3_EXAMPLES=OFF -DRANGE_V3_PERF=OFF -DRANGE_V3_HEADER_CHECKS=OFF)
 

@@ -41,8 +41,8 @@ namespace cppm::option
                 auto build = Build();
                 build.start_from(path);
                 std::vector<std::string> args = {"install"};
-                build.app().args().insert(build.app().args().end(), args.begin(), args.end());
                 build.app().parse(app_);
+                build.app().args().insert(build.app().args().end(), args.begin(), args.end());
                 fs::remove_all(path);
             });
     }

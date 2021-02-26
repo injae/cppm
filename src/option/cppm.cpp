@@ -37,15 +37,14 @@ namespace cppm::option
         app_.add_command("test")
             .desc("run the tests")
             .args("{ctest flags}")
-            .call_back([&](){
-                config_load();
-                util::working_directory(config_->path.build.string().c_str());
-                auto str_args = "ctest " + util::accumulate(app_.args(), " "); app_.args().clear();
-                system(str_args.c_str());
+            .call_back([&]() {
+              config_load();
+              util::working_directory(config_->path.build.string().c_str());
+              auto str_args = "ctest " + util::accumulate(app_.args(), " ");
+              app_.args().clear();
+              system(str_args.c_str());
             });
-            
-    } 
-
+    }
     void Cppm::_run() {
         using namespace fmt::literals;
         config_load();

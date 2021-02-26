@@ -108,7 +108,7 @@ namespace cppm::util
                 recursive_copy(item.path(), dst/item.path().filename());
             }
         } 
-        else if (fs::is_regular_file(src)) {fs::copy(src, dst);} 
+        else if (fs::is_regular_file(src)) { fs::copy(src, dst); } 
         else {throw std::runtime_error(dst.generic_string() + " not dir or file");}
     }
 

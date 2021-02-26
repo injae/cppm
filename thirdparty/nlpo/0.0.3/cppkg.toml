@@ -1,0 +1,5 @@
+[nlpo]
+version = "0.0.3"
+description = "c++ program option and command library"
+module  = "nlpo::nlpo "
+url="https://github.com/injae/nlpo/archive/0.0.3.tar.gz"

@@ -15,12 +15,33 @@ namespace cppm::option
     Init::Init() {
         app_.add_option("bin")
             .abbr("b")
-            .desc("initialize new c++ binary project")
-            .call_back([&](nlpo::arg::One arg){ make_bin(arg); }, "{binary name}");
+            .desc("initialize binary project")
+            .call_back([&](){ type = "bin"; });
         app_.add_option("lib")
             .abbr("l")
-            .desc("initialize new c++ library project")
-            .call_back([&](nlpo::arg::One arg){ make_lib(arg); }, "{library name}");
+            .desc("initialize library project")
+            .call_back([&](){ type = "lib"; });
+        app_.add_option("dep")
+            .abbr("d")
+            .desc("add dependency")
+            .call_back([&](nlpo::arg::One arg) { deps.emplace_back(arg); }, "{dep}={version}");
+        app_.add_command()
+            .args("{name}")
+            .call_back([&]() {
+                name = app_.get_arg();
+                if (type == "lib") {
+                    make_lib(name);
+                } else {
+                    make_bin(name);
+                }
+            });
+    }
+
+    std::string Init::add_deps() {
+        std::string gen;
+        if(!deps.empty()) gen += "[dependencies]\n";
+        for (auto &dep : deps) { gen += "   {}\n"_format(dep); }
+        return gen;
     }
 
     void Init::make_bin(const std::string& name) {
@@ -28,6 +49,7 @@ namespace cppm::option
         gen += "[[bin]]\n"
             +  "   name = {}\n"_format(quot(name))
             +  "   source = [{}]\n"_format("src/.*"_quot)
+            +  add_deps()
             ;
 
         auto project = core::Path::make((fs::current_path()/name).string());
@@ -47,6 +69,7 @@ namespace cppm::option
             +  "   name = {}\n"_format(quot(name))
             +  "   type = {}\n"_format("shared"_quot)
             +  "   source = [{}]\n"_format("src/.*"_quot)
+            +  add_deps()
             ;
 
         auto project = core::Path::make((fs::current_path()/name).string());

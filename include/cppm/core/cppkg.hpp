@@ -6,74 +6,71 @@
 #include "cppm/core/dependency.hpp"
 #include "cppm/util/hash.hpp"
 #include <functional>
-#include <tomlpp/orm.hpp>
+#include <serdepp/utility.hpp>
 
 namespace cppm::core {
-    class Cppkg : public toml::orm::table {
+    class Cppkg {
     public:
-        template<typename Def>
-        void parse(Def& defn) {
+        derive_serde(Cppkg,
             using namespace utilpp::literals;
-            type = defn.name();
-            defn.element(TOML_D(name))
-                .element(namespace_, "namespace")
-                .element(TOML_D(source))
-                .element(exclude_var, "flag");
-
-            switch(utilpp::hash(type))
-            {
-            case "lib"_h:
-                defn.element(cppkg_type, "type", "static") ;
-                defn.element(TOML_D(install), true);
-                break;
-            case "bin"_h:
-                defn.element(TOML_D(install), true);
-                defn.element(cppkg_type, "type", "binary") ;
-                break;
-            case "test"_h:
-            case "example"_h:
-                defn.element(cppkg_type, "type", "binary") ;
-                defn.element(TOML_D(install), false);
-                break;
-            default:
-                fmt::print(stderr, "unkown target type \"{}\"\n",type); exit(1);
-            }
-        }
+                      ctx
+                     .name(type)
+                     .TAG(name)
+                     .tag(namespace_, "namespace")
+                     .TAG(source)
+                     .tag(exclude_var, "flag");
+                    switch(utilpp::hash(type))
+                    { 
+                    case "lib"_h:
+                        ctx.tag(cppkg_type, "type", "static") ;
+                        ctx.TAG_OR(install, true);
+                        break;
+                    case "bin"_h:
+                        ctx.TAG_OR(install, true);
+                        ctx.tag(cppkg_type, "type", "binary") ;
+                        break;
+                    case "test"_h:
+                    case "example"_h:
+                        ctx.tag(cppkg_type, "type", "binary") ;
+                        ctx.TAG_OR(install, false);
+                        break;
+                    default:
+                        fmt::print(stderr, "unkown target type \"{}\"\n",type); exit(1);
+                    })
         std::string name;
         std::string type; // bin | lib | test | example
-        opt<std::string> cppkg_type;
-        opt<std::string> namespace_;
-        opt<bool> install;
-        opt<arr<std::string>> source;
-        opt<std::string> exclude_var;
-        opt<bool> exclude;
+        std::optional<std::string> cppkg_type;
+        std::optional<std::string> namespace_;
+        std::optional<bool> install;
+        std::optional<std::vector<std::string>> source;
+        std::optional<std::string> exclude_var;
+        std::optional<bool> exclude;
     };
 
-    class Cppkgs : public toml::orm::inline_define {
+    class Cppkgs {
     public:
-        template<typename Def>
-        void parse(Def& defn) {
-            opt<Cppkg> lib;
-            opt<arr<Cppkg>> bins;
-            opt<arr<Cppkg>> tests;
-            opt<arr<Cppkg>> examples;
-            defn.element(bins, "bin");
-            defn.element(bins, "test");
-            defn.element(bins, "example");
-            defn.element(TOML_D(lib));
-            if(lib) list.push_back(lib.value());
-            if(bins) {
-                list.reserve( bins->size() + 1 ); // preallocate memory
-
-            }
-            if(tests) {
-                list.reserve( tests->size() + 1 ); // preallocate memory
-                list.insert( list.end(), tests->begin(), tests->end() );
-            }
-        }
-        arr<Cppkg> list;
+        derive_serde(Cppkgs, ctx
+                     .TAG(lib)
+                     .tag(bins, "bin")
+                     .tag(tests, "test")
+                     .tag(examples, "example");
+                     if constexpr (std::decay_t<decltype(ctx)>::serialize_step) {
+                        if(lib) list.push_back(lib.value());
+                        if(bins) {
+                            list.reserve( bins->size() + 1 ); // preallocate memory
+                        }
+                        if(tests) {
+                            list.reserve( tests->size() + 1 ); // preallocate memory
+                            list.insert( list.end(), tests->begin(), tests->end() );
+                        }
+                     }
+                     )
+        std::optional<Cppkg> lib;
+        std::optional<std::vector<Cppkg>> bins;
+        std::optional<std::vector<Cppkg>> tests;
+        std::optional<std::vector<Cppkg>> examples;
+        std::vector<Cppkg> list;
     };
-
 }
 
 #endif

@@ -4,9 +4,9 @@
 #include "cppm/util/version.h"
 #include <range/v3/all.hpp>
 #include <hashpp/md5.h>
+#include <string>
 
 using namespace ranges;
-
 
 namespace cppm::core {
     namespace cmake {
@@ -32,6 +32,7 @@ namespace cppm::core {
                    "   {}\n"
                    "endif()\n"_format(flag, code, else_code);
         }
+        inline std::string to_upper(std::string str) { return str | copy | actions::transform(::toupper);}
     }
 
     std::string cppm_translate(Config& config) {
@@ -51,13 +52,13 @@ namespace cppm::core {
               "{cppkg_define}\n"
               "{cppkg_dependencies}\n"
               "{cppkg_install}\n"
-               ,"cppm_version"_a=std::string(CPPM_VERSION)
-               ,"unity_build"_a=cmake::arg_flag(config.package.unity_build.value(), "UNITY_BUILD")
-               ,"with_vcpkg"_a=cmake::arg_flag(config.package.with_vcpkg.value(), "WITH_VCPKG")
-               ,"cmake_version"_a=config.cmake->version.value()
+               ,"cppm_version"_a=*config.package.tool_version
+               ,"unity_build"_a=cmake::arg_flag(*config.package.unity_build, "UNITY_BUILD")
+               ,"with_vcpkg"_a=cmake::arg_flag(*config.package.with_vcpkg, "WITH_VCPKG")
+               ,"cmake_version"_a=*config.cmake->version
                ,"hunter"_a=hunter_load(config)
                ,"pkg_name"_a=config.package.name
-               ,"pkg_ver"_a=config.package.version.value()
+               ,"pkg_ver"_a=*config.package.version
                ,"cpp_ver"_a=config.package.standard.value()
                ,"compiler"_a=cppm_compiler_option(config)
                ,"include"_a=include_cmake_files(config)
@@ -66,19 +67,21 @@ namespace cppm::core {
                ,"cppkg_dependencies"_a=cppm_target_dependencies(config)
                ,"cppkg_install"_a=cppm_target_install(config)
         );
-        
-
         return gen;
     }
+
     std::string cppm_header(Config& config) {
         std::string gen;
         return gen;
     }
 
+    void cppm_features_parse(Config& config) {
+    }
+
     std::string hunter_load(Config& config) {
         std::string gen;
-        auto& is_hunter = config.hunter->use.value();
-        if(!is_hunter) {
+        auto is_hunter = *config.hunter->use;
+        if(not is_hunter) {
             auto find_hunter = [&is_hunter](auto& target){
                     if(target) {
                         auto result = *target | views::filter([](auto it) { return *it.second.repo == "hunter"; });
@@ -96,21 +99,21 @@ namespace cppm::core {
                   "   URL {url}\n"
                   "   SHA1 {sha1}\n"
                  ")"
-                 ,"url"_a=*config.hunter->url
-                 ,"sha1"_a=*config.hunter->sha1);
+                ,"url"_a=config.hunter->url.value()
+                ,"sha1"_a=config.hunter->sha1.value());
         }
         return gen;
     }
     std::string cppm_compiler_option(Config& config) {
         std::string gen;
-        if(config.profile) {
+        if(config.profile.has_value()) {
             for(auto& [name, type] : *config.profile){
-                auto rtype = name == "dev" ? "DEBUG" : name | copy | actions::transform(::toupper);
+                auto rtype = name == "dev" ? "DEBUG" : cmake::to_upper(name);
                 if(type.compiler) {
                     auto script = *type.compiler
                         | views::filter([](auto it) { return it.second.option.has_value();})
                         | views::transform([](auto it) { auto& [name, comp] = it;
-                            auto cname = name | copy | actions::transform(::toupper);
+                                auto cname = cmake::to_upper(name);
                             return "      {} \"{}\"\n"_format(cname, *comp.option);
                         }) | to_vector;
                     if(!script.empty()) {
@@ -123,6 +126,7 @@ namespace cppm::core {
         }
         return "cppm_compiler_option({})"_format(gen);
     }
+
     std::string include_cmake_files(Config& config) {
         std::string gen;
         if(config.cmake->include) {
@@ -136,19 +140,22 @@ namespace cppm::core {
     std::string find_cppkg(Config& config) {
         using namespace cmake;
         std::string gen;
-        auto make_find_cppkg = [&gen](auto& deps){
+        auto make_find_cppkg = [&](auto& deps){
             if(deps) {
-                auto scripts = *deps | views::transform([](auto it) {
+                auto scripts = *deps | views::transform([&](auto it) {
                     auto& [name, dep] = it;
                     auto hunter = dep.repo == "hunter" ? " HUNTER" : "";
-                    return fmt::format("find_cppkg({name} {ver} {module}{components}{path}{hunter}{type})\n"
+                    auto opt = *dep.optional ? " OPTIONAL OFF" : "";
+                    return fmt::format("find_cppkg({name} {ver} {module}{components}{path}{hunter}{type}{optional})\n"
                                             ,"name"_a=dep.name
                                             ,"ver"_a=dep.version
                                             ,"module"_a=arg("MODULE",dep.module)
-                                            ,"components"_a=qarg("COMPONENTS",dep.components)
+                                            ,"components"_a=arg("COMPONENTS",dep.components)
                                             ,"path"_a=arg("LOADPATH",dep.path)
                                             ,"hunter"_a=hunter
-                                            ,"type"_a=arg("TYPE",dep.type));
+                                            ,"type"_a=arg("TYPE",dep.type)
+                                            ,"optional"_a=opt
+                                       );
                 }) | to_vector;
                 gen += fmt::format("{}",fmt::join(scripts, ""));
             }
@@ -183,9 +190,7 @@ namespace cppm::core {
         auto make_script = [&gen](auto& pkg) {
                 auto src = pkg.source ? fmt::format("\nSOURCES\n    {}\n",fmt::join(*pkg.source, "\n    ")) : "";
                 std::string cppkg_type = *pkg.cppkg_type == "header-only" ? "INTERFACE"
-                                                                          : *pkg.cppkg_type
-                                                                          | copy
-                                                                          | actions::transform(::toupper);
+                                                                          : cmake::to_upper(*pkg.cppkg_type);
                 gen += fmt::format("cppm_target_define({name} {type}{namespace}{sources})\n\n"
                                   ,"name"_a=pkg.name
                                   ,"type"_a=cppkg_type
@@ -194,7 +199,7 @@ namespace cppm::core {
         };
         if(config.lib)  make_script(*config.lib);
         if(config.bins) ranges::for_each(*config.bins, make_script);
-        auto upkg_name = config.package.name | copy | actions::transform(::toupper);
+        auto upkg_name = cmake::to_upper(config.package.name);
         if(config.examples) {
             gen += "cppm_examples_area()\n"
                    "if({}_BUILD_EXAMPLES)\n\n"_format(upkg_name);
@@ -222,8 +227,8 @@ namespace cppm::core {
                 auto group = libs | views::group_by([](auto a, auto b) { return *a.link == *b.link; });
                 auto link_join = [](auto& i) {
                     auto names =  i | views::transform([](auto i){ return i.name; }) | to_vector;
-                    return "{} {}"_format(*i[0].link | copy | actions::transform(::toupper)
-                                             ,names | views::join(views::c_str(" ")) | to<std::string>());
+                    return "{} {}"_format(cmake::to_upper(*i[0].link)
+                                         ,names | views::join(views::c_str(" ")) | to<std::string>());
                 };
                 auto cmake_dep = group
                     | views::transform([&link_join](auto i){ return link_join(i); })
@@ -234,28 +239,29 @@ namespace cppm::core {
             }
             return std::string{""};
         };
-        gen += cmake::set("global_deps", grouped_deps(config.dependencies));
+        std::string global_deps = "{}_global_deps"_format(config.package.name);
+        gen += cmake::set(global_deps, grouped_deps(config.dependencies));
         if(config.dev_dependencies) {
             gen += cmake::if_else("CMAKE_BUILD_TYPE STREQUAL \"Debug\""
-                                 , cmake::append("global_deps",grouped_deps(config.dev_dependencies)));
+                                 , cmake::append(global_deps, grouped_deps(config.dev_dependencies)));
         }
 
         if(config.target) {
-            ranges::for_each(*config.target, [&gen,&grouped_deps](auto& it) {
+            ranges::for_each(*config.target, [&gen,&grouped_deps,&global_deps](auto& it) {
                 auto& [name, target] = it;
                 gen += "\ntriplet_check({})\nif(_result)\n"_format(cmake::quote(name));
-                gen += cmake::append("global_deps",grouped_deps(target.dependencies));
+                gen += cmake::append(global_deps, grouped_deps(target.dependencies));
                 if (target.dev_dependencies) {
                     gen += "\nif(CMAKE_BUILD_TYPE STREQUAL \"Debug\")\n";
-                    gen += cmake::append("global_deps",grouped_deps(target.dev_dependencies));
+                    gen += cmake::append(global_deps, grouped_deps(target.dev_dependencies));
                     gen += "endif()\n";
                 }
                 gen += "\nendif()\n";
             });
         }
 
-        auto set_dependencies = [&config](auto& target) {
-            std::vector<std::string> deps{cmake::getf("global_deps")};
+        auto set_dependencies = [&config,&global_deps](auto& target) {
+            std::vector<std::string> deps{cmake::getf(global_deps)};
             if(target.type != "lib" && config.lib) deps.emplace_back(config.lib->name);
             return fmt::format("cppm_target_dependencies({name}\n   {deps})\n\n"
                                ,"name"_a=target.name
@@ -310,9 +316,7 @@ namespace cppm::core {
         if(auto list = util::file_list(hunter_root)) {
             for(auto& file : *list) {
                 auto other = Version::parse(file.path().filename().string());
-                if(version < other) {
-                    version = other;
-                }
+                if (version < other) { version = other; }
             }
         }
         auto min_hash = util::file_list(hunter_root+version.str())->front().path().filename().string().substr(0,7);

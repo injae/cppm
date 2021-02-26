@@ -1,15 +1,8 @@
 # Cppkg Base Dependency Downloader
-# Other Options:
-# - Linux Configures:
-#    L_CONFIGURE {...}, L_BUILD {...}, L_INSTALL {...}
-# - Windows Configures:
-#    W_CONFIGURE {...}, W_BUILD {...}, W_INSTALL {...}
-# - Install Path Options:
-#    LOCAL(default) GLOBAL 
 cmake_minimum_required(VERSION 3.6)
-project(dbg-macro-git-install C CXX)
+project(dbg-macro-git-install)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_tool.cmake)
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH})
-download_package(dbg-macro git  GIT https://github.com/injae/dbg-macro.git CMAKE_ARGS ${CMAKE_ARGS} )
+set(CPPM_VERSION 0.0.12)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_loader.cmake)
+download_package(dbg-macro git  GIT https://github.com/injae/dbg-macro.git  TYPE lib CMAKE_ARGS ${CMAKE_ARGS} )
 

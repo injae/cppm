@@ -1,20 +1,22 @@
 cmake_minimum_required(VERSION 3.12)
 
-set(CPPM_VERSION 0.0.12)
+set(CPPM_VERSION dev)
 include(cmake/cppm_loader.cmake)
 cppm_project()
 
-project(cppm VERSION 0.0.12 LANGUAGES C CXX)
+project(cppm VERSION 0.0.13 LANGUAGES C CXX)
 cppm_setting()
 cppm_cxx_standard(17)
 cppm_compiler_option(DEFAULT)
 
 include(cmake/cppm_install.cmake)
-find_cppkg(fmt 6.2.0  MODULE fmt::fmt TYPE lib)
+find_cppkg(fmt 7.1.3  MODULE fmt::fmt TYPE lib)
 find_cppkg(hashpp git  MODULE hashpp::hashpp TYPE lib)
-find_cppkg(nlpo 1.0.3  MODULE nlpo LOADPATH libs/nlpo TYPE lib)
+find_cppkg(nlohmann_json 3.9.1  MODULE nlohmann_json::nlohmann_json TYPE lib)
+find_cppkg(nlpo git  MODULE nlpo::nlpo  TYPE lib)
 find_cppkg(range-v3 git  MODULE range-v3::range-v3 TYPE lib)
-find_cppkg(tomlpp 0.6.0  MODULE tomlpp LOADPATH libs/tomlpp TYPE lib)
+find_cppkg(serdepp git  MODULE serdepp::serdepp TYPE lib)
+find_cppkg(toml11 3.6.0  MODULE toml11::toml11 TYPE lib)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
 find_cppkg(Catch2 2.9.1  MODULE Catch2::Catch2 TYPE lib)
@@ -87,23 +89,23 @@ endif()
 end_cppm_unit_test_area()
 
 
-set(global_deps PUBLIC fmt hashpp nlpo range-v3 tomlpp)
+set(cppm_global_deps PUBLIC fmt hashpp nlohmann_json nlpo range-v3 serdepp toml11)
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-   list(APPEND global_deps PUBLIC Catch2)
+   list(APPEND cppm_global_deps PUBLIC Catch2)
 endif()
 cppm_target_dependencies(cppm-core
-   ${global_deps})
+   ${cppm_global_deps})
 
 cppm_target_dependencies(cppm
-   ${global_deps}
+   ${cppm_global_deps}
    cppm-core)
 
 cppm_target_dependencies(cppm-core-load
-   ${global_deps}
+   ${cppm_global_deps}
    cppm-core)
 
 cppm_target_dependencies(cppm-test-check
-   ${global_deps}
+   ${cppm_global_deps}
    cppm-core)
 
 

@@ -2,3 +2,5 @@ build/
 .ccls-cache/
 compile_commands.json
 docs/book/
+.DS_Store
+.vscode/

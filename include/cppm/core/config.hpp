@@ -11,8 +11,10 @@
 #include "cppm/core/profile.hpp"
 #include "cppm/core/cppkg.hpp"
 #include "cppm/core/target.hpp"
+#include "cppm/core/features.hpp"
 #include "cppm/util/optional.hpp"
 #include "cppm/util/filesystem.h"
+#include <serdepp/utility.hpp>
 
 namespace cppm::core {
     struct Path
@@ -36,42 +38,41 @@ namespace cppm::core {
         fs::path thirdparty;
     };
 
-    class Config :public toml::orm::table {
+    class Config {
     public:
-        template<typename Def>
-        void parse(Def& defn) {
-            defn.element(TOML_D(package))
-                .element(TOML_D(hunter))
-                .element(TOML_D(cmake))
-                .element(TOML_D(workspace))
-                .element(TOML_D(lib))
-                .element(bins, "bin")
-                .element(tests,"test")
-                .element(examples, "example")
-                .element(TOML_D(dependencies))
-                .element(dev_dependencies, "dev-dependencies")
-                .element(TOML_D(profile))
-                .element(TOML_D(target))
-                .no_remains();
-        }
+        derive_serde(Config, ctx
+                     .TAG(package)
+                     .TAG_OR(hunter, Hunter())
+                     .TAG_OR(cmake, CMake())
+                     .tag(features, "features", std::map<std::string, Feature>())
+                     .TAG(workspace)
+                     .TAG(lib)
+                     .tag(bins , "bin")
+                     .tag(tests, "test")
+                     .tag(examples, "example")
+                     .TAG(dependencies)
+                     .tag(dev_dependencies, "dev-dependencies")
+                     .TAG(profile)
+                     .TAG(target)
+                     .no_remain();)
         Package package;
         Path path;
-        opt<Hunter> hunter;
-        opt<CMake> cmake;
-        opt<Workspace> workspace; 
-        opt<Cppkg> lib;
-        opt<arr<Cppkg>> bins;
-        opt<arr<Cppkg>> tests;
-        opt<arr<Cppkg>> examples;
-        arr<Cppkg*> cppkgs;
-        opt<nested<Dependency>> dependencies;
-        opt<nested<Dependency>> dev_dependencies;
-        opt<nested<Profile>> profile;
-        opt<nested<Target>> target;
+        std::optional<Hunter> hunter;
+        std::optional<CMake> cmake;
+        std::optional<Workspace> workspace; 
+        std::optional<Cppkg> lib;
+        std::optional<std::vector<Cppkg>> bins;
+        std::optional<std::vector<Cppkg>> tests;
+        std::optional<std::vector<Cppkg>> examples;
+        std::optional<std::map<std::string, Feature>> features;
+        std::vector<Cppkg*> cppkgs;
+        std::optional<std::map<std::string, Dependency>> dependencies;
+        std::optional<std::map<std::string, Dependency>> dev_dependencies;
+        std::optional<std::map<std::string, Profile>> profile;
+        std::optional<std::map<std::string, Target>> target;
     public:
         static std::optional<Config> load(const std::string& path);
     private:
     };
 }
-
 #endif
