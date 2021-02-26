@@ -17,8 +17,8 @@ jobs:
         sudo apt-get install -yq g++-8 gcc-8 libc++-dev libc++abi-dev build-essential libstdc++-8-dev
     - name: Compiler Setting
       run: |
-        echo "::set-env name=CC::gcc-8"
-        echo "::set-env name=CXX::g++-8"
+        echo "CC=gcc-8" >> $GITHUB_ENV
+        echo "CXX=g++-8" >> $GITHUB_ENV
     - name: CMake build
       run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DUSE_CPPM_PATH=ON . && cd build && cmake --build . --target install --target cppm_link 
   ubuntu-xenial-llvm-8:
@@ -36,8 +36,8 @@ jobs:
         sudo apt-get install -yq clang-8 libc++-dev libc++abi-dev libstdc++-8-dev build-essential
     - name: Compiler Setting
       run: |
-        echo "::set-env name=CC::clang-8"
-        echo "::set-env name=CXX::clang++-8"
+        echo "CC=clang-8" >> $GITHUB_ENV
+        echo "CXX=clang++-8" >> $GITHUB_ENV
     - name: CMake build
       run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DUSE_CPPM_PATH=ON . && cd build && cmake --build . --target install --target cppm_link 
 
