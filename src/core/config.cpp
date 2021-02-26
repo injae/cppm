@@ -120,7 +120,7 @@ namespace cppm::core {
             if(key == "default") continue;
             for(auto& value : arr.member) {
                 if(value[0] == '$') { // cmake value
-                    fmt::print("= {}\n", value);
+                    //fmt::print("= {}\n", value);
                 }
                 else {
                     if(auto idx = value.find_first_of('/'); idx != std::string::npos) {
@@ -128,16 +128,15 @@ namespace cppm::core {
                         auto feature = value.substr(idx+1);
                         if(config->dependencies->find(src) != config->dependencies->end()) {
                             if(config->dependencies.value()[src].features) {
-                                fmt::print("= {}/{} = {}\n",src, feature,
-                                           config->dependencies.value()[src].features.value()[feature]);
+                                //fmt::print("= {}/{} = {}\n",src, feature, config->dependencies.value()[src].features.value()[feature]);
                             } else {
-                                fmt::print(stderr, "undefiend features: {}\n", feature); exit(1);
+                            //fmt::print(stderr, "undefiend features: {}\n", feature); exit(1);
                             }
                         } else {
-                            fmt::print(stderr, "undefiend dependencies: {}\n", src); exit(1);
+                        //fmt::print(stderr, "undefiend dependencies: {}\n", src); exit(1);
                         }
                     } else {
-                        fmt::print("= {}\n", value);
+                    //fmt::print("= {}\n", value);
                     }
                 }
             }
