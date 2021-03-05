@@ -40,7 +40,7 @@ hashpp   = "git"
 range-v3 = "git"
 nlpo     = "git"
 toml11   = "3.6.0"
-serdepp  = "git"
+serdepp  = {version="git", flags="-DSERDEPP_USE_TOML11=ON"}
 nlohmann_json="3.9.1"
 
 [dev-dependencies]

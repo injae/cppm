@@ -5,6 +5,7 @@ description="cpp serialize deserialie library" #(require)
 module="serdepp::serdepp" #(require) if none_module=true -> no require
 git="https://github.com/injae/serdepp.git" #(require)
 branch="main" #(optional & require git)
+flags="-DSERDEPP_USE_TOML11=ON"
 #link="public" #default
 [serdepp.features]
     toml = ["SERDEPP_USE_TOML11"]
