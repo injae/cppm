@@ -39,9 +39,10 @@ fmt      = "7.1.3"
 hashpp   = "git"
 range-v3 = "git"
 nlpo     = "git"
-toml11   = "3.6.0"
-serdepp  = {version="git", flags="-DSERDEPP_USE_TOML11=ON"}
+#serdepp  = {version="0.0.2", flags="-DSERDEPP_USE_TOML11=ON"}
+serdepp  = "0.0.2"
 nlohmann_json="3.9.1"
+toml11   = "3.6.0"
 
 [dev-dependencies]
     Catch2 = "2.9.1"

@@ -1,0 +1,8 @@
+# Cppkg Base Dependency Downloader
+cmake_minimum_required(VERSION 3.6)
+project(serdepp-0.0.2-install)
+
+set(CPPM_VERSION 0.0.13)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_loader.cmake)
+download_package(serdepp 0.0.2  URL https://github.com/injae/serdepp/archive/refs/tags/0.0.2.tar.gz  TYPE lib CMAKE_ARGS ${CMAKE_ARGS} )
+

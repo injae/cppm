@@ -110,7 +110,7 @@ namespace cppm::option
                 }
                 if(cmake_.toolchain) { cmake_.define("CMAKE_EXTERNAL_TOOLCHAIN_FILE", cmake_.toolchain.value()); }
                 if(!is_cppm){
-                    cmake_.toolchain = "{}cppkg/cppm-tools-{}/toolchain.cmake"_format(core::cppm_root(),
+                    cmake_.toolchain = "{}cmake/cppm-tools-{}/toolchain.cmake"_format(core::cppm_root(),
                                                                                       CPPM_TOOLS_VERSION);
                 }
                 if(cmake_.prefix == "") cmake_.define("USE_CPPM_PATH", "ON");

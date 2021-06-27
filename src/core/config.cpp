@@ -115,33 +115,35 @@ namespace cppm::core {
         }
 
         // features
-        for(auto& [key, arr] : *(config->features)) {
-            //            fmt::print("--{}",key);
-            if(key == "default") continue;
-            for(auto& value : arr.member) {
-                if(value[0] == '$') { // cmake value
-                    //fmt::print("= {}\n", value);
-                }
-                else {
-                    if(auto idx = value.find_first_of('/'); idx != std::string::npos) {
-                        auto src = value.substr(0,idx);
-                        auto feature = value.substr(idx+1);
-                        if(config->dependencies->find(src) != config->dependencies->end()) {
-                            if(config->dependencies.value()[src].features) {
-                                //fmt::print("= {}/{} = {}\n",src, feature, config->dependencies.value()[src].features.value()[feature]);
-                            } else {
-                            //fmt::print(stderr, "undefiend features: {}\n", feature); exit(1);
-                            }
-                        } else {
-                        //fmt::print(stderr, "undefiend dependencies: {}\n", src); exit(1);
-                        }
-                    } else {
-                    //fmt::print("= {}\n", value);
-                    }
-                }
-            }
-            //fmt::print("\n");
-        }
+        //for(auto& [key, feature] : *(config->features)) {
+        //    //            fmt::print("--{}",key);
+        //    if(key == "default") continue;
+        //    for(auto& value : feature.member) {
+        //        if(value[0] == '$') { // cmake value
+        //            //feature.key = value; feature.value="OFF"; 
+        //            //fmt::print("= {}\n", value);
+        //        }
+        //        else {
+        //            if(auto idx = value.find_first_of('/'); idx != std::string::npos) {
+        //                auto src = value.substr(0,idx);
+        //                auto feature_key = value.substr(idx+1);
+        //                if(config->dependencies->find(src) != config->dependencies->end()) {
+        //                    if(auto& target = config->dependencies.value()[src].features) {
+        //                         feature.key = (*target)[feature_key].member[0];
+        //                         feature.value = "OFF";
+        //                    } else {
+        //                        fmt::print(stderr, "undefiend features: {}\n", feature); exit(1);
+        //                    }
+        //                } else {
+        //                    fmt::print(stderr, "undefiend dependencies: {}\n", src); exit(1);
+        //                }
+        //            } 
+        //                fmt::print("= {}\n", value);
+        //            }
+        //        }
+        //    }
+        //    //fmt::print("\n");
+        //}
 
         if(config->features->find("default") != config->features->end()) {
             

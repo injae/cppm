@@ -15,7 +15,7 @@ find_cppkg(hashpp git  MODULE hashpp::hashpp TYPE lib)
 find_cppkg(nlohmann_json 3.9.1  MODULE nlohmann_json::nlohmann_json TYPE lib)
 find_cppkg(nlpo git  MODULE nlpo::nlpo  TYPE lib)
 find_cppkg(range-v3 git  MODULE range-v3::range-v3 TYPE lib)
-find_cppkg(serdepp git  MODULE serdepp::serdepp TYPE lib)
+find_cppkg(serdepp 0.0.2  MODULE serdepp::serdepp TYPE lib)
 find_cppkg(toml11 3.6.0  MODULE toml11::toml11 TYPE lib)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")

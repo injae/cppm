@@ -114,8 +114,8 @@ namespace cppm::core {
                         | views::filter([](auto it) { return it.second.option.has_value();})
                         | views::transform([](auto it) { auto& [name, comp] = it;
                                 auto cname = cmake::to_upper(name);
-                            return "      {} \"{}\"\n"_format(cname, *comp.option);
-                        }) | to_vector;
+                            return "      {} \"{}\"\n"_format(cname, *comp.option); })
+                        | to_vector;
                     if(!script.empty()) {
                         gen += "\n   {}\n{}"_format(rtype, fmt::join(script, ""));
                     }
