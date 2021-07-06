@@ -31,7 +31,7 @@ namespace cppm::core {
         )
         std::string name;
         cppkg_type type; 
-        cppkg_type_detail cppkg_type;
+        cppkg_type_detail cppkg_type_d;
         std::optional<std::string> namespace_;
         bool install;
         std::vector<std::string> source;
@@ -50,7 +50,7 @@ namespace cppm::core {
             Cppkg::serde(context, upcast);
             serde::serde_struct(context, value)
                 (&Self::type, "cppkg_type", default_se{cppkg_type::lib})
-                (&Self::cppkg_type, "type", default_se{cppkg_type_detail::STATIC}, enum_under_to_dash_tolower{})
+                (&Self::cppkg_type_d, "type", default_se{cppkg_type_detail::STATIC}, enum_under_to_dash_tolower{})
                 ;
         }
     };
@@ -63,7 +63,7 @@ namespace cppm::core {
             Cppkg::serde(context, upcast);
             serde::serde_struct(context, value)
                 (&Self::type, "cppkg_type", default_se{cppkg_type::bin})
-                (&Self::cppkg_type, "type", default_se{cppkg_type_detail::BINARY}, enum_under_to_dash_tolower{})
+                (&Self::cppkg_type_d, "type", default_se{cppkg_type_detail::BINARY}, enum_under_to_dash_tolower{})
                 ;
         }
     };
@@ -76,7 +76,7 @@ namespace cppm::core {
             Cppkg::serde(context, upcast);
             serde::serde_struct(context, value)
                 (&Self::type, "cppkg_type", default_se{cppkg_type::example})
-                (&Self::cppkg_type, "type", default_se{cppkg_type_detail::BINARY},  enum_under_to_dash_tolower{})
+                (&Self::cppkg_type_d, "type", default_se{cppkg_type_detail::BINARY},  enum_under_to_dash_tolower{})
                 ;
         }
     };
@@ -90,7 +90,7 @@ namespace cppm::core {
             Cppkg::serde(context, upcast);
             serde::serde_struct(context, value)
                 (&Self::type, "cppkg_type", default_se{cppkg_type::test})
-                (&Self::cppkg_type, "type", default_se{cppkg_type_detail::BINARY},  enum_under_to_dash_tolower{})
+                (&Self::cppkg_type_d, "type", default_se{cppkg_type_detail::BINARY},  enum_under_to_dash_tolower{})
                 ;
         }
     };

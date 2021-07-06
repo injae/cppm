@@ -184,11 +184,11 @@ namespace cppm::core {
         std::string gen;
         auto make_script = [&gen](auto& pkg) {
             auto src = !pkg.source.empty() ? fmt::format("\nSOURCES\n    {}\n",fmt::join(pkg.source, "\n    ")) : "";
-            std::string cppkg_type = pkg.cppkg_type == cppkg_type_detail::HEADER_ONLY ?
-                "INTERFACE" : fmt::format("{}",serde::type::enum_t::to_str(pkg.cppkg_type));
+            std::string cppkg_type_d = pkg.cppkg_type_d == cppkg_type_detail::HEADER_ONLY ?
+                "INTERFACE" : fmt::format("{}",serde::type::enum_t::to_str(pkg.cppkg_type_d));
             gen += fmt::format("cppm_target_define({name} {type}{namespace}{sources})\n\n"
                                 ,"name"_a=pkg.name
-                                ,"type"_a=cppkg_type
+                                ,"type"_a=cppkg_type_d
                                 ,"namespace"_a=arg_opt("NAMESPACE",pkg.namespace_)
                                 ,"sources"_a=src);
         };
