@@ -11,7 +11,7 @@ namespace cppm::core {
     Config Config::load(fs::path config_path) {
         using namespace fmt::literals;
         auto config = serde::serialize<Config>(toml::parse((config_path/"cppm.toml").string()));
-        config.post_processing(config_path);
+        config.post_processing(config_path.string());
         return config;
     }
     Config& Config::post_processing(const std::string& config_path) {
