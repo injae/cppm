@@ -72,7 +72,7 @@ namespace cppm::core {
         }
 
         if(workspace) {
-            auto dep = workspace->member
+            std::map<std::string, Dependency> dep = workspace->member
                 | views::transform([&](auto& it){ return Config::load(path.root/it); })
                 | views::cache1
                 | views::filter([](auto&& it){ return it.lib.has_value(); })
@@ -87,7 +87,7 @@ namespace cppm::core {
                     dep.repo = repo_type::workspace;
                     dep.optional = false; 
                     return yield(std::make_pair(it.lib.value().name, dep));
-                }) | to<std::map>;
+                }) | to<std::map<std::string, Dependency>>;
 
             ranges::insert(dependencies, dep);
         }

@@ -3,7 +3,7 @@ name: Linux
 on: [push]
 
 jobs:
-  ubuntu-xenial-gcc-9:
+  ubuntu-xenial-gcc-10:
     runs-on: ubuntu-16.04
     steps:
     - name: Clone Repository
@@ -14,11 +14,11 @@ jobs:
       run: |
         sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
         sudo apt-get update
-        sudo apt-get install -yq g++-9 gcc-9 libc++-dev libc++abi-dev build-essential libstdc++-9-dev
+        sudo apt-get install -yq g++-10 gcc-10 libc++-dev libc++abi-dev build-essential libstdc++-10-dev
     - name: Compiler Setting
       run: |
-        echo "CC=gcc-9" >> $GITHUB_ENV
-        echo "CXX=g++-9" >> $GITHUB_ENV
+        echo "CC=gcc-10" >> $GITHUB_ENV
+        echo "CXX=g++-10" >> $GITHUB_ENV
     - name: CMake build
       run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DUSE_CPPM_PATH=ON . && cd build && cmake --build . --target install --target cppm_link 
   ubuntu-xenial-llvm-8:
