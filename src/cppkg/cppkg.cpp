@@ -3,25 +3,26 @@
 #include <cppm/util/optional.hpp>
 #include <cppm/cppkg/cppkg.h>
 #include <cppm/core/cppm_tool.hpp>
-#include <tomlpp/orm.hpp>
 #include <range/v3/all.hpp>
 #include <map>
 #include <list>
+#include <serdepp/adaptor/toml11.hpp>
 
 namespace cppkg
 {
     using namespace fmt::literals;
     cppm::core::Dependency parse(const std::string& name, std::string path) {
         using namespace cppm;
+        using deps = std::map<std::string, core::Dependency>;
         path = path != "" ? "{}/"_format(path) : "";
-        std::optional<std::map<std::string,core::Dependency>> dep;
-        auto config = toml::orm::parser(dep,"{}cppkg.toml"_format(path));
-        return (*dep)[name];
+        auto dep = serde::serialize<deps>(toml::parse("{}cppkg.toml"_format(path)));
+        return dep[name];
     }
 
     void init(const std::string& name) {
-        cppm::core::Dependency dep;
-        dep.name = name; dep.type = "lib";
+        using namespace cppm::core;
+        Dependency dep;
+        dep.name = name; dep.type = cppkg_type::lib;
         init(dep);
     }
 
@@ -30,18 +31,18 @@ namespace cppkg
         auto value = [](const std::string& str){ return "\"{}\""_format(str); };
         //auto convert = [](const bool flag) { return flag ? "true" : "false"; };
         util::panic(!fs::exists("cppkg.toml"), "existed cppkg.toml");
-        auto url_type = dep.git ? "git" : "url";
+        auto url_type = dep.git ? "git={}"_format(value(*dep.git)) : "url={}"_format(value(*dep.url));
         auto is_branch = dep.branch ? "" : "#";
         util::create("cppkg.toml");
         util::write("cppkg.toml"
                     ,"[{}]\n"_format(dep.name)
-                    +"version={} #(require)\n"_format(value(*dep.version))
-                    +"type={} #lib(default) | bin | cmake\n"_format(value(*dep.type))
-                    +"description={} #(require)\n"_format(value(*dep.description))
-                    +"module={} #(require) if none_module=true -> no require\n"_format(value(*dep.module))
-                    +"{}={} #(require)\n"_format(url_type,value(*dep.url))
+                    +"version={} #(require)\n"_format(value(dep.version))
+                    +"type=\"{}\" #lib(default) | bin | cmake\n"_format(dep.type)
+                    +"description={} #(require)\n"_format(value(dep.description))
+                    +"module={} #(require) if none_module=true -> no require\n"_format(dep.module)
+                    +"{} #(require)\n"_format(url_type)
                     +"{}branch={} #(optional & require git)\n"_format(is_branch, value(*dep.branch))
-                    +"#link={} #default\n"_format(value("public"))
+                    +"#link=private #default\n"
                     //+"#components={} #(optional)\n"_format(value(*dep.components))
                     //+"#none_module={} #(optional)\n"_format(convert(*dep.none_module))
                     //+"#helper={} #(optional)\n"_format(value(dep.helper))
@@ -80,11 +81,11 @@ namespace cppkg
         core::Dependency dep;
         cppkg::parse(name);
         auto local_path = "{0}repo/local"_format(core::cppm_root());
-        auto pack_path = "{0}/{1}/{2}"_format(local_path, dep.name, *dep.version);
+        auto pack_path = "{0}/{1}/{2}"_format(local_path, dep.name, dep.version);
         if(!fs::exists(local_path)) fs::create_directories(pack_path);
         if(fs::exists(pack_path)) fs::remove_all(pack_path);
         util::recursive_copy(name,pack_path);
-        fmt::print("update {0}/{1} in local-repo [\"{2}\"]\n", dep.name, *dep.version, pack_path);
+        fmt::print("update {0}/{1} in local-repo [\"{2}\"]\n", dep.name, dep.version, pack_path);
     }
 
 

@@ -1,19 +1,26 @@
 [package]
 name    = "cppm"
-version = "0.0.12"
+version = "0.0.13"
 description = "c++ cmake maker use to toml like Cargo"
 git = "https://github.com/injae/cppm.git"
+#tool-version = "dev"
 
 [cmake]
 include  = ["cmake/cppm_install.cmake"]
 
+[features]
+    default = [ "json", "toml" ] # default flags set ON
+    json = ["serdepp/json"]
+    toml = ["serdepp/toml11"]
+    test = ["$USE_CPPM_TEST"] # default value is OFF
+    
 [lib]
 name = "cppm-core"
-source = ["src/core/.*", "src/util/.*", "src/cppkg/.*"]
+type ="header-only"
 
 [[bin]]
 name   = "cppm"
-source = ["src/cmake/.*","src/option/.*", "src/util/.*", "src/main.cpp"]
+source = ["src/.*.cpp"]
 
 [[test]]
 name   = "cppm-test-check"
@@ -23,13 +30,15 @@ source = ["tests/test.cpp"]
 name   = "cppm-core-load"
 source = ["examples/example.cpp"]
 
-[workspace]
-    member = ["libs/nlpo", "libs/tomlpp"]
+#[workspace]
+#   member = ["libs/hashpp"]
 
 [dependencies]
-fmt      = "6.2.0"
-hashpp   = "git"
 range-v3 = "git"
+nlpo     = "git"
+#serdepp  = {version="git", features=[ "xxx" ], default_features=false}
+serdepp  = {version="git", link="public", features=["json", "toml"]} 
+hash-lib = "git"
 
 [dev-dependencies]
     Catch2 = "2.9.1"

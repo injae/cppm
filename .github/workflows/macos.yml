@@ -15,8 +15,8 @@ jobs:
         brew install llvm cmake
     - name: Compiler Setting
       run: |
-        echo "::set-env name=CC::clang"
-        echo "::set-env name=CXX::clang++"
+        echo "CC=clang" >> $GITHUB_ENV
+        echo "CXX=clang++" >> $GITHUB_ENV
     - name: CMake build
       run: CC=/usr/local/opt/llvm/bin/clang CXX=/usr/local/opt/llvm/bin/clang++ cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DUSE_CPPM_PATH=ON . && cd build && cmake --build . --target install --target cppm_link
 

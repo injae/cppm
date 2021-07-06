@@ -48,7 +48,7 @@ namespace cppm::option
             .call_back([&](){ pkg.description = app_.get_arg(); });
         app_.add_option("type").abbr("t")
             .desc("add type default is lib")
-            .call_back([&](nlpo::arg::One arg){ pkg.type = arg; });
+            .call_back([&](nlpo::arg::One arg){ pkg.type = serde::type::enum_t::from_str<core::cppkg_type>(arg); });
         app_.add_option("flags").abbr("f")
             .desc("add cmake build flags")
             .call_back([&](nlpo::arg::One arg){ pkg.flags = arg; });
@@ -64,8 +64,8 @@ namespace cppm::option
                      if(app_.args().size() > 1) { fmt::print(stderr, "too many argument"); exit(1); }
                 else if(app_.args().size() < 1) { fmt::print(stderr, "need package name"); exit(1); }
                 pkg.name = app_.get_arg();
-                if(!pkg.type) pkg.type = "lib";
-                if(!pkg.module && *pkg.type == "lib") {
+                pkg.type = core::cppkg_type::lib;
+                if(!pkg.module && pkg.type == core::cppkg_type::lib) {
                     fmt::print("[cppkg] can't find module value\n");
                     fmt::print("[cppkg] module name find mode on\n");
                     auto current_path = fs::current_path();
@@ -98,7 +98,8 @@ namespace cppm::option
                     if(auto match = util::find_pattern(target_file,filter)) {
                         pkg.module = (*match)[1].str();
                     } else {
-                        fmt::print(stderr, "this package can't generate cppkg file\n maybe this package is not cmake package or unexportable package\n");
+                        fmt::print(stderr, "this package can't generate cppkg file\n"
+                                           "maybe this package is not cmake package or unexportable package\n");
                         exit(1);
                     }
                     util::working_directory(current_path.string());

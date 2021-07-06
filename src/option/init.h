@@ -18,6 +18,10 @@ namespace cppm::option
     private:
         void make_bin(const std::string& name);
         void make_lib(const std::string& name);
+        std::string add_deps();
+        std::vector<std::string> deps;
+        std::string name;
+        std::string type="bin"; // bin | lib
     };
 }
 

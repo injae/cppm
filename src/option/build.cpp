@@ -2,10 +2,11 @@
 #include <thread>
 #include <memory>
 #include <fmt/format.h>
-#include <hashpp/md5.h>
+#include <hash_lib/md5.h>
 
 #include <cstdlib>
 #include <string>
+#include <range/v3/all.hpp>
 
 #include "option/build.h"
 #include "cppm/util/algorithm.hpp"
@@ -17,6 +18,10 @@
 #include "cppm/core/cppm_tool.hpp"
 #include "cppm_version.h"
 #include "cmake/cmake.h"
+
+#include "serdepp/adaptor/nlohmann_json.hpp"
+#include "serdepp/adaptor/toml11.hpp"
+
 using namespace fmt::literals;
 using namespace std::literals;
 using namespace cppm::util::str;
@@ -62,6 +67,11 @@ namespace cppm::option
         app_.add_option("toolchains")
             .desc("build with cmake toolchain")
             .call_back([&](){ cmake_.toolchain = app_.get_arg(); });
+        app_.add_option("Define")
+            .abbr("D")
+            .desc("set cmake cache variable, same cmake -D option")
+            .args("{cache name} {value}")
+            .call_back([&](){ cmake_.define(app_.get_arg(), app_.get_arg()); });
         app_.add_option("export")
             .desc("export cppkg")
             .call_back([&](){ config_load(); export_cppkg(); });
@@ -81,37 +91,33 @@ namespace cppm::option
         app_.add_option("prefix")
             .desc("cmake install prefix")
             .call_back([&](nlpo::arg::One arg){ cmake_.prefix = arg; clean=true; });
-        app_.add_command().args("{cppm options} {builder options}")
+        app_.add_option("print")
+            .desc("print cppm config (fmt or json or toml)")
+            .call_back([&](nlpo::arg::One arg){ print_format = arg; });
+        app_.add_command().args("{builder options}")
             .desc("Build command")
             .call_back([&](){
                 auto is_cppm = config_load(false);
                 if(!is_cppm) { none_tc = true; }
+                if(print_format) print_config();
+
                 auto cmake_script = util::reverse_find_file(fs::current_path() ,"CMakeLists.txt");
                 if(!is_cppm && !cmake_script) { fmt::print(stderr,"this package is not cmake project\n"); exit(1); }
+
                 core::Path path = is_cppm ? config_->path : core::Path::make(cmake_script->parent_path().string());
-                if(is_cppm) {
-                    if(config_->cmake && config_->cmake->toolchain) {
-                        cmake_.define("CMAKE_EXTERNAL_TOOLCHAIN_FILE", config_->cmake->toolchain.value());
-                    }
+                if(is_cppm && config_->cmake.toolchain) {
+                    cmake_.define("CMAKE_EXTERNAL_TOOLCHAIN_FILE", config_->cmake.toolchain.value());
                 }
-                if(cmake_.toolchain) {
-                    cmake_.define("CMAKE_EXTERNAL_TOOLCHAIN_FILE", cmake_.toolchain.value());
-                }
+                if(cmake_.toolchain) { cmake_.define("CMAKE_EXTERNAL_TOOLCHAIN_FILE", cmake_.toolchain.value()); }
                 if(!is_cppm){
-                    cmake_.toolchain = "{}cppkg/cppm-tools-{}/toolchain.cmake"_format(core::cppm_root(), CPPM_TOOLS_VERSION);
+                    cmake_.toolchain = "{}cmake/cppm-tools-{}/toolchain.cmake"_format(core::cppm_root(),
+                                                                                      CPPM_TOOLS_VERSION);
                 }
                 if(cmake_.prefix == "") cmake_.define("USE_CPPM_PATH", "ON");
                                         
                 fs::create_directories(path.build);
                 if(!none_tc) {
-                    auto tranc_cmake = cppm_translate(*config_);
-                    if(util::file_hash("{0}/CMakeLists.txt"_format(path.root)) != hashpp::md5(tranc_cmake)) {
-                        fmt::print("[cppm] Generate CMakeLists.txt\n");
-                        util::write_file("{0}/CMakeLists.txt"_format(path.root), tranc_cmake);
-                    }
-                    fs::create_directories(path.cmake);
-                    util::over_write_copy_file("{0}cmake/cppm_loader.cmake"_format(core::cppm_root())
-                                               ,"{0}/cppm_loader.cmake"_format(path.cmake));
+                    transcompile(path);
                     if(only_tc) { exit(1); }
                 }
                 if(clean) {
@@ -129,6 +135,24 @@ namespace cppm::option
             });
     }
 
+    void Build::print_config() {
+        if(*print_format == "fmt")  { fmt::print("{}",*config_); }
+        if(*print_format == "json") { fmt::print("{}", serde::deserialize<nlohmann::json>(*config_).dump(3)); }
+        if(*print_format == "toml") { fmt::print("{}", serde::deserialize<toml::value>(*config_)); }
+    }
+
+    void Build::transcompile(core::Path& path) {
+        auto tranc_cmake = cppm_translate(config_.value());
+        if(util::file_hash("{0}/CMakeLists.txt"_format(path.root)) != hash::MD5{}(tranc_cmake)) {
+            fmt::print("[cppm] Generate CMakeLists.txt\n");
+            util::write_file("{0}/CMakeLists.txt"_format(path.root), tranc_cmake);
+        }
+        fs::create_directories(path.cmake);
+        util::over_write_copy_file("{0}cmake/cppm_loader.cmake"_format(core::cppm_root())
+                                    ,"{0}/cppm_loader.cmake"_format(path.cmake));
+    }
+
+
     void Build::export_cppkg() { 
         core::Dependency pkg;
         pkg.name = config_->package.name;
@@ -138,10 +162,9 @@ namespace cppm::option
                 lib->install
                     ? "{0}::{1} "_format(config_->package.name, lib->name)
                     : "";
-            pkg.type = "lib";
+            pkg.type = core::cppkg_type::lib;
         }
-        if (!config_->bins)
-          pkg.type = "bin";
+        if (!config_->bins.empty()) pkg.type = core::cppkg_type::bin;
         pkg.description = config_->package.description;
         pkg.git = *config_->package.git_repo;
         pkg.version = "git";

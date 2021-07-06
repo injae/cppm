@@ -17,7 +17,7 @@ namespace cppm::option {
             return false;
         }
         // 나중에 쓸예정 none cppm test
-        config_ = core::Config::load(path->parent_path().string());
+        config_ = core::Config::load(path->parent_path());
         return true;
     }
 

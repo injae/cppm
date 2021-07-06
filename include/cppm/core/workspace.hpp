@@ -3,16 +3,14 @@
 #ifndef __CPPM_CORE_WORKSPACE_HPP__
 #define __CPPM_CORE_WORKSPACE_HPP__
 
-#include <tomlpp/orm.hpp>
+
+#include <serdepp/utility.hpp>
+#include <serdepp/attributes.hpp>
 
 namespace cppm::core {
-    class Workspace : public toml::orm::table {
-    public:
-        template<typename Def>
-        void parse(Def& defn) {
-            defn.element(TOML_D(member));
-        }
-        opt<arr<std::string>> member;
+    struct Workspace {
+        DERIVE_SERDE(Workspace, (&Self::member, "member", make_optional{}).no_remain())
+        std::vector<std::string> member;
     };
 }
 

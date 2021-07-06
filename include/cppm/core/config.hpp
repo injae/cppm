@@ -3,15 +3,19 @@
 #ifndef __CPPM_CORE_CONFIG_HPP__
 #define __CPPM_CORE_CONFIG_HPP__
 
-#include <string>
+#include <serdepp/utility.hpp>
+#include <serdepp/attributes.hpp>
+
 #include "cppm/core/package.hpp"
-#include "cppm/core/hunter.hpp"
 #include "cppm/core/cmake.hpp"
 #include "cppm/core/workspace.hpp"
-#include "cppm/core/profile.hpp"
+#include "cppm/core/feature.hpp"
+#include "cppm/core/dependency.hpp"
 #include "cppm/core/cppkg.hpp"
+#include "cppm/core/profile.hpp"
 #include "cppm/core/target.hpp"
-#include "cppm/util/optional.hpp"
+#include "cppm/core/hunter.hpp"
+
 #include "cppm/util/filesystem.h"
 
 namespace cppm::core {
@@ -36,42 +40,44 @@ namespace cppm::core {
         fs::path thirdparty;
     };
 
-    class Config :public toml::orm::table {
-    public:
-        template<typename Def>
-        void parse(Def& defn) {
-            defn.element(TOML_D(package))
-                .element(TOML_D(hunter))
-                .element(TOML_D(cmake))
-                .element(TOML_D(workspace))
-                .element(TOML_D(lib))
-                .element(bins, "bin")
-                .element(tests,"test")
-                .element(examples, "example")
-                .element(TOML_D(dependencies))
-                .element(dev_dependencies, "dev-dependencies")
-                .element(TOML_D(profile))
-                .element(TOML_D(target))
-                .no_remains();
-        }
+    struct Config {
+        DERIVE_SERDE(Config,
+            (&Self::package,          "package")
+            (&Self::cmake,            "cmake",       default_se{CMake{}})
+            (&Self::hunter,           "hunter")
+            (&Self::workspace,        "workspace")
+            (&Self::features,         "features",     make_optional{}) 
+            (&Self::dependencies,     "dependencies", make_optional{})
+            (&Self::dev_dependencies, "dev-dependencies", make_optional{})
+            (&Self::lib,        "lib")
+            (&Self::bins,       "bin",     make_optional{})
+            (&Self::examples,   "example", make_optional{})
+            (&Self::benchmarks, "benchmark", make_optional{})
+            (&Self::tests,      "tests",   make_optional{})
+            (&Self::profile,    "profile", make_optional{})
+            (&Self::target,     "target",  make_optional{})
+        )
+
         Package package;
+        CMake cmake;
+        std::optional<Hunter> hunter;
+        std::optional<Workspace> workspace;
+        std::unordered_map<std::string, std::vector<Feature>> features;
+        std::unordered_map<std::string, Dependency> dependencies;
+        std::unordered_map<std::string, Dependency> dev_dependencies;
+        std::optional<CppkgLib> lib;
+        std::vector<CppkgBin> bins;
+        std::vector<CppkgExample> examples;
+        std::vector<CppkgTest> tests;
+        std::vector<CppkgTest> benchmarks;
+        std::map<std::string, Profile> profile;
+        std::map<std::string, Target> target;
         Path path;
-        opt<Hunter> hunter;
-        opt<CMake> cmake;
-        opt<Workspace> workspace; 
-        opt<Cppkg> lib;
-        opt<arr<Cppkg>> bins;
-        opt<arr<Cppkg>> tests;
-        opt<arr<Cppkg>> examples;
-        arr<Cppkg*> cppkgs;
-        opt<nested<Dependency>> dependencies;
-        opt<nested<Dependency>> dev_dependencies;
-        opt<nested<Profile>> profile;
-        opt<nested<Target>> target;
-    public:
-        static std::optional<Config> load(const std::string& path);
-    private:
+
+        Config& post_processing(const std::string& config_path);
+        static Config load(fs::path config_path);
     };
+
 }
 
 #endif

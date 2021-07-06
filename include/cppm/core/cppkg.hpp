@@ -3,78 +3,97 @@
 #ifndef __CPPM_CORE_CPPKG_HPP__
 #define __CPPM_CORE_CPPKG_HPP__
 
-#include "cppm/core/dependency.hpp"
-#include "cppm/util/hash.hpp"
-#include <functional>
-#include <tomlpp/orm.hpp>
+#include <serdepp/utility.hpp>
+#include <cppm/core/dependency.hpp>
 
 namespace cppm::core {
-    class Cppkg : public toml::orm::table {
-    public:
-        template<typename Def>
-        void parse(Def& defn) {
-            using namespace utilpp::literals;
-            type = defn.name();
-            defn.element(TOML_D(name))
-                .element(namespace_, "namespace")
-                .element(TOML_D(source))
-                .element(exclude_var, "flag");
+    enum class cppkg_type {
+        bin,
+        lib,
+        test,
+        example,
+        cmake,
+    };
+    enum class cppkg_type_detail {
+        STATIC,
+        BINARY,
+        SHARED,
+        HEADER_ONLY,
+    };
 
-            switch(utilpp::hash(type))
-            {
-            case "lib"_h:
-                defn.element(cppkg_type, "type", "static") ;
-                defn.element(TOML_D(install), true);
-                break;
-            case "bin"_h:
-                defn.element(TOML_D(install), true);
-                defn.element(cppkg_type, "type", "binary") ;
-                break;
-            case "test"_h:
-            case "example"_h:
-                defn.element(cppkg_type, "type", "binary") ;
-                defn.element(TOML_D(install), false);
-                break;
-            default:
-                fmt::print(stderr, "unkown target type \"{}\"\n",type); exit(1);
-            }
-        }
+    struct Cppkg {
+        DERIVE_SERDE(Cppkg,
+                     (&Self::name, "name")
+                     (&Self::namespace_, "namespace")
+                     (&Self::install,    "install", default_se{true})
+                     (&Self::source,     "source",  make_optional{})
+                     (&Self::exclude,    "flag",    default_se{false})
+        )
         std::string name;
-        std::string type; // bin | lib | test | example
-        opt<std::string> cppkg_type;
-        opt<std::string> namespace_;
-        opt<bool> install;
-        opt<arr<std::string>> source;
-        opt<std::string> exclude_var;
-        opt<bool> exclude;
+        cppkg_type type; 
+        cppkg_type_detail cppkg_type_d;
+        std::optional<std::string> namespace_;
+        bool install;
+        std::vector<std::string> source;
+        std::string exclude_var;
+        bool exclude;
+
+        virtual ~Cppkg() = default;
     };
 
-    class Cppkgs : public toml::orm::inline_define {
-    public:
-        template<typename Def>
-        void parse(Def& defn) {
-            opt<Cppkg> lib;
-            opt<arr<Cppkg>> bins;
-            opt<arr<Cppkg>> tests;
-            opt<arr<Cppkg>> examples;
-            defn.element(bins, "bin");
-            defn.element(bins, "test");
-            defn.element(bins, "example");
-            defn.element(TOML_D(lib));
-            if(lib) list.push_back(lib.value());
-            if(bins) {
-                list.reserve( bins->size() + 1 ); // preallocate memory
-
-            }
-            if(tests) {
-                list.reserve( tests->size() + 1 ); // preallocate memory
-                list.insert( list.end(), tests->begin(), tests->end() );
-            }
+    struct CppkgLib : Cppkg {
+        template<class Context>
+        constexpr static void serde(Context& context, CppkgLib& value) {
+            using namespace serde::attribute;
+            using Self = CppkgLib;
+            Cppkg& upcast = static_cast<Cppkg&>(value);
+            Cppkg::serde(context, upcast);
+            serde::serde_struct(context, value)
+                (&Self::type, "cppkg_type", default_se{cppkg_type::lib})
+                (&Self::cppkg_type_d, "type", default_se{cppkg_type_detail::STATIC}, enum_under_to_dash_tolower{})
+                ;
         }
-        arr<Cppkg> list;
+    };
+    struct CppkgBin : Cppkg {
+        template<class Context>
+        constexpr static void serde(Context& context, CppkgBin& value) {
+            using namespace serde::attribute;
+            using Self = CppkgBin;
+            Cppkg& upcast = static_cast<Cppkg&>(value);
+            Cppkg::serde(context, upcast);
+            serde::serde_struct(context, value)
+                (&Self::type, "cppkg_type", default_se{cppkg_type::bin})
+                (&Self::cppkg_type_d, "type", default_se{cppkg_type_detail::BINARY}, enum_under_to_dash_tolower{})
+                ;
+        }
+    };
+    struct CppkgExample : Cppkg {
+        template<class Context>
+        constexpr static void serde(Context& context, CppkgExample& value) {
+            using namespace serde::attribute;
+            using Self = CppkgExample;
+            Cppkg& upcast = static_cast<Cppkg&>(value);
+            Cppkg::serde(context, upcast);
+            serde::serde_struct(context, value)
+                (&Self::type, "cppkg_type", default_se{cppkg_type::example})
+                (&Self::cppkg_type_d, "type", default_se{cppkg_type_detail::BINARY},  enum_under_to_dash_tolower{})
+                ;
+        }
     };
 
+    struct CppkgTest : Cppkg {
+        template<class Context>
+        constexpr static void serde(Context& context, CppkgTest& value) {
+            using namespace serde::attribute;
+            using Self = CppkgTest;
+            Cppkg& upcast = static_cast<Cppkg&>(value);
+            Cppkg::serde(context, upcast);
+            serde::serde_struct(context, value)
+                (&Self::type, "cppkg_type", default_se{cppkg_type::test})
+                (&Self::cppkg_type_d, "type", default_se{cppkg_type_detail::BINARY},  enum_under_to_dash_tolower{})
+                ;
+        }
+    };
 }
 
 #endif
-

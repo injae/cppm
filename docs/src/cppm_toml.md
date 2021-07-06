@@ -7,6 +7,7 @@
     standard = "{11|14|17(default)|20}"
     git = "..." # this option use to cppm build --export
     vcpkg= "false(default)|true" # cppm auto detect vcpkg option
+    tool-version = "{cppm-tool version | dev | current cppm version(default)}"
 ```
 ```toml
 [hunter] # (optional)  hunter package manager setting option
@@ -21,6 +22,11 @@
     option = "..." # cmake build option use to command 'cppm build'
     toolchains = "..." # (incomplete) cmake toolchains option
 ```
+
+```toml
+[features] (incomplete)
+```
+
 Profiles
 Prfiles provide a way alter the compiler settings, 
 Profile settings can be overridden for specific packages
@@ -76,7 +82,7 @@ Profile settings can be overridden for specific packages
       ... = "x.x.x|git|latest" # this config find cppkg.toml in ${package root}/thirdparty/${name}/${version}/cppkg.toml
     # inline dependency setting
     # name        (require)                   (optional)           (optional) default is public            (optional) package type  
-      ... = {module = "..." , version ="...", components="... ...", link = "public|private|interface", type="lib(default)|bin|cmake(incomplete)", repo="cppkg(default)|hunter" }
+      ... = {module = "..." , version ="...", components="... ...", link = "public|private|interface", type="lib(default)|bin|cmake(incomplete)", repo="cppkg(default)|hunter", optional=true|false(default) }
     # hunter package add dependency
     # name        (require)                   (optional)           (optional) default is public            (require) load hunter package
       ... = {module = "..." , version ="latest", components="... ...", link = "public|private|interface" ,    repo="hunter" }

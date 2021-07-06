@@ -14,7 +14,7 @@ RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 100
 COPY ./ /app/
 WORKDIR /app
 
-
 RUN  cmake -H. -Bbuild 
-RUN cd build && cmake --build . 
+RUN cd build &&  cmake -DUSE_CPPM_PATH=ON -DCMAKE_BUILD_TYPE=Debug .. && cmake --build . --config Debug
+RUN cd build/Debug && ./server 
 

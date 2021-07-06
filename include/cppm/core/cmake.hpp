@@ -3,30 +3,23 @@
 #ifndef __CPPM_CORE_CMAKE_HPP__
 #define __CPPM_CORE_CMAKE_HPP__
 
-#include <tomlpp/orm.hpp>
+#include <serdepp/utility.hpp>
+#include <serdepp/attributes.hpp>
 
 namespace cppm::core {
-    class CMake : public toml::orm::table {
-    public:
-        template<typename Def>
-        void parse(Def& defn) {
-            defn.element(TOML_D(version),"3.12")
-                .element(TOML_D(option))
-                .element(TOML_D(compiler))
-                .element(TOML_D(builder))
-                .element(TOML_D(toolchain))
-                .element(TOML_D(include))
-                .no_remains();
-        }
-        opt<std::string> version;
-        opt<std::string> option;
-        opt<std::string> compiler;
-        opt<std::string> builder;
-        opt<std::string> toolchain;
-        opt<arr<std::string>> include;
+    struct CMake {
+        DERIVE_SERDE(CMake,
+            (&Self::version,   "version", default_se{"3.12"})
+            (&Self::toolchain, "toolchain")
+            (&Self::include,   "include", make_optional{})
+            .no_remain()
+        )
+
+        std::string version = "3.12";
+        std::optional<std::string> toolchain;
+        std::vector<std::string> include;
     };
 }
 
 
 #endif
-
