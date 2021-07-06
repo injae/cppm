@@ -33,7 +33,7 @@ namespace cppm::option
                 fs::create_directories(path);
                 fs::create_directories(path + "/cmake");
                 fs::create_directories(path + "/src");
-                inst_proj += "{} = {}\n"_format(dep.name, quot(*dep.version));
+                inst_proj += "{} = {}\n"_format(dep.name, quot(dep.version));
                 util::write_file(path + "/cppm.toml" , inst_proj);
                 //auto main = "\nint main(int argc, char* argv[]) {\n\n     return 0; \n}";
                 //util::write_file(path + "/src/main.cpp" , main);

@@ -38,10 +38,10 @@ namespace cppm::option
                     for(auto& [pname, pkg] : repo.pkgs) {
                         for(auto& [vname, ver] : util::reverse(pkg.versions)) {
                             auto dep = cppkg::parse(pname, ver);
-                            if(name != ""&&!has_str(pname, name)&&!has_str(*dep.description, name)) break; 
+                            if(name != ""&&!has_str(pname, name)&&!has_str(dep.description, name)) break; 
                             fmt::print("{:<20}{:<10}{:<13}{:<50}{:<70}\n"
                                       , str_cut(pname, 20), std::string(vname), rname
-                                      , str_cut(*dep.description, 50), _make_use_column(dep,rname));
+                                      , str_cut(dep.description, 50), _make_use_column(dep,rname));
                         }
                     }
                 }
@@ -53,9 +53,9 @@ namespace cppm::option
         auto component = dep.components
             ? " components={0}"_format(quot(*dep.components)) : "";
         return repo == "cppkg" && component == ""
-               ? "{0}={1}"_format(dep.name, quot(*dep.version))
+               ? "{0}={1}"_format(dep.name, quot(dep.version))
                : "{0}={{module={1}, version={2}{3}}}"_format(
-                  dep.name, quot(*dep.module), quot(*dep.version), component);
+                  dep.name, quot(*dep.module), quot(dep.version), component);
     }
 
     void CppkgSearch::_show_hunter_package(const std::string& target){

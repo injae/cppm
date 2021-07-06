@@ -2,7 +2,7 @@
 #include <thread>
 #include <memory>
 #include <fmt/format.h>
-#include <hashpp/md5.h>
+#include <hash_lib/md5.h>
 
 #include <cstdlib>
 #include <string>
@@ -105,12 +105,12 @@ namespace cppm::option
                 if(!is_cppm && !cmake_script) { fmt::print(stderr,"this package is not cmake project\n"); exit(1); }
 
                 core::Path path = is_cppm ? config_->path : core::Path::make(cmake_script->parent_path().string());
-                if(is_cppm && config_->cmake && config_->cmake->toolchain) {
-                    cmake_.define("CMAKE_EXTERNAL_TOOLCHAIN_FILE", config_->cmake->toolchain.value());
+                if(is_cppm && config_->cmake.toolchain) {
+                    cmake_.define("CMAKE_EXTERNAL_TOOLCHAIN_FILE", config_->cmake.toolchain.value());
                 }
                 if(cmake_.toolchain) { cmake_.define("CMAKE_EXTERNAL_TOOLCHAIN_FILE", cmake_.toolchain.value()); }
                 if(!is_cppm){
-                    cmake_.toolchain = "{}cppkg/cppm-tools-{}/toolchain.cmake"_format(core::cppm_root(),
+                    cmake_.toolchain = "{}cmake/cppm-tools-{}/toolchain.cmake"_format(core::cppm_root(),
                                                                                       CPPM_TOOLS_VERSION);
                 }
                 if(cmake_.prefix == "") cmake_.define("USE_CPPM_PATH", "ON");
@@ -143,7 +143,7 @@ namespace cppm::option
 
     void Build::transcompile(core::Path& path) {
         auto tranc_cmake = cppm_translate(config_.value());
-        if(util::file_hash("{0}/CMakeLists.txt"_format(path.root)) != hashpp::md5(tranc_cmake)) {
+        if(util::file_hash("{0}/CMakeLists.txt"_format(path.root)) != hash::MD5{}(tranc_cmake)) {
             fmt::print("[cppm] Generate CMakeLists.txt\n");
             util::write_file("{0}/CMakeLists.txt"_format(path.root), tranc_cmake);
         }
@@ -162,10 +162,9 @@ namespace cppm::option
                 lib->install
                     ? "{0}::{1} "_format(config_->package.name, lib->name)
                     : "";
-            pkg.type = "lib";
+            pkg.type = core::cppkg_type::lib;
         }
-        if (!config_->bins)
-          pkg.type = "bin";
+        if (!config_->bins.empty()) pkg.type = core::cppkg_type::bin;
         pkg.description = config_->package.description;
         pkg.git = *config_->package.git_repo;
         pkg.version = "git";

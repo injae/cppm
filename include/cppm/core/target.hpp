@@ -3,23 +3,21 @@
 #ifndef __CPPM_CORE_TARGET_HPP__
 #define __CPPM_CORE_TARGET_HPP__
 
-#include "cppm/core/dependency.hpp"
 #include <serdepp/utility.hpp>
+#include "cppm/core/dependency.hpp"
 
 namespace cppm::core {
-    class Target{
-    public:
-        derive_serde(Target, ctx
-                     .name(name)
-                     .TAG(dependencies)
-                     .tag(dev_dependencies, "dev-dependencies")
-                     .no_remain();
+    struct Target {
+        DERIVE_SERDE(Target,
+                     (&Self::dependencies,     "dependencies",     make_optional{})
+                     (&Self::dev_dependencies, "dev-dependencies", make_optional{})
+                     .no_remain()
                      )
 
-        std::string name;
-        std::optional<std::map<std::string,Dependency>> dependencies;
-        std::optional<std::map<std::string,Dependency>> dev_dependencies;
+        std::unordered_map<std::string, Dependency> dependencies;
+        std::unordered_map<std::string, Dependency> dev_dependencies;
     };
 }
+
 
 #endif

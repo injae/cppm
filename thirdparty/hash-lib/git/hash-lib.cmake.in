@@ -1,8 +1,8 @@
 # Cppkg Base Dependency Downloader
 cmake_minimum_required(VERSION 3.6)
-project(dbg-macro-git-install)
+project(hash-lib-git-install)
 
 set(CPPM_VERSION 0.0.13)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/cppm_loader.cmake)
-download_package(dbg-macro git  GIT https://github.com/injae/dbg-macro.git  TYPE lib CMAKE_ARGS ${CMAKE_ARGS} )
+download_package(hash-lib git  GIT https://github.com/injae/hash-library.git  TYPE lib CMAKE_ARGS ${CMAKE_ARGS} )
 

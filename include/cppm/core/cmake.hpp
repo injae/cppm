@@ -4,28 +4,22 @@
 #define __CPPM_CORE_CMAKE_HPP__
 
 #include <serdepp/utility.hpp>
+#include <serdepp/attributes.hpp>
 
 namespace cppm::core {
-    class CMake {
-    public:
-        derive_serde(CMake, ctx
-                        .TAG_OR(version, "3.12")
-                        .TAG(options)
-                        .TAG(compiler)
-                        .TAG(builder)
-                        .TAG(toolchain)
-                        .TAG(include)
-                        .no_remain();)
+    struct CMake {
+        DERIVE_SERDE(CMake,
+            (&Self::version,   "version", default_se{"3.12"})
+            (&Self::toolchain, "toolchain")
+            (&Self::include,   "include", make_optional{})
+            .no_remain()
+        )
 
-        std::optional<std::string> version;
-        std::optional<std::string> options;
-        std::optional<std::string> compiler;
-        std::optional<std::string> builder;
+        std::string version = "3.12";
         std::optional<std::string> toolchain;
-        std::optional<std::vector<std::string>> include;
+        std::vector<std::string> include;
     };
 }
 
 
 #endif
-

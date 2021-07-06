@@ -1,7 +1,8 @@
 #include "cppm/util/filesystem.h"
 #include "cppm/util/algorithm.hpp"
 #include <fmt/format.h>
-#include <hashpp/md5.h>
+//#include <hashpp/md5.h>
+#include <hash_lib/md5.h>
 #include <iostream>
 
 #ifdef _WIN32
@@ -126,7 +127,7 @@ namespace cppm::util
     }
 
     std::string file_hash(const std::string& name) {
-        return hashpp::md5(read_file_all(name));
+        return hash::MD5()(read_file_all(name));
     }
 
     // if find pattern return smatch

@@ -5,17 +5,15 @@
 
 #include <serdepp/utility.hpp>
 
+
 namespace cppm::core {
-    class Compiler {
-    public:
-        derive_serde(Compiler, ctx
-                     .name(name)
-                     .or_value(option,"option", "")
-                     .TAG(version);
+    struct Compiler {
+        DERIVE_SERDE(Compiler,
+                     (&Self::version, "version", value_or_struct_se{})
+                     (&Self::option,  "option")
                      )
-        std::string name;
-        std::optional<std::string> version;
-        std::optional<std::string> option;
+        std::string version;
+        std::string option;
     };
 }
 

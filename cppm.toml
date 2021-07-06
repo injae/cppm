@@ -16,11 +16,11 @@ include  = ["cmake/cppm_install.cmake"]
     
 [lib]
 name = "cppm-core"
-source = ["src/core/.*", "src/util/.*", "src/cppkg/.*"]
+type ="header-only"
 
 [[bin]]
 name   = "cppm"
-source = ["src/cmake/.*","src/option/.*", "src/util/.*", "src/main.cpp"]
+source = ["src/.*.cpp"]
 
 [[test]]
 name   = "cppm-test-check"
@@ -31,17 +31,14 @@ name   = "cppm-core-load"
 source = ["examples/example.cpp"]
 
 #[workspace]
-    #member = ["libs/nlpo", "libs/serdepp"]
-    #member = ["libs/nlpo"]
+#   member = ["libs/hashpp"]
 
 [dependencies]
-fmt      = "7.1.3"
-hashpp   = "git"
 range-v3 = "git"
 nlpo     = "git"
-toml11   = "3.6.0"
-serdepp  = {version="git", flags="-DSERDEPP_USE_TOML11=ON"}
-nlohmann_json="3.9.1"
+#serdepp  = {version="git", features=[ "xxx" ], default_features=false}
+serdepp  = {version="git", link="public", features=["json", "toml"]} 
+hash-lib = "git"
 
 [dev-dependencies]
     Catch2 = "2.9.1"
