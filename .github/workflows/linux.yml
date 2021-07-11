@@ -21,7 +21,7 @@ jobs:
         echo "CXX=g++-11" >> $GITHUB_ENV
     - name: CMake build
       run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DUSE_CPPM_PATH=ON . && cd build && cmake --build . --target install --target cppm_link 
-  ubuntu-xenial-llvm-9:
+  ubuntu-xenial-llvm-10:
     runs-on: ubuntu-18.04
     steps:
     - name: Clone Repository
@@ -32,13 +32,13 @@ jobs:
       run: |
         sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
-        sudo add-apt-repository -y "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-9 main"
+        sudo add-apt-repository -y "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-10 main"
         sudo apt-get update
-        sudo apt-get install -yq clang-9 libc++-dev libc++abi-dev libstdc++-9-dev build-essential
+        sudo apt-get install -yq clang-10 libc++-dev libc++abi-dev libstdc++-10-dev build-essential
     - name: Compiler Setting
       run: |
-        echo "CC=clang-9" >> $GITHUB_ENV
-        echo "CXX=clang++-9" >> $GITHUB_ENV
+        echo "CC=clang-10" >> $GITHUB_ENV
+        echo "CXX=clang++-10" >> $GITHUB_ENV
     - name: CMake build
       run: cmake -Bbuild -DCMAKE_BUILD_TYPE=Release -DUSE_CPPM_PATH=ON . && cd build && cmake --build . --target install --target cppm_link 
 
