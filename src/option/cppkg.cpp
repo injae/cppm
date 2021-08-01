@@ -32,7 +32,12 @@ namespace cppm::option
     void Cppkg::_update() {
         using namespace fmt::literals;
         auto cppkg_path = "{0}repo/cppkg"_format(core::cppm_root());
-        auto command = "cd {0} && git pull"_format(cppkg_path);
+        if(!fs::exists(cppkg_path)) {
+            fmt::print("clone cppkg path:{}\n",cppkg_path);
+            system("git clone https://github.com/injae/cppkg.git {}"_format(cppkg_path).c_str());
+        }
+
+        auto command = "cd {0} &&  git fetch origin && git pull origin master"_format(cppkg_path);
         system(command.c_str());
     }
 

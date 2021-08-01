@@ -9,9 +9,9 @@
 namespace cppm::core {
     struct CMake {
         DERIVE_SERDE(CMake,
-            (&Self::version,   "version", default_se{"3.12"})
+            (&Self::version,   "version", default_{"3.12"})
             (&Self::toolchain, "toolchain")
-            (&Self::include,   "include", make_optional{})
+            (&Self::include,   "include", make_optional)
             .no_remain()
         )
 

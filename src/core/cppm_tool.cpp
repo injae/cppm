@@ -149,7 +149,7 @@ namespace cppm::core {
                                     ,"components"_a=arg_opt("COMPONENTS",dep.components)
                                     ,"path"_a=arg_opt("LOADPATH",dep.path)
                                     ,"hunter"_a=hunter
-                                    ,"type"_a=arg("TYPE", serde::type::enum_t::to_str(dep.type))
+                                    ,"type"_a=arg("TYPE", serde::to_str(dep.type))
                                     ,"optional"_a=opt
                                     );
             }) | to_vector;
@@ -185,7 +185,7 @@ namespace cppm::core {
         auto make_script = [&gen](auto& pkg) {
             auto src = !pkg.source.empty() ? fmt::format("\nSOURCES\n    {}\n",fmt::join(pkg.source, "\n    ")) : "";
             std::string cppkg_type_d = pkg.cppkg_type_d == cppkg_type_detail::HEADER_ONLY ?
-                "INTERFACE" : fmt::format("{}",serde::type::enum_t::to_str(pkg.cppkg_type_d));
+                "INTERFACE" : fmt::format("{}",serde::to_str(pkg.cppkg_type_d));
             gen += fmt::format("cppm_target_define({name} {type}{namespace}{sources})\n\n"
                                 ,"name"_a=pkg.name
                                 ,"type"_a=cppkg_type_d
@@ -209,6 +209,12 @@ namespace cppm::core {
             gen += "end_cppm_unit_test_area()\n\n"_format(upkg_name);
         } 
 
+        if(!config.benchmarks.empty()) {
+            gen += "if({}_BUILD_BENCHMARKS)\n\n"_format(upkg_name);
+            ranges::for_each(config.benchmarks, make_script);
+            gen += "endif()\n"_format(upkg_name);
+        } 
+
         return gen;
     }
     std::string cppm_target_dependencies(Config& config) {
@@ -221,7 +227,7 @@ namespace cppm::core {
             auto group = libs | views::group_by([](auto a, auto b) { return a.link == b.link; });
             auto link_join = [](auto& i) {
                 auto names =  i | views::transform([](auto i){ return i.name; }) | to_vector;
-                return "{} {}"_format(cmake::to_upper(fmt::format("{}", serde::type::enum_t::to_str(i[0].link)))
+                return "{} {}"_format(cmake::to_upper(fmt::format("{}", serde::to_str(i[0].link)))
                                         ,names | views::join(views::c_str(" ")) | to<std::string>());
             };
             auto cmake_dep = group
@@ -262,6 +268,7 @@ namespace cppm::core {
         ranges::for_each(config.bins, [&set_dependencies, &gen](auto& it) { gen += set_dependencies(it); });
         ranges::for_each(config.examples, [&set_dependencies, &gen](auto& it) { gen += set_dependencies(it); });
         ranges::for_each(config.tests, [&set_dependencies, &gen](auto& it) { gen += set_dependencies(it); });
+        ranges::for_each(config.benchmarks, [&set_dependencies, &gen](auto& it) { gen += set_dependencies(it); });
 
         return gen;
     }
@@ -290,7 +297,7 @@ namespace cppm::core {
             "download_package({name} {version} {url} {type} CMAKE_ARGS "
             "${{CMAKE_ARGS}} {flags})\n\n",
             "name"_a = dep.name, "version"_a = dep.version, "cppm_version"_a=std::string(CPPM_VERSION),
-            "url"_a = download, "type"_a=cmake::arg("TYPE", serde::type::enum_t::to_str(dep.type)), "flags"_a = dep.flags.value_or(""));
+            "url"_a = download, "type"_a=cmake::arg("TYPE", serde::to_str(dep.type)), "flags"_a = dep.flags.value_or(""));
     }
 
     std::string hunter_root() {

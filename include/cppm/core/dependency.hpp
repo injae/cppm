@@ -17,18 +17,18 @@ namespace cppm::core {
 
     struct Dependency {
         DERIVE_SERDE(Dependency,
-                     (&Self::version,    "version",  value_or_struct_se{})
-                     (&Self::description, "description", default_se{""})
-                     (&Self::type,       "type",     default_se{cppkg_type::lib})
-                     (&Self::repo,       "repo",     default_se{repo_type::cppkg})
-                     (&Self::link,       "link",     default_se{link_type::PRIVATE}, enum_toupper{})
+                     (&Self::version,    "version",  value_or_struct)
+                     (&Self::description, "description", default_{""})
+                     (&Self::type,       "type",     default_{cppkg_type::lib})
+                     (&Self::repo,       "repo",     default_{repo_type::cppkg})
+                     (&Self::link,       "link",     default_{link_type::PRIVATE}, to_lower)
                      (&Self::module,     "module")
-                     (&Self::features,   "feature-map", make_optional{})
-                     (&Self::default_feature, "features", make_optional{})
-                     (&Self::default_features_flag, "default_features", default_se{true})
-                     (&Self::custom,     "custom",   default_se{false})
-                     (&Self::no_cmake,   "no_module",default_se{false})
-                     (&Self::optional,   "optional", default_se{false})
+                     (&Self::features,   "feature-map", make_optional)
+                     (&Self::default_feature, "features", make_optional)
+                     (&Self::default_features_flag, "default_features", default_{true})
+                     (&Self::custom,     "custom",   default_{false})
+                     (&Self::no_cmake,   "no_module",default_{false})
+                     (&Self::optional,   "optional", default_{false})
                      (&Self::components, "components")
                      (&Self::path,       "path")
                      (&Self::git,        "git")
@@ -87,3 +87,4 @@ namespace cppm::core {
 
 
 #endif
+

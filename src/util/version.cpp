@@ -11,7 +11,7 @@ using namespace fmt::literals;
 namespace cppm
 {
     Version::Version(std::string version) {
-        if(version == "latest") { latest = true; return; }
+        if(version == "latest" || version == "*") { latest = true; return; }
         if(version == "git")    { git    = true; return; }
         std::sscanf(version.c_str(), "%d.%d.%d", &major, &minor, &revision);
     }
@@ -23,6 +23,7 @@ namespace cppm
     }
 
     Version Version::parse(std::string version_include_string) {
+        if(version_include_string == "*") return {"latest"};
         if(version_include_string == "latest") return {"latest"};
         if(version_include_string == "git")    return {"git"}; 
         std::regex regex("(\\d+)\\.?(\\d+)\\.?(\\d+)");
@@ -47,6 +48,7 @@ namespace cppm
     
     Version& Version::operator = (const std::string& version) {
              if(version == "latest") { latest = true; }
+        else if(version == "*")      { latest = true; }
         else if(version == "git")    { git = true; }
         else std::sscanf(version.c_str(), "%d.%d.%d", &major, &minor, &revision);
         return *this;
