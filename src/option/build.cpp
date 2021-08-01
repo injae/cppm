@@ -137,8 +137,8 @@ namespace cppm::option
 
     void Build::print_config() {
         if(*print_format == "fmt")  { fmt::print("{}",*config_); }
-        if(*print_format == "json") { fmt::print("{}", serde::deserialize<nlohmann::json>(*config_).dump(3)); }
-        if(*print_format == "toml") { std::cout <<  serde::deserialize<toml::value>(*config_); }
+        if(*print_format == "json") { fmt::print("{}", serde::serialize<nlohmann::json>(*config_).dump(3)); }
+        if(*print_format == "toml") { std::cout <<  serde::serialize<toml::value>(*config_); }
     }
 
     void Build::transcompile(core::Path& path) {

@@ -68,23 +68,6 @@ namespace cppm::core {
     };
 }
 
-//namespace serde{
-//    using cppm::core::link_type;
-//    template<typename serde_ctx>
-//    struct serde_serializer<link_type, serde_ctx>{
-//        inline static auto from(serde_ctx& ctx, link_type& data, std::string_view key) {
-//            std::string buffer = serialize_at<std::string>(ctx.adaptor, key);
-//            std::transform(buffer.begin(), buffer.end(), buffer.begin(), ::toupper);
-//            data = type::enum_t::from_str<link_type>(buffer);
-//        }
-//        inline static auto into(serde_ctx& ctx, const link_type& data, std::string_view key) {
-//            std::string buffer = std::string{type::enum_t::to_str(data)};
-//            std::transform(buffer.begin(), buffer.end(), buffer.begin(), ::tolower);
-//            deserialize_by_from<typename serde_ctx::Adaptor>(ctx.adaptor, buffer, key);
-//        }
-//    };
-//}
-
 
 #endif
 

@@ -27,8 +27,9 @@ namespace cppm::core {
                      (&Self::namespace_, "namespace")
                      (&Self::install,    "install", default_{true})
                      (&Self::source,     "source",  make_optional)
-                     (&Self::exclude,    "flag",    default_{false})
+                     (&Self::exclude,    "flag",    default_{false});
         )
+
         std::string name;
         cppkg_type type; 
         cppkg_type_detail cppkg_type_d;
@@ -40,6 +41,8 @@ namespace cppm::core {
 
         virtual ~Cppkg() = default;
     };
+
+
 
     struct CppkgLib : Cppkg {
         template<class Context>
@@ -95,5 +98,33 @@ namespace cppm::core {
         }
     };
 }
+
+//namespace serde {
+//    template<typename T, typename serde_ctx>
+//    struct serde_serializer<T, serde_ctx,
+//                            std::enable_if_t<std::is_base_of_v<cppm::core::Cppkg, T> &&
+//                                             meta::is_serdeable_v<serde_ctx, T>>> {
+//        inline static auto from(serde_ctx& ctx, T& data, std::string_view key) {
+//            using namespace cppm::core;
+//            fmt::print("here");
+//            auto upper = static_cast<Cppkg&>(data);
+//            deserialize_to(ctx.adaptor, key, upper);
+//            deserialize_to(ctx.adaptor, key, data);
+//            //serde_adaptor<typename serde_ctx::Adaptor, Cppkg>::from(ctx.adaptor, key, static_cast<Cppkg&>(data));
+//            //serde_adaptor<typename serde_ctx::Adaptor, T>::from(ctx.adaptor, key, data);
+//        }
+//
+//        // deserialize step
+//        inline static auto into(serde_ctx& ctx, const T& data, std::string_view key) {
+//            using namespace cppm::core;
+//            fmt::print("here");
+//            auto upper = static_cast<Cppkg&>(data);
+//            serialize_to(ctx.adaptor, key, upper);
+//            serialize_to(ctx.adaptor, key, data);
+//            //serde_adaptor<typename serde_ctx::Adaptor, Cppkg>::into(ctx.adaptor, key, static_cast<Cppkg&>(data));
+//            //serde_adaptor<typename serde_ctx::Adaptor, T>::into(ctx.adaptor, key, data);
+//        }
+//    };
+//}
 
 #endif

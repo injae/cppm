@@ -10,7 +10,7 @@ namespace cppm::core {
 
     Config Config::load(fs::path config_path) {
         using namespace fmt::literals;
-        auto config = serde::serialize<Config>(toml::parse((config_path/"cppm.toml").string()));
+        auto config = serde::deserialize<Config>(toml::parse((config_path/"cppm.toml").string()));
         config.post_processing(config_path.string());
         return config;
     }
@@ -40,7 +40,7 @@ namespace cppm::core {
 
         auto load_cppkg = [&](auto& deps) {
             for(auto& [name, dep] : deps) {
-                auto table = serde::deserialize<toml::value>(dep);
+                auto table = serde::serialize<toml::value>(dep);
                 if(dep.optional) {
                     if(features.find(name) == features.end()) features[name] = {};
                     features[name].push_back({"$USE_{}_{}"_format(package.name, name)
@@ -52,9 +52,9 @@ namespace cppm::core {
                 }
                 auto default_on = dep.default_features_flag;
                 dep = {};
-                serde::serialize_to(toml::parse(_path)[name], dep);
+                serde::deserialize_to(toml::parse(_path)[name], dep);
                 dep.default_feature = default_on ? dep.default_feature : decltype(dep.default_feature){};
-                serde::serialize_to(table, deps[name]);
+                serde::deserialize_to(table, deps[name]);
 
                 dep.name = name;
                 if(!dep.custom) {

@@ -15,7 +15,7 @@ namespace cppkg
         using namespace cppm;
         using deps = std::map<std::string, core::Dependency>;
         path = path != "" ? "{}/"_format(path) : "";
-        auto dep = serde::serialize<deps>(toml::parse("{}cppkg.toml"_format(path)));
+        auto dep = serde::deserialize<deps>(toml::parse("{}cppkg.toml"_format(path)));
         dep[name].name = name;
         return dep[name];
     }
