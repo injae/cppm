@@ -25,9 +25,9 @@ namespace cppm::core {
         DERIVE_SERDE(Cppkg,
                      (&Self::name, "name")
                      (&Self::namespace_, "namespace")
-                     (&Self::install,    "install", default_se{true})
+                     (&Self::install,    "install", default_{true})
                      (&Self::source,     "source",  make_optional)
-                     (&Self::exclude,    "flag",    default_se{false})
+                     (&Self::exclude,    "flag",    default_{false})
         )
         std::string name;
         cppkg_type type; 
@@ -49,8 +49,8 @@ namespace cppm::core {
             Cppkg& upcast = static_cast<Cppkg&>(value);
             Cppkg::serde(context, upcast);
             serde::serde_struct(context, value)
-                (&Self::type, "cppkg_type", default_se{cppkg_type::lib})
-                (&Self::cppkg_type_d, "type", default_se{cppkg_type_detail::STATIC}, under_to_dash, to_lower)
+                (&Self::type, "cppkg_type", default_{cppkg_type::lib})
+                (&Self::cppkg_type_d, "type", default_{cppkg_type_detail::STATIC}, under_to_dash, to_lower)
                 ;
         }
     };
@@ -62,8 +62,8 @@ namespace cppm::core {
             Cppkg& upcast = static_cast<Cppkg&>(value);
             Cppkg::serde(context, upcast);
             serde::serde_struct(context, value)
-                (&Self::type, "cppkg_type", default_se{cppkg_type::bin})
-                (&Self::cppkg_type_d, "type", default_se{cppkg_type_detail::BINARY}, under_to_dash, to_lower)
+                (&Self::type, "cppkg_type", default_{cppkg_type::bin})
+                (&Self::cppkg_type_d, "type", default_{cppkg_type_detail::BINARY}, under_to_dash, to_lower)
                 ;
         }
     };
@@ -75,8 +75,8 @@ namespace cppm::core {
             Cppkg& upcast = static_cast<Cppkg&>(value);
             Cppkg::serde(context, upcast);
             serde::serde_struct(context, value)
-                (&Self::type, "cppkg_type", default_se{cppkg_type::example})
-                (&Self::cppkg_type_d, "type", default_se{cppkg_type_detail::BINARY}, under_to_dash, to_lower)
+                (&Self::type, "cppkg_type", default_{cppkg_type::example})
+                (&Self::cppkg_type_d, "type", default_{cppkg_type_detail::BINARY}, under_to_dash, to_lower)
                 ;
         }
     };
@@ -89,8 +89,8 @@ namespace cppm::core {
             Cppkg& upcast = static_cast<Cppkg&>(value);
             Cppkg::serde(context, upcast);
             serde::serde_struct(context, value)
-                (&Self::type, "cppkg_type", default_se{cppkg_type::test})
-                (&Self::cppkg_type_d, "type", default_se{cppkg_type_detail::BINARY}, under_to_dash, to_lower)
+                (&Self::type, "cppkg_type", default_{cppkg_type::test})
+                (&Self::cppkg_type_d, "type", default_{cppkg_type_detail::BINARY}, under_to_dash, to_lower)
                 ;
         }
     };

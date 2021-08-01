@@ -16,6 +16,7 @@ namespace cppkg
         using deps = std::map<std::string, core::Dependency>;
         path = path != "" ? "{}/"_format(path) : "";
         auto dep = serde::serialize<deps>(toml::parse("{}cppkg.toml"_format(path)));
+        dep[name].name = name;
         return dep[name];
     }
 
@@ -37,9 +38,9 @@ namespace cppkg
         util::write("cppkg.toml"
                     ,"[{}]\n"_format(dep.name)
                     +"version={} #(require)\n"_format(value(dep.version))
-                    +"type=\"{}\" #lib(default) | bin | cmake\n"_format(dep.type)
+                    +"type=\"{}\" #lib(default) | bin | cmake\n"_format(serde::to_string(dep.type))
                     +"description={} #(require)\n"_format(value(dep.description))
-                    +"module={} #(require) if none_module=true -> no require\n"_format(dep.module)
+                    +"module={} #(require) if none_module=true -> no require\n"_format(value(*dep.module))
                     +"{} #(require)\n"_format(url_type)
                     +"{}branch={} #(optional & require git)\n"_format(is_branch, value(*dep.branch))
                     +"#link=private #default\n"

@@ -48,7 +48,7 @@ namespace cppm::option
             .call_back([&](){ pkg.description = app_.get_arg(); });
         app_.add_option("type").abbr("t")
             .desc("add type default is lib")
-            .call_back([&](nlpo::arg::One arg){ pkg.type = serde::type::enum_t::from_str<core::cppkg_type>(arg); });
+            .call_back([&](nlpo::arg::One arg){ pkg.type = serde::deserialize<core::cppkg_type>(arg); });
         app_.add_option("flags").abbr("f")
             .desc("add cmake build flags")
             .call_back([&](nlpo::arg::One arg){ pkg.flags = arg; });
@@ -68,10 +68,13 @@ namespace cppm::option
                 if(!pkg.module && pkg.type == core::cppkg_type::lib) {
                     fmt::print("[cppkg] can't find module value\n");
                     fmt::print("[cppkg] module name find mode on\n");
+
                     auto current_path = fs::current_path();
                     auto path ="{}/cache/__install"_format(core::cppm_root());
+
                     fs::create_directory(path);
                     util::working_directory(path);
+
                     std::string name = "script";
                     auto cppm_toml = Init::make_project(name,false);
                     cppm_toml += "[dependencies]\n{} = \"{}\"\n"_format(pkg.name, pkg.version);
@@ -83,6 +86,7 @@ namespace cppm::option
                     file << cppm_toml;
                     file.close();
                     util::working_directory(project.thirdparty.string());
+
                     cppkg::init(pkg);
                     cppkg::build(pkg.name);
                     auto build = Build();
@@ -90,8 +94,10 @@ namespace cppm::option
                     std::vector<std::string> args = {"--release"};
                     build.app().args().insert(build.app().args().end(), args.begin(), args.end());
                     build.app().parse(app_);
+
                     auto cache = cmake::Cache(project.build.string());
                     auto pkg_path = cache["{}_DIR"_format(pkg.name)];
+
                     std::regex find_target_cmake(".*[Tt][Aa][Rr][Gg][Ee][Tt][Ss].cmake");
                     auto target_file= util::find_files(pkg_path,find_target_cmake,true)[0];
                     std::regex filter(R"(foreach\(_expectedTarget (.*)\))");

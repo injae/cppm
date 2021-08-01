@@ -19,12 +19,12 @@ namespace cppm::core {
     struct Package {
         DERIVE_SERDE(Package,
                 (&Self::name,         "name")
-                (&Self::version,      "version",      default_se{"0.0.1"})
-                (&Self::tool_version, "tool-version", default_se{"0.0.13"})
-                (&Self::description,  "description",  default_se{""})
-                (&Self::standard,     "standard",     default_se{"17"})
-                (&Self::with_vcpkg,   "vcpkg",        default_se{false})
-                (&Self::unity_build,  "unity",        default_se{false})
+                (&Self::version,      "version",      default_{"0.0.1"})
+                (&Self::tool_version, "tool-version", default_{"0.0.13"})
+                (&Self::description,  "description",  default_{""})
+                (&Self::standard,     "standard",     default_{"17"})
+                (&Self::with_vcpkg,   "vcpkg",        default_{false})
+                (&Self::unity_build,  "unity",        default_{false})
                 (&Self::git_repo,     "git")
                 .no_remain())
         std::string name;

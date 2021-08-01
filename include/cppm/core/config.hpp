@@ -43,7 +43,7 @@ namespace cppm::core {
     struct Config {
         DERIVE_SERDE(Config,
             (&Self::package,          "package")
-            (&Self::cmake,            "cmake",       default_se{CMake{}})
+            (&Self::cmake,            "cmake",       default_{CMake{}})
             (&Self::hunter,           "hunter")
             (&Self::workspace,        "workspace")
             (&Self::features,         "features",     make_optional) 

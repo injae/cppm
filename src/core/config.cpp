@@ -48,7 +48,7 @@ namespace cppm::core {
                 }
                 auto _path = path.thirdparty/"{}/{}/cppkg.toml"_format(name, dep.version);
                 if(!fs::exists(_path) && dep.repo == repo_type::cppkg) {
-                    cppkg::install(*this, cppkg::search(dep.name, dep.version));
+                    cppkg::install(*this, cppkg::search(name, dep.version));
                 }
                 auto default_on = dep.default_features_flag;
                 dep = {};

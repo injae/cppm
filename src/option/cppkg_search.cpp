@@ -22,6 +22,10 @@ namespace cppm::option
             .call_back([&](){
                 fmt::print("update cppkg repo version\n");
                 auto cppkg_path = "{0}repo/cppkg"_format(core::cppm_root());
+                if(!fs::exists(cppkg_path)) {
+                    fmt::print("clone cppkg path:{}\n",cppkg_path);
+                    system("git clone https://github.com/injae/cppkg.git {}"_format(cppkg_path).c_str());
+                }
                 auto command = "cd {0} && git pull"_format(cppkg_path);
                 system(command.c_str());
                 auto name = !app_.args().empty() ? app_.get_arg() : "";
