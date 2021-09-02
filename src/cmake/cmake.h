@@ -8,6 +8,7 @@
 #include <optional>
 #include <queue>
 #include <functional>
+#include <serdepp/serde.hpp>
 
 namespace cppm::cmake
 {
@@ -21,13 +22,26 @@ namespace cppm::cmake
 
     class Cache{
     public:
+        struct Variable {
+            DERIVE_SERDE(Variable, (&Self::type, "type") (&Self::value, "value"))
+            std::string type;
+            std::string value;
+        };
+        
+        DERIVE_SERDE(Cache,
+                     (&Self::variables, "variables")
+                     (&Self::changed, "changed")
+                     (&Self::exist_file_, "exist_file"))
         Cache(std::string path);
         bool exist(const std::string& name, const std::string& value);
-        inline std::string&  operator[](const std::string& name) { return variables[name].second; }
+        bool set(const std::string& name, const std::string& value);
+        std::string cmake_refresh_flags();
+        bool is_changed() { return !changed.empty(); }
+        inline std::string&  operator[](const std::string& name) { return variables[name].value; }
         bool exist_file() { return exist_file_; }
-        using variable = std::pair<std::string, std::string>;
     private:
-        std::map<std::string, variable> variables;
+        std::map<std::string, Variable> variables;
+        std::vector<std::string> changed;
         bool exist_file_=true;
     };
 

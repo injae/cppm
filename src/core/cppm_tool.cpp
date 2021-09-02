@@ -32,6 +32,7 @@ namespace cppm::core {
                    "   {}\n"
                    "else()\n"
                    "   {}\n"
+
                    "endif()\n"_format(flag, code, else_code);
         }
         inline std::string to_upper(std::string str) { return str | copy | actions::transform(::toupper);}
@@ -69,6 +70,7 @@ namespace cppm::core {
                ,"cppkg_dependencies"_a=cppm_target_dependencies(config)
                ,"cppkg_install"_a=cppm_target_install(config)
         );
+
         return gen;
     }
 
@@ -136,6 +138,7 @@ namespace cppm::core {
 
     std::string find_cppkg(Config& config) {
         using namespace cmake;
+        using namespace fmt::literals;
         std::string gen;
         auto make_find_cppkg = [&](auto& deps){
             auto scripts = deps | views::transform([&](auto it) {
@@ -147,7 +150,7 @@ namespace cppm::core {
                                     ,"ver"_a=dep.version
                                     ,"module"_a=arg_opt("MODULE",dep.module)
                                     ,"components"_a=arg_opt("COMPONENTS",dep.components)
-                                    ,"path"_a=arg_opt("LOADPATH",dep.path)
+                                    ,"path"_a=arg_opt("LOADPATH", dep.path)
                                     ,"hunter"_a=hunter
                                     ,"type"_a=arg("TYPE", serde::to_str(dep.type))
                                     ,"optional"_a=opt
@@ -283,6 +286,7 @@ namespace cppm::core {
         for(auto& exam : config.examples) { make_install(exam); }
         return gen;
     }
+
     std::string cppm_download_package(Dependency& dep) {
         auto download = cmake::arg_opt("GIT", dep.git);
         download += cmake::arg_opt("URL", dep.url);
@@ -292,7 +296,7 @@ namespace cppm::core {
             "# Cppkg Base Dependency Downloader\n"
             "cmake_minimum_required(VERSION 3.6)\n"
             "project({name}-{version}-install)\n\n"
-            "set(CPPM_VERSION {cppm_version})\n"
+            "set(CPPM_VERSION ${{CPPM_VERSION}})\n"
             "include(${{CMAKE_CURRENT_SOURCE_DIR}}/cmake/cppm_loader.cmake)\n"
             "download_package({name} {version} {url} {type} CMAKE_ARGS "
             "${{CMAKE_ARGS}} {flags})\n\n",

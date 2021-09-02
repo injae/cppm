@@ -7,12 +7,12 @@
 
 namespace cppm::option
 {
+
     class Cppm : public base_option
     {
     public:
         Cppm();
         void run(int argc, char* argv[]);
-    private:
         void _run();
         void _update();
     };

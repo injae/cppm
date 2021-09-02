@@ -1,0 +1,8 @@
+[cpcli]
+version="git" #(require)
+type="lib" #lib(default) | bin | cmake
+description="cpp command line library" #(require)
+module="cpcli::cpcli" #(require) if none_module=true -> no require
+git="https://github.com/injae/cpcli.git" #(require)
+#branch="" #(optional & require git)
+#link=private #default

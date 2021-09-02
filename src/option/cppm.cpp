@@ -18,9 +18,6 @@ namespace cppm::option
         app_.add_option("version").abbr("v")
             .desc("show cppm version")
             .call_back([&](){ fmt::print("cppm version {}\n", CPPM_VERSION);});
-        //app_.add_command<CppmConfig>("config")
-        //    .desc("cppm config setting")
-        //    .is_show(false);
         app_.add_command<Init>("init")
             .desc("make c++ project");
         app_.add_command("update")
@@ -62,4 +59,5 @@ namespace cppm::option
     void Cppm::run(int argc, char **argv) {
         app_.parse(argc, argv);
     }
+
 }

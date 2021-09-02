@@ -42,8 +42,6 @@ namespace cppm::core {
         virtual ~Cppkg() = default;
     };
 
-
-
     struct CppkgLib : Cppkg {
         template<class Context>
         constexpr static void serde(Context& context, CppkgLib& value) {

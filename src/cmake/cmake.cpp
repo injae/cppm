@@ -18,19 +18,36 @@ namespace cppm::cmake
         std::smatch what;
         while (std::getline(ss, to, '\n')) {
             if(std::regex_match(to, what, filter)) {
-              variables.insert(std::make_pair(what[1], std::make_pair(what[2], what[3])));}
+                variables.insert(std::make_pair(what[1], Cache::Variable{what[2], what[3]}));
+            }
         }
+    }
+
+    bool Cache::set(const std::string &name, const std::string &value) {
+        if(exist(name, value)) { return false; }
+        changed.push_back(name);
+        variables[name].value = value;
+        return true;
     }
 
     bool Cache::exist(const std::string& name, const std::string& value) {
         if(auto data = variables.find(name); data != variables.end()) {
-            if(data->second.second == value) return true;
+            if(data->second.value == value) return true;
             return false;
         }
         else {
             return false;
         }
     }
+
+    std::string Cache::cmake_refresh_flags() {
+        std::string flags="";
+        for(auto& name : changed) {
+            flags += " -D{}={}"_format(name, variables[name].value);
+        }
+        return flags;
+    }
+
 
     Cmake Cmake::generator(const std::string& generator) {
         auto hook = [generator](auto& cache, auto& cmake_option){

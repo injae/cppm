@@ -6,6 +6,7 @@
 #include "cppm/util/string.hpp"
 #include <iostream>
 #include <cstdlib>
+#include <serdepp/adaptor/toml11.hpp>
 
 using namespace fmt::literals;
 using namespace cppm::util::str;

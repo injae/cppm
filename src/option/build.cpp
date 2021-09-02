@@ -1,11 +1,9 @@
 #include <iostream>
 #include <thread>
 #include <memory>
-#include <fmt/format.h>
 #include <hash_lib/md5.h>
 
 #include <cstdlib>
-#include <string>
 #include <range/v3/all.hpp>
 
 #include "option/build.h"
@@ -13,7 +11,6 @@
 #include "cppm/util/filesystem.h"
 #include "cppm/cppkg/cppkg.h"
 #include "cppm/util/system.hpp"
-
 #include "cppm/util/string.hpp"
 #include "cppm/core/cppm_tool.hpp"
 #include "cppm_version.h"

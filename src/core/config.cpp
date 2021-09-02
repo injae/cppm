@@ -95,4 +95,18 @@ namespace cppm::core {
 
         return *this;
     }
+    std::optional<Config> cppm_config_load(bool panic, const std::string& start_path) {
+        fs::path start_position = (start_path == "") ? fs::current_path() : fs::path{start_path};
+        auto path = cppm::util::reverse_find_file(start_position, "cppm.toml");
+        if(!path) {
+            if(panic) {
+                fmt::print("can't find cppm.toml\n");
+                exit(1);
+            } else {
+                fmt::print("can't find cppm.toml\nbuild with cppm_toolchain\n");
+            }
+            return std::nullopt;
+        }
+        return core::Config::load(path->parent_path());
+    }
 }

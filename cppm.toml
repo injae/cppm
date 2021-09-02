@@ -20,28 +20,39 @@ type ="header-only"
 
 [[bin]]
 name   = "cppm"
-source = ["src/.*.cpp"]
+source = ["src/main.cpp",
+          "src/cmake/.*",
+          "src/core/.*",
+          "src/cppkg/.*",
+          "src/option/.*",
+          "src/cppm_version.h",
+          "src/util/.*"]
 
-[[test]]
-name   = "cppm-test-check"
-source = ["tests/test.cpp"]
 
-[[example]]
-name   = "cppm-core-load"
-source = ["examples/example.cpp"]
+#[[example]]
+#name   = "cppm-core-load"
+#source = ["examples/example.cpp",
+#          "src/cmake/.*",
+#          "src/core/.*",
+#          "src/cppkg/.*",
+#          "src/options/.*",
+#          "src/util/.*"]
 
-#[workspace]
-#   member = ["libs/hashpp"]
+#[[test]]
+#name   = "cppm-test-check"
+#source = ["tests/test.cpp"]
 
 [dependencies]
-range-v3 = "git"
+range-v3 = "0.11.0"
 nlpo     = "git"
-#serdepp  = {version="git", features=[ "xxx" ], default_features=false}
-serdepp  = {version="git", link="public", features=["json", "toml"]} 
+serdepp  = {version="0.1.1", link="public", features=["json", "toml"]} 
 hash-lib = "git"
+toml11   = "3.7.0"
+nlohmann_json = "3.9.1"
 
 [dev-dependencies]
     Catch2 = "2.9.1"
+    #cpcli    = "git"
 
 #[target.all-osx-clang.dependencies]
 #    dbg-macro = "git"

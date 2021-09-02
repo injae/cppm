@@ -1,0 +1,11 @@
+[serdepp]
+version="0.1.1" #(require)
+type="lib" #lib(default) | bin | cmake
+description="cpp serialize deserialie library" #(require)
+module="serdepp::serdepp" #(require) if none_module=true -> no require
+url="https://github.com/injae/serdepp/archive/refs/tags/v0.1.1.zip" #(require)
+#flags="-DSERDEPP_USE_TOML11=ON"
+#link="public" #default
+[serdepp.feature-map]
+    toml = ["SERDEPP_USE_TOML11"]
+    json = ["SERDEPP_USE_NLOHMANN_JSON"]

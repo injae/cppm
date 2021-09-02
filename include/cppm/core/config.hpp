@@ -41,43 +41,42 @@ namespace cppm::core {
     };
 
     struct Config {
-        DERIVE_SERDE(Config,
-            (&Self::package,          "package")
-            (&Self::cmake,            "cmake",       default_{CMake{}})
-            (&Self::hunter,           "hunter")
-            (&Self::workspace,        "workspace")
-            (&Self::features,         "features",     make_optional) 
-            (&Self::dependencies,     "dependencies", make_optional)
-            (&Self::dev_dependencies, "dev-dependencies", make_optional)
-            (&Self::lib,        "lib")
-            (&Self::bins,       "bin",     make_optional)
-            (&Self::examples,   "example", make_optional)
-            (&Self::benchmarks, "benchmark", make_optional)
-            (&Self::tests,      "tests",   make_optional)
-            (&Self::profile,    "profile", make_optional)
-            (&Self::target,     "target",  make_optional)
-        )
+      DERIVE_SERDE(Config,
+                   (&Self::package, "package")(&Self::cmake, "cmake",
+                                               default_{CMake{}})(
+                       &Self::hunter, "hunter")(&Self::workspace, "workspace")(
+                       &Self::features, "features",
+                       make_optional)(&Self::dependencies, "dependencies",
+                                      make_optional)(&Self::dev_dependencies,
+                                                     "dev-dependencies",
+                                                     make_optional)(
+                       &Self::lib, "lib")(&Self::bins, "bin", make_optional)(
+                       &Self::examples, "example",
+                       make_optional)(&Self::benchmarks, "benchmark",
+                                      make_optional)(&Self::tests, "tests",
+                                                     make_optional)(
+                       &Self::profile, "profile",
+                       make_optional)(&Self::target, "target", make_optional))
 
-        Package package;
-        CMake cmake;
-        std::optional<Hunter> hunter;
-        std::optional<Workspace> workspace;
-        std::unordered_map<std::string, std::vector<Feature>> features;
-        std::unordered_map<std::string, Dependency> dependencies;
-        std::unordered_map<std::string, Dependency> dev_dependencies;
-        std::optional<CppkgLib> lib;
-        std::vector<CppkgBin> bins;
-        std::vector<CppkgExample> examples;
-        std::vector<CppkgTest> tests;
-        std::vector<CppkgTest> benchmarks;
-        std::map<std::string, Profile> profile;
-        std::map<std::string, Target> target;
-        Path path;
+      Package package;
+      CMake cmake;
+      std::optional<Hunter> hunter;
+      std::optional<Workspace> workspace;
+      std::unordered_map<std::string, std::vector<Feature>> features;
+      std::unordered_map<std::string, Dependency> dependencies;
+      std::unordered_map<std::string, Dependency> dev_dependencies;
+      std::optional<CppkgLib> lib;
+      std::vector<CppkgBin> bins;
+      std::vector<CppkgExample> examples;
+      std::vector<CppkgTest> tests;
+      std::vector<CppkgTest> benchmarks;
+      std::map<std::string, Profile> profile;
+      std::map<std::string, Target> target;
+      Path path;
 
-        Config& post_processing(const std::string& config_path);
-        static Config load(fs::path config_path);
+      Config &post_processing(const std::string &config_path);
+      static Config load(fs::path config_path);
     };
-
-}
-
+    std::optional<Config> cppm_config_load(bool panic, const std::string &start_path = "");
+} // namespace cppm::core
 #endif

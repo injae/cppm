@@ -5,7 +5,6 @@
 
 #include "option/base_option.h"
 #include <string>
-#include <memory>
 
 namespace cppm::option
 {
