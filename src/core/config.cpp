@@ -54,8 +54,7 @@ namespace cppm::core {
                 dep = {};
                 serde::deserialize_to(toml::parse(_path)[name], dep);
                 dep.default_feature = default_on ? dep.default_feature : decltype(dep.default_feature){};
-                serde::deserialize_to(table, deps[name]);
-
+                serde::deserialize_to(table, dep);
                 dep.name = name;
                 if(!dep.custom) {
                     auto _path = path.thirdparty/name/(dep.version);

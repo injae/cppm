@@ -146,7 +146,7 @@ namespace cppm::option
         }
         fs::create_directories(path.cmake);
         util::over_write_copy_file("{0}cmake/cppm_loader.cmake"_format(core::cppm_root())
-                                    ,"{0}/cppm_loader.cmake"_format(path.cmake));
+                                  ,"{0}/cppm_loader.cmake"_format(path.cmake));
     }
 
 
