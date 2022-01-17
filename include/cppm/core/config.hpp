@@ -3,7 +3,8 @@
 #ifndef __CPPM_CORE_CONFIG_HPP__
 #define __CPPM_CORE_CONFIG_HPP__
 
-#include <serdepp/utility.hpp>
+#include <serdepp/serde.hpp>
+#include <serdepp/adaptor/fmt.hpp>
 #include <serdepp/attributes.hpp>
 
 #include "cppm/core/package.hpp"

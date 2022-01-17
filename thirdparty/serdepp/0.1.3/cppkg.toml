@@ -1,0 +1,15 @@
+[serdepp]
+version="0.1.3" #(require)
+type="lib" #lib(default) | bin | cmake
+description="cpp serialize deserialie library" #(require)
+module="serdepp::serdepp" #(require) if none_module=true -> no require
+url="https://github.com/injae/serdepp/archive/refs/tags/v0.1.3.zip" #(require)
+#flags="-DSERDEPP_USE_TOML11=ON"
+#link="public" #default
+[serdepp.feature-map]
+    njson = ["SERDEPP_USE_NLOHMANN_JSON"]
+    rjson = ["SERDEPP_USE_RPAID_JSON"]
+    toml  = ["SERDEPP_USE_TOML11"]
+    yaml  = ["SEREDEPP_USE_YAML-CPP"]
+    fmt   = ["SERDEPP_USE_FMT"]
+

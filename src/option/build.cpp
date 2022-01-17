@@ -102,10 +102,11 @@ namespace cppm::option
                 if(!is_cppm && !cmake_script) { fmt::print(stderr,"this package is not cmake project\n"); exit(1); }
 
                 core::Path path = is_cppm ? config_->path : core::Path::make(cmake_script->parent_path().string());
+
                 if(is_cppm && config_->cmake.toolchain) {
-                    cmake_.define("CMAKE_EXTERNAL_TOOLCHAIN_FILE", config_->cmake.toolchain.value());
+                    cmake_.define("CPPM_EXTERNAL_TOOLCHAIN_FILE", config_->cmake.toolchain.value());
                 }
-                if(cmake_.toolchain) { cmake_.define("CMAKE_EXTERNAL_TOOLCHAIN_FILE", cmake_.toolchain.value()); }
+                if(cmake_.toolchain) { cmake_.define("CPPM_EXTERNAL_TOOLCHAIN_FILE", cmake_.toolchain.value()); }
                 if(!is_cppm){
                     cmake_.toolchain = "{}cmake/cppm-tools-{}/toolchain.cmake"_format(core::cppm_root(),
                                                                                       CPPM_TOOLS_VERSION);

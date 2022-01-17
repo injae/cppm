@@ -40,7 +40,6 @@ namespace cppm::core {
 
         auto load_cppkg = [&](auto& deps) {
             for(auto& [name, dep] : deps) {
-                auto table = serde::serialize<toml::value>(dep);
                 if(dep.optional) {
                     if(features.find(name) == features.end()) features[name] = {};
                     features[name].push_back({"$USE_{}_{}"_format(package.name, name)
@@ -51,12 +50,12 @@ namespace cppm::core {
                     cppkg::install(*this, cppkg::search(name, dep.version));
                 }
                 auto default_on = dep.default_features_flag;
-                dep = {};
-                serde::deserialize_to(toml::parse(_path)[name], dep);
+                auto origin = toml::parse(_path)[name];
                 dep.default_feature = default_on ? dep.default_feature : decltype(dep.default_feature){};
-                serde::deserialize_to(table, dep);
+                serde::serialize_to(dep, origin);
+                serde::deserialize_to(origin, dep);
                 dep.name = name;
-                if(!dep.custom) {
+                if(!dep.custom && *dep.custom) {
                     auto _path = path.thirdparty/name/(dep.version);
                     install_cppm_download_package(_path, dep);
                 }
