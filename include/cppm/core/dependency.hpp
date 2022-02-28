@@ -66,7 +66,7 @@ namespace cppm::core {
         bool optional;
         bool default_features_flag;
         std::optional<std::string> module;
-        std::unordered_map<std::string, Dependency> dependencies;
+        std::map<std::string, Dependency> dependencies;
     };
 }
 
