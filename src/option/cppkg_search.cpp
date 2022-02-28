@@ -26,7 +26,7 @@ namespace cppm::option
                     fmt::print("clone cppkg path:{}\n",cppkg_path);
                     system("git clone https://github.com/injae/cppkg.git {}"_format(cppkg_path).c_str());
                 }
-                auto command = "cd {0} && git pull"_format(cppkg_path);
+                auto command = "cd {0} && git pull origin master"_format(cppkg_path);
                 system(command.c_str());
                 auto name = !app_.args().empty() ? app_.get_arg() : "";
                 if(is_all) { repo_name = ""; name = ""; }

@@ -63,7 +63,7 @@ namespace cppm::core {
       CMake cmake;
       std::optional<Hunter> hunter;
       std::optional<Workspace> workspace;
-      std::unordered_map<std::string, std::vector<Feature>> features;
+      std::unordered_map<std::string, Feature> features;
       std::unordered_map<std::string, Dependency> dependencies;
       std::unordered_map<std::string, Dependency> dev_dependencies;
       std::optional<CppkgLib> lib;

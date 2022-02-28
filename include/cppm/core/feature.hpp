@@ -7,33 +7,12 @@
 #include <serdepp/attributes.hpp>
 
 namespace cppm::core {
-    enum class FeatureType {
-        CMAKE_FLAG,
-        REMOTE,
-    };
-
     struct Feature {
-        template<class Context>
-        constexpr static void serde(Context& context, Feature& value) {
-            using namespace serde::attribute;
-            using Self = Feature;
-            serde::serde_struct(context, value)
-                (&Self::key,   "key",   value_or_struct)
-                (&Self::value, "value", skip)
-                (&Self::type,  "type",  skip);
-            if constexpr(Context::is_serialize) {
-                if(value.key[0] == '$') {
-                    value.type = FeatureType::CMAKE_FLAG;
-                    value.value = "OFF";
-                }
-            }
-        }
-        Feature() = default;
-        Feature(const std::string& key_) : key(key_){}
-
+        DERIVE_SERDE(Feature,
+                     [attributes(value_or_struct)]_SF_(key)
+                     [attributes(default_{"OFF"})]_SF_(value))
+        std::variant<std::string, std::vector<Feature>> key;
         std::string value;
-        std::string key;
-        FeatureType type;
     };
 }
 

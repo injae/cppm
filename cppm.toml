@@ -12,7 +12,7 @@ include  = ["cmake/cppm_install.cmake"]
     default = [ "json", "toml" ] # default flags set ON
     json = ["serdepp/json"]
     toml = ["serdepp/toml11"]
-    test = ["$USE_CPPM_TEST"] # default value is OFF
+    test = "$USE_CPPM_TEST" # default value is OFF
     
 [lib]
 name = "cppm-core"

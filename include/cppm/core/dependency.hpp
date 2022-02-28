@@ -47,7 +47,7 @@ namespace cppm::core {
         link_type link;
         repo_type repo;
         std::string description;
-        std::map<std::string, std::vector<Feature>> features;
+        std::map<std::string, Feature> features;
         std::vector<Feature> default_feature;
         std::optional<std::string> components;
         std::optional<std::string> path;

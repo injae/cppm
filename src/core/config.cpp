@@ -41,9 +41,10 @@ namespace cppm::core {
         auto load_cppkg = [&](auto& deps) {
             for(auto& [name, dep] : deps) {
                 if(dep.optional) {
-                    if(features.find(name) == features.end()) features[name] = {};
-                    features[name].push_back({"$USE_{}_{}"_format(package.name, name)
-                            | copy | actions::transform(::toupper)});
+                    Feature feature;
+                    feature.key ="$USE_{}_{}"_format(package.name, name);
+                    feature.value="OFF";
+                    features[name] = feature;
                 }
                 auto _path = path.thirdparty/"{}/{}/cppkg.toml"_format(name, dep.version);
                 if(!fs::exists(_path) && dep.repo == repo_type::cppkg) {
