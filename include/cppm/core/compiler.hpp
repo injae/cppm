@@ -9,8 +9,8 @@
 namespace cppm::core {
     struct Compiler {
         DERIVE_SERDE(Compiler,
-                     (&Self::version, "version", value_or_struct)
-                     (&Self::option,  "option")
+                     (&Self::option,  "option", value_or_struct)
+                     (&Self::version, "version", make_optional)
                      )
         std::string version;
         std::string option;
