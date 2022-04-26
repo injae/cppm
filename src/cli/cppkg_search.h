@@ -10,20 +10,21 @@ namespace cppm::command {
     class CppkgSearch {
     public:
         DERIVE_SERDE(CppkgSearch,
-                     .attrs(desc{"Search for a package"}, callback{CppkgSearch::execute})
-                     [attrs(option("-r,--repo", "repository to search"))]
-                     _SF_(repo)
-                     [attrs(option("targets", "search targets"))]
-                     _SF_(targets)
-                     [attrs(option("-a,--all", "show all results"))]
-                     _SF_(all)
+                     .attrs(desc{"Search for a package"},
+                            callback{CppkgSearch::execute},
+                            option_group("Search","Search options"))
+                     [attrs(option("-r,--repo", "show {repo_name}'s packages"))]_SF_(repo)
+                     [attrs(option("target", "search target"))]_SF_(target)
+                     [attrs(flag("-a,--all", "show all results"))]_SF_(all)
+                     [attrs(flag("-o,--one", "show one result"))]_SF_(one)
                      )
     private:
         static void execute(CppkgSearch& cmd);
     private:
         std::string repo;
-        std::vector<std::string> targets;
+        std::string target;
         bool all;
+        bool one;
     };
 }
 

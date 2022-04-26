@@ -4,6 +4,7 @@
 #define __CPPM_CLI_CPPKG_H__
 
 #include "cli/util.hpp"
+#include "cli/cppkg_search.h"
 
 namespace cppm::command {
 
@@ -28,11 +29,13 @@ namespace cppm::command {
                      .attrs(desc{"cppkg option and commands"}, callback{Cppkg::execute})
                      _SF_(update)
                      _SF_(build)
+                     _SF_(search)
                      )
     private:
         static void execute(Cppkg& cmd);
         SingleCommand<CppkgUpdate> update;
         SingleCommand<CppkgBuild>  build;
+        CppkgSearch                search;
     };
 
 }

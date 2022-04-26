@@ -50,11 +50,11 @@ hash-lib = "0.8.0"
 toml11   = "3.7.0"
 nlohmann_json = "3.9.1"
 fmt = "8.0.1"
+CLI11  = "2.2.0"
 
 [dev-dependencies]
     Catch2 = "2.9.1"
     #cpcli  = "git"
-    CLI11  = "2.2.0"
 
 #[target.all-osx-clang.dependencies]
 #    dbg-macro = "git"
