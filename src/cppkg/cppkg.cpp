@@ -51,6 +51,12 @@ namespace cppkg
                     );
     }
 
+    void transcompile(cppm::core::Dependency& dep, const std::string& path) {
+        using namespace cppm;
+        auto file = "{}/{}.cmake.in"_format(path, dep.name);
+        util::write(file, core::cppm_download_package(dep));
+    }
+
     void build(const std::string& name) {
         using namespace cppm;
         auto dep = cppkg::parse(name);
@@ -59,8 +65,7 @@ namespace cppkg
         fs::create_directories(dir_name);
         fs::copy("cppkg.toml", dir_name+"/cppkg.toml");
         fs::remove("cppkg.toml");
-        auto file = "{}/{}.cmake.in"_format(dir_name,dep.name);
-        util::write(file, core::cppm_download_package(dep));
+        transcompile(dep, dir_name);
         fmt::print("[cppkg] Success to make {} package\n",dep.name);
     }
     void build() {
@@ -104,7 +109,8 @@ namespace cppkg
                         if(auto versions = util::file_list("{0}/{1}/{2}"_format(root_path,rname,pname))) {
                             for(auto& ver : *versions) {
                                 auto vname = ver.path().filename().generic_string();
-                                cppkg_repos[rname].pkgs[pname].versions[vname] = "{0}/{1}/{2}/{3}"_format(root_path, rname, pname, vname);
+                                cppkg_repos[rname].pkgs[pname].versions[vname] =
+                                    "{0}/{1}/{2}/{3}"_format(root_path, rname, pname, vname);
                             }
                         }
                     }

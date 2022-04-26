@@ -16,6 +16,7 @@ namespace cppkg {
     Repos list();
     void build(const std::string& name);
     void regist(const std::string& name);
+    void transcompile(cppm::core::Dependency& dep, const std::string& path);
     dep_in_repo search(const std::string& name, const std::string& version); 
     void install(cppm::core::Config& config, const dep_in_repo& depr);
     cppm::core::Dependency cppkg_auto_gen(std::string& path);

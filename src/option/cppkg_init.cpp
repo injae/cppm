@@ -68,10 +68,13 @@ namespace cppm::option
                 if(!pkg.module && pkg.type == core::cppkg_type::lib) {
                     fmt::print("[cppkg] can't find module value\n");
                     fmt::print("[cppkg] module name find mode on\n");
+
                     auto current_path = fs::current_path();
                     auto path ="{}/cache/__install"_format(core::cppm_root());
+
                     fs::create_directory(path);
                     util::working_directory(path);
+
                     std::string name = "script";
                     auto cppm_toml = Init::make_project(name,false);
                     cppm_toml += "[dependencies]\n{} = \"{}\"\n"_format(pkg.name, pkg.version);
@@ -82,18 +85,27 @@ namespace cppm::option
                     file.open(project.root/"cppm.toml", std::ios::out);
                     file << cppm_toml;
                     file.close();
+
                     util::working_directory(project.thirdparty.string());
                     cppkg::init(pkg);
                     cppkg::build(pkg.name);
+
                     auto build = Build();
                     build.start_from(project.root.string());
+
                     std::vector<std::string> args = {"--release"};
                     build.app().args().insert(build.app().args().end(), args.begin(), args.end());
                     build.app().parse(app_);
+
                     auto cache = cmake::Cache(project.build.string());
                     auto pkg_path = cache["{}_DIR"_format(pkg.name)];
+                    if(pkg_path.empty()) {
+                        fmt::print(stderr, "can't find package name {}", pkg.name);
+                        exit(1);
+                    }
+
                     std::regex find_target_cmake(".*[Tt][Aa][Rr][Gg][Ee][Tt][Ss].cmake");
-                    auto target_file= util::find_files(pkg_path,find_target_cmake,true)[0];
+                    auto target_file= util::find_files(pkg_path, find_target_cmake, true)[0];
                     std::regex filter(R"(foreach\(_expectedTarget (.*)\))");
                     if(auto match = util::find_pattern(target_file,filter)) {
                         pkg.module = (*match)[1].str();
@@ -104,8 +116,10 @@ namespace cppm::option
                     }
                     util::working_directory(current_path.string());
                 }
+
                 cppkg::init(pkg);
                 cppkg::build(pkg.name);
+
                 if(regist) {cppkg::regist("{}/{}"_format(pkg.name, pkg.version));}
             });
     }

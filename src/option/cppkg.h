@@ -15,6 +15,7 @@ namespace cppm::option
         void _update();
         void _build();
         void _push();
+        void _generate();
     };
 }
 

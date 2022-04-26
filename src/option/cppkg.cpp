@@ -15,6 +15,9 @@ namespace cppm::option
 {
     Cppkg::Cppkg() {
         app_.add_command<CppkgInit>("init").args("{option} {name}").desc("init cppkg");
+        app_.add_command("generate").args("{cppkg name}").
+            desc("generate {cppkg name}.cmake.in")
+            .call_back([&](){ _generate(); });
         app_.add_command("build").args("{cppkg name}")
             .desc("build cppm package file")
             .call_back([&](){ _build(); });
@@ -27,6 +30,13 @@ namespace cppm::option
             .is_show(false)
             .call_back([&](){ _push(); });
         app_.add_command<CppkgInstall>("install").args("{name}").desc("install cppkg package");
+    }
+
+    void Cppkg::_generate() {
+        if(app_.args().empty())    { fmt::print(stderr,"need argument");     exit(1);}
+        if(app_.args().size() > 1) { fmt::print(stderr,"too many argument"); exit(1);}
+        auto dep = cppkg::parse(app_.get_arg());
+        cppkg::transcompile(dep, ".");
     }
 
     void Cppkg::_update() {

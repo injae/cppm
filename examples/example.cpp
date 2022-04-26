@@ -1,11 +1,11 @@
-#include "cppm/cmake/script.hpp"
-#include "cppm/core/config.hpp"
-#include <range/v3/all.hpp>
-#include "options/cppm.h"
-#include <cpcli/cpcli.hpp>
+#include "cli/cppm.h"
 
 int main(int argc, char* argv[]) {
-    cpcli::parse_with_exec<cppm::option::Cppm>(argc,argv);
+    CLI::App app;
+    cppm::command::Cppm cppm;
+    serde::serialize_to(cppm, app);
+    CLI11_PARSE(app, argc, argv);
+
     return 0;
 }
 

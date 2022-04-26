@@ -1,0 +1,8 @@
+[hash-lib]
+version="0.8.0" #(require)
+type="lib" #lib(default) | bin | cmake
+description="Portable C++ Hashing Library" #(require)
+module="hash-lib::hash-lib " #(require) if none_module=true -> no require
+url="https://github.com/injae/hash-library/archive/refs/tags/v0.8.0.zip" #(require)
+#branch="" #(optional & require git)
+#link="public" #default

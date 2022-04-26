@@ -3,7 +3,6 @@
 #include <serdepp/adaptor/toml11.hpp>
 #include "cppm/cppkg/cppkg.h"
 #include "cppm/core/cppm_tool.hpp"
-
 #include <serdepp/adaptor/nlohmann_json.hpp>
 
 namespace cppm::core {
@@ -35,7 +34,6 @@ namespace cppm::core {
         ranges::for_each(examples,   [&](auto& it) { parse_source(it.source); });
         ranges::for_each(tests,      [&](auto& it) { parse_source(it.source); });
         ranges::for_each(benchmarks, [&](auto& it) { parse_source(it.source); });
-
         //--------
 
         auto load_cppkg = [&](auto& deps) {
@@ -47,18 +45,22 @@ namespace cppm::core {
                     features[name] = feature;
                 }
                 auto _path = path.thirdparty/"{}/{}/cppkg.toml"_format(name, dep.version);
-                if(!fs::exists(_path) && dep.repo == repo_type::cppkg) {
+                if(!fs::exists(_path) && dep.repo == repo_type::cppkg && dep.version!="unknown") {
                     cppkg::install(*this, cppkg::search(name, dep.version));
                 }
+                if (dep.version == "unknown") { dep.version = "latest"; }
                 auto default_on = dep.default_features_flag;
                 auto origin = toml::parse(_path)[name];
                 dep.default_feature = default_on ? dep.default_feature : decltype(dep.default_feature){};
                 serde::serialize_to(dep, origin);
                 serde::deserialize_to(origin, dep);
                 dep.name = name;
-                if(!dep.custom && *dep.custom) {
+                if(!dep.custom && !*dep.custom) {
                     auto _path = path.thirdparty/name/(dep.version);
                     install_cppm_download_package(_path, dep);
+                    if(fs::exists(_path)) {
+                        cppkg::transcompile(dep, _path);
+                    }
                 }
             }
         };
