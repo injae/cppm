@@ -25,7 +25,7 @@ endif()
 
 cppm_target_define(cppm-core INTERFACE)
 
-cppm_target_define(cppm-new BINARY
+cppm_target_define(cppm BINARY
 SOURCES
     examples/example.cpp
     src/cmake/cmake.cpp
@@ -61,11 +61,11 @@ endif()
 cppm_target_dependencies(cppm-core
    ${cppm_global_deps})
 
-cppm_target_dependencies(cppm-new
+cppm_target_dependencies(cppm
    ${cppm_global_deps}
    cppm-core)
 
 
 cppm_target_install(cppm-core)
-cppm_target_install(cppm-new)
+cppm_target_install(cppm)
 

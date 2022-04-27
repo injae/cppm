@@ -30,7 +30,7 @@ type ="header-only"
 
 
 [[bin]]
-name   = "cppm-new"
+name   = "cppm"
 source = ["examples/example.cpp",
           "src/cmake/.*",
           "src/core/.*",

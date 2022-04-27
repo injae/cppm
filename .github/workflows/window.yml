@@ -18,7 +18,7 @@ jobs:
         cmake -Bbuild -DCMAKE_BUILD_TYPE=${{matrix.build-type}} -DUSE_CPPM_PATH=ON . 
         cd build
         cmake --build . --config ${{matrix.build-type}} --target install --target cppm_link
-    - name: Cppm build install
-      run: |
-        cd build/${{matrix.build-type}}
-        ./cppm build -h
+    #- name: Cppm build install
+    #  run: |
+    #    cd build/${{matrix.build-type}}
+    #    ./cppm build -h
