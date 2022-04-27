@@ -9,7 +9,7 @@ namespace cppm::command
 {
     void Run::execute(Run& cmd) {
         using namespace fmt::literals;
-        if(auto config = cppm::core::cppm_config_load(false) ) {
+        if(auto config = cppm::core::cppm_config_load("") ) {
             auto cache = cmake::Cache(config->path.build.string());
             auto binary = cmd.target.empty() ? config->package.name : cmd.target;
 
@@ -40,7 +40,7 @@ namespace cppm::command
 
     void CTest::execute(CTest& cmd) {
         using namespace fmt::literals;
-        if (auto config = cppm::core::cppm_config_load(false)) {
+        if (auto config = cppm::core::cppm_config_load("")) {
             util::working_directory(config->path.build.string().c_str());
             system("ctest {}"_format(util::accumulate(cmd.args, " ")).c_str());
             throw CLI::Success{};

@@ -108,6 +108,7 @@ namespace cppm::cmake
         auto is_sudo = (!(strcmp(util::system::what(), "windows")) && sudo) ? "sudo" : "";
         script += install ? " && {} cmake --install . && cmake --build . --target cppm_link"_format(is_sudo) : "";
         if(detail) fmt::print(script + "\n");
+        fmt::print("{}\n",script);
         system(script.c_str());
         util::working_directory(current.string());
         return *this;

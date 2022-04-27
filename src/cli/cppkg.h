@@ -5,6 +5,7 @@
 
 #include "cli/util.hpp"
 #include "cli/cppkg_search.h"
+#include "cli/cppkg_init.h"
 
 namespace cppm::command {
 
@@ -28,13 +29,15 @@ namespace cppm::command {
         DERIVE_SERDE(Cppkg,
                      .attrs(desc{"cppkg option and commands"}, callback{Cppkg::execute})
                      _SF_(update)
-                     _SF_(build)
                      _SF_(search)
+                     _SF_(build)
+                     _SF_(init)
                      )
     private:
         static void execute(Cppkg& cmd);
         SingleCommand<CppkgUpdate> update;
         SingleCommand<CppkgBuild>  build;
+        CppkgInit                  init;
         CppkgSearch                search;
     };
 

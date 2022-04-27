@@ -6,6 +6,7 @@
 #include "cppm/core/config.hpp"
 #include "cli/util.hpp"
 #include "cmake/cmake.h"
+#include <serdepp/attributes.hpp>
 
 #include <serdepp/attribute/cli11.hpp>
 
@@ -19,9 +20,9 @@ namespace cppm::command
     public:
         DERIVE_SERDE(Build,
                      .attrs(desc{"make CMakeLists.txt and project build"},
-                            option_group("Compiler",  "Compiler Options -DCMAKE_CXX_COMPILER",    [](auto* g){ g->require_option(0,1); }),
+                            option_group("Compiler",  "Compiler Options -DCMAKE_CXX_COMPILER", [](auto* g){ g->require_option(0,1); }),
                             option_group("Generator", "Generator Options -DCMAKE_GENERATOR",   [](auto* g){ g->require_option(0,1); }),
-                            option_group("Build",     "CMake Build Options", [](auto* g){ g->require_option(0,1); }),
+                            option_group("Build",     "CMake Build Options",                   [](auto* g){ g->require_option(0,1); }),
                             option_group("CMake",     "CMake Flags"),
                             callback(Build::execute))
 
@@ -38,12 +39,13 @@ namespace cppm::command
                      // Build
                      [attrs(group_flag("Build", "-r,--release", "Compile Release Build"))]_SF_(release)
                      [attrs(group_flag("Build", "-d,--debug","Compile Debug Build"))]_SF_(debug)
-                     [attrs(group_flag("Build", "--clean", "clean CMakeCache.txt"))]_SF_(clean)
-                     [attrs(group_flag("Build", "--check","Check CMakeLists Changes"))]_SF_(check)
+
+                     [attrs(flag("--clean", "clean CMakeCache.txt"))]_SF_(clean)
+                     [attrs(flag("--check","Check CMakeLists Changes"))]_SF_(check)
 
                      // Transcompile
-                     [attrs(flag("--ntc",   "Not Change CMakeLists.txt"))]_SF_(ntc)
-                     [attrs(flag("--tc", "Only Change CMakeLists.txt"))]_SF_(tc)
+                     [attrs(flag("--ntc", "Not Change CMakeLists.txt"))]_SF_(ntc)
+                     [attrs(flag("--skip",  "Only Change CMakeLists.txt"))]_SF_(tc_only)
 
                      // Install Options
                      [attrs(flag("--local", "install cppm path"))]_SF_(local)
@@ -80,7 +82,8 @@ namespace cppm::command
 
         bool release, debug;
         bool clean, check;
-        bool ntc, tc;
+        bool ntc;
+        bool tc_only=false;
         bool local, global;
         bool detail;
         bool export_;
@@ -93,7 +96,7 @@ namespace cppm::command
         std::string toolchain;
         std::vector<std::string> define;
 
-        SingleCommand<Install> install_;
+        SingleCommand<Install>   install_;
         SingleCommand<Uninstall> uninstall_;
         std::vector<std::string> args;
     private:

@@ -45,6 +45,7 @@ std::string if_else(std::string flag, std::string code, std::string else_code) {
 inline std::string to_upper(std::string str) {
     return str | copy | actions::transform(::toupper);
 }
+
 } // namespace cmake
 
 std::string cppm_translate(Config &config) {
@@ -91,6 +92,7 @@ void cppm_features_parse(Config &config) {}
 std::string is_dev_dependencies() {
     return "CMAKE_BUILD_TYPE STREQUAL \"Debug\" OR (SERDEPP_BUILD_EXAMPLES OR (SERDEPP_BUILD_TESTING))";
 }
+
 
 std::string hunter_load(Config &config) {
     std::string gen;
@@ -247,6 +249,7 @@ std::string cppm_target_dependencies(Config &config) {
             | views::for_each([](auto it) { return yield_if(it.second.type == cppkg_type::lib, it.second); })
             | to_vector;
         libs |= actions::sort([](auto a, auto b) { return a.link > b.link; });
+
         auto group = libs | views::group_by([](auto a, auto b) { return a.link == b.link; });
         auto link_join = [](auto &i) {
             auto names = i | views::transform([](auto i) { return i.name; }) | to_vector;
@@ -257,18 +260,20 @@ std::string cppm_target_dependencies(Config &config) {
         };
         auto cmake_dep = group
             | views::transform([&link_join](auto i) { return link_join(i); })
-            | views::cache1 | views::join(views::c_str("\n")) | to<std::string>();
+            | views::cache1
+            | views::join(views::c_str("\n"))
+            | to<std::string>();
         return cmake_dep;
-        return std::string{""};
     };
+
     std::string global_deps = "{}_global_deps"_format(config.package.name);
     gen += cmake::set(global_deps, grouped_deps(config.dependencies));
     if (!config.dev_dependencies.empty()) {
         gen += cmake::if_end( is_dev_dependencies()
                             , cmake::append(global_deps, grouped_deps(config.dev_dependencies)));
     }
-    ranges::for_each(config.target, [&gen, &grouped_deps,
-                                     &global_deps](auto &it) {
+
+    ranges::for_each(config.target, [&gen, &grouped_deps, &global_deps](auto &it) {
         auto &[name, target] = it;
         gen += "\ntriplet_check({})\nif(_result)\n"_format(cmake::quote(name));
         gen += cmake::append(global_deps, grouped_deps(target.dependencies));
@@ -286,7 +291,7 @@ std::string cppm_target_dependencies(Config &config) {
                            "name"_a = target.name,
                            "deps"_a = fmt::join(deps, "\n   "));
     };
-    if (config.lib) {  gen += set_dependencies(*config.lib); }
+    if (config.lib) { gen += set_dependencies(*config.lib); }
     ranges::for_each(config.bins, [&](auto &it) { gen += set_dependencies(it); });
     ranges::for_each(config.examples, [&](auto &it) { gen += set_dependencies(it); });
     ranges::for_each(config.tests, [&](auto &it) { gen += set_dependencies(it); });
@@ -353,6 +358,7 @@ void install_cppm_download_package(fs::path path, Dependency &dep) {
 
 Dependency cppm_auto_generate_cppkg(fs::path &path) {
     Dependency dep;
+
 
     return dep;
 }

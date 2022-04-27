@@ -119,7 +119,6 @@ namespace cppm::option
 
                 cppkg::init(pkg);
                 cppkg::build(pkg.name);
-
                 if(regist) {cppkg::regist("{}/{}"_format(pkg.name, pkg.version));}
             });
     }

@@ -43,21 +43,19 @@ namespace cppm::core {
 
     struct Config {
       DERIVE_SERDE(Config,
-                   (&Self::package, "package")(&Self::cmake, "cmake",
-                                               default_{CMake{}})(
-                       &Self::hunter, "hunter")(&Self::workspace, "workspace")(
-                       &Self::features, "features",
-                       make_optional)(&Self::dependencies, "dependencies",
-                                      make_optional)(&Self::dev_dependencies,
-                                                     "dev-dependencies",
-                                                     make_optional)(
-                       &Self::lib, "lib")(&Self::bins, "bin", make_optional)(
-                       &Self::examples, "example",
-                       make_optional)(&Self::benchmarks, "benchmark",
-                                      make_optional)(&Self::tests, "tests",
-                                                     make_optional)(
-                       &Self::profile, "profile",
-                       make_optional)(&Self::target, "target", make_optional))
+                   (&Self::package, "package")
+                   (&Self::cmake, "cmake", default_{CMake{}})
+                   (&Self::hunter, "hunter")(&Self::workspace, "workspace")
+                   (&Self::features, "features", make_optional)
+                   (&Self::dependencies, "dependencies", make_optional)
+                   (&Self::dev_dependencies, "dev-dependencies", make_optional)
+                   (&Self::lib, "lib")
+                   (&Self::bins, "bin", make_optional)
+                   (&Self::examples, "example", make_optional)
+                   (&Self::benchmarks, "benchmark", make_optional)
+                   (&Self::tests, "tests", make_optional)
+                   (&Self::profile, "profile", make_optional)
+                   (&Self::target, "target", make_optional))
 
       Package package;
       CMake cmake;
@@ -78,6 +76,7 @@ namespace cppm::core {
       Config &post_processing(const std::string &config_path);
       static Config load(fs::path config_path);
     };
-    std::optional<Config> cppm_config_load(bool panic, const std::string &start_path = "");
+    std::optional<Config> cppm_config_load(const std::string &start_path, bool panic=false);
+
 } // namespace cppm::core
 #endif

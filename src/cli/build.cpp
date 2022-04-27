@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <range/v3/all.hpp>
 
+
 #include "cli/build.h"
 #include "cppm/util/algorithm.hpp"
 #include "cppm/util/filesystem.h"
@@ -18,6 +19,7 @@
 
 #include "serdepp/adaptor/nlohmann_json.hpp"
 #include "serdepp/adaptor/toml11.hpp"
+#include <serdepp/adaptor/fmt.hpp>
 
 using namespace fmt::literals;
 using namespace std::literals;
@@ -45,6 +47,7 @@ namespace cppm::command
                                   ,"{0}/cppm_loader.cmake"_format(path.cmake));
     }
 
+
     void Build::export_cppkg() { 
         //core::Dependency pkg;
         //pkg.name = config_->package.name;
@@ -66,26 +69,35 @@ namespace cppm::command
     }
 
     void Build::execute(Build& build) {
+        build.config_ = core::cppm_config_load("");
         fmt::print("{}\n",build);
-        build.config_ = core::cppm_config_load(false);
-        auto cmake_script = util::reverse_find_file(fs::current_path() ,"CMakeLists.txt");
         auto& cmake = build.cmake_;
         auto& config = build.config_;
         bool cppm_project = config.has_value();
 
-        core::Path path = config ? build.config_->path
-                                        : core::Path::make(cmake_script->parent_path().string());
-
-        cmake.detail = build.detail;
-
-        if(!build.generator.empty()) { cmake.generator(build.generator); }
-        if(!build.compiler.empty()) { cmake.define("CMAKE_CXX_COMPILER", build.compiler); }
+        auto cmake_script = util::reverse_find_file(fs::current_path() ,"CMakeLists.txt");
 
         if(!cppm_project) {
             if(!cmake_script) {
                 throw CLI::Error("Parse Error", "this package is not cmake project\n");
             }
             fmt::print("this package is not cppm package\n build with cppm toolchain");
+        }
+
+        core::Path path = config ? build.config_->path : core::Path::make(cmake_script->parent_path().string());
+
+        cmake.detail = build.detail;
+
+        if(!build.generator.empty()) { cmake.generator(build.generator); }
+        if(!build.compiler.empty())  { cmake.define("CMAKE_CXX_COMPILER", build.compiler); }
+
+        if(build.debug) {
+            cmake.build_type = "Debug";
+            build.clean = true;
+        }
+        if(build.release){
+            cmake.build_type = "Release";
+            build.clean = true;
         }
 
         cmake.toolchain = "{}cmake/cppm-tools-{}/toolchain.cmake"_format(core::cppm_root(), CPPM_TOOLS_VERSION);
@@ -96,20 +108,22 @@ namespace cppm::command
             cmake.define("CPPM_EXTERNAL_TOOLCHAIN_FILE", build.toolchain);
         }
 
-        if(build.prefix.empty()) cmake.define("USE_CPPM_PATH", "ON");
-
-        auto deps = build.define
-            | views::transform([](auto def) { return split(def, '='); })
-            | to_vector;
-            
-        for(auto& dep : deps | views::filter([](auto vec) { return vec.size() == 2; })) {
-            cmake.define(dep[0], dep[1]);
+        if(build.prefix.empty()) {
+            cmake.define("USE_CPPM_PATH", "ON");
+        }
+        else if(build.local){
+            cmake.prefix = "";
+            build.clean = true;
+        }
+        else if(build.global){
+            cmake.prefix = "/usr/local";
+            build.clean = true;
         }
 
         fs::create_directories(path.build);
         if(!build.ntc) {
             build.transcompile(path);
-            if(build.tc) { throw CLI::Success{}; }
+            if(build.tc_only) { throw CLI::Success{}; }
         }
 
         if(build.clean) {
@@ -117,13 +131,23 @@ namespace cppm::command
             fs::remove(config->path.build/"CMakeCache.txt");
         }
 
-        if(build.args.empty()) {
+        if(!build.args.empty()) {
             cmake.generator_options(util::str::quot(util::accumulate(build.args, " ")));
         }
 
         if(util::compiler::what() != "msvc"s) {
             cmake.generator_options(" -j{} "_format(std::thread::hardware_concurrency()));
         }
+
+        //-----------------------------------------------------
+        auto deps = build.define
+            | views::transform([](auto def) { return split(def, '='); })
+            | to_vector;
+            
+        for(auto& dep : deps | views::filter([](auto vec) { return vec.size() == 2; })) {
+            cmake.define(dep[0], dep[1]);
+        }
+        //
         cmake.build(path.root.string(), "build");
 
         throw CLI::Success{};
@@ -132,7 +156,7 @@ namespace cppm::command
     void Build::Install::callback(std::vector<std::string>& args) {
         auto cmake_script = util::reverse_find_file(fs::current_path() ,"CMakeLists.txt");
         core::Path path = core::Path::make(cmake_script->parent_path().string());
-        cmake::Cache cache(path.build);
+        cmake::Cache cache(path.build.string());
         fs::path p;
         auto command = " cmake --install . && cmake --build . --target cppm_link";
         system(command);
@@ -143,7 +167,7 @@ namespace cppm::command
     void Build::Uninstall::callback(std::vector<std::string>& args) {
         auto cmake_script = util::reverse_find_file(fs::current_path() ,"CMakeLists.txt");
         core::Path path = core::Path::make(cmake_script->parent_path().string());
-        cmake::Cache cache(path.build);
+        cmake::Cache cache(path.build.string());
         auto command = " cmake --build . --target uninstall";
         system(command);
         throw CLI::Success{};

@@ -6,13 +6,13 @@
 #include <serdepp/adaptor/nlohmann_json.hpp>
 
 namespace cppm::core {
-
     Config Config::load(fs::path config_path) {
         using namespace fmt::literals;
         auto config = serde::deserialize<Config>(toml::parse((config_path/"cppm.toml").string()));
         config.post_processing(config_path.string());
         return config;
     }
+
     Config& Config::post_processing(const std::string& config_path) {
         using namespace ranges;
         using namespace fmt::literals;
@@ -48,6 +48,7 @@ namespace cppm::core {
                 if(!fs::exists(_path) && dep.repo == repo_type::cppkg && dep.version!="unknown") {
                     cppkg::install(*this, cppkg::search(name, dep.version));
                 }
+                
                 if (dep.version == "unknown") { dep.version = "latest"; }
                 auto default_on = dep.default_features_flag;
                 auto origin = toml::parse(_path)[name];
@@ -59,7 +60,7 @@ namespace cppm::core {
                     auto _path = path.thirdparty/name/(dep.version);
                     install_cppm_download_package(_path, dep);
                     if(fs::exists(_path)) {
-                        cppkg::transcompile(dep, _path);
+                        cppkg::transcompile(dep, _path.string());
                     }
                 }
             }
@@ -96,7 +97,8 @@ namespace cppm::core {
 
         return *this;
     }
-    std::optional<Config> cppm_config_load(bool panic, const std::string& start_path) {
+
+    std::optional<Config> cppm_config_load(const std::string& start_path, bool panic) {
         fs::path start_position = (start_path == "") ? fs::current_path() : fs::path{start_path};
         auto path = cppm::util::reverse_find_file(start_position, "cppm.toml");
         if(!path) {

@@ -22,10 +22,11 @@ namespace cppm::command
                      [attrs(group_flag("Type", "-l,--lib", "initialize library project"))]_SF_(lib)
                      [attrs(option("name", "project name", [](auto* opt){ opt->required(); }))]_SF_(name)
                      )
-    private:
-        static void execute(Init& cmd);
+
         static std::string make_project(const std::string& name, bool dupl_check=true);
         static void make_gitignore(core::Path& project);
+    private:
+        static void execute(Init& cmd);
 
         std::string name;
         bool bin, lib;
