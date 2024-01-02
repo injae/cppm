@@ -10,7 +10,7 @@ cppm_cxx_standard(17)
 cppm_compiler_option(DEFAULT)
 
 include(cmake/cppm_install.cmake)
-find_cppkg(fmt 7.1.3  MODULE fmt::fmt TYPE lib)
+find_cppkg(fmt 7.1.3  MODULE fmt::fmt-header-only TYPE lib)
 find_cppkg(hashpp git  MODULE hashpp::hashpp TYPE lib)
 find_cppkg(nlohmann_json 3.9.1  MODULE nlohmann_json::nlohmann_json TYPE lib)
 find_cppkg(nlpo git  MODULE nlpo::nlpo  TYPE lib)

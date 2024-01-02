@@ -1,7 +1,7 @@
 [fmt]
 version = "7.1.3"
 description = "A modern formatting library"
-module = "fmt::fmt"
+module = "fmt::fmt-header-only"
 url="https://github.com/fmtlib/fmt/releases/download/7.1.3/fmt-7.1.3.zip"
 flags="-DFMT_DOC=OFF -DFMT_TEST=OFF -DFMT_FUZZ=OFF"
 
